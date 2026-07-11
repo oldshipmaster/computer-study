@@ -1,17 +1,70 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Bibi } from "@/components/Bibi";
 import { IslandMap } from "@/components/IslandMap";
 import { getCourse } from "@/lib/course-data";
+import {
+  DEFAULT_PROGRESS,
+  parseProgress,
+  serializeProgress,
+} from "@/lib/progress.mjs";
 
 type Screen = "map" | "lesson" | "complete";
 
 const PLAYABLE_COURSE_ID = "keyboard-flight";
+const PROGRESS_STORAGE_KEY = "bit-island-progress-v1";
 
 export function BitIslandApp() {
   const [screen, setScreen] = useState<Screen>("map");
+  const [progress, setProgress] = useState(DEFAULT_PROGRESS);
+  const [progressLoaded, setProgressLoaded] = useState(false);
+  const [storageUnavailable, setStorageUnavailable] = useState(false);
   const currentCourse = getCourse(PLAYABLE_COURSE_ID);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    queueMicrotask(() => {
+      if (cancelled) {
+        return;
+      }
+
+      try {
+        setProgress(parseProgress(window.localStorage.getItem(PROGRESS_STORAGE_KEY)));
+      } catch {
+        setStorageUnavailable(true);
+      } finally {
+        setProgressLoaded(true);
+      }
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!progressLoaded || storageUnavailable) {
+      return;
+    }
+
+    let cancelled = false;
+
+    try {
+      window.localStorage.setItem(PROGRESS_STORAGE_KEY, serializeProgress(progress));
+    } catch {
+      queueMicrotask(() => {
+        if (!cancelled) {
+          setStorageUnavailable(true);
+        }
+      });
+    }
+
+    return () => {
+      cancelled = true;
+    };
+  }, [progress, progressLoaded, storageUnavailable]);
 
   function startCourse(courseId: string) {
     const course = getCourse(courseId);
@@ -57,5 +110,10 @@ export function BitIslandApp() {
     );
   }
 
-  return <IslandMap completedCourseIds={[]} onStartCourse={startCourse} />;
+  return (
+    <IslandMap
+      completedCourseIds={progress.completedCourseIds}
+      onStartCourse={startCourse}
+    />
+  );
 }
