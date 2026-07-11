@@ -130,7 +130,7 @@ export const COURSES: Course[] = [
     skill: "文件整理",
     minutes: 9,
     difficulty: 2,
-    playable: false,
+    playable: true,
   },
   {
     id: "instruction-order",

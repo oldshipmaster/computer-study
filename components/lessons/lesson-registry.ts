@@ -7,6 +7,7 @@ import { FileHomeLesson } from "@/components/lessons/FileHomeLesson";
 import { NameYourWorkLesson } from "@/components/lessons/NameYourWorkLesson";
 import { MoveAndCopyLesson } from "@/components/lessons/MoveAndCopyLesson";
 import { FileTypesLesson } from "@/components/lessons/FileTypesLesson";
+import { LearningBackpackLesson } from "@/components/lessons/LearningBackpackLesson";
 import type { LessonDefinition } from "@/components/lessons/types";
 
 export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
@@ -81,6 +82,14 @@ export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
     completionTitle: "文件分类实验室整理完成",
     completionSummary: "你会用扩展名识别图片、文字和声音，也知道陌生文件要先问大人。",
     Component: FileTypesLesson,
+  },
+  "learning-backpack": {
+    courseId: "learning-backpack",
+    badgeId: "digital-organizer",
+    badgeName: "数字整理师",
+    completionTitle: "文件森林的学习背包整理完成",
+    completionSummary: "你会搜索、排序、重命名、分类和从回收站恢复文件。",
+    Component: LearningBackpackLesson,
   },
 };
 
