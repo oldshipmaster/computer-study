@@ -4,6 +4,7 @@ import { BilingualInputLesson } from "@/components/lessons/BilingualInputLesson"
 import { DesktopAdventureLesson } from "@/components/lessons/DesktopAdventureLesson";
 import { ProgramLandingLesson } from "@/components/lessons/ProgramLandingLesson";
 import { FileHomeLesson } from "@/components/lessons/FileHomeLesson";
+import { NameYourWorkLesson } from "@/components/lessons/NameYourWorkLesson";
 import type { LessonDefinition } from "@/components/lessons/types";
 
 export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
@@ -54,6 +55,14 @@ export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
     completionTitle: "你找到了文件的家",
     completionSummary: "你能分清文件与文件夹，也会沿着地址进入、返回并找到目标文件。",
     Component: FileHomeLesson,
+  },
+  "name-your-work": {
+    courseId: "name-your-work",
+    badgeId: "naming-designer",
+    badgeName: "命名设计师",
+    completionTitle: "作品有了清楚的名字和住处",
+    completionSummary: "你会用内容线索命名、保留扩展名、处理重名并选择正确的保存位置。",
+    Component: NameYourWorkLesson,
   },
 };
 
