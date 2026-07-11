@@ -45,7 +45,7 @@ test("publishes four islands and twenty ordered lessons", () => {
 test("publishes only lessons with complete interactive implementations", () => {
   assert.deepEqual(
     COURSES.filter((course) => course.playable).map((course) => course.id),
-    ["keyboard-flight", "mouse-precision", "bilingual-input", "desktop-adventure", "program-landing", "file-home", "name-your-work", "move-and-copy", "file-types", "learning-backpack", "instruction-order", "grid-city-navigation", "repeat-power", "rainy-condition", "bug-catcher", "password-guardian", "private-information", "popup-fog"],
+    COURSE_TITLES.map((_, index) => COURSES[index].id),
   );
   assert.equal(getCourse("keyboard-flight")?.title, "键盘驾驶飞船");
 });
@@ -70,6 +70,7 @@ test("distinguishes completed, available, and upcoming lesson cards", () => {
   const seventeenthCourse = getCourse("private-information");
   const eighteenthCourse = getCourse("popup-fog");
   const nineteenthCourse = getCourse("healthy-computer-habits");
+  const twentiethCourse = getCourse("light-bit-island");
 
   assert.ok(firstCourse);
   assert.ok(secondCourse);
@@ -90,6 +91,7 @@ test("distinguishes completed, available, and upcoming lesson cards", () => {
   assert.ok(seventeenthCourse);
   assert.ok(eighteenthCourse);
   assert.ok(nineteenthCourse);
+  assert.ok(twentiethCourse);
   assert.equal(getCourseCardState(firstCourse, []), "available");
   assert.equal(getCourseCardState(firstCourse, [firstCourse.id]), "completed");
   assert.equal(getCourseCardState(secondCourse, []), "available");
@@ -109,7 +111,8 @@ test("distinguishes completed, available, and upcoming lesson cards", () => {
   assert.equal(getCourseCardState(sixteenthCourse, []), "available");
   assert.equal(getCourseCardState(seventeenthCourse, []), "available");
   assert.equal(getCourseCardState(eighteenthCourse, []), "available");
-  assert.equal(getCourseCardState(nineteenthCourse, []), "upcoming");
+  assert.equal(getCourseCardState(nineteenthCourse, []), "available");
+  assert.equal(getCourseCardState(twentiethCourse, []), "available");
 });
 
 test("finds the next unfinished playable lesson without hiding replayable cards", () => {

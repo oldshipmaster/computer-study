@@ -16,6 +16,8 @@ import { BugCatcherLesson } from "@/components/lessons/BugCatcherLesson";
 import { PasswordGuardianLesson } from "@/components/lessons/PasswordGuardianLesson";
 import { PrivateInformationLesson } from "@/components/lessons/PrivateInformationLesson";
 import { PopupFogLesson } from "@/components/lessons/PopupFogLesson";
+import { HealthyComputerHabitsLesson } from "@/components/lessons/HealthyComputerHabitsLesson";
+import { LightBitIslandLesson } from "@/components/lessons/LightBitIslandLesson";
 import type { LessonDefinition } from "@/components/lessons/types";
 
 export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
@@ -162,6 +164,22 @@ export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
     completionTitle: "可疑弹窗迷雾已经散开",
     completionSummary: "你会检查来源、请求、催促和下载线索，并能关闭或向可信大人求助。",
     Component: PopupFogLesson,
+  },
+  "healthy-computer-habits": {
+    courseId: "healthy-computer-habits",
+    badgeId: "healthy-tech-user",
+    badgeName: "健康使用达人",
+    completionTitle: "健康使用节奏已经安排好",
+    completionSummary: "你会检查坐姿、屏幕和光线，安排离屏休息，并在不舒服时告诉大人。",
+    Component: HealthyComputerHabitsLesson,
+  },
+  "light-bit-island": {
+    courseId: "light-bit-island",
+    badgeId: "island-lighter",
+    badgeName: "比特岛点灯师",
+    completionTitle: "比特岛二十段学习航线全部点亮",
+    completionSummary: "你综合运用了电脑操作、文件管理、编程思维和数字安全知识。",
+    Component: LightBitIslandLesson,
   },
 };
 

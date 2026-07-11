@@ -229,7 +229,7 @@ export const COURSES: Course[] = [
     skill: "健康使用",
     minutes: 9,
     difficulty: 1,
-    playable: false,
+    playable: true,
   },
   {
     id: "light-bit-island",
@@ -240,7 +240,7 @@ export const COURSES: Course[] = [
     skill: "综合挑战",
     minutes: 9,
     difficulty: 3,
-    playable: false,
+    playable: true,
   },
 ];
 
