@@ -1,13 +1,17 @@
 export type BibiMood = "happy" | "thinking" | "celebrating";
 
 interface BibiProps {
+  className?: string;
   mood: BibiMood;
   message: string;
 }
 
-export function Bibi({ mood, message }: BibiProps) {
+export function Bibi({ className = "", mood, message }: BibiProps) {
   return (
-    <aside className={`bibi bibi--${mood}`} aria-label={`比比：${message}`}>
+    <aside
+      className={`bibi bibi--${mood} ${className}`.trim()}
+      aria-label={`比比：${message}`}
+    >
       <div className="bibi-portrait" aria-hidden="true">
         <span className="bibi-antenna">
           <span className="bibi-antenna-light" />

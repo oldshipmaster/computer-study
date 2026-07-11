@@ -4,6 +4,13 @@ import test from "node:test";
 
 const globalCss = readFileSync(new URL("../app/globals.css", import.meta.url), "utf8");
 
+function lessonSource() {
+  return readFileSync(
+    new URL("../components/KeyboardFlightLesson.tsx", import.meta.url),
+    "utf8",
+  );
+}
+
 function cssBlocks(selector) {
   const escapedSelector = selector.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   const matches = [...globalCss.matchAll(new RegExp(`${escapedSelector}\\s*\\{([^}]*)\\}`, "g"))];
@@ -102,6 +109,25 @@ test("server-renders the complete curriculum map", async () => {
   assert.equal((html.match(/disabled=""/g) ?? []).length, 19);
   assert.match(html, /data-course-id="keyboard-flight"/);
   assert.match(html, /即将开放/);
+});
+
+test("keeps the playable keyboard-flight lesson contract in source", () => {
+  const source = lessonSource();
+  const childFacingLabels = [
+    "方向键热身",
+    "飞船训练场",
+    "指令积木",
+    "运行飞船",
+    "再试一次",
+    "键盘领航员",
+  ];
+
+  for (const label of childFacingLabels) {
+    assert.match(source, new RegExp(label));
+  }
+
+  assert.match(source, /aria-live="polite"/);
+  assert.match(source, /addEventListener\(["']keydown["']/);
 });
 
 test("keeps essential lesson-card copy readable for young learners", () => {
