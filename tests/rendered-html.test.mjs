@@ -113,12 +113,12 @@ test("server-renders the complete curriculum map", async () => {
   assert.match(html, /硬件实验岛/);
   assert.match(html, /网络海湾/);
   assert.equal((html.match(/data-course-card=/g) ?? []).length, 30);
-  assert.equal((html.match(/course-card--available/g) ?? []).length, 25);
-  assert.equal((html.match(/course-card--locked/g) ?? []).length, 5);
-  assert.equal((html.match(/disabled=""/g) ?? []).length, 5);
+  assert.equal((html.match(/course-card--available/g) ?? []).length, 26);
+  assert.equal((html.match(/course-card--locked/g) ?? []).length, 4);
+  assert.equal((html.match(/disabled=""/g) ?? []).length, 4);
   assert.match(html, /data-course-id="keyboard-flight"/);
   assert.match(html, /即将开放/);
-  assert.equal((html.match(/开始任务/g) ?? []).length, 25);
+  assert.equal((html.match(/开始任务/g) ?? []).length, 26);
 });
 
 test("keeps the playable keyboard-flight lesson contract in source", () => {

@@ -23,6 +23,7 @@ import { CpuMemoryStorageLesson } from "@/components/lessons/CpuMemoryStorageLes
 import { BitsAndDataLesson } from "@/components/lessons/BitsAndDataLesson";
 import { HardwareSoftwareLesson } from "@/components/lessons/HardwareSoftwareLesson";
 import { TroubleshootMachineLesson } from "@/components/lessons/TroubleshootMachineLesson";
+import { NetworkJourneyLesson } from "@/components/lessons/NetworkJourneyLesson";
 import type { LessonDefinition } from "@/components/lessons/types";
 
 export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
@@ -225,6 +226,14 @@ export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
     completionTitle: "硬件实验岛的四个案例诊断完成",
     completionSummary: "你会描述现象、检查简单原因、一次改变一处、重新测试并安全求助。",
     Component: TroubleshootMachineLesson,
+  },
+  "network-journey": {
+    courseId: "network-journey",
+    badgeId: "packet-guide",
+    badgeName: "数据包向导",
+    completionTitle: "三组数据包完成网络往返",
+    completionSummary: "你会解释设备、路由器、互联网与服务器在请求和响应中的角色。",
+    Component: NetworkJourneyLesson,
   },
 };
 

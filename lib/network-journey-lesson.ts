@@ -1,0 +1,5 @@
+export type NetworkStop = "device" | "router" | "internet" | "server";
+export interface PacketJourney { request: string; route: NetworkStop[]; index: number; current: NetworkStop | null; response: string | null; complete: boolean; }
+const RESPONSES: Record<string, string> = { "weather-request": "fictional-weather-result", "library-request": "fictional-book-result", "map-request": "fictional-map-result" };
+export function createPacketJourney(request: string): PacketJourney { if (!RESPONSES[request]) return { request, route: [], index: 0, current: null, response: null, complete: false }; const route: NetworkStop[] = ["device", "router", "internet", "server", "internet", "router", "device"]; return { request, route, index: 0, current: route[0], response: null, complete: false }; }
+export function advancePacket(state: PacketJourney): PacketJourney { if (state.complete || state.route.length === 0) return state; const index = Math.min(state.index + 1, state.route.length - 1); const complete = index === state.route.length - 1; return { ...state, index, current: state.route[index], response: complete ? RESPONSES[state.request] : null, complete }; }

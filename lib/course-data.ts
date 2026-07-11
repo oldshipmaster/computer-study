@@ -264,7 +264,7 @@ export const COURSES: Course[] = [
   },
   {
     id: "network-journey", islandId: "network-bay", order: 26,
-    title: "消息怎样穿过网络", summary: "设备、路由器、网络与服务器。", skill: "网络原理", minutes: 9, difficulty: 2, playable: false,
+    title: "消息怎样穿过网络", summary: "设备、路由器、网络与服务器。", skill: "网络原理", minutes: 9, difficulty: 2, playable: true,
   },
   {
     id: "web-address", islandId: "network-bay", order: 27,
