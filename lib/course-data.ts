@@ -280,7 +280,7 @@ export const COURSES: Course[] = [
   },
   {
     id: "network-troubleshooting", islandId: "network-bay", order: 30,
-    title: "网络信号侦察", summary: "离线、弱信号、服务器和地址问题。", skill: "网络排障", minutes: 9, difficulty: 3, playable: false,
+    title: "网络信号侦察", summary: "离线、弱信号、服务器和地址问题。", skill: "网络排障", minutes: 9, difficulty: 3, playable: true,
   },
 ];
 

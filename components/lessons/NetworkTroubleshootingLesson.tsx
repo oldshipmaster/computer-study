@@ -1,0 +1,8 @@
+"use client";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { LessonChrome } from "@/components/lessons/LessonChrome";
+import { NetworkClinic } from "@/components/lessons/network/NetworkClinic";
+import type { LessonProps } from "@/components/lessons/types";
+const STAGES = ["描述网络现象", "比较多个服务", "查看连接线索", "区分地址与服务器", "安全求助", "四案网络挑战"];
+const MESSAGES = ["“网络坏了”太模糊，要说明哪些服务、何时、出现什么提示。", "所有服务都失败和只有一个服务失败，可能是不同原因。", "网络图标和信号格是线索，不等于需要马上改设置。", "地址错误会找不到位置；服务器不可用时其他网站仍可能正常。", "记录现象后找家长、老师或设备负责人，不独自重置真实网络。", "诊断离线、弱信号、服务器不可用和地址错误四个虚拟案例。"];
+export function NetworkTroubleshootingLesson({ initialStage, onAward, onComplete, onExit, onStageChange }: LessonProps) { const [stage, setStage] = useState(() => Math.max(0, Math.min(5, Math.floor(initialStage || 0)))); const headingRef = useRef<HTMLHeadingElement>(null); const awardedRef = useRef(false); useLayoutEffect(() => headingRef.current?.focus(), [stage]); useEffect(() => onStageChange(stage), [onStageChange, stage]); function finish() { if (awardedRef.current) return; awardedRef.current = true; onAward("network-troubleshooting", "network-detective"); onComplete(); } return <LessonChrome courseName="网络信号侦察" currentStage={stage} heading={STAGES[stage]} headingRef={headingRef} message={MESSAGES[stage]} onExit={onExit} stageNames={STAGES}><div className="network-clinic-mission">{stage < 5 ? <div className="network-clinic-demo"><p>描述 → 比较 → 检查线索 → 安全下一步</p><button className="primary-action" onClick={() => setStage((value) => value + 1)} type="button">练习下一步侦察</button></div> : <NetworkClinic onComplete={finish}/>}</div></LessonChrome>; }

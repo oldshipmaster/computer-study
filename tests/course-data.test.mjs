@@ -54,7 +54,7 @@ test("publishes six islands and thirty ordered lessons", () => {
 });
 
 test("publishes only lessons with complete interactive implementations", () => {
-  assert.equal(COURSES.filter((course) => course.playable).length, 29);
+  assert.equal(COURSES.filter((course) => course.playable).length, 30);
   assert.equal(getCourse("input-process-output")?.playable, true);
   assert.equal(getCourse("cpu-memory-storage")?.playable, true);
   assert.equal(getCourse("bits-and-data")?.playable, true);
@@ -64,7 +64,7 @@ test("publishes only lessons with complete interactive implementations", () => {
   assert.equal(getCourse("web-address")?.playable, true);
   assert.equal(getCourse("search-and-links")?.playable, true);
   assert.equal(getCourse("downloads-and-cloud")?.playable, true);
-  assert.equal(getCourse("network-troubleshooting")?.playable, false);
+  assert.equal(getCourse("network-troubleshooting")?.playable, true);
   assert.equal(getCourse("keyboard-flight")?.title, "键盘驾驶飞船");
 });
 

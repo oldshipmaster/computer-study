@@ -27,6 +27,7 @@ import { NetworkJourneyLesson } from "@/components/lessons/NetworkJourneyLesson"
 import { WebAddressLesson } from "@/components/lessons/WebAddressLesson";
 import { SearchAndLinksLesson } from "@/components/lessons/SearchAndLinksLesson";
 import { DownloadsCloudLesson } from "@/components/lessons/DownloadsCloudLesson";
+import { NetworkTroubleshootingLesson } from "@/components/lessons/NetworkTroubleshootingLesson";
 import type { LessonDefinition } from "@/components/lessons/types";
 
 export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
@@ -261,6 +262,14 @@ export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
     completionTitle: "本机与云端副本追踪完成",
     completionSummary: "你会区分下载、上传、同步与共享，并理解多个位置可以保存不同副本。",
     Component: DownloadsCloudLesson,
+  },
+  "network-troubleshooting": {
+    courseId: "network-troubleshooting",
+    badgeId: "network-detective",
+    badgeName: "网络侦察员",
+    completionTitle: "网络海湾四类信号全部辨认",
+    completionSummary: "你会比较现象，区分离线、弱信号、服务器与地址问题，并安全求助。",
+    Component: NetworkTroubleshootingLesson,
   },
 };
 
