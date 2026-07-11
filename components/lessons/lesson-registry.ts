@@ -19,6 +19,7 @@ import { PopupFogLesson } from "@/components/lessons/PopupFogLesson";
 import { HealthyComputerHabitsLesson } from "@/components/lessons/HealthyComputerHabitsLesson";
 import { LightBitIslandLesson } from "@/components/lessons/LightBitIslandLesson";
 import { InputProcessOutputLesson } from "@/components/lessons/InputProcessOutputLesson";
+import { CpuMemoryStorageLesson } from "@/components/lessons/CpuMemoryStorageLesson";
 import type { LessonDefinition } from "@/components/lessons/types";
 
 export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
@@ -189,6 +190,14 @@ export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
     completionTitle: "三条信息加工流水线全部运行",
     completionSummary: "你会区分输入、处理和输出，并能追踪信息在电脑中的完整旅程。",
     Component: InputProcessOutputLesson,
+  },
+  "cpu-memory-storage": {
+    courseId: "cpu-memory-storage",
+    badgeId: "memory-manager",
+    badgeName: "记忆管理师",
+    completionTitle: "电脑内部三个岗位配合成功",
+    completionSummary: "你会区分 CPU、工作内存和长期存储，也理解为什么修改后需要保存。",
+    Component: CpuMemoryStorageLesson,
   },
 };
 

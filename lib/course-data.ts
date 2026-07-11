@@ -248,7 +248,7 @@ export const COURSES: Course[] = [
   },
   {
     id: "cpu-memory-storage", islandId: "hardware-lab", order: 22,
-    title: "处理器、内存与存储", summary: "工作台、短期记忆和长期仓库。", skill: "计算机硬件", minutes: 9, difficulty: 2, playable: false,
+    title: "处理器、内存与存储", summary: "工作台、短期记忆和长期仓库。", skill: "计算机硬件", minutes: 9, difficulty: 2, playable: true,
   },
   {
     id: "bits-and-data", islandId: "hardware-lab", order: 23,
