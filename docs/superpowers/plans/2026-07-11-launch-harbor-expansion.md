@@ -215,19 +215,19 @@ Commit as `feat: add simulated desktop adventure`.
 - State: `{ open, content, savedContent, saveLocation, closePrompt }`.
 - Actions: `open`, `edit`, `save`, `requestClose`, `cancelClose`, `discardAndClose`, `saveAndClose`.
 
-- [ ] **Step 1: Test safe document lifecycle**
+- [x] **Step 1: Test safe document lifecycle**
 
 Cover opening, dirty state, save clearing dirty state, close without changes, unsaved-change prompt, cancel preserving work, save-and-close persisting the simulated document, and discard never being the primary action.
 
-- [ ] **Step 2: Build the lesson and challenge**
+- [x] **Step 2: Build the lesson and challenge**
 
 Stages teach open, edit, save, close, and unsaved-change decisions. The final challenge requires opening a mission note, typing a short call sign, saving to a named simulated folder, and closing safely.
 
-- [ ] **Step 3: Register and verify**
+- [x] **Step 3: Register and verify**
 
 Badge: `program-pilot` / `程序领航员`. Enable the fifth Launch Harbor course. Run all tests and both production builds.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 Commit as `feat: add safe program landing lesson`.
 

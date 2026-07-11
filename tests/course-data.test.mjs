@@ -45,7 +45,7 @@ test("publishes four islands and twenty ordered lessons", () => {
 test("publishes completed Launch Harbor lessons only", () => {
   assert.deepEqual(
     COURSES.filter((course) => course.playable).map((course) => course.id),
-    ["keyboard-flight", "mouse-precision", "bilingual-input", "desktop-adventure"],
+    ["keyboard-flight", "mouse-precision", "bilingual-input", "desktop-adventure", "program-landing"],
   );
   assert.equal(getCourse("keyboard-flight")?.title, "键盘驾驶飞船");
 });
@@ -67,7 +67,7 @@ test("distinguishes completed, available, and upcoming lesson cards", () => {
   assert.equal(getCourseCardState(secondCourse, []), "available");
   assert.equal(getCourseCardState(thirdCourse, []), "available");
   assert.equal(getCourseCardState(fourthCourse, []), "available");
-  assert.equal(getCourseCardState(fifthCourse, []), "upcoming");
+  assert.equal(getCourseCardState(fifthCourse, []), "available");
 });
 
 test("finds the next unfinished playable lesson without hiding replayable cards", () => {

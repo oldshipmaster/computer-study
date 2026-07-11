@@ -3019,3 +3019,15 @@ html.bit-island-document--reduced-motion *::after,
 .sim-window header { display: flex; justify-content: space-between; gap: .5rem; padding: .45rem; background: #dcecf4; } .sim-window header button { min-height: 2.5rem; }
 .sim-window > div { padding: 1.2rem; color: #15384e; }
 .sim-taskbar { position: absolute; inset: auto 0 0; display: flex; gap: .5rem; min-height: 3.5rem; padding: .4rem; background: #15384e; }
+
+/* Program lifecycle lesson */
+.program-landing-mission { display: grid; min-height: 24rem; place-items: center; padding: 1.5rem; border-radius: 1.5rem; background: #fff2d6; }
+.document-simulator { position: relative; display: grid; width: min(100%, 42rem); min-height: 21rem; place-items: center; }
+.document-file { display: grid; min-width: 10rem; min-height: 9rem; place-items: center; border: 3px solid #15384e; border-radius: 1rem; background: white; color: #15384e; font-weight: 850; } .document-file span { font-size: 3rem; }
+.document-window { width: 100%; overflow: hidden; border: 4px solid #15384e; border-radius: 1rem; background: white; }
+.document-window header { display: flex; justify-content: space-between; align-items: center; padding: .7rem 1rem; background: #15384e; color: white; } .document-window header button { min-width: 2.8rem; min-height: 2.8rem; }
+.document-window label { display: block; padding: 1rem 1rem .3rem; color: #15384e; font-weight: 800; }
+.document-window textarea { display: block; width: calc(100% - 2rem); min-height: 7rem; margin: 0 1rem; padding: .8rem; border: 3px solid #317ba5; border-radius: .7rem; color: #15384e; font-size: 1.15rem; }
+.document-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; padding: 1rem; color: #15384e; font-weight: 750; }
+.save-prompt { position: absolute; z-index: 3; width: min(92%, 34rem); padding: 1.4rem; border: 4px solid #15384e; border-radius: 1rem; background: white; box-shadow: 0 12px 0 rgb(21 56 78 / 18%); color: #15384e; } .save-prompt div { display: flex; flex-wrap: wrap; gap: .7rem; } .save-prompt button { min-height: 3rem; }
+.discard-action { order: 3; color: #6e3940; background: transparent; border: 0; text-decoration: underline; }

@@ -75,7 +75,7 @@ export const COURSES: Course[] = [
     skill: "程序操作",
     minutes: 9,
     difficulty: 1,
-    playable: false,
+    playable: true,
   },
   {
     id: "file-home",

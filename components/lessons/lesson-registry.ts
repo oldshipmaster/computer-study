@@ -2,6 +2,7 @@ import { KeyboardFlightLesson } from "@/components/KeyboardFlightLesson";
 import { MousePrecisionLesson } from "@/components/lessons/MousePrecisionLesson";
 import { BilingualInputLesson } from "@/components/lessons/BilingualInputLesson";
 import { DesktopAdventureLesson } from "@/components/lessons/DesktopAdventureLesson";
+import { ProgramLandingLesson } from "@/components/lessons/ProgramLandingLesson";
 import type { LessonDefinition } from "@/components/lessons/types";
 
 export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
@@ -36,6 +37,14 @@ export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
     completionTitle: "模拟桌面整理完成",
     completionSummary: "你会打开、切换、最小化、恢复和关闭窗口，也认识了图标与任务栏。",
     Component: DesktopAdventureLesson,
+  },
+  "program-landing": {
+    courseId: "program-landing",
+    badgeId: "program-pilot",
+    badgeName: "程序领航员",
+    completionTitle: "启航港五段航线全部点亮",
+    completionSummary: "你会安全打开程序、编辑内容、选择保存位置并正确关闭。",
+    Component: ProgramLandingLesson,
   },
 };
 
