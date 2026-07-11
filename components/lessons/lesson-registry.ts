@@ -1,5 +1,6 @@
 import { KeyboardFlightLesson } from "@/components/KeyboardFlightLesson";
 import { MousePrecisionLesson } from "@/components/lessons/MousePrecisionLesson";
+import { BilingualInputLesson } from "@/components/lessons/BilingualInputLesson";
 import type { LessonDefinition } from "@/components/lessons/types";
 
 export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
@@ -18,6 +19,14 @@ export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
     completionTitle: "港口导航台重新亮起来了",
     completionSummary: "你会移动、单击、双击和拖放，也知道如何用键盘完成同样的任务。",
     Component: MousePrecisionLesson,
+  },
+  "bilingual-input": {
+    courseId: "bilingual-input",
+    badgeId: "typing-communicator",
+    badgeName: "输入通信员",
+    completionTitle: "中英文通信站连接成功",
+    completionSummary: "你会输入字母和数字、用退格键修正，也完成了中文输入法选词。",
+    Component: BilingualInputLesson,
   },
 };
 

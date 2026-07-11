@@ -149,19 +149,19 @@ Run all pure tests, `npm test`, `npm run test:pages`, and lint. Commit as `feat:
 - `evaluateTypingTask(task, value, compositionState)` returns `{ complete, feedback, useful }`.
 - Tasks cover exact lowercase letters, digits, backspace correction, and one Chinese word entered through IME composition.
 
-- [ ] **Step 1: Write failing typing-model tests**
+- [x] **Step 1: Write failing typing-model tests**
 
 Cover case-sensitive English input, number matching, backspace correction, composition-start/update/end safety, wrong text preserving prior completed tasks, and no completion during active IME composition.
 
-- [ ] **Step 2: Implement model and lesson**
+- [x] **Step 2: Implement model and lesson**
 
 Stages: identify home row, type `bit`, enter `2026`, correct `BIBI` to `BIBI` after an inserted error using Backspace, compose `比比`, then complete a mixed call-sign challenge. Never record the learner’s text outside component state or local stage progress.
 
-- [ ] **Step 3: Add child-safe input behavior**
+- [x] **Step 3: Add child-safe input behavior**
 
 Use a real labeled text input, visible target text, caps-lock-neutral instructions, and composition event handling. Do not intercept browser/system shortcuts. Add an onscreen key guide that mirrors but does not replace the physical keyboard.
 
-- [ ] **Step 4: Register, enable, verify, and commit**
+- [x] **Step 4: Register, enable, verify, and commit**
 
 Badge: `typing-communicator` / `输入通信员`. Run focused tests, full tests, both builds, and lint. Commit as `feat: add bilingual typing station`.
 

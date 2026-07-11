@@ -9,7 +9,14 @@ const sourceFile = (path) =>
 test("selects the next incomplete playable course in catalog order", () => {
   assert.equal(getNextPlayableCourse([])?.id, "keyboard-flight");
   assert.equal(getNextPlayableCourse(["keyboard-flight"])?.id, "mouse-precision");
-  assert.equal(getNextPlayableCourse(["keyboard-flight", "mouse-precision"]), undefined);
+  assert.equal(
+    getNextPlayableCourse(["keyboard-flight", "mouse-precision"])?.id,
+    "bilingual-input",
+  );
+  assert.equal(
+    getNextPlayableCourse(["keyboard-flight", "mouse-precision", "bilingual-input"]),
+    undefined,
+  );
 });
 
 test("keeps every playable course backed by a lesson definition", async () => {

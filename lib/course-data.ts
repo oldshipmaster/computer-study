@@ -53,7 +53,7 @@ export const COURSES: Course[] = [
     skill: "文字输入",
     minutes: 9,
     difficulty: 1,
-    playable: false,
+    playable: true,
   },
   {
     id: "desktop-adventure",

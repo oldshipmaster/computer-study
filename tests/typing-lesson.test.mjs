@@ -1,0 +1,27 @@
+import assert from "node:assert/strict";
+import test from "node:test";
+import { evaluateTypingTask, normalizeTypingResumeStage } from "../lib/typing-lesson.ts";
+
+test("matches English and numbers exactly", () => {
+  assert.equal(evaluateTypingTask({ target: "bit", kind: "exact" }, "bit", false).complete, true);
+  assert.equal(evaluateTypingTask({ target: "bit", kind: "exact" }, "Bit", false).complete, false);
+  assert.equal(evaluateTypingTask({ target: "2026", kind: "exact" }, "2026", false).complete, true);
+});
+
+test("waits for IME composition to finish before accepting Chinese", () => {
+  assert.equal(evaluateTypingTask({ target: "比比", kind: "ime" }, "比比", true).complete, false);
+  assert.equal(evaluateTypingTask({ target: "比比", kind: "ime" }, "比比", false).complete, true);
+});
+
+test("gives useful, non-punitive correction feedback", () => {
+  const partial = evaluateTypingTask({ target: "BIBI", kind: "correction" }, "BIBIX", false);
+  assert.equal(partial.complete, false);
+  assert.equal(partial.useful, true);
+  assert.match(partial.feedback, /退格键/);
+  assert.equal(evaluateTypingTask({ target: "bit", kind: "exact" }, "xyz", false).useful, false);
+});
+
+test("clamps resume to a playable stage", () => {
+  assert.equal(normalizeTypingResumeStage(-1), 0);
+  assert.equal(normalizeTypingResumeStage(99), 5);
+});
