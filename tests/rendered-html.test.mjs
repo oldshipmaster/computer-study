@@ -120,6 +120,9 @@ test("server-renders the complete curriculum map", async () => {
   assert.doesNotMatch(html, /即将开放/);
   assert.equal((html.match(/开始任务/g) ?? []).length, 30);
   assert.equal((html.match(/route-curve route-curve--/g) ?? []).length, 5);
+  assert.match(html, /你的知识图鉴/);
+  assert.equal((html.match(/class="knowledge-chapter"/g) ?? []).length, 6);
+  assert.equal((html.match(/神秘知识卡/g) ?? []).length, 30);
 });
 
 test("supports alternating route curves for all six islands", () => {
