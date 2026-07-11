@@ -14,6 +14,7 @@ import { RepeatPowerLesson } from "@/components/lessons/RepeatPowerLesson";
 import { RainyConditionLesson } from "@/components/lessons/RainyConditionLesson";
 import { BugCatcherLesson } from "@/components/lessons/BugCatcherLesson";
 import { PasswordGuardianLesson } from "@/components/lessons/PasswordGuardianLesson";
+import { PrivateInformationLesson } from "@/components/lessons/PrivateInformationLesson";
 import type { LessonDefinition } from "@/components/lessons/types";
 
 export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
@@ -144,6 +145,14 @@ export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
     completionTitle: "安全灯塔的账号大门锁好了",
     completionSummary: "你知道使用长而独特的密码、保持保密，并在需要时请家长帮助。",
     Component: PasswordGuardianLesson,
+  },
+  "private-information": {
+    courseId: "private-information",
+    badgeId: "privacy-sentinel",
+    badgeName: "隐私哨兵",
+    completionTitle: "个人信息防护门已经升起",
+    completionSummary: "你会结合信息、询问者和场景判断，并能停止、关闭和向可信大人求助。",
+    Component: PrivateInformationLesson,
   },
 };
 

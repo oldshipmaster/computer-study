@@ -3126,3 +3126,11 @@ html.bit-island-document--reduced-motion *::after,
 .token-bank { display: flex; flex-wrap: wrap; gap: .6rem; } .token-bank button { min-height: 3rem; padding: .6rem .9rem; border: 2px solid #315c9a; border-radius: 2rem; background: white; color: #15384e; font-weight: 800; }
 .practice-passphrase { min-height: 4rem; padding: 1rem; border: 3px dashed #315c9a; border-radius: .8rem; background: white; overflow-wrap: anywhere; font-family: monospace; font-size: 1.15rem; font-weight: 800; }
 .passphrase-actions { display: flex; flex-wrap: wrap; gap: .7rem; }
+
+/* Personal information safety lesson */
+.privacy-mission { padding: 1.4rem; border-radius: 1.5rem; background: #e9f8ee; }
+.privacy-rule { display: grid; min-height: 13rem; place-items: center; } .privacy-rule p { padding: 1rem; border: 3px solid #24734a; border-radius: 1rem; background: white; color: #15384e; font-weight: 850; }
+.privacy-sorter { display: grid; gap: 1rem; color: #15384e; } .privacy-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: .6rem; } .privacy-cards button { min-height: 4rem; border: 2px solid #24734a; border-radius: .7rem; background: white; color: #15384e; font-weight: 750; } .privacy-cards button[aria-pressed="true"] { background: #fff3bd; }
+.privacy-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: .7rem; } .privacy-actions button { min-height: 4rem; border: 3px solid #15384e; border-radius: .8rem; background: white; color: #15384e; font-weight: 850; }
+.privacy-sorter aside { padding: .8rem; border-radius: .7rem; background: #fff0df; font-weight: 750; }
+@media (max-width: 35rem) { .privacy-actions { grid-template-columns: 1fr; } }
