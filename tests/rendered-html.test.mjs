@@ -249,18 +249,19 @@ test("hands focus across lesson, stage, completion, and map transitions", () => 
   const appSource = sourceFile("components/BitIslandApp.tsx");
   const islandSource = sourceFile("components/IslandMap.tsx");
   const lessonSourceText = sourceFile("components/KeyboardFlightLesson.tsx");
+  const completionSource = sourceFile("components/lessons/LessonCompletion.tsx");
   const stageSource = sourceFile("components/keyboard-flight/LessonStages.tsx");
   const programSource = sourceFile("components/keyboard-flight/ProgramStage.tsx");
 
   assert.match(appSource, /previousScreenRef/);
-  assert.match(appSource, /mapHeadingRef\.current\?\.focus\(\)/);
+  assert.match(appSource, /courseCard \?\? mapHeadingRef\.current/);
   assert.match(appSource, /completeHeadingRef\.current\?\.focus\(\)/);
   assert.match(appSource, /parentPanelOpen/);
   assert.match(
-    appSource,
-    /<h1[\s\S]{0,180}ref=\{completeHeadingRef\}[\s\S]{0,180}tabIndex=\{-1\}/,
+    completionSource,
+    /<h1[\s\S]{0,180}ref=\{headingRef\}[\s\S]{0,180}tabIndex=\{-1\}/,
   );
-  assert.match(appSource, /role="status"/);
+  assert.match(completionSource, /role="status"/);
 
   assert.match(islandSource, /headingRef/);
   assert.match(

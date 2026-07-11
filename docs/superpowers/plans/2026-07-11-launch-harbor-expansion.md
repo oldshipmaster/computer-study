@@ -41,29 +41,29 @@
 - `getLessonDefinition(courseId: string): LessonDefinition | undefined`.
 - `getNextPlayableCourse(completedIds: readonly string[]): Course | undefined`.
 
-- [ ] **Step 1: Write failing runtime tests**
+- [x] **Step 1: Write failing runtime tests**
 
-Add tests asserting that five Launch Harbor course IDs are registered, the next incomplete playable course is selected in catalog order, a completed course stays clickable for replay, and unknown course IDs never enter the lesson screen.
+Add tests asserting that every currently playable course has a registry entry, the next incomplete playable course is selected in catalog order, a completed course stays clickable for replay, and unknown course IDs never enter the lesson screen. Each later course task adds its registry entry and only then flips its `playable` flag, so the registry can never point at an unfinished placeholder lesson.
 
-- [ ] **Step 2: Verify RED**
+- [x] **Step 2: Verify RED**
 
 Run: `node --experimental-strip-types --test tests/course-data.test.mjs tests/multi-course-runtime.test.mjs`
 
 Expected: FAIL because the registry and next-course helper do not exist.
 
-- [ ] **Step 3: Define shared lesson contracts**
+- [x] **Step 3: Define shared lesson contracts**
 
 Create the exact `LessonProps` and `LessonDefinition` interfaces. `LessonChrome` renders one heading, visible caption, stage progress, exit button, and child-safe status region. `LessonCompletion` accepts the active definition rather than hard-coded keyboard-flight copy.
 
-- [ ] **Step 4: Replace hard-coded course state**
+- [x] **Step 4: Replace hard-coded course state**
 
 In `BitIslandApp`, add `activeCourseId: string | null`; resolve the component from the registry; resume only when `progress.resume.courseId === activeCourseId`; save the active course ID with every stage; award the definition’s course/badge pair; render generic completion copy; return focus to the active course card when exiting.
 
-- [ ] **Step 5: Make map progression data-driven**
+- [x] **Step 5: Make map progression data-driven**
 
 Export `getNextPlayableCourse`. Use it for the hero’s current mission and “继续冒险” button. Keep completed playable cards enabled for replay. Make `CourseCard` expose a stable `data-course-id` focus target.
 
-- [ ] **Step 6: Verify GREEN**
+- [x] **Step 6: Verify GREEN**
 
 Run:
 

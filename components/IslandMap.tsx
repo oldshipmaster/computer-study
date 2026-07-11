@@ -4,6 +4,7 @@ import {
   ISLANDS,
   getCourse,
   getCourseCardState,
+  getNextPlayableCourse,
   type Course,
   type CourseCardState,
 } from "@/lib/course-data";
@@ -13,8 +14,6 @@ interface IslandMapProps {
   headingRef: Ref<HTMLHeadingElement>;
   onStartCourse: (courseId: string) => void;
 }
-
-const FIRST_COURSE_ID = "keyboard-flight";
 
 const DIFFICULTY_LABELS: Record<Course["difficulty"], string> = {
   1: "轻松",
@@ -68,7 +67,11 @@ export function IslandMap({
   headingRef,
   onStartCourse,
 }: IslandMapProps) {
-  const firstCourse = getCourse(FIRST_COURSE_ID);
+  const currentCourse =
+    getNextPlayableCourse(completedCourseIds) ??
+    ISLANDS.flatMap((island) => island.courseIds)
+      .map((courseId) => getCourse(courseId))
+      .find((course) => course?.playable);
 
   return (
     <main className="island-app-shell">
@@ -97,16 +100,16 @@ export function IslandMap({
             每次用 9 分钟完成一个小任务，从键盘驾驶一直探索到安全灯塔。
           </p>
 
-          {firstCourse ? (
+          {currentCourse ? (
             <div className="current-mission" aria-label="当前任务">
               <span className="mission-label">当前任务</span>
               <div>
-                <strong>{firstCourse.title}</strong>
-                <span>{firstCourse.summary}</span>
+                <strong>{currentCourse.title}</strong>
+                <span>{currentCourse.summary}</span>
               </div>
               <button
                 className="primary-action"
-                onClick={() => onStartCourse(firstCourse.id)}
+                onClick={() => onStartCourse(currentCourse.id)}
                 type="button"
               >
                 继续冒险

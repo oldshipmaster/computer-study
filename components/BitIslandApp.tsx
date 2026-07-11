@@ -10,9 +10,9 @@ import {
   type MouseEvent as ReactMouseEvent,
   type PointerEvent as ReactPointerEvent,
 } from "react";
-import { Bibi } from "@/components/Bibi";
 import { IslandMap } from "@/components/IslandMap";
-import { KeyboardFlightLesson } from "@/components/KeyboardFlightLesson";
+import { LessonCompletion } from "@/components/lessons/LessonCompletion";
+import { getLessonDefinition } from "@/components/lessons/lesson-registry";
 import { ParentPanel, type ParentProgress } from "@/components/ParentPanel";
 import { getCourse } from "@/lib/course-data";
 import {
@@ -25,12 +25,12 @@ import {
 
 type Screen = "map" | "lesson" | "complete";
 
-const PLAYABLE_COURSE_ID = "keyboard-flight";
 const PROGRESS_STORAGE_KEY = "bit-island-progress-v1";
 const PARENT_HOLD_DURATION_MS = 1_500;
 
 export function BitIslandApp() {
   const [screen, setScreen] = useState<Screen>("map");
+  const [activeCourseId, setActiveCourseId] = useState<string | null>(null);
   const [progress, setProgress] = useState(DEFAULT_PROGRESS);
   const [progressLoaded, setProgressLoaded] = useState(false);
   const [storageUnavailable, setStorageUnavailable] = useState(false);
@@ -43,8 +43,12 @@ export function BitIslandApp() {
   const mapHeadingRef = useRef<HTMLHeadingElement>(null);
   const completeHeadingRef = useRef<HTMLHeadingElement>(null);
   const previousScreenRef = useRef<Screen>(screen);
+  const pendingMapFocusIdRef = useRef<string | null>(null);
   const parentHoldTimerRef = useRef<number | null>(null);
-  const currentCourse = getCourse(PLAYABLE_COURSE_ID);
+  const currentCourse = activeCourseId ? getCourse(activeCourseId) : undefined;
+  const lessonDefinition = activeCourseId
+    ? getLessonDefinition(activeCourseId)
+    : undefined;
   const effectiveReducedMotion =
     progress.settings.reducedMotion || systemPrefersReducedMotion;
 
@@ -57,7 +61,14 @@ export function BitIslandApp() {
     }
 
     if (screen === "map") {
-      mapHeadingRef.current?.focus();
+      const focusCourseId = pendingMapFocusIdRef.current;
+      pendingMapFocusIdRef.current = null;
+      const courseCard = focusCourseId
+        ? document.querySelector<HTMLButtonElement>(
+            `[data-course-id="${focusCourseId}"]`,
+          )
+        : null;
+      (courseCard ?? mapHeadingRef.current)?.focus();
     } else if (screen === "complete") {
       completeHeadingRef.current?.focus();
     }
@@ -170,24 +181,30 @@ export function BitIslandApp() {
 
   function startCourse(courseId: string) {
     const course = getCourse(courseId);
+    const lessonDefinition = getLessonDefinition(courseId);
 
-    if (course?.playable && course.id === PLAYABLE_COURSE_ID) {
+    if (course?.playable && lessonDefinition) {
       cancelParentHold();
       setKeyboardConfirmationVisible(false);
       setParentPanelOpen(false);
+      setActiveCourseId(course.id);
       setScreen("lesson");
     }
   }
 
   const saveLessonStage = useCallback((stage: number) => {
+    if (!activeCourseId) {
+      return;
+    }
+
     setProgress((currentProgress) => ({
       ...currentProgress,
       resume: {
-        courseId: PLAYABLE_COURSE_ID,
+        courseId: activeCourseId,
         stage,
       },
     }));
-  }, []);
+  }, [activeCourseId]);
 
   const awardCourse = useCallback((courseId: string, badgeId: string) => {
     setProgress((currentProgress) => completeCourse(currentProgress, courseId, badgeId));
@@ -196,6 +213,11 @@ export function BitIslandApp() {
   const finishCourse = useCallback(() => {
     setScreen("complete");
   }, []);
+
+  const returnToMap = useCallback(() => {
+    pendingMapFocusIdRef.current = activeCourseId;
+    setScreen("map");
+  }, [activeCourseId]);
 
   const openParentPanel = useCallback(() => {
     cancelParentHold();
@@ -266,51 +288,28 @@ export function BitIslandApp() {
 
   let productScreen;
 
-  if (screen === "lesson" && currentCourse) {
+  if (screen === "lesson" && currentCourse && lessonDefinition) {
+    const LessonComponent = lessonDefinition.Component;
     productScreen = (
-      <KeyboardFlightLesson
+      <LessonComponent
         initialStage={
-          progress.resume?.courseId === PLAYABLE_COURSE_ID ? progress.resume.stage : 0
+          progress.resume?.courseId === activeCourseId ? progress.resume.stage : 0
         }
-        onAward={awardCourse}
+        onAward={() => awardCourse(lessonDefinition.courseId, lessonDefinition.badgeId)}
         onComplete={finishCourse}
-        onExit={() => setScreen("map")}
+        onExit={returnToMap}
         onStageChange={saveLessonStage}
         reducedMotion={effectiveReducedMotion}
         sound={progress.settings.sound}
       />
     );
-  } else if (screen === "complete") {
+  } else if (screen === "complete" && lessonDefinition) {
     productScreen = (
-      <main className="lesson-preview">
-        <section className="lesson-preview-card" aria-labelledby="complete-title">
-          <div>
-            <p className="hero-kicker" role="status">
-              任务完成 · 获得键盘领航员徽章
-            </p>
-            <h1
-              className="screen-focus-heading"
-              id="complete-title"
-              ref={completeHeadingRef}
-              tabIndex={-1}
-            >
-              你已点亮第一段航线
-            </h1>
-            <p>方向键负责移动，空格键负责行动，指令会按顺序执行。</p>
-            <button className="primary-action" onClick={() => setScreen("map")} type="button">
-              回到岛屿地图
-            </button>
-          </div>
-          <div className="completion-summary">
-            <div className="completion-badge" aria-label="获得键盘领航员徽章">
-              <span aria-hidden="true">★</span>
-              <strong>键盘领航员</strong>
-              <small>新徽章</small>
-            </div>
-            <Bibi mood="celebrating" message="做得很好！现在离开屏幕看看远处，让眼睛休息一会儿。" />
-          </div>
-        </section>
-      </main>
+      <LessonCompletion
+        definition={lessonDefinition}
+        headingRef={completeHeadingRef}
+        onReturn={returnToMap}
+      />
     );
   } else {
     productScreen = (

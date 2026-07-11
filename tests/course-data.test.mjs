@@ -5,6 +5,7 @@ import {
   ISLANDS,
   getCourse,
   getCourseCardState,
+  getNextPlayableCourse,
 } from "../lib/course-data.ts";
 
 const COURSE_TITLES = [
@@ -58,4 +59,10 @@ test("distinguishes completed, available, and upcoming lesson cards", () => {
   assert.equal(getCourseCardState(firstCourse, []), "available");
   assert.equal(getCourseCardState(firstCourse, [firstCourse.id]), "completed");
   assert.equal(getCourseCardState(secondCourse, []), "upcoming");
+});
+
+test("finds the next unfinished playable lesson without hiding replayable cards", () => {
+  assert.equal(getNextPlayableCourse([])?.id, "keyboard-flight");
+  assert.equal(getNextPlayableCourse(["keyboard-flight"]), undefined);
+  assert.equal(getCourseCardState(getCourse("keyboard-flight"), ["keyboard-flight"]), "completed");
 });

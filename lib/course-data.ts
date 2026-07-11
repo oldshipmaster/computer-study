@@ -307,6 +307,14 @@ export function getCourse(id: string): Course | undefined {
   return COURSES.find((course) => course.id === id);
 }
 
+export function getNextPlayableCourse(
+  completedCourseIds: readonly string[],
+): Course | undefined {
+  return COURSES.find(
+    (course) => course.playable && !completedCourseIds.includes(course.id),
+  );
+}
+
 export function getCourseCardState(
   course: Course,
   completedCourseIds: readonly string[],
