@@ -3,6 +3,7 @@ import { FlightGrid } from "@/components/keyboard-flight/LessonVisuals";
 import {
   FAILURE_MESSAGE,
   PROGRAM_DEFINITIONS,
+  isProgramLocked,
   instructionLabel,
   type Direction,
   type Position,
@@ -55,6 +56,7 @@ export function ProgramStage({
   title,
 }: ProgramStageProps) {
   const running = runState === "running";
+  const locked = isProgramLocked(runState);
 
   return (
     <section className="flight-stage-card" aria-labelledby="program-title">
@@ -82,7 +84,7 @@ export function ProgramStage({
                 className={`instruction-add instruction-add--${definition.instruction} ${
                   highlightedInstruction === definition.instruction ? "is-hinting" : ""
                 }`}
-                disabled={running}
+                disabled={locked}
                 key={definition.instruction}
                 onClick={() => onAdd(definition.instruction)}
                 type="button"
@@ -110,7 +112,7 @@ export function ProgramStage({
                       className={`program-block program-block--${instruction} ${
                         currentInstruction === index ? "is-current" : ""
                       } ${highlightedQueueIndex === index ? "is-hinting" : ""}`}
-                      draggable={!running}
+                      draggable={!locked}
                       key={item.id}
                       onDragOver={(event: DragEvent<HTMLLIElement>) => event.preventDefault()}
                       onDragStart={(event: DragEvent<HTMLLIElement>) => {
@@ -128,7 +130,7 @@ export function ProgramStage({
                       <span className="program-block-controls">
                         <button
                           aria-label={`把第 ${index + 1} 步向左移动`}
-                          disabled={running || index === 0}
+                          disabled={locked || index === 0}
                           onClick={() => onMove(index, -1)}
                           type="button"
                         >
@@ -136,7 +138,7 @@ export function ProgramStage({
                         </button>
                         <button
                           aria-label={`把第 ${index + 1} 步向右移动`}
-                          disabled={running || index === queue.length - 1}
+                          disabled={locked || index === queue.length - 1}
                           onClick={() => onMove(index, 1)}
                           type="button"
                         >
@@ -144,7 +146,7 @@ export function ProgramStage({
                         </button>
                         <button
                           aria-label={`移除第 ${index + 1} 步${instructionLabel(instruction)}`}
-                          disabled={running}
+                          disabled={locked}
                           onClick={() => onRemove(index)}
                           type="button"
                         >
@@ -167,7 +169,7 @@ export function ProgramStage({
 
           <button
             className={`run-program-action ${highlightRunButton ? "is-hinting" : ""}`}
-            disabled={running || queue.length === 0}
+            disabled={locked || queue.length === 0}
             onClick={onRun}
             type="button"
           >

@@ -167,3 +167,29 @@ test("claims a successful lesson award exactly once before the visual delay", ()
   assert.doesNotMatch(awardSource, /setScreen/);
   assert.match(transitionSource, /setScreen\("complete"\)/);
 });
+
+test("locks every program control during the successful transition", () => {
+  assert.equal(typeof lessonModel.isProgramLocked, "function");
+  assert.equal(lessonModel.isProgramLocked("idle"), false);
+  assert.equal(lessonModel.isProgramLocked("failure"), false);
+  assert.equal(lessonModel.isProgramLocked("running"), true);
+  assert.equal(lessonModel.isProgramLocked("success"), true);
+
+  const programSource = readFileSync(
+    new URL("../components/keyboard-flight/ProgramStage.tsx", import.meta.url),
+    "utf8",
+  );
+  const lessonSource = readFileSync(
+    new URL("../components/KeyboardFlightLesson.tsx", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(programSource, /const locked = isProgramLocked\(runState\)/);
+  assert.match(programSource, /draggable=\{!locked\}/);
+  assert.ok(
+    (programSource.match(/disabled=\{locked/g) ?? []).length >= 5,
+    "palette, queue controls, and run action must all use the success-aware lock",
+  );
+  assert.doesNotMatch(programSource, /disabled=\{running/);
+  assert.match(lessonSource, /runState === "success"\s*\? "任务完成"/);
+});

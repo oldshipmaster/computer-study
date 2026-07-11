@@ -80,11 +80,13 @@ export function KeyboardFlightLesson({
   }, [handlePracticeKey, handleTutorialKey, stage]);
 
   const runLabel =
-    lesson.runState === "running"
-      ? "飞船执行中…"
-      : lesson.runState === "failure"
-        ? "再试一次"
-        : "运行飞船";
+    lesson.runState === "success"
+      ? "任务完成"
+      : lesson.runState === "running"
+        ? "飞船执行中…"
+        : lesson.runState === "failure"
+          ? "再试一次"
+          : "运行飞船";
 
   return (
     <main

@@ -122,6 +122,10 @@ export function shouldCaptureLessonKey(
   return key !== " " || !interactiveTarget;
 }
 
+export function isProgramLocked(runState: RunState) {
+  return runState === "running" || runState === "success";
+}
+
 export function isNewTutorialKey(pressedKeys: ReadonlySet<string>, key: KeyDefinition["key"]) {
   return !pressedKeys.has(key);
 }
