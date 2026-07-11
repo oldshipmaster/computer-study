@@ -1,3 +1,4 @@
+import type { Ref } from "react";
 import { CHALLENGE } from "@/lib/flight-engine.mjs";
 import { FlightGrid, KeyboardDiagram } from "@/components/keyboard-flight/LessonVisuals";
 import {
@@ -8,15 +9,24 @@ import {
 } from "@/components/keyboard-flight/lesson-model";
 
 interface IntroStageProps {
+  headingRef: Ref<HTMLHeadingElement>;
   onSkip: () => void;
 }
 
-export function IntroStage({ onSkip }: IntroStageProps) {
+export function IntroStage({ headingRef, onSkip }: IntroStageProps) {
   return (
     <section className="flight-stage-card flight-stage-card--intro" aria-labelledby="intro-title">
       <div className="stage-copy">
         <p className="section-kicker">启航港 · 剧情</p>
-        <h1 id="intro-title">飞船正在等待小领航员</h1>
+        <h1
+          className="screen-focus-heading"
+          data-lesson-stage-heading
+          id="intro-title"
+          ref={headingRef}
+          tabIndex={-1}
+        >
+          飞船正在等待小领航员
+        </h1>
         <p>控制台需要五个键盘信号。短短几秒后，我们就开始热身。</p>
         <button className="primary-action" onClick={onSkip} type="button">
           跳过动画，开始热身
@@ -38,6 +48,7 @@ export function IntroStage({ onSkip }: IntroStageProps) {
 
 interface KeysStageProps {
   activeKey: KeyDefinition["key"] | null;
+  headingRef: Ref<HTMLHeadingElement>;
   highlightContinue: boolean;
   highlightedKey: KeyDefinition["key"] | null;
   onContinue: () => void;
@@ -48,6 +59,7 @@ interface KeysStageProps {
 
 export function KeysStage({
   activeKey,
+  headingRef,
   highlightContinue,
   highlightedKey,
   onContinue,
@@ -62,7 +74,15 @@ export function KeysStage({
       <div className="stage-heading">
         <div>
           <p className="section-kicker">控制台校准</p>
-          <h1 id="keys-title">{title}</h1>
+          <h1
+            className="screen-focus-heading"
+            data-lesson-stage-heading
+            id="keys-title"
+            ref={headingRef}
+            tabIndex={-1}
+          >
+            {title}
+          </h1>
         </div>
         <span className="stage-score">已点亮 {pressedKeys.size} / 5</span>
       </div>
@@ -104,6 +124,7 @@ interface PracticeStageProps {
   activeKey: KeyDefinition["key"] | null;
   collected: boolean;
   direction: Direction;
+  headingRef: Ref<HTMLHeadingElement>;
   highlightContinue: boolean;
   highlightedKey: KeyDefinition["key"] | null;
   onContinue: () => void;
@@ -116,6 +137,7 @@ export function PracticeStage({
   activeKey,
   collected,
   direction,
+  headingRef,
   highlightContinue,
   highlightedKey,
   onContinue,
@@ -128,7 +150,15 @@ export function PracticeStage({
       <div className="stage-heading">
         <div>
           <p className="section-kicker">实机练习</p>
-          <h1 id="practice-title">{title}</h1>
+          <h1
+            className="screen-focus-heading"
+            data-lesson-stage-heading
+            id="practice-title"
+            ref={headingRef}
+            tabIndex={-1}
+          >
+            {title}
+          </h1>
         </div>
         <span className="stage-score">{collected ? "能量已收集" : "目标：能量星"}</span>
       </div>
@@ -170,10 +200,11 @@ export function PracticeStage({
 
 interface CompleteStageProps {
   badgeName: string;
+  headingRef: Ref<HTMLHeadingElement>;
   onExit: () => void;
 }
 
-export function CompleteStage({ badgeName, onExit }: CompleteStageProps) {
+export function CompleteStage({ badgeName, headingRef, onExit }: CompleteStageProps) {
   return (
     <section
       className="flight-stage-card flight-stage-card--complete"
@@ -186,7 +217,15 @@ export function CompleteStage({ badgeName, onExit }: CompleteStageProps) {
       </div>
       <div className="stage-copy">
         <p className="section-kicker">任务完成</p>
-        <h1 id="lesson-complete-title">你点亮了第一段航线</h1>
+        <h1
+          className="screen-focus-heading"
+          data-lesson-stage-heading
+          id="lesson-complete-title"
+          ref={headingRef}
+          tabIndex={-1}
+        >
+          你点亮了第一段航线
+        </h1>
         <p>你认识了方向键和空格键，也发现指令会从第一步开始按顺序执行。</p>
         <button className="primary-action" onClick={onExit} type="button">
           回到岛屿地图

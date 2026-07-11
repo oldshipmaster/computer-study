@@ -1,3 +1,4 @@
+import type { Ref } from "react";
 import { Bibi } from "@/components/Bibi";
 import {
   ISLANDS,
@@ -9,6 +10,7 @@ import {
 
 interface IslandMapProps {
   completedCourseIds: string[];
+  headingRef: Ref<HTMLHeadingElement>;
   onStartCourse: (courseId: string) => void;
 }
 
@@ -63,6 +65,7 @@ function CourseCard({ course, state, onStartCourse }: CourseCardProps) {
 
 export function IslandMap({
   completedCourseIds,
+  headingRef,
   onStartCourse,
 }: IslandMapProps) {
   const firstCourse = getCourse(FIRST_COURSE_ID);
@@ -82,7 +85,14 @@ export function IslandMap({
       <section className="map-hero" aria-labelledby="map-heading">
         <div className="hero-copy">
           <p className="hero-kicker">今天的探险任务</p>
-          <h1 id="map-heading">跟比比一起，学会真正的电脑本领</h1>
+          <h1
+            className="screen-focus-heading"
+            id="map-heading"
+            ref={headingRef}
+            tabIndex={-1}
+          >
+            跟比比一起，学会真正的电脑本领
+          </h1>
           <p className="hero-summary">
             每次用 9 分钟完成一个小任务，从键盘驾驶一直探索到安全灯塔。
           </p>

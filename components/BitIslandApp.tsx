@@ -3,6 +3,7 @@
 import {
   useCallback,
   useEffect,
+  useLayoutEffect,
   useRef,
   useState,
   type KeyboardEvent as ReactKeyboardEvent,
@@ -18,7 +19,8 @@ import {
   completeCourse,
   DEFAULT_PROGRESS,
   parseProgress,
-  serializeProgress,
+  resetProgress,
+  storeProgress,
 } from "@/lib/progress.mjs";
 
 type Screen = "map" | "lesson" | "complete";
@@ -37,11 +39,29 @@ export function BitIslandApp() {
   const [keyboardConfirmationVisible, setKeyboardConfirmationVisible] = useState(false);
   const [systemPrefersReducedMotion, setSystemPrefersReducedMotion] = useState(false);
   const parentGateButtonRef = useRef<HTMLButtonElement>(null);
-  const keyboardConfirmationButtonRef = useRef<HTMLButtonElement>(null);
+  const keyboardConfirmationCancelButtonRef = useRef<HTMLButtonElement>(null);
+  const mapHeadingRef = useRef<HTMLHeadingElement>(null);
+  const completeHeadingRef = useRef<HTMLHeadingElement>(null);
+  const previousScreenRef = useRef<Screen>(screen);
   const parentHoldTimerRef = useRef<number | null>(null);
   const currentCourse = getCourse(PLAYABLE_COURSE_ID);
   const effectiveReducedMotion =
     progress.settings.reducedMotion || systemPrefersReducedMotion;
+
+  useLayoutEffect(() => {
+    const previousScreen = previousScreenRef.current;
+    previousScreenRef.current = screen;
+
+    if (parentPanelOpen || previousScreen === screen) {
+      return;
+    }
+
+    if (screen === "map") {
+      mapHeadingRef.current?.focus();
+    } else if (screen === "complete") {
+      completeHeadingRef.current?.focus();
+    }
+  }, [parentPanelOpen, screen]);
 
   useEffect(() => {
     let cancelled = false;
@@ -73,7 +93,7 @@ export function BitIslandApp() {
     let cancelled = false;
 
     try {
-      window.localStorage.setItem(PROGRESS_STORAGE_KEY, serializeProgress(progress));
+      storeProgress(window.localStorage, PROGRESS_STORAGE_KEY, progress);
     } catch {
       queueMicrotask(() => {
         if (!cancelled) {
@@ -111,12 +131,12 @@ export function BitIslandApp() {
     };
   }, [progress.settings.reducedMotion]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!keyboardConfirmationVisible) {
       return;
     }
 
-    queueMicrotask(() => keyboardConfirmationButtonRef.current?.focus());
+    keyboardConfirmationCancelButtonRef.current?.focus();
   }, [keyboardConfirmationVisible]);
 
   const cancelParentHold = useCallback(() => {
@@ -169,8 +189,11 @@ export function BitIslandApp() {
     }));
   }, []);
 
-  const finishCourse = useCallback((courseId: string, badgeId: string) => {
+  const awardCourse = useCallback((courseId: string, badgeId: string) => {
     setProgress((currentProgress) => completeCourse(currentProgress, courseId, badgeId));
+  }, []);
+
+  const finishCourse = useCallback(() => {
     setScreen("complete");
   }, []);
 
@@ -228,12 +251,18 @@ export function BitIslandApp() {
   }, []);
 
   const resetLearningProgress = useCallback(() => {
-    setProgress((currentProgress) => ({
-      ...DEFAULT_PROGRESS,
-      settings: currentProgress.settings,
-    }));
+    const nextProgress = resetProgress(progress);
+    setProgress(nextProgress);
+
+    try {
+      storeProgress(window.localStorage, PROGRESS_STORAGE_KEY, nextProgress);
+      setStorageUnavailable(false);
+    } catch {
+      setStorageUnavailable(true);
+    }
+
     setScreen("map");
-  }, []);
+  }, [progress]);
 
   let productScreen;
 
@@ -243,6 +272,7 @@ export function BitIslandApp() {
         initialStage={
           progress.resume?.courseId === PLAYABLE_COURSE_ID ? progress.resume.stage : 0
         }
+        onAward={awardCourse}
         onComplete={finishCourse}
         onExit={() => setScreen("map")}
         onStageChange={saveLessonStage}
@@ -255,8 +285,17 @@ export function BitIslandApp() {
       <main className="lesson-preview">
         <section className="lesson-preview-card" aria-labelledby="complete-title">
           <div>
-            <p className="hero-kicker">任务完成</p>
-            <h1 id="complete-title">你已点亮第一段航线</h1>
+            <p className="hero-kicker" role="status">
+              任务完成 · 获得键盘领航员徽章
+            </p>
+            <h1
+              className="screen-focus-heading"
+              id="complete-title"
+              ref={completeHeadingRef}
+              tabIndex={-1}
+            >
+              你已点亮第一段航线
+            </h1>
             <p>方向键负责移动，空格键负责行动，指令会按顺序执行。</p>
             <button className="primary-action" onClick={() => setScreen("map")} type="button">
               回到岛屿地图
@@ -277,6 +316,7 @@ export function BitIslandApp() {
     productScreen = (
       <IslandMap
         completedCourseIds={progress.completedCourseIds}
+        headingRef={mapHeadingRef}
         onStartCourse={startCourse}
       />
     );
@@ -314,7 +354,6 @@ export function BitIslandApp() {
                   <button
                     className="parent-confirm-action"
                     onClick={openParentPanel}
-                    ref={keyboardConfirmationButtonRef}
                     type="button"
                   >
                     进入家长区
@@ -322,6 +361,7 @@ export function BitIslandApp() {
                   <button
                     className="parent-cancel-action"
                     onClick={closeKeyboardConfirmation}
+                    ref={keyboardConfirmationCancelButtonRef}
                     type="button"
                   >
                     取消

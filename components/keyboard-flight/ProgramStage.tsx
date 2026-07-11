@@ -1,4 +1,4 @@
-import type { DragEvent } from "react";
+import type { DragEvent, Ref } from "react";
 import { FlightGrid } from "@/components/keyboard-flight/LessonVisuals";
 import {
   FAILURE_MESSAGE,
@@ -16,6 +16,7 @@ interface ProgramStageProps {
   currentInstruction: number | null;
   direction: Direction;
   guidance: string | null;
+  headingRef: Ref<HTMLHeadingElement>;
   highlightRunButton: boolean;
   highlightedInstruction: ProgramInstruction | null;
   highlightedQueueIndex: number | null;
@@ -37,6 +38,7 @@ export function ProgramStage({
   currentInstruction,
   direction,
   guidance,
+  headingRef,
   highlightRunButton,
   highlightedInstruction,
   highlightedQueueIndex,
@@ -59,7 +61,15 @@ export function ProgramStage({
       <div className="stage-heading">
         <div>
           <p className="section-kicker">顺序挑战</p>
-          <h1 id="program-title">{title}</h1>
+          <h1
+            className="screen-focus-heading"
+            data-lesson-stage-heading
+            id="program-title"
+            ref={headingRef}
+            tabIndex={-1}
+          >
+            {title}
+          </h1>
         </div>
         <span className="stage-score">{queue.length} 块积木</span>
       </div>

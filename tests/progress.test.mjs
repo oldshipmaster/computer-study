@@ -1,11 +1,15 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import {
+import * as progressModule from "../lib/progress.mjs";
+
+const {
   DEFAULT_PROGRESS,
   completeCourse,
   parseProgress,
+  resetProgress,
   serializeProgress,
-} from "../lib/progress.mjs";
+  storeProgress,
+} = progressModule;
 
 test("falls back safely for empty or malformed storage", () => {
   assert.deepEqual(parseProgress(null), DEFAULT_PROGRESS);
@@ -20,4 +24,50 @@ test("deduplicates completion and badge rewards", () => {
   assert.deepEqual(twice.badgeIds, ["keyboard-pilot"]);
   assert.equal(twice.resume, null);
   assert.deepEqual(parseProgress(serializeProgress(twice)), twice);
+});
+
+test("reset keeps settings and can retry storage after an earlier write failure", () => {
+  assert.equal(typeof resetProgress, "function");
+  assert.equal(typeof storeProgress, "function");
+
+  const completed = {
+    ...completeCourse(DEFAULT_PROGRESS, "keyboard-flight", "keyboard-pilot"),
+    settings: {
+      sound: false,
+      reducedMotion: true,
+    },
+    resume: {
+      courseId: "keyboard-flight",
+      stage: 3,
+    },
+  };
+  const reset = resetProgress(completed);
+
+  assert.deepEqual(reset, {
+    ...DEFAULT_PROGRESS,
+    settings: completed.settings,
+  });
+
+  let attempts = 0;
+  let storedValue = null;
+  const recoveringStorage = {
+    setItem(key, value) {
+      attempts += 1;
+      assert.equal(key, "bit-island-progress-v1");
+      if (attempts === 1) {
+        throw new Error("storage is temporarily unavailable");
+      }
+      storedValue = value;
+    },
+  };
+
+  assert.throws(
+    () => storeProgress(recoveringStorage, "bit-island-progress-v1", completed),
+    /temporarily unavailable/,
+  );
+  assert.doesNotThrow(() =>
+    storeProgress(recoveringStorage, "bit-island-progress-v1", reset),
+  );
+  assert.equal(attempts, 2);
+  assert.deepEqual(parseProgress(storedValue), reset);
 });

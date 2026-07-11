@@ -15,7 +15,8 @@ import { useKeyboardPractice } from "@/components/keyboard-flight/useKeyboardPra
 
 interface UseKeyboardFlightLessonOptions {
   initialStage: number;
-  onComplete: (courseId: string, badgeId: string) => void;
+  onAward: (courseId: string, badgeId: string) => void;
+  onComplete: () => void;
   onStageChange: (stage: number) => void;
   reducedMotion: boolean;
   sound: boolean;
@@ -23,6 +24,7 @@ interface UseKeyboardFlightLessonOptions {
 
 export function useKeyboardFlightLesson({
   initialStage,
+  onAward,
   onComplete,
   onStageChange,
   reducedMotion,
@@ -88,7 +90,9 @@ export function useKeyboardFlightLesson({
       setHintLevel(0);
       setActivityVersion((version) => version + 1);
       announce(STAGE_GUIDES[nextStage], withSpeech);
-      onStageChange(LESSON_STAGES.indexOf(nextStage));
+      if (nextStage !== "complete") {
+        onStageChange(LESSON_STAGES.indexOf(nextStage));
+      }
     },
     [announce, onStageChange],
   );
@@ -131,9 +135,13 @@ export function useKeyboardFlightLesson({
     }
 
     completionReportedRef.current = true;
-    onComplete(COURSE_ID, BADGE_ID);
+    onComplete();
   }, [onComplete, stage]);
 
+  const awardCompletion = useCallback(
+    () => onAward(COURSE_ID, BADGE_ID),
+    [onAward],
+  );
   const completeProgram = useCallback(() => goToStage("complete", true), [goToStage]);
   const keyboardPractice = useKeyboardPractice({
     announce,
@@ -145,7 +153,8 @@ export function useKeyboardFlightLesson({
     announce,
     hintLevel,
     markUserGesture,
-    onSuccess: completeProgram,
+    onSuccess: awardCompletion,
+    onSuccessTransition: completeProgram,
     reducedMotion,
     registerUsefulInput,
   });

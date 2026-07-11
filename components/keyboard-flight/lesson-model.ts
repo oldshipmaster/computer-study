@@ -24,6 +24,10 @@ export interface Position {
   y: number;
 }
 
+export interface CompletionGate {
+  current: boolean;
+}
+
 export interface KeyDefinition {
   key: "ArrowUp" | "ArrowRight" | "ArrowDown" | "ArrowLeft" | " ";
   label: string;
@@ -130,6 +134,19 @@ export function normalizeInitialLessonStage(initialStage: number) {
   }
 
   return Math.min(initialStage, lastPlayableStage);
+}
+
+export function claimCompletionAward(
+  completionGate: CompletionGate,
+  onAward: () => void,
+) {
+  if (completionGate.current) {
+    return false;
+  }
+
+  completionGate.current = true;
+  onAward();
+  return true;
 }
 
 export function getPracticeAction(

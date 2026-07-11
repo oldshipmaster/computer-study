@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import { Bibi } from "@/components/Bibi";
 import {
   CompleteStage,
@@ -22,7 +22,8 @@ export interface KeyboardFlightLessonProps {
   reducedMotion: boolean;
   sound: boolean;
   onStageChange: (stage: number) => void;
-  onComplete: (courseId: string, badgeId: string) => void;
+  onAward: (courseId: string, badgeId: string) => void;
+  onComplete: () => void;
   onExit: () => void;
 }
 
@@ -30,18 +31,25 @@ export function KeyboardFlightLesson({
   initialStage,
   reducedMotion,
   sound,
+  onAward,
   onStageChange,
   onComplete,
   onExit,
 }: KeyboardFlightLessonProps) {
   const lesson = useKeyboardFlightLesson({
     initialStage,
+    onAward,
     onComplete,
     onStageChange,
     reducedMotion,
     sound,
   });
   const { handlePracticeKey, handleTutorialKey, stage } = lesson;
+  const stageHeadingRef = useRef<HTMLHeadingElement>(null);
+
+  useLayoutEffect(() => {
+    stageHeadingRef.current?.focus();
+  }, [stage]);
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
@@ -118,11 +126,14 @@ export function KeyboardFlightLesson({
           />
         </div>
 
-        {stage === "intro" ? <IntroStage onSkip={lesson.moveFromIntro} /> : null}
+        {stage === "intro" ? (
+          <IntroStage headingRef={stageHeadingRef} onSkip={lesson.moveFromIntro} />
+        ) : null}
 
         {stage === "keys" ? (
           <KeysStage
             activeKey={lesson.activeKey}
+            headingRef={stageHeadingRef}
             highlightContinue={lesson.hintLevel > 0}
             highlightedKey={lesson.nextTutorialKey}
             onContinue={lesson.moveFromKeys}
@@ -137,6 +148,7 @@ export function KeyboardFlightLesson({
             activeKey={lesson.activeKey}
             collected={lesson.practiceCollected}
             direction={lesson.practiceDirection}
+            headingRef={stageHeadingRef}
             highlightContinue={lesson.hintLevel > 0}
             highlightedKey={lesson.practiceHintKey}
             onContinue={lesson.moveFromPractice}
@@ -152,6 +164,7 @@ export function KeyboardFlightLesson({
             currentInstruction={lesson.currentInstruction}
             direction={lesson.programDirection}
             guidance={lesson.programGuidance}
+            headingRef={stageHeadingRef}
             highlightedInstruction={lesson.highlightedInstruction}
             highlightedQueueIndex={lesson.highlightedQueueIndex}
             highlightRunButton={lesson.highlightRunButton}
@@ -170,7 +183,11 @@ export function KeyboardFlightLesson({
         ) : null}
 
         {stage === "complete" ? (
-          <CompleteStage badgeName="键盘领航员" onExit={onExit} />
+          <CompleteStage
+            badgeName="键盘领航员"
+            headingRef={stageHeadingRef}
+            onExit={onExit}
+          />
         ) : null}
       </div>
     </main>

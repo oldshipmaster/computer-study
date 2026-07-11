@@ -108,3 +108,62 @@ test("keys rendered program blocks by stable item identity", () => {
   assert.match(source, /key=\{item\.id\}/);
   assert.doesNotMatch(source, /key=\{`\$\{instruction\}-\$\{index\}`\}/);
 });
+
+test("claims a successful lesson award exactly once before the visual delay", () => {
+  assert.equal(typeof lessonModel.claimCompletionAward, "function");
+
+  const completionGate = { current: false };
+  const awards = [];
+  const award = () => awards.push("keyboard-pilot");
+
+  assert.equal(lessonModel.claimCompletionAward(completionGate, award), true);
+  assert.equal(lessonModel.claimCompletionAward(completionGate, award), false);
+  assert.deepEqual(awards, ["keyboard-pilot"]);
+
+  const source = readFileSync(
+    new URL("../components/keyboard-flight/useFlightProgram.ts", import.meta.url),
+    "utf8",
+  );
+  const lessonHookSource = readFileSync(
+    new URL("../components/keyboard-flight/useKeyboardFlightLesson.ts", import.meta.url),
+    "utf8",
+  );
+  const appSource = readFileSync(
+    new URL("../components/BitIslandApp.tsx", import.meta.url),
+    "utf8",
+  );
+  const successBranchStart = source.indexOf("if (result.success)");
+  const awardCall = source.indexOf("claimCompletionAward", successBranchStart);
+  const visualDelay = source.indexOf(
+    "await wait(reducedMotion ? 0 : 650)",
+    successBranchStart,
+  );
+  const delayedTransition = source.indexOf("onSuccessTransition()", visualDelay);
+
+  assert.ok(successBranchStart >= 0, "missing successful-program branch");
+  assert.ok(
+    awardCall > successBranchStart && awardCall < visualDelay,
+    "the completion award must be claimed before the cancellable visual delay",
+  );
+  assert.ok(
+    delayedTransition > visualDelay,
+    "the completion-screen transition must remain after the visual delay",
+  );
+  assert.match(lessonHookSource, /onSuccess:\s*awardCompletion/);
+  assert.match(lessonHookSource, /onSuccessTransition:\s*completeProgram/);
+  assert.match(
+    lessonHookSource,
+    /if \(nextStage !== "complete"\) \{\s*onStageChange/,
+  );
+
+  const awardStart = appSource.indexOf("const awardCourse");
+  const awardEnd = appSource.indexOf("\n  }, []);", awardStart);
+  const awardSource = appSource.slice(awardStart, awardEnd);
+  const transitionStart = appSource.indexOf("const finishCourse");
+  const transitionEnd = appSource.indexOf("\n  }, []);", transitionStart);
+  const transitionSource = appSource.slice(transitionStart, transitionEnd);
+
+  assert.match(awardSource, /completeCourse/);
+  assert.doesNotMatch(awardSource, /setScreen/);
+  assert.match(transitionSource, /setScreen\("complete"\)/);
+});

@@ -72,6 +72,12 @@ input {
   outline-offset: 4px;
 }
 
+.screen-focus-heading:focus-visible {
+  outline: 4px solid var(--deep-sea);
+  outline-offset: 6px;
+  border-radius: 8px;
+}
+
 .island-app-shell {
   min-height: 100dvh;
 }
@@ -824,13 +830,19 @@ input {
 }
 
 .course-card--available:hover {
+  animation: none;
   box-shadow: 4px 5px 0 var(--deep-sea);
   transform: translate(2px, 3px);
 }
 
 .course-card--available:active {
+  animation: none;
   box-shadow: 1px 2px 0 var(--deep-sea);
   transform: translate(5px, 6px);
+}
+
+.course-card--available:focus-visible {
+  animation: none;
 }
 
 .course-card--complete {
@@ -1474,11 +1486,13 @@ input {
 @keyframes bibi-float {
   0%,
   100% {
-    transform: translateY(0) rotate(-1deg);
+    translate: 0 0;
+    rotate: -1deg;
   }
 
   50% {
-    transform: translateY(-8px) rotate(1deg);
+    translate: 0 -8px;
+    rotate: 1deg;
   }
 }
 
@@ -1988,7 +2002,7 @@ input {
 }
 
 .bibi--lesson .bibi-message p {
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 
 .flight-stage-card {
@@ -2834,7 +2848,7 @@ input {
   }
 
   .bibi--lesson .bibi-message p {
-    font-size: 0.82rem;
+    font-size: 1rem;
   }
 
   .flight-stage-card {
@@ -2953,6 +2967,11 @@ html.bit-island-document--reduced-motion *::after,
   .lesson-progress li.is-current strong {
     text-decoration: underline 3px;
     text-underline-offset: 4px;
+  }
+
+  .program-block.is-current {
+    outline: 3px double CanvasText;
+    outline-offset: 3px;
   }
 
   .parent-setting-row input:checked + .parent-switch::after {

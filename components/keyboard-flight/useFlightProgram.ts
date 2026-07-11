@@ -7,6 +7,7 @@ import {
   getProgramProgressScore,
   getProgramHintTarget,
   hasProgramMadeProgress,
+  claimCompletionAward,
   instructionLabel,
   moveProgramQueueItem,
   nextProgramGuidance,
@@ -23,6 +24,7 @@ interface FlightProgramOptions {
   hintLevel: number;
   markUserGesture: () => void;
   onSuccess: () => void;
+  onSuccessTransition: () => void;
   reducedMotion: boolean;
   registerUsefulInput: () => void;
 }
@@ -32,6 +34,7 @@ export function useFlightProgram({
   hintLevel,
   markUserGesture,
   onSuccess,
+  onSuccessTransition,
   reducedMotion,
   registerUsefulInput,
 }: FlightProgramOptions) {
@@ -44,6 +47,7 @@ export function useFlightProgram({
   const [failedRuns, setFailedRuns] = useState(0);
   const [programGuidance, setProgramGuidance] = useState<string | null>(null);
   const runSequenceRef = useRef(0);
+  const completionAwardedRef = useRef(false);
   const draggedInstructionRef = useRef<number | null>(null);
   const nextProgramItemIdRef = useRef(1);
   const bestProgramProgressRef = useRef(getProgramProgressScore([]));
@@ -200,10 +204,11 @@ export function useFlightProgram({
     setRunState(result.success ? "success" : "failure");
 
     if (result.success) {
+      claimCompletionAward(completionAwardedRef, onSuccess);
       announce("成功收集能量星！这就是按顺序执行指令。", true);
       await wait(reducedMotion ? 0 : 650);
       if (runSequenceRef.current === sequence) {
-        onSuccess();
+        onSuccessTransition();
       }
       return;
     }
@@ -225,6 +230,7 @@ export function useFlightProgram({
     failedRuns,
     markUserGesture,
     onSuccess,
+    onSuccessTransition,
     programQueue,
     reducedMotion,
     registerUsefulInput,

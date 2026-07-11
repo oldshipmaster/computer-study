@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { existsSync, readFileSync } from "node:fs";
 import test from "node:test";
 
@@ -198,6 +199,82 @@ test("contains forward and backward focus when it starts outside the parent dial
   assert.match(parentSource, /event\.shiftKey\s*\?\s*lastElement\s*:\s*firstElement/);
 });
 
+test("focuses the safe action for both held-key confirmation boundaries", () => {
+  const appSource = sourceFile("components/BitIslandApp.tsx");
+  const parentSource = sourceFile("components/ParentPanel.tsx");
+
+  assert.match(appSource, /keyboardConfirmationCancelButtonRef/);
+  assert.match(
+    appSource,
+    /keyboardConfirmationCancelButtonRef\.current\?\.focus\(\)/,
+  );
+  assert.match(
+    appSource,
+    /className="parent-cancel-action"[\s\S]{0,180}ref=\{keyboardConfirmationCancelButtonRef\}/,
+  );
+  assert.doesNotMatch(
+    appSource,
+    /className="parent-confirm-action"[\s\S]{0,180}ref=/,
+  );
+
+  assert.match(parentSource, /resetKeepButtonRef/);
+  assert.match(parentSource, /resetKeepButtonRef\.current\?\.focus\(\)/);
+  assert.match(
+    parentSource,
+    /className="parent-secondary-action"[\s\S]{0,180}ref=\{resetKeepButtonRef\}/,
+  );
+  assert.doesNotMatch(
+    parentSource,
+    /className="parent-danger-action"[\s\S]{0,180}ref=/,
+  );
+});
+
+test("retries a reset write independently from the storage-unavailable latch", () => {
+  const appSource = sourceFile("components/BitIslandApp.tsx");
+  const resetStart = appSource.indexOf("const resetLearningProgress");
+  const resetEnd = appSource.indexOf("\n  },", resetStart);
+  const resetSource = appSource.slice(resetStart, resetEnd);
+
+  assert.ok(resetStart >= 0 && resetEnd > resetStart, "missing reset callback");
+  assert.match(resetSource, /resetProgress\(progress\)/);
+  assert.match(
+    resetSource,
+    /storeProgress\(window\.localStorage,\s*PROGRESS_STORAGE_KEY,\s*nextProgress\)/,
+  );
+  assert.match(resetSource, /catch\s*\{[\s\S]*setStorageUnavailable\(true\)/);
+  assert.doesNotMatch(resetSource, /if\s*\([^)]*storageUnavailable/);
+});
+
+test("hands focus across lesson, stage, completion, and map transitions", () => {
+  const appSource = sourceFile("components/BitIslandApp.tsx");
+  const islandSource = sourceFile("components/IslandMap.tsx");
+  const lessonSourceText = sourceFile("components/KeyboardFlightLesson.tsx");
+  const stageSource = sourceFile("components/keyboard-flight/LessonStages.tsx");
+  const programSource = sourceFile("components/keyboard-flight/ProgramStage.tsx");
+
+  assert.match(appSource, /previousScreenRef/);
+  assert.match(appSource, /mapHeadingRef\.current\?\.focus\(\)/);
+  assert.match(appSource, /completeHeadingRef\.current\?\.focus\(\)/);
+  assert.match(appSource, /parentPanelOpen/);
+  assert.match(
+    appSource,
+    /<h1[\s\S]{0,180}ref=\{completeHeadingRef\}[\s\S]{0,180}tabIndex=\{-1\}/,
+  );
+  assert.match(appSource, /role="status"/);
+
+  assert.match(islandSource, /headingRef/);
+  assert.match(
+    islandSource,
+    /<h1[\s\S]{0,180}ref=\{headingRef\}[\s\S]{0,180}tabIndex=\{-1\}/,
+  );
+  assert.match(lessonSourceText, /useLayoutEffect/);
+  assert.match(lessonSourceText, /stageHeadingRef\.current\?\.focus\(\)/);
+  assert.match(stageSource, /headingRef/);
+  assert.match(stageSource, /tabIndex=\{-1\}/);
+  assert.match(programSource, /headingRef/);
+  assert.match(programSource, /tabIndex=\{-1\}/);
+});
+
 test("keeps the final motion, focus, and responsive accessibility rules", () => {
   const lessonHookSource = sourceFile(
     "components/keyboard-flight/useKeyboardFlightLesson.ts",
@@ -234,6 +311,76 @@ test("keeps essential lesson-card copy readable for young learners", () => {
       `${selector} must remain at least 16px at the 680px mobile root size; received ${fontSize}`,
     );
   }
+});
+
+test("keeps the lesson caption at least 16px at every responsive size", () => {
+  const captionBlocks = cssBlocks(".bibi--lesson .bibi-message p");
+
+  for (const block of captionBlocks) {
+    const match = block.match(/font-size\s*:\s*([^;]+);/);
+    assert.ok(match, "every lesson-caption block must declare its font size");
+    assert.ok(
+      pixelsAtMobileRoot(match[1].trim()) >= 16,
+      `lesson captions must remain at least 16px; received ${match[1].trim()}`,
+    );
+  }
+});
+
+test("marks the executing instruction in forced-colors mode", () => {
+  const forcedColorsStart = globalCss.indexOf("@media (forced-colors: active)");
+  const forcedColorsCss = globalCss.slice(forcedColorsStart);
+
+  assert.ok(forcedColorsStart >= 0, "missing forced-colors media query");
+  assert.match(
+    forcedColorsCss,
+    /\.program-block\.is-current\s*\{[^}]*outline\s*:\s*3px double CanvasText;/,
+  );
+});
+
+test("composes ambient transforms with responsive and interactive transforms", () => {
+  const floatStart = globalCss.indexOf("@keyframes bibi-float");
+  const floatEnd = globalCss.indexOf("@keyframes sun-breathe", floatStart);
+  const bibiFloat = globalCss.slice(floatStart, floatEnd);
+
+  assert.ok(floatStart >= 0 && floatEnd > floatStart, "missing bibi-float keyframes");
+  assert.match(bibiFloat, /translate\s*:/);
+  assert.match(bibiFloat, /rotate\s*:/);
+  assert.doesNotMatch(bibiFloat, /\btransform\s*:/);
+
+  for (const selector of [
+    ".course-card--available:hover",
+    ".course-card--available:active",
+    ".course-card--available:focus-visible",
+  ]) {
+    assert.equal(cssProperty(selector, "animation"), "none");
+  }
+});
+
+test("ships a Bit Island favicon instead of the Sites starter identity", () => {
+  const favicon = sourceFile("public/favicon.svg");
+  const layoutSource = sourceFile("app/layout.tsx");
+  const faviconHash = createHash("sha256").update(favicon).digest("hex");
+  const sitesStarterHash = "e6d2e59b7b5bbb0342e0fb496dfc262decbfe4426bbb7b047aec8d467d1dc6f7";
+
+  assert.notEqual(faviconHash, sitesStarterHash);
+  assert.match(favicon, /#12324a/i);
+  assert.match(favicon, /#(?:ffd85a|ff7d55)/i);
+  assert.doesNotMatch(favicon, /#(?:68c4ff|0c79d8|2e9eff)/i);
+  assert.doesNotMatch(favicon, /<(?:script|foreignObject|image|text)\b/i);
+  assert.doesNotMatch(favicon, /(?:href|xlink:href)\s*=/i);
+  assert.match(layoutSource, /icon:\s*["']\/favicon\.svg["']/);
+  assert.match(layoutSource, /shortcut:\s*["']\/favicon\.svg["']/);
+});
+
+test("runs every test file after exactly one production build", () => {
+  const packageJson = JSON.parse(sourceFile("package.json"));
+  const testCommand = packageJson.scripts?.test ?? "";
+
+  assert.equal((testCommand.match(/npm run build/g) ?? []).length, 1);
+  assert.match(
+    testCommand,
+    /npm run build\s*&&\s*node --experimental-strip-types --test tests\/\*\.test\.mjs/,
+  );
 });
 
 test("keeps normal deep-palette text at WCAG AA contrast", () => {

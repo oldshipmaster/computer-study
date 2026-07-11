@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { COURSES } from "@/lib/course-data";
 
 export interface ParentProgress {
@@ -35,7 +35,7 @@ export function ParentPanel({
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLElement>(null);
   const resetActionButtonRef = useRef<HTMLButtonElement>(null);
-  const resetConfirmationButtonRef = useRef<HTMLButtonElement>(null);
+  const resetKeepButtonRef = useRef<HTMLButtonElement>(null);
 
   useLayoutEffect(() => {
     closeButtonRef.current?.focus();
@@ -94,9 +94,9 @@ export function ParentPanel({
     };
   }, [onClose]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (resetConfirmationVisible) {
-      queueMicrotask(() => resetConfirmationButtonRef.current?.focus());
+      resetKeepButtonRef.current?.focus();
     }
   }, [resetConfirmationVisible]);
 
@@ -231,7 +231,6 @@ export function ParentPanel({
                 <button
                   className="parent-danger-action"
                   onClick={confirmReset}
-                  ref={resetConfirmationButtonRef}
                   type="button"
                 >
                   确认清空这台电脑上的学习记录
@@ -239,6 +238,7 @@ export function ParentPanel({
                 <button
                   className="parent-secondary-action"
                   onClick={closeResetConfirmation}
+                  ref={resetKeepButtonRef}
                   type="button"
                 >
                   保留学习记录
