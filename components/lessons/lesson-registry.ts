@@ -6,6 +6,7 @@ import { ProgramLandingLesson } from "@/components/lessons/ProgramLandingLesson"
 import { FileHomeLesson } from "@/components/lessons/FileHomeLesson";
 import { NameYourWorkLesson } from "@/components/lessons/NameYourWorkLesson";
 import { MoveAndCopyLesson } from "@/components/lessons/MoveAndCopyLesson";
+import { FileTypesLesson } from "@/components/lessons/FileTypesLesson";
 import type { LessonDefinition } from "@/components/lessons/types";
 
 export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
@@ -72,6 +73,14 @@ export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
     completionTitle: "文件整理台恢复整齐",
     completionSummary: "你能分清移动与复制，会使用剪切、复制、粘贴和撤销。",
     Component: MoveAndCopyLesson,
+  },
+  "file-types": {
+    courseId: "file-types",
+    badgeId: "file-type-detective",
+    badgeName: "类型侦探",
+    completionTitle: "文件分类实验室整理完成",
+    completionSummary: "你会用扩展名识别图片、文字和声音，也知道陌生文件要先问大人。",
+    Component: FileTypesLesson,
   },
 };
 

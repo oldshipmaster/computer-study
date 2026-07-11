@@ -3063,3 +3063,12 @@ html.bit-island-document--reduced-motion *::after,
 .folder-board section > div { display: grid; gap: .5rem; padding: .6rem; }
 .movable-file { display: grid; min-height: 4rem; place-items: center; border: 2px solid transparent; border-radius: .5rem; background: white; color: #15384e; font-size: .78rem; } .movable-file[aria-pressed="true"] { border-color: #197ba7; background: #e6f7ff; } .movable-file span { font-size: 1.6rem; }
 @media (max-width: 46rem) { .folder-board { grid-template-columns: 1fr; } }
+
+/* File type classification lesson */
+.file-types-mission { padding: 1.4rem; border-radius: 1.5rem; background: #fff5d9; }
+.type-example { display: grid; min-height: 15rem; place-items: center; gap: 1rem; } .type-example strong { padding: 1.5rem; border: 3px solid #15384e; border-radius: 1rem; background: white; color: #15384e; font-size: clamp(1.4rem, 4vw, 2.2rem); }
+.file-type-sorter { display: grid; gap: 1rem; color: #15384e; }
+.unsorted-files { display: flex; flex-wrap: wrap; gap: .6rem; } .unsorted-files button { min-height: 3rem; padding: .6rem .8rem; border: 2px solid #15384e; border-radius: .6rem; background: white; color: #15384e; font-weight: 750; } .unsorted-files button[aria-pressed="true"] { background: #e6f7ff; border-color: #197ba7; }
+.type-trays { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .7rem; } .type-trays button { display: grid; min-height: 8rem; place-items: center; border: 3px dashed #9b6a12; border-radius: .8rem; background: white; color: #15384e; } .type-trays span { font-size: 2rem; }
+.file-type-sorter aside { padding: .8rem; border-radius: .7rem; background: #ffe4d6; font-weight: 750; }
+@media (max-width: 42rem) { .type-trays { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
