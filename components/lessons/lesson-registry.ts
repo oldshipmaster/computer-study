@@ -3,6 +3,7 @@ import { MousePrecisionLesson } from "@/components/lessons/MousePrecisionLesson"
 import { BilingualInputLesson } from "@/components/lessons/BilingualInputLesson";
 import { DesktopAdventureLesson } from "@/components/lessons/DesktopAdventureLesson";
 import { ProgramLandingLesson } from "@/components/lessons/ProgramLandingLesson";
+import { FileHomeLesson } from "@/components/lessons/FileHomeLesson";
 import type { LessonDefinition } from "@/components/lessons/types";
 
 export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
@@ -45,6 +46,14 @@ export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
     completionTitle: "启航港五段航线全部点亮",
     completionSummary: "你会安全打开程序、编辑内容、选择保存位置并正确关闭。",
     Component: ProgramLandingLesson,
+  },
+  "file-home": {
+    courseId: "file-home",
+    badgeId: "file-home-finder",
+    badgeName: "文件寻家员",
+    completionTitle: "你找到了文件的家",
+    completionSummary: "你能分清文件与文件夹，也会沿着地址进入、返回并找到目标文件。",
+    Component: FileHomeLesson,
   },
 };
 

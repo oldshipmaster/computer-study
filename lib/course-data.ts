@@ -86,7 +86,7 @@ export const COURSES: Course[] = [
     skill: "文件管理",
     minutes: 9,
     difficulty: 1,
-    playable: false,
+    playable: true,
   },
   {
     id: "name-your-work",
