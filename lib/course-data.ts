@@ -256,7 +256,7 @@ export const COURSES: Course[] = [
   },
   {
     id: "hardware-software", islandId: "hardware-lab", order: 24,
-    title: "硬件与软件搭档", summary: "物理部件和程序怎样合作。", skill: "系统概念", minutes: 9, difficulty: 2, playable: false,
+    title: "硬件与软件搭档", summary: "物理部件和程序怎样合作。", skill: "系统概念", minutes: 9, difficulty: 2, playable: true,
   },
   {
     id: "troubleshoot-machine", islandId: "hardware-lab", order: 25,

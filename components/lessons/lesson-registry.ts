@@ -21,6 +21,7 @@ import { LightBitIslandLesson } from "@/components/lessons/LightBitIslandLesson"
 import { InputProcessOutputLesson } from "@/components/lessons/InputProcessOutputLesson";
 import { CpuMemoryStorageLesson } from "@/components/lessons/CpuMemoryStorageLesson";
 import { BitsAndDataLesson } from "@/components/lessons/BitsAndDataLesson";
+import { HardwareSoftwareLesson } from "@/components/lessons/HardwareSoftwareLesson";
 import type { LessonDefinition } from "@/components/lessons/types";
 
 export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
@@ -207,6 +208,14 @@ export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
     completionTitle: "数字与颜色的比特灯全部点亮",
     completionSummary: "你会用 0 和 1 组合小数字与颜色，也理解数据需要编码规则。",
     Component: BitsAndDataLesson,
+  },
+  "hardware-software": {
+    courseId: "hardware-software",
+    badgeId: "system-partner",
+    badgeName: "系统搭档师",
+    completionTitle: "硬件和软件搭档任务全部启动",
+    completionSummary: "你会区分物理部件与程序，也理解操作系统和软硬件怎样合作。",
+    Component: HardwareSoftwareLesson,
   },
 };
 
