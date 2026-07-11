@@ -15,6 +15,7 @@ import { RainyConditionLesson } from "@/components/lessons/RainyConditionLesson"
 import { BugCatcherLesson } from "@/components/lessons/BugCatcherLesson";
 import { PasswordGuardianLesson } from "@/components/lessons/PasswordGuardianLesson";
 import { PrivateInformationLesson } from "@/components/lessons/PrivateInformationLesson";
+import { PopupFogLesson } from "@/components/lessons/PopupFogLesson";
 import type { LessonDefinition } from "@/components/lessons/types";
 
 export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
@@ -153,6 +154,14 @@ export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
     completionTitle: "个人信息防护门已经升起",
     completionSummary: "你会结合信息、询问者和场景判断，并能停止、关闭和向可信大人求助。",
     Component: PrivateInformationLesson,
+  },
+  "popup-fog": {
+    courseId: "popup-fog",
+    badgeId: "popup-scout",
+    badgeName: "弹窗侦察员",
+    completionTitle: "可疑弹窗迷雾已经散开",
+    completionSummary: "你会检查来源、请求、催促和下载线索，并能关闭或向可信大人求助。",
+    Component: PopupFogLesson,
   },
 };
 

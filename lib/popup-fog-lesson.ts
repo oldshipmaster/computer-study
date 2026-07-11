@@ -1,0 +1,3 @@
+export type PromptAction = "close" | "ask" | "continue";
+export interface PromptSignals { trustedSource: boolean; urgent: boolean; asksSecret: boolean; download: boolean; expected: boolean; }
+export function inspectPrompt(signals: PromptSignals) { const warningFlags: string[] = []; if (!signals.trustedSource) warningFlags.push("来源不可信"); if (signals.urgent) warningFlags.push("催促马上行动"); if (signals.asksSecret) warningFlags.push("索要私密信息"); if (signals.download && !signals.expected) warningFlags.push("意外下载"); const action: PromptAction = signals.asksSecret || !signals.trustedSource || (signals.download && !signals.expected) ? "close" : signals.download || !signals.expected ? "ask" : "continue"; return { action, warningFlags }; }

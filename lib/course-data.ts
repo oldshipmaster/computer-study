@@ -218,7 +218,7 @@ export const COURSES: Course[] = [
     skill: "网络安全",
     minutes: 9,
     difficulty: 2,
-    playable: false,
+    playable: true,
   },
   {
     id: "healthy-computer-habits",
