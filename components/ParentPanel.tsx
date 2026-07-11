@@ -2,6 +2,8 @@
 
 import { useLayoutEffect, useRef, useState } from "react";
 import { COURSES } from "@/lib/course-data";
+import { LESSON_DEFINITIONS } from "@/components/lessons/lesson-registry";
+import { summarizeIslandProgress } from "@/lib/parent-progress-summary";
 
 export interface ParentProgress {
   completedCourseIds: string[];
@@ -20,9 +22,12 @@ export interface ParentPanelProps {
   onClose: () => void;
 }
 
-const BADGE_NAMES: Record<string, string> = {
-  "keyboard-pilot": "键盘领航员",
-};
+const BADGE_NAMES = Object.fromEntries(
+  Object.values(LESSON_DEFINITIONS).map((definition) => [
+    definition.badgeId,
+    definition.badgeName,
+  ]),
+);
 
 export function ParentPanel({
   progress,
@@ -36,6 +41,7 @@ export function ParentPanel({
   const panelRef = useRef<HTMLElement>(null);
   const resetActionButtonRef = useRef<HTMLButtonElement>(null);
   const resetKeepButtonRef = useRef<HTMLButtonElement>(null);
+  const islandProgress = summarizeIslandProgress(progress.completedCourseIds);
 
   useLayoutEffect(() => {
     closeButtonRef.current?.focus();
@@ -167,6 +173,24 @@ export function ParentPanel({
             </div>
 
             <div className="parent-badge-summary">
+              <h3>四岛进度</h3>
+              <ul className="parent-island-progress">
+                {islandProgress.map((island) => (
+                  <li key={island.id}>
+                    <span aria-hidden="true">{island.icon}</span>
+                    <span>
+                      <strong>{island.name}</strong>
+                      <small>{island.completed} / {island.total} 课</small>
+                    </span>
+                    <progress
+                      aria-label={`${island.name}完成进度`}
+                      max={island.total}
+                      value={island.completed}
+                    />
+                  </li>
+                ))}
+              </ul>
+
               <h3>已获得徽章</h3>
               {progress.badgeIds.length > 0 ? (
                 <ul className="parent-badge-list">
@@ -178,7 +202,7 @@ export function ParentPanel({
                   ))}
                 </ul>
               ) : (
-                <p>完成第一课后，徽章会出现在这里。</p>
+                <p>完成任意一课后，对应徽章会出现在这里。</p>
               )}
             </div>
           </section>
