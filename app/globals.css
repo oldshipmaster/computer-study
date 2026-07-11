@@ -3110,3 +3110,11 @@ html.bit-island-document--reduced-motion *::after,
 .condition-weather { display: grid; grid-template-columns: auto 1fr auto 1fr; align-items: center; gap: .7rem; padding: 1rem; border-radius: .8rem; background: white; } .condition-weather span { font-size: 2rem; }
 .condition-program { display: grid; grid-template-columns: repeat(2, 1fr); gap: .8rem; } .condition-program section { display: grid; gap: .5rem; padding: .8rem; border: 3px solid #287aa5; border-radius: .8rem; background: #d8f1ff; } .condition-program code { padding: .6rem; background: #15384e; color: white; font-weight: 800; } .condition-program button { min-height: 3rem; border: 2px solid #15384e; border-radius: .6rem; background: white; } .condition-program button[aria-pressed="true"] { background: #fff1a8; border-color: #9b6a12; }
 @media (max-width: 40rem) { .condition-program { grid-template-columns: 1fr; } .condition-weather { grid-template-columns: auto 1fr; } }
+
+/* Debugging lesson */
+.bug-mission { padding: 1.4rem; border-radius: 1.5rem; background: #f2eaff; }
+.debug-cycle { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .6rem; min-height: 14rem; } .debug-cycle > span:nth-child(odd) { padding: .8rem; border: 3px solid #65469a; border-radius: .8rem; background: white; color: #15384e; font-weight: 850; } .debug-cycle button { flex-basis: 100%; }
+.debug-lab { display: grid; gap: 1rem; color: #15384e; } .debug-lab header { padding: .8rem; border-radius: .8rem; background: white; } .debug-lab h2 { margin: .3rem 0; }
+.debug-columns { display: grid; grid-template-columns: repeat(2, 1fr); gap: .8rem; } .debug-columns section { padding: 1rem; border: 3px solid #65469a; border-radius: .8rem; background: white; }
+.debug-lab fieldset { display: flex; flex-wrap: wrap; gap: .6rem; border: 0; padding: 0; } .debug-lab fieldset button { min-height: 3rem; border: 2px solid #15384e; border-radius: .6rem; background: white; color: #15384e; font-weight: 750; }
+@media (max-width: 40rem) { .debug-columns { grid-template-columns: 1fr; } }

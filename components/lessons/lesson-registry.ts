@@ -12,6 +12,7 @@ import { InstructionOrderLesson } from "@/components/lessons/InstructionOrderLes
 import { GridCityNavigationLesson } from "@/components/lessons/GridCityNavigationLesson";
 import { RepeatPowerLesson } from "@/components/lessons/RepeatPowerLesson";
 import { RainyConditionLesson } from "@/components/lessons/RainyConditionLesson";
+import { BugCatcherLesson } from "@/components/lessons/BugCatcherLesson";
 import type { LessonDefinition } from "@/components/lessons/types";
 
 export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
@@ -126,6 +127,14 @@ export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
     completionTitle: "机器人学会根据情况安全行动",
     completionSummary: "你会判断真和假，理解那么与否则分支，也知道输入变化会改变结果。",
     Component: RainyConditionLesson,
+  },
+  "bug-catcher": {
+    courseId: "bug-catcher",
+    badgeId: "bug-catcher",
+    badgeName: "调试侦探",
+    completionTitle: "机器人工坊的程序小虫全部找到",
+    completionSummary: "你会预测、观察证据、找到第一个不同点、修改一处并重新测试。",
+    Component: BugCatcherLesson,
   },
 };
 
