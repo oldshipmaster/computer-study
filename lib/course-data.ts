@@ -163,7 +163,7 @@ export const COURSES: Course[] = [
     skill: "循环",
     minutes: 9,
     difficulty: 2,
-    playable: false,
+    playable: true,
   },
   {
     id: "rainy-condition",

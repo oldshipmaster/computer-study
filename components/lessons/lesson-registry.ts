@@ -10,6 +10,7 @@ import { FileTypesLesson } from "@/components/lessons/FileTypesLesson";
 import { LearningBackpackLesson } from "@/components/lessons/LearningBackpackLesson";
 import { InstructionOrderLesson } from "@/components/lessons/InstructionOrderLesson";
 import { GridCityNavigationLesson } from "@/components/lessons/GridCityNavigationLesson";
+import { RepeatPowerLesson } from "@/components/lessons/RepeatPowerLesson";
 import type { LessonDefinition } from "@/components/lessons/types";
 
 export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
@@ -108,6 +109,14 @@ export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
     completionTitle: "方格城的三座信标全部点亮",
     completionSummary: "你会读取行列坐标、按方向移动，并能绕过边界和障碍规划路线。",
     Component: GridCityNavigationLesson,
+  },
+  "repeat-power": {
+    courseId: "repeat-power",
+    badgeId: "loop-builder",
+    badgeName: "循环建造师",
+    completionTitle: "重复能源环稳定运行",
+    completionSummary: "你会发现重复模式、设置循环次数，并用更短的程序完成正方形任务。",
+    Component: RepeatPowerLesson,
   },
 };
 
