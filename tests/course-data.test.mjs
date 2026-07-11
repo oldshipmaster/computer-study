@@ -54,14 +54,15 @@ test("publishes six islands and thirty ordered lessons", () => {
 });
 
 test("publishes only lessons with complete interactive implementations", () => {
-  assert.equal(COURSES.filter((course) => course.playable).length, 26);
+  assert.equal(COURSES.filter((course) => course.playable).length, 27);
   assert.equal(getCourse("input-process-output")?.playable, true);
   assert.equal(getCourse("cpu-memory-storage")?.playable, true);
   assert.equal(getCourse("bits-and-data")?.playable, true);
   assert.equal(getCourse("hardware-software")?.playable, true);
   assert.equal(getCourse("troubleshoot-machine")?.playable, true);
   assert.equal(getCourse("network-journey")?.playable, true);
-  assert.equal(getCourse("web-address")?.playable, false);
+  assert.equal(getCourse("web-address")?.playable, true);
+  assert.equal(getCourse("search-and-links")?.playable, false);
   assert.equal(getCourse("keyboard-flight")?.title, "键盘驾驶飞船");
 });
 

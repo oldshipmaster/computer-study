@@ -24,6 +24,7 @@ import { BitsAndDataLesson } from "@/components/lessons/BitsAndDataLesson";
 import { HardwareSoftwareLesson } from "@/components/lessons/HardwareSoftwareLesson";
 import { TroubleshootMachineLesson } from "@/components/lessons/TroubleshootMachineLesson";
 import { NetworkJourneyLesson } from "@/components/lessons/NetworkJourneyLesson";
+import { WebAddressLesson } from "@/components/lessons/WebAddressLesson";
 import type { LessonDefinition } from "@/components/lessons/types";
 
 export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
@@ -234,6 +235,14 @@ export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
     completionTitle: "三组数据包完成网络往返",
     completionSummary: "你会解释设备、路由器、互联网与服务器在请求和响应中的角色。",
     Component: NetworkJourneyLesson,
+  },
+  "web-address": {
+    courseId: "web-address",
+    badgeId: "address-reader",
+    badgeName: "网址阅读员",
+    completionTitle: "五张网络地址卡检查完成",
+    completionSummary: "你会区分连接方式、网站身份和路径，并能发现相似但不同的虚构地址。",
+    Component: WebAddressLesson,
   },
 };
 
