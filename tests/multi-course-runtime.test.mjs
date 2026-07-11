@@ -13,10 +13,8 @@ test("selects the next incomplete playable course in catalog order", () => {
     getNextPlayableCourse(["keyboard-flight", "mouse-precision"])?.id,
     "bilingual-input",
   );
-  assert.equal(
-    getNextPlayableCourse(["keyboard-flight", "mouse-precision", "bilingual-input"]),
-    undefined,
-  );
+  assert.equal(getNextPlayableCourse(["keyboard-flight", "mouse-precision", "bilingual-input"])?.id, "desktop-adventure");
+  assert.equal(getNextPlayableCourse(["keyboard-flight", "mouse-precision", "bilingual-input", "desktop-adventure"]), undefined);
 });
 
 test("keeps every playable course backed by a lesson definition", async () => {

@@ -182,19 +182,19 @@ Badge: `typing-communicator` / `输入通信员`. Run focused tests, full tests,
 - Model actions: `selectIcon`, `openWindow`, `focusWindow`, `minimizeWindow`, `restoreWindow`, `closeWindow`.
 - State distinguishes desktop icons, open windows, focused window, minimized windows, and taskbar entries.
 
-- [ ] **Step 1: Test the simulated desktop model**
+- [x] **Step 1: Test the simulated desktop model**
 
 Cover single selection vs double-click open, one focused window at a time, minimize/restore through taskbar, close semantics, keyboard activation, and safe replay.
 
-- [ ] **Step 2: Build the simulated desktop lesson**
+- [x] **Step 2: Build the simulated desktop lesson**
 
 Stages teach icon, window, title bar, taskbar, program switching, minimize/restore, and close. Challenge asks the learner to open Notes and Paint, switch to Notes, minimize it, restore from taskbar, then close both.
 
-- [ ] **Step 3: Register and verify**
+- [x] **Step 3: Register and verify**
 
 Badge: `desktop-explorer` / `桌面探险家`. Enable only after tests pass. Run both builds and accessibility source checks.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 Commit as `feat: add simulated desktop adventure`.
 

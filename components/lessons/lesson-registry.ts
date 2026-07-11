@@ -1,6 +1,7 @@
 import { KeyboardFlightLesson } from "@/components/KeyboardFlightLesson";
 import { MousePrecisionLesson } from "@/components/lessons/MousePrecisionLesson";
 import { BilingualInputLesson } from "@/components/lessons/BilingualInputLesson";
+import { DesktopAdventureLesson } from "@/components/lessons/DesktopAdventureLesson";
 import type { LessonDefinition } from "@/components/lessons/types";
 
 export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
@@ -27,6 +28,14 @@ export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
     completionTitle: "中英文通信站连接成功",
     completionSummary: "你会输入字母和数字、用退格键修正，也完成了中文输入法选词。",
     Component: BilingualInputLesson,
+  },
+  "desktop-adventure": {
+    courseId: "desktop-adventure",
+    badgeId: "desktop-explorer",
+    badgeName: "桌面探险家",
+    completionTitle: "模拟桌面整理完成",
+    completionSummary: "你会打开、切换、最小化、恢复和关闭窗口，也认识了图标与任务栏。",
+    Component: DesktopAdventureLesson,
   },
 };
 
