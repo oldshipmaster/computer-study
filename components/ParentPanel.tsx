@@ -4,6 +4,7 @@ import { useLayoutEffect, useRef, useState } from "react";
 import { COURSES } from "@/lib/course-data";
 import { LESSON_DEFINITIONS } from "@/components/lessons/lesson-registry";
 import { summarizeIslandProgress } from "@/lib/parent-progress-summary";
+import { getNextCourseGuide } from "@/lib/curriculum-guide";
 
 export interface ParentProgress {
   completedCourseIds: string[];
@@ -42,6 +43,7 @@ export function ParentPanel({
   const resetActionButtonRef = useRef<HTMLButtonElement>(null);
   const resetKeepButtonRef = useRef<HTMLButtonElement>(null);
   const islandProgress = summarizeIslandProgress(progress.completedCourseIds);
+  const nextCourseGuide = getNextCourseGuide(progress.completedCourseIds);
 
   useLayoutEffect(() => {
     closeButtonRef.current?.focus();
@@ -203,6 +205,23 @@ export function ParentPanel({
                 </ul>
               ) : (
                 <p>完成任意一课后，对应徽章会出现在这里。</p>
+              )}
+            </div>
+
+            <div className="parent-next-guide">
+              <h3>{nextCourseGuide ? "下一课家长提示" : "全部课程已完成"}</h3>
+              {nextCourseGuide ? (
+                <>
+                  <strong>{nextCourseGuide.course.title}</strong>
+                  <ul>
+                    {nextCourseGuide.guide.objectives.map((objective) => (
+                      <li key={objective}>{objective}</li>
+                    ))}
+                  </ul>
+                  <p>{nextCourseGuide.guide.parentPrompt}</p>
+                </>
+              ) : (
+                <p>请孩子挑选喜欢的课程重玩，并用自己的话讲解学到的本领。</p>
               )}
             </div>
           </section>
