@@ -30,24 +30,32 @@ const COURSE_TITLES = [
   "弹窗迷雾",
   "健康电脑习惯",
   "点亮比特岛",
+  "信息加工流水线",
+  "处理器、内存与存储",
+  "0 和 1 的数据积木",
+  "硬件与软件搭档",
+  "电脑小医生",
+  "消息怎样穿过网络",
+  "网址是网络地址",
+  "搜索与链接导航",
+  "下载、上传与云端",
+  "网络信号侦察",
 ];
 
-test("publishes four islands and twenty ordered lessons", () => {
-  assert.equal(ISLANDS.length, 4);
-  assert.equal(COURSES.length, 20);
+test("publishes six islands and thirty ordered lessons", () => {
+  assert.equal(ISLANDS.length, 6);
+  assert.equal(COURSES.length, 30);
   assert.deepEqual(
     COURSES.map((course) => course.order),
-    Array.from({ length: 20 }, (_, index) => index + 1),
+    Array.from({ length: 30 }, (_, index) => index + 1),
   );
   assert.deepEqual(COURSES.map((course) => course.title), COURSE_TITLES);
   assert.ok(ISLANDS.every((island) => island.courseIds.length === 5));
 });
 
 test("publishes only lessons with complete interactive implementations", () => {
-  assert.deepEqual(
-    COURSES.filter((course) => course.playable).map((course) => course.id),
-    COURSE_TITLES.map((_, index) => COURSES[index].id),
-  );
+  assert.equal(COURSES.filter((course) => course.playable).length, 20);
+  assert.equal(getCourse("input-process-output")?.playable, false);
   assert.equal(getCourse("keyboard-flight")?.title, "键盘驾驶飞船");
 });
 

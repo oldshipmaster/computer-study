@@ -242,6 +242,46 @@ export const COURSES: Course[] = [
     difficulty: 3,
     playable: true,
   },
+  {
+    id: "input-process-output", islandId: "hardware-lab", order: 21,
+    title: "信息加工流水线", summary: "输入、处理与输出。", skill: "计算机原理", minutes: 9, difficulty: 1, playable: false,
+  },
+  {
+    id: "cpu-memory-storage", islandId: "hardware-lab", order: 22,
+    title: "处理器、内存与存储", summary: "工作台、短期记忆和长期仓库。", skill: "计算机硬件", minutes: 9, difficulty: 2, playable: false,
+  },
+  {
+    id: "bits-and-data", islandId: "hardware-lab", order: 23,
+    title: "0 和 1 的数据积木", summary: "用比特表示数字、颜色与符号。", skill: "数字与数据", minutes: 9, difficulty: 2, playable: false,
+  },
+  {
+    id: "hardware-software", islandId: "hardware-lab", order: 24,
+    title: "硬件与软件搭档", summary: "物理部件和程序怎样合作。", skill: "系统概念", minutes: 9, difficulty: 2, playable: false,
+  },
+  {
+    id: "troubleshoot-machine", islandId: "hardware-lab", order: 25,
+    title: "电脑小医生", summary: "观察、检查、改变一处、再测试。", skill: "设备排障", minutes: 9, difficulty: 3, playable: false,
+  },
+  {
+    id: "network-journey", islandId: "network-bay", order: 26,
+    title: "消息怎样穿过网络", summary: "设备、路由器、网络与服务器。", skill: "网络原理", minutes: 9, difficulty: 2, playable: false,
+  },
+  {
+    id: "web-address", islandId: "network-bay", order: 27,
+    title: "网址是网络地址", summary: "网站身份、路径与仿冒地址。", skill: "网址识别", minutes: 9, difficulty: 2, playable: false,
+  },
+  {
+    id: "search-and-links", islandId: "network-bay", order: 28,
+    title: "搜索与链接导航", summary: "关键词、结果线索、链接和标签页。", skill: "信息检索", minutes: 9, difficulty: 2, playable: false,
+  },
+  {
+    id: "downloads-and-cloud", islandId: "network-bay", order: 29,
+    title: "下载、上传与云端", summary: "本机副本、传输、同步与共享。", skill: "网络文件", minutes: 9, difficulty: 2, playable: false,
+  },
+  {
+    id: "network-troubleshooting", islandId: "network-bay", order: 30,
+    title: "网络信号侦察", summary: "离线、弱信号、服务器和地址问题。", skill: "网络排障", minutes: 9, difficulty: 3, playable: false,
+  },
 ];
 
 export const ISLANDS: Island[] = [
@@ -300,6 +340,22 @@ export const ISLANDS: Island[] = [
       "healthy-computer-habits",
       "light-bit-island",
     ],
+  },
+  {
+    id: "hardware-lab",
+    name: "硬件实验岛",
+    subtitle: "看懂电脑内部怎样工作",
+    accent: "yellow",
+    icon: "⚙️",
+    courseIds: ["input-process-output", "cpu-memory-storage", "bits-and-data", "hardware-software", "troubleshoot-machine"],
+  },
+  {
+    id: "network-bay",
+    name: "网络海湾",
+    subtitle: "跟随信息穿过互联网",
+    accent: "sky",
+    icon: "🌐",
+    courseIds: ["network-journey", "web-address", "search-and-links", "downloads-and-cloud", "network-troubleshooting"],
   },
 ];
 
