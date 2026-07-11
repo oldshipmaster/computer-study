@@ -276,7 +276,7 @@ export const COURSES: Course[] = [
   },
   {
     id: "downloads-and-cloud", islandId: "network-bay", order: 29,
-    title: "下载、上传与云端", summary: "本机副本、传输、同步与共享。", skill: "网络文件", minutes: 9, difficulty: 2, playable: false,
+    title: "下载、上传与云端", summary: "本机副本、传输、同步与共享。", skill: "网络文件", minutes: 9, difficulty: 2, playable: true,
   },
   {
     id: "network-troubleshooting", islandId: "network-bay", order: 30,

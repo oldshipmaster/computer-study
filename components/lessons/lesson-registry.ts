@@ -26,6 +26,7 @@ import { TroubleshootMachineLesson } from "@/components/lessons/TroubleshootMach
 import { NetworkJourneyLesson } from "@/components/lessons/NetworkJourneyLesson";
 import { WebAddressLesson } from "@/components/lessons/WebAddressLesson";
 import { SearchAndLinksLesson } from "@/components/lessons/SearchAndLinksLesson";
+import { DownloadsCloudLesson } from "@/components/lessons/DownloadsCloudLesson";
 import type { LessonDefinition } from "@/components/lessons/types";
 
 export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
@@ -252,6 +253,14 @@ export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
     completionTitle: "虚拟搜索航线成功往返",
     completionSummary: "你会提炼关键词、比较结果线索，并使用链接和标签页保持方向。",
     Component: SearchAndLinksLesson,
+  },
+  "downloads-and-cloud": {
+    courseId: "downloads-and-cloud",
+    badgeId: "cloud-courier",
+    badgeName: "云端运输员",
+    completionTitle: "本机与云端副本追踪完成",
+    completionSummary: "你会区分下载、上传、同步与共享，并理解多个位置可以保存不同副本。",
+    Component: DownloadsCloudLesson,
   },
 };
 
