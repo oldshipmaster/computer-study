@@ -20,6 +20,7 @@ import { HealthyComputerHabitsLesson } from "@/components/lessons/HealthyCompute
 import { LightBitIslandLesson } from "@/components/lessons/LightBitIslandLesson";
 import { InputProcessOutputLesson } from "@/components/lessons/InputProcessOutputLesson";
 import { CpuMemoryStorageLesson } from "@/components/lessons/CpuMemoryStorageLesson";
+import { BitsAndDataLesson } from "@/components/lessons/BitsAndDataLesson";
 import type { LessonDefinition } from "@/components/lessons/types";
 
 export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
@@ -198,6 +199,14 @@ export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
     completionTitle: "电脑内部三个岗位配合成功",
     completionSummary: "你会区分 CPU、工作内存和长期存储，也理解为什么修改后需要保存。",
     Component: CpuMemoryStorageLesson,
+  },
+  "bits-and-data": {
+    courseId: "bits-and-data",
+    badgeId: "bit-builder",
+    badgeName: "比特积木师",
+    completionTitle: "数字与颜色的比特灯全部点亮",
+    completionSummary: "你会用 0 和 1 组合小数字与颜色，也理解数据需要编码规则。",
+    Component: BitsAndDataLesson,
   },
 };
 

@@ -3198,3 +3198,9 @@ html.bit-island-document--reduced-motion *::after,
 .memory-lab { display: grid; gap: 1rem; color: #15384e; } .machine-parts { display: grid; grid-template-columns: repeat(3, 1fr); gap: .7rem; } .machine-parts section { min-height: 10rem; padding: 1rem; border: 3px solid #65469a; border-radius: .8rem; background: white; text-align: center; } .machine-parts span { font-size: 2rem; }
 .machine-actions { display: flex; flex-wrap: wrap; gap: .6rem; } .machine-actions button { min-height: 3rem; border: 2px solid #15384e; border-radius: .6rem; background: white; color: #15384e; font-weight: 750; }
 @media (max-width: 42rem) { .machine-parts { grid-template-columns: 1fr; } }
+
+/* Bits and data lesson */
+.bits-mission { padding: 1.4rem; border-radius: 1.5rem; background: #edf4ff; }
+.bits-demo { display: grid; min-height: 13rem; place-items: center; } .bits-demo p { padding: 1rem; border: 3px solid #315c9a; border-radius: 1rem; background: white; color: #15384e; font-size: 1.2rem; }
+.bit-board { display: grid; gap: 1rem; color: #15384e; } .bit-switches { display: grid; grid-template-columns: repeat(4, 1fr); gap: .7rem; } .bit-switches button { display: grid; min-height: 7rem; place-items: center; border: 3px solid #315c9a; border-radius: .8rem; background: #d8e2ec; color: #15384e; } .bit-switches button[aria-pressed="true"] { background: #ffe36e; box-shadow: 0 0 0 4px rgb(255 227 110 / 35%); } .bit-switches span { font-family: monospace; font-size: 2rem; font-weight: 900; }
+.bit-result { display: flex; justify-content: space-between; align-items: center; padding: 1rem; border-radius: .8rem; background: white; } .bit-result strong { font-size: 1.5rem; } .bit-result--magenta { background: #f0b6ef; } .bit-result--black { background: #25323a; color: white; }

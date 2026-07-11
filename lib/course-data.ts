@@ -252,7 +252,7 @@ export const COURSES: Course[] = [
   },
   {
     id: "bits-and-data", islandId: "hardware-lab", order: 23,
-    title: "0 和 1 的数据积木", summary: "用比特表示数字、颜色与符号。", skill: "数字与数据", minutes: 9, difficulty: 2, playable: false,
+    title: "0 和 1 的数据积木", summary: "用比特表示数字、颜色与符号。", skill: "数字与数据", minutes: 9, difficulty: 2, playable: true,
   },
   {
     id: "hardware-software", islandId: "hardware-lab", order: 24,
