@@ -45,7 +45,7 @@ test("publishes four islands and twenty ordered lessons", () => {
 test("publishes only lessons with complete interactive implementations", () => {
   assert.deepEqual(
     COURSES.filter((course) => course.playable).map((course) => course.id),
-    ["keyboard-flight", "mouse-precision", "bilingual-input", "desktop-adventure", "program-landing", "file-home", "name-your-work", "move-and-copy", "file-types", "learning-backpack"],
+    ["keyboard-flight", "mouse-precision", "bilingual-input", "desktop-adventure", "program-landing", "file-home", "name-your-work", "move-and-copy", "file-types", "learning-backpack", "instruction-order"],
   );
   assert.equal(getCourse("keyboard-flight")?.title, "键盘驾驶飞船");
 });
@@ -62,6 +62,7 @@ test("distinguishes completed, available, and upcoming lesson cards", () => {
   const ninthCourse = getCourse("file-types");
   const tenthCourse = getCourse("learning-backpack");
   const eleventhCourse = getCourse("instruction-order");
+  const twelfthCourse = getCourse("grid-city-navigation");
 
   assert.ok(firstCourse);
   assert.ok(secondCourse);
@@ -74,6 +75,7 @@ test("distinguishes completed, available, and upcoming lesson cards", () => {
   assert.ok(ninthCourse);
   assert.ok(tenthCourse);
   assert.ok(eleventhCourse);
+  assert.ok(twelfthCourse);
   assert.equal(getCourseCardState(firstCourse, []), "available");
   assert.equal(getCourseCardState(firstCourse, [firstCourse.id]), "completed");
   assert.equal(getCourseCardState(secondCourse, []), "available");
@@ -85,7 +87,8 @@ test("distinguishes completed, available, and upcoming lesson cards", () => {
   assert.equal(getCourseCardState(eighthCourse, []), "available");
   assert.equal(getCourseCardState(ninthCourse, []), "available");
   assert.equal(getCourseCardState(tenthCourse, []), "available");
-  assert.equal(getCourseCardState(eleventhCourse, []), "upcoming");
+  assert.equal(getCourseCardState(eleventhCourse, []), "available");
+  assert.equal(getCourseCardState(twelfthCourse, []), "upcoming");
 });
 
 test("finds the next unfinished playable lesson without hiding replayable cards", () => {

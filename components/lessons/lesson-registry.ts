@@ -8,6 +8,7 @@ import { NameYourWorkLesson } from "@/components/lessons/NameYourWorkLesson";
 import { MoveAndCopyLesson } from "@/components/lessons/MoveAndCopyLesson";
 import { FileTypesLesson } from "@/components/lessons/FileTypesLesson";
 import { LearningBackpackLesson } from "@/components/lessons/LearningBackpackLesson";
+import { InstructionOrderLesson } from "@/components/lessons/InstructionOrderLesson";
 import type { LessonDefinition } from "@/components/lessons/types";
 
 export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
@@ -90,6 +91,14 @@ export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
     completionTitle: "文件森林的学习背包整理完成",
     completionSummary: "你会搜索、排序、重命名、分类和从回收站恢复文件。",
     Component: LearningBackpackLesson,
+  },
+  "instruction-order": {
+    courseId: "instruction-order",
+    badgeId: "sequence-engineer",
+    badgeName: "顺序工程师",
+    completionTitle: "机器人工坊的第一座桥修好了",
+    completionSummary: "你知道电脑从上到下执行指令，也能调整顺序让机器人完成任务。",
+    Component: InstructionOrderLesson,
   },
 };
 

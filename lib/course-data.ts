@@ -141,7 +141,7 @@ export const COURSES: Course[] = [
     skill: "顺序执行",
     minutes: 9,
     difficulty: 1,
-    playable: false,
+    playable: true,
   },
   {
     id: "grid-city-navigation",
