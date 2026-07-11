@@ -2,10 +2,10 @@
 
 :root {
   --coral: #ff7d55;
-  --coral-deep: #d94f2b;
+  --coral-deep: #c04023;
   --coral-soft: #fff0e8;
   --yellow: #ffd85a;
-  --yellow-deep: #a66700;
+  --yellow-deep: #945c00;
   --yellow-soft: #fff7cf;
   --mint: #79d9b5;
   --mint-deep: #176f59;
@@ -850,15 +850,17 @@ a {
 }
 
 .course-card-topline {
+  flex-wrap: wrap;
   justify-content: space-between;
 }
 
 .course-number {
   color: var(--deep-sea-soft);
   font-family: var(--font-geist-mono), monospace;
-  font-size: 0.68rem;
+  font-size: 1rem;
   font-weight: 800;
   letter-spacing: 0.04em;
+  white-space: nowrap;
 }
 
 .course-status {
@@ -866,9 +868,10 @@ a {
   border-radius: 9px;
   background: #e9f0f2;
   color: var(--deep-sea-soft);
-  font-size: 0.64rem;
+  font-size: 1rem;
   font-weight: 850;
   line-height: 1.1;
+  white-space: nowrap;
 }
 
 .course-card--available .course-status {
@@ -896,7 +899,7 @@ a {
 
 .course-card-copy > span {
   color: var(--deep-sea-soft);
-  font-size: 0.76rem;
+  font-size: 1rem;
   font-weight: 550;
   line-height: 1.5;
 }
@@ -904,7 +907,7 @@ a {
 .course-card-meta {
   flex-wrap: wrap;
   color: var(--deep-sea-soft);
-  font-size: 0.65rem;
+  font-size: 1rem;
   font-weight: 750;
 }
 
