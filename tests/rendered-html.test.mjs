@@ -33,3 +33,20 @@ test("server-renders the Bit Island product shell", async () => {
   assert.match(html, /跟比比一起，学会真正的电脑本领/);
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape/);
 });
+
+test("server-renders the complete curriculum map", async () => {
+  const response = await render();
+  const html = await response.text();
+
+  assert.match(html, />继续冒险</);
+  assert.match(html, /启航港/);
+  assert.match(html, /文件森林/);
+  assert.match(html, /机器人工坊/);
+  assert.match(html, /安全灯塔/);
+  assert.equal((html.match(/data-course-card=/g) ?? []).length, 20);
+  assert.equal((html.match(/course-card--available/g) ?? []).length, 1);
+  assert.equal((html.match(/course-card--locked/g) ?? []).length, 19);
+  assert.equal((html.match(/disabled=""/g) ?? []).length, 19);
+  assert.match(html, /data-course-id="keyboard-flight"/);
+  assert.match(html, /即将开放/);
+});
