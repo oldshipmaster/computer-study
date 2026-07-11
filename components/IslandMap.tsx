@@ -1,6 +1,7 @@
 import type { Ref } from "react";
 import { Bibi } from "@/components/Bibi";
 import { KnowledgeAtlas } from "@/components/KnowledgeAtlas";
+import { ReviewChallenge } from "@/components/ReviewChallenge";
 import {
   ISLANDS,
   getCourse,
@@ -145,6 +146,7 @@ export function IslandMap({
       </section>
 
       <KnowledgeAtlas completedCourseIds={completedCourseIds} />
+      <ReviewChallenge />
 
       <section className="adventure-map" id="adventure-map" aria-labelledby="islands-heading">
         <div className="map-intro">
