@@ -111,9 +111,9 @@ test("server-renders the complete curriculum map", async () => {
   assert.match(html, /机器人工坊/);
   assert.match(html, /安全灯塔/);
   assert.equal((html.match(/data-course-card=/g) ?? []).length, 20);
-  assert.equal((html.match(/course-card--available/g) ?? []).length, 11);
-  assert.equal((html.match(/course-card--locked/g) ?? []).length, 9);
-  assert.equal((html.match(/disabled=""/g) ?? []).length, 9);
+  assert.equal((html.match(/course-card--available/g) ?? []).length, 12);
+  assert.equal((html.match(/course-card--locked/g) ?? []).length, 8);
+  assert.equal((html.match(/disabled=""/g) ?? []).length, 8);
   assert.match(html, /data-course-id="keyboard-flight"/);
   assert.match(html, /即将开放/);
 });

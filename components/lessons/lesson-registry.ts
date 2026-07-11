@@ -9,6 +9,7 @@ import { MoveAndCopyLesson } from "@/components/lessons/MoveAndCopyLesson";
 import { FileTypesLesson } from "@/components/lessons/FileTypesLesson";
 import { LearningBackpackLesson } from "@/components/lessons/LearningBackpackLesson";
 import { InstructionOrderLesson } from "@/components/lessons/InstructionOrderLesson";
+import { GridCityNavigationLesson } from "@/components/lessons/GridCityNavigationLesson";
 import type { LessonDefinition } from "@/components/lessons/types";
 
 export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
@@ -99,6 +100,14 @@ export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
     completionTitle: "机器人工坊的第一座桥修好了",
     completionSummary: "你知道电脑从上到下执行指令，也能调整顺序让机器人完成任务。",
     Component: InstructionOrderLesson,
+  },
+  "grid-city-navigation": {
+    courseId: "grid-city-navigation",
+    badgeId: "grid-navigator",
+    badgeName: "方格导航员",
+    completionTitle: "方格城的三座信标全部点亮",
+    completionSummary: "你会读取行列坐标、按方向移动，并能绕过边界和障碍规划路线。",
+    Component: GridCityNavigationLesson,
   },
 };
 

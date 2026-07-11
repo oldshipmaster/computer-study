@@ -152,7 +152,7 @@ export const COURSES: Course[] = [
     skill: "坐标导航",
     minutes: 9,
     difficulty: 2,
-    playable: false,
+    playable: true,
   },
   {
     id: "repeat-power",
