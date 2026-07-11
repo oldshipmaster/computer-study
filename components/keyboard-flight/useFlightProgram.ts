@@ -4,13 +4,17 @@ import {
   FAILURE_MESSAGE,
   START_DIRECTION,
   START_POSITION,
+  getProgramProgressScore,
   getProgramHintTarget,
+  hasProgramMadeProgress,
   instructionLabel,
+  moveProgramQueueItem,
   nextProgramGuidance,
   wait,
   type Direction,
   type Position,
   type ProgramInstruction,
+  type ProgramQueueItem,
   type RunState,
 } from "@/components/keyboard-flight/lesson-model";
 
@@ -31,7 +35,7 @@ export function useFlightProgram({
   reducedMotion,
   registerUsefulInput,
 }: FlightProgramOptions) {
-  const [programQueue, setProgramQueue] = useState<ProgramInstruction[]>([]);
+  const [programQueue, setProgramQueue] = useState<ProgramQueueItem[]>([]);
   const [programPosition, setProgramPosition] = useState<Position>(START_POSITION);
   const [programDirection, setProgramDirection] = useState<Direction>(START_DIRECTION);
   const [programCollected, setProgramCollected] = useState(false);
@@ -41,6 +45,8 @@ export function useFlightProgram({
   const [programGuidance, setProgramGuidance] = useState<string | null>(null);
   const runSequenceRef = useRef(0);
   const draggedInstructionRef = useRef<number | null>(null);
+  const nextProgramItemIdRef = useRef(1);
+  const bestProgramProgressRef = useRef(getProgramProgressScore([]));
 
   useEffect(
     () => () => {
@@ -50,10 +56,15 @@ export function useFlightProgram({
   );
 
   const editProgram = useCallback(
-    (nextQueue: ProgramInstruction[], message: string) => {
+    (nextQueue: ProgramQueueItem[], message: string) => {
+      const nextInstructions = nextQueue.map((item) => item.instruction);
       setProgramQueue(nextQueue);
       setCurrentInstruction(null);
-      registerUsefulInput();
+      setProgramGuidance(null);
+      if (hasProgramMadeProgress(nextInstructions, bestProgramProgressRef.current)) {
+        bestProgramProgressRef.current = getProgramProgressScore(nextInstructions);
+        registerUsefulInput();
+      }
       announce(message, true);
     },
     [announce, registerUsefulInput],
@@ -66,8 +77,14 @@ export function useFlightProgram({
         return;
       }
 
+      const item = {
+        id: nextProgramItemIdRef.current,
+        instruction,
+      };
+      nextProgramItemIdRef.current += 1;
+
       editProgram(
-        [...programQueue, instruction],
+        [...programQueue, item],
         `已把“${instructionLabel(instruction)}”放到第 ${programQueue.length + 1} 步。`,
       );
     },
@@ -82,8 +99,7 @@ export function useFlightProgram({
         return;
       }
 
-      const nextQueue = [...programQueue];
-      [nextQueue[index], nextQueue[targetIndex]] = [nextQueue[targetIndex], nextQueue[index]];
+      const nextQueue = moveProgramQueueItem(programQueue, index, targetIndex);
       editProgram(nextQueue, `第 ${index + 1} 步已经向${offset < 0 ? "左" : "右"}移动。`);
     },
     [editProgram, markUserGesture, programQueue, runState],
@@ -99,7 +115,7 @@ export function useFlightProgram({
       const removed = programQueue[index];
       editProgram(
         programQueue.filter((_, itemIndex) => itemIndex !== index),
-        `已移除“${instructionLabel(removed)}”。`,
+        `已移除“${instructionLabel(removed.instruction)}”。`,
       );
     },
     [editProgram, markUserGesture, programQueue, runState],
@@ -127,10 +143,12 @@ export function useFlightProgram({
         return;
       }
 
-      const nextQueue = [...programQueue];
-      const [moved] = nextQueue.splice(sourceIndex, 1);
-      nextQueue.splice(targetIndex, 0, moved);
-      editProgram(nextQueue, `已把“${instructionLabel(moved)}”拖到第 ${targetIndex + 1} 步。`);
+      const moved = programQueue[sourceIndex];
+      const nextQueue = moveProgramQueueItem(programQueue, sourceIndex, targetIndex);
+      editProgram(
+        nextQueue,
+        `已把“${instructionLabel(moved.instruction)}”拖到第 ${targetIndex + 1} 步。`,
+      );
     },
     [editProgram, programQueue, runState],
   );
@@ -150,7 +168,8 @@ export function useFlightProgram({
 
     const sequence = runSequenceRef.current + 1;
     runSequenceRef.current = sequence;
-    const result = runProgram(programQueue, CHALLENGE);
+    const programInstructions = programQueue.map((item) => item.instruction);
+    const result = runProgram(programInstructions, CHALLENGE);
     const stepDelay = reducedMotion ? 0 : 320;
 
     setRunState("running");
@@ -195,7 +214,7 @@ export function useFlightProgram({
     setProgramDirection(START_DIRECTION);
     setProgramCollected(false);
     if (nextFailureCount >= 2) {
-      const guidance = nextProgramGuidance(programQueue);
+      const guidance = nextProgramGuidance(programInstructions);
       setProgramGuidance(guidance);
       announce(`${FAILURE_MESSAGE}。${guidance}`, true);
     } else {
@@ -212,7 +231,10 @@ export function useFlightProgram({
     runState,
   ]);
 
-  const hintTarget = getProgramHintTarget(programQueue, hintLevel > 0);
+  const hintTarget = getProgramHintTarget(
+    programQueue.map((item) => item.instruction),
+    hintLevel > 0,
+  );
 
   return {
     addInstruction,

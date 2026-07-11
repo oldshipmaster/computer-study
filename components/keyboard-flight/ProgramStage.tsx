@@ -7,6 +7,7 @@ import {
   type Direction,
   type Position,
   type ProgramInstruction,
+  type ProgramQueueItem,
   type RunState,
 } from "@/components/keyboard-flight/lesson-model";
 
@@ -25,7 +26,7 @@ interface ProgramStageProps {
   onRemove: (index: number) => void;
   onRun: () => void;
   position: Position;
-  queue: ProgramInstruction[];
+  queue: ProgramQueueItem[];
   runLabel: string;
   runState: RunState;
   title: string;
@@ -91,55 +92,58 @@ export function ProgramStage({
               <p className="empty-program">点击上方积木，把第一条指令放到这里。</p>
             ) : (
               <ol className="program-queue" aria-label="飞船指令顺序">
-                {queue.map((instruction, index) => (
-                  <li
-                    aria-current={currentInstruction === index ? "step" : undefined}
-                    className={`program-block program-block--${instruction} ${
-                      currentInstruction === index ? "is-current" : ""
-                    } ${highlightedQueueIndex === index ? "is-hinting" : ""}`}
-                    draggable={!running}
-                    key={`${instruction}-${index}`}
-                    onDragOver={(event: DragEvent<HTMLLIElement>) => event.preventDefault()}
-                    onDragStart={(event: DragEvent<HTMLLIElement>) => {
-                      onDragStart(index);
-                      event.dataTransfer.effectAllowed = "move";
-                      event.dataTransfer.setData("text/plain", String(index));
-                    }}
-                    onDrop={(event: DragEvent<HTMLLIElement>) => {
-                      event.preventDefault();
-                      onDrop(index);
-                    }}
-                  >
-                    <span className="program-step-number">{index + 1}</span>
-                    <strong>{instructionLabel(instruction)}</strong>
-                    <span className="program-block-controls">
-                      <button
-                        aria-label={`把第 ${index + 1} 步向左移动`}
-                        disabled={running || index === 0}
-                        onClick={() => onMove(index, -1)}
-                        type="button"
-                      >
-                        ←
-                      </button>
-                      <button
-                        aria-label={`把第 ${index + 1} 步向右移动`}
-                        disabled={running || index === queue.length - 1}
-                        onClick={() => onMove(index, 1)}
-                        type="button"
-                      >
-                        →
-                      </button>
-                      <button
-                        aria-label={`移除第 ${index + 1} 步${instructionLabel(instruction)}`}
-                        disabled={running}
-                        onClick={() => onRemove(index)}
-                        type="button"
-                      >
-                        ×
-                      </button>
-                    </span>
-                  </li>
-                ))}
+                {queue.map((item, index) => {
+                  const { instruction } = item;
+                  return (
+                    <li
+                      aria-current={currentInstruction === index ? "step" : undefined}
+                      className={`program-block program-block--${instruction} ${
+                        currentInstruction === index ? "is-current" : ""
+                      } ${highlightedQueueIndex === index ? "is-hinting" : ""}`}
+                      draggable={!running}
+                      key={item.id}
+                      onDragOver={(event: DragEvent<HTMLLIElement>) => event.preventDefault()}
+                      onDragStart={(event: DragEvent<HTMLLIElement>) => {
+                        onDragStart(index);
+                        event.dataTransfer.effectAllowed = "move";
+                        event.dataTransfer.setData("text/plain", String(index));
+                      }}
+                      onDrop={(event: DragEvent<HTMLLIElement>) => {
+                        event.preventDefault();
+                        onDrop(index);
+                      }}
+                    >
+                      <span className="program-step-number">{index + 1}</span>
+                      <strong>{instructionLabel(instruction)}</strong>
+                      <span className="program-block-controls">
+                        <button
+                          aria-label={`把第 ${index + 1} 步向左移动`}
+                          disabled={running || index === 0}
+                          onClick={() => onMove(index, -1)}
+                          type="button"
+                        >
+                          ←
+                        </button>
+                        <button
+                          aria-label={`把第 ${index + 1} 步向右移动`}
+                          disabled={running || index === queue.length - 1}
+                          onClick={() => onMove(index, 1)}
+                          type="button"
+                        >
+                          →
+                        </button>
+                        <button
+                          aria-label={`移除第 ${index + 1} 步${instructionLabel(instruction)}`}
+                          disabled={running}
+                          onClick={() => onRemove(index)}
+                          type="button"
+                        >
+                          ×
+                        </button>
+                      </span>
+                    </li>
+                  );
+                })}
               </ol>
             )}
           </div>

@@ -1,4 +1,4 @@
-import { CHALLENGE } from "../../lib/flight-engine.mjs";
+import { CHALLENGE, runProgram } from "../../lib/flight-engine.mjs";
 
 export const COURSE_ID = "keyboard-flight";
 export const BADGE_ID = "keyboard-pilot";
@@ -13,6 +13,11 @@ export type LessonStage = (typeof LESSON_STAGES)[number];
 export type Direction = "north" | "east" | "south" | "west";
 export type ProgramInstruction = "forward" | "left" | "right" | "collect";
 export type RunState = "idle" | "running" | "failure" | "success";
+
+export interface ProgramQueueItem {
+  id: number;
+  instruction: ProgramInstruction;
+}
 
 export interface Position {
   x: number;
@@ -117,6 +122,16 @@ export function isNewTutorialKey(pressedKeys: ReadonlySet<string>, key: KeyDefin
   return !pressedKeys.has(key);
 }
 
+export function normalizeInitialLessonStage(initialStage: number) {
+  const lastPlayableStage = LESSON_STAGES.indexOf("complete") - 1;
+
+  if (!Number.isInteger(initialStage) || initialStage < 0) {
+    return 0;
+  }
+
+  return Math.min(initialStage, lastPlayableStage);
+}
+
 export function getPracticeAction(
   position: Position,
   key: KeyDefinition["key"],
@@ -156,6 +171,51 @@ export function instructionLabel(instruction: ProgramInstruction) {
   return PROGRAM_DEFINITIONS.find((item) => item.instruction === instruction)?.label ?? instruction;
 }
 
+export function getProgramProgressScore(queue: ProgramInstruction[]) {
+  if (runProgram(queue, CHALLENGE).success) {
+    return (PROGRAM_SOLUTION.length + 1) ** 2;
+  }
+
+  let correctPrefixLength = 0;
+  while (
+    correctPrefixLength < PROGRAM_SOLUTION.length &&
+    queue[correctPrefixLength] === PROGRAM_SOLUTION[correctPrefixLength]
+  ) {
+    correctPrefixLength += 1;
+  }
+
+  const offTrackLength = queue.length - correctPrefixLength;
+  return correctPrefixLength * (PROGRAM_SOLUTION.length + 1) - offTrackLength;
+}
+
+export function hasProgramMadeProgress(
+  queue: ProgramInstruction[],
+  bestProgressScore: number,
+) {
+  return getProgramProgressScore(queue) > bestProgressScore;
+}
+
+export function moveProgramQueueItem(
+  queue: ProgramQueueItem[],
+  sourceIndex: number,
+  targetIndex: number,
+) {
+  if (
+    sourceIndex === targetIndex ||
+    sourceIndex < 0 ||
+    sourceIndex >= queue.length ||
+    targetIndex < 0 ||
+    targetIndex >= queue.length
+  ) {
+    return queue;
+  }
+
+  const nextQueue = [...queue];
+  const [moved] = nextQueue.splice(sourceIndex, 1);
+  nextQueue.splice(targetIndex, 0, moved);
+  return nextQueue;
+}
+
 export function nextProgramGuidance(queue: ProgramInstruction[]) {
   const mismatchIndex = PROGRAM_SOLUTION.findIndex(
     (instruction, index) => queue[index] !== instruction,
@@ -177,6 +237,10 @@ export function nextProgramGuidance(queue: ProgramInstruction[]) {
 export function getProgramHintTarget(queue: ProgramInstruction[], active: boolean) {
   if (!active) {
     return { instruction: null, queueIndex: null, run: false };
+  }
+
+  if (runProgram(queue, CHALLENGE).success) {
+    return { instruction: null, queueIndex: null, run: true };
   }
 
   const mismatchIndex = PROGRAM_SOLUTION.findIndex(

@@ -7,6 +7,7 @@ import {
   SECOND_HINT_DELAY_MS,
   SECOND_HINTS,
   STAGE_GUIDES,
+  normalizeInitialLessonStage,
   type LessonStage,
 } from "@/components/keyboard-flight/lesson-model";
 import { useFlightProgram } from "@/components/keyboard-flight/useFlightProgram";
@@ -27,10 +28,7 @@ export function useKeyboardFlightLesson({
   reducedMotion,
   sound,
 }: UseKeyboardFlightLessonOptions) {
-  const safeInitialStage = Math.min(
-    LESSON_STAGES.length - 1,
-    Math.max(0, Number.isInteger(initialStage) ? initialStage : 0),
-  );
+  const safeInitialStage = normalizeInitialLessonStage(initialStage);
   const initialLessonStage = LESSON_STAGES[safeInitialStage];
 
   const [stage, setStage] = useState<LessonStage>(initialLessonStage);
