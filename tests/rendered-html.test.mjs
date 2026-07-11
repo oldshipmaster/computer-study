@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import test from "node:test";
 
 const globalCss = readFileSync(new URL("../app/globals.css", import.meta.url), "utf8");
@@ -9,6 +9,12 @@ function lessonSource() {
     new URL("../components/KeyboardFlightLesson.tsx", import.meta.url),
     "utf8",
   );
+}
+
+function sourceFile(relativePath) {
+  const fileUrl = new URL(`../${relativePath}`, import.meta.url);
+  assert.ok(existsSync(fileUrl), `Missing source file ${relativePath}`);
+  return readFileSync(fileUrl, "utf8");
 }
 
 function cssBlocks(selector) {
@@ -128,6 +134,60 @@ test("keeps the playable keyboard-flight lesson contract in source", () => {
 
   assert.match(source, /aria-live="polite"/);
   assert.match(source, /addEventListener\(["']keydown["']/);
+});
+
+test("keeps the guarded parent-area contract in source", () => {
+  const parentSource = sourceFile("components/ParentPanel.tsx");
+  const appSource = sourceFile("components/BitIslandApp.tsx");
+  const combinedSource = `${parentSource}\n${appSource}`;
+  const parentLabels = [
+    "家长区",
+    "本机学习进度",
+    "声音提示",
+    "减少动画",
+    "重置学习进度",
+    "长按进入",
+    "进入家长区",
+    "确认清空这台电脑上的学习记录",
+  ];
+
+  for (const label of parentLabels) {
+    assert.match(combinedSource, new RegExp(label));
+  }
+
+  assert.match(appSource, /1_500/);
+  assert.match(appSource, /onPointerDown/);
+  assert.match(appSource, /onPointerUp/);
+  assert.match(appSource, /onPointerCancel/);
+  assert.match(appSource, /onPointerLeave/);
+  assert.match(parentSource, /event\.key === "Escape"/);
+  assert.match(parentSource, /event\.key === "Tab"/);
+  assert.match(parentSource, /resetActionButtonRef/);
+  assert.match(appSource, /matchMedia\("\(prefers-reduced-motion: reduce\)"\)/);
+  assert.match(appSource, /document\.documentElement\.classList\.toggle/);
+  assert.match(appSource, /inert=/);
+  assert.match(appSource, /screen !== "lesson"/);
+  assert.match(appSource, /\.focus\(\)/);
+});
+
+test("keeps the final motion, focus, and responsive accessibility rules", () => {
+  const lessonHookSource = sourceFile(
+    "components/keyboard-flight/useKeyboardFlightLesson.ts",
+  );
+
+  assert.match(globalCss, /@media\s*\(prefers-reduced-motion:\s*reduce\)/);
+  assert.match(globalCss, /:focus-visible/);
+  assert.match(globalCss, /@media\s*\(forced-colors:\s*active\)/);
+  assert.match(globalCss, /@media\s*\(max-width:\s*960px\)/);
+  assert.match(globalCss, /@media\s*\(max-width:\s*680px\)/);
+  assert.doesNotMatch(globalCss, /overflow-x\s*:\s*(?:hidden|clip)/);
+  assert.match(lessonHookSource, /reducedMotion\s*\?\s*0\s*:\s*3_600/);
+
+  for (const selector of [".island-app-shell", ".flight-lesson"]) {
+    for (const block of cssBlocks(selector)) {
+      assert.doesNotMatch(block, /\boverflow\s*:\s*(?:hidden|clip)/);
+    }
+  }
 });
 
 test("keeps essential lesson-card copy readable for young learners", () => {

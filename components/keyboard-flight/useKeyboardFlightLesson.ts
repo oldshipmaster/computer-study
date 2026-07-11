@@ -100,7 +100,7 @@ export function useKeyboardFlightLesson({
 
     const introTimer = window.setTimeout(
       () => goToStage("keys", false),
-      reducedMotion ? 1_500 : 3_600,
+      reducedMotion ? 0 : 3_600,
     );
     return () => window.clearTimeout(introTimer);
   }, [goToStage, reducedMotion, stage]);
