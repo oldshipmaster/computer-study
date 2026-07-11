@@ -244,7 +244,7 @@ export const COURSES: Course[] = [
   },
   {
     id: "input-process-output", islandId: "hardware-lab", order: 21,
-    title: "信息加工流水线", summary: "输入、处理与输出。", skill: "计算机原理", minutes: 9, difficulty: 1, playable: false,
+    title: "信息加工流水线", summary: "输入、处理与输出。", skill: "计算机原理", minutes: 9, difficulty: 1, playable: true,
   },
   {
     id: "cpu-memory-storage", islandId: "hardware-lab", order: 22,

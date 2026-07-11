@@ -54,8 +54,9 @@ test("publishes six islands and thirty ordered lessons", () => {
 });
 
 test("publishes only lessons with complete interactive implementations", () => {
-  assert.equal(COURSES.filter((course) => course.playable).length, 20);
-  assert.equal(getCourse("input-process-output")?.playable, false);
+  assert.equal(COURSES.filter((course) => course.playable).length, 21);
+  assert.equal(getCourse("input-process-output")?.playable, true);
+  assert.equal(getCourse("cpu-memory-storage")?.playable, false);
   assert.equal(getCourse("keyboard-flight")?.title, "键盘驾驶飞船");
 });
 

@@ -30,6 +30,7 @@ test("selects the next incomplete playable course in catalog order", () => {
   assert.equal(getNextPlayableCourse(["keyboard-flight", "mouse-precision", "bilingual-input", "desktop-adventure", "program-landing", "file-home", "name-your-work", "move-and-copy", "file-types", "learning-backpack", "instruction-order", "grid-city-navigation", "repeat-power", "rainy-condition", "bug-catcher", "password-guardian", "private-information"])?.id, "popup-fog");
   assert.equal(getNextPlayableCourse(["keyboard-flight", "mouse-precision", "bilingual-input", "desktop-adventure", "program-landing", "file-home", "name-your-work", "move-and-copy", "file-types", "learning-backpack", "instruction-order", "grid-city-navigation", "repeat-power", "rainy-condition", "bug-catcher", "password-guardian", "private-information", "popup-fog"])?.id, "healthy-computer-habits");
   assert.equal(getNextPlayableCourse(["keyboard-flight", "mouse-precision", "bilingual-input", "desktop-adventure", "program-landing", "file-home", "name-your-work", "move-and-copy", "file-types", "learning-backpack", "instruction-order", "grid-city-navigation", "repeat-power", "rainy-condition", "bug-catcher", "password-guardian", "private-information", "popup-fog", "healthy-computer-habits"])?.id, "light-bit-island");
+  assert.equal(getNextPlayableCourse(COURSES.slice(0, 20).map((course) => course.id))?.id, "input-process-output");
   assert.equal(getNextPlayableCourse(COURSES.map((course) => course.id)), undefined);
 });
 

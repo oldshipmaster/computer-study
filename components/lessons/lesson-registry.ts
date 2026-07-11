@@ -18,6 +18,7 @@ import { PrivateInformationLesson } from "@/components/lessons/PrivateInformatio
 import { PopupFogLesson } from "@/components/lessons/PopupFogLesson";
 import { HealthyComputerHabitsLesson } from "@/components/lessons/HealthyComputerHabitsLesson";
 import { LightBitIslandLesson } from "@/components/lessons/LightBitIslandLesson";
+import { InputProcessOutputLesson } from "@/components/lessons/InputProcessOutputLesson";
 import type { LessonDefinition } from "@/components/lessons/types";
 
 export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
@@ -180,6 +181,14 @@ export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
     completionTitle: "比特岛二十段学习航线全部点亮",
     completionSummary: "你综合运用了电脑操作、文件管理、编程思维和数字安全知识。",
     Component: LightBitIslandLesson,
+  },
+  "input-process-output": {
+    courseId: "input-process-output",
+    badgeId: "pipeline-engineer",
+    badgeName: "流水线工程师",
+    completionTitle: "三条信息加工流水线全部运行",
+    completionSummary: "你会区分输入、处理和输出，并能追踪信息在电脑中的完整旅程。",
+    Component: InputProcessOutputLesson,
   },
 };
 

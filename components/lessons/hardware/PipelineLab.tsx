@@ -1,0 +1,5 @@
+import { useState } from "react";
+import { runInformationPipeline } from "@/lib/input-process-output-lesson";
+const TASKS = [{ id: "press-A", prompt: "按下 A 后怎样在屏幕出现字母？" }, { id: "record-voice", prompt: "录音怎样再从扬声器播放？" }, { id: "click-print", prompt: "单击打印怎样变成纸面作品？" }];
+interface Props { onComplete: () => void; }
+export function PipelineLab({ onComplete }: Props) { const [index, setIndex] = useState(0); const [revealed, setRevealed] = useState(false); const task = TASKS[index]; const steps = runInformationPipeline(task.id); function next() { if (!revealed) { setRevealed(true); return; } if (index === TASKS.length - 1) onComplete(); else { setIndex((value) => value + 1); setRevealed(false); } } return <div className="pipeline-lab"><h2>{task.prompt}</h2><div className="pipeline-roles"><span>输入</span><b>→</b><span>处理</span><b>→</b><span>输出</span></div>{revealed ? <ol>{steps.map((step) => <li key={step}>{step}</li>)}</ol> : <p>先说出你预测的输入设备、处理部分和输出设备。</p>}<button className="primary-action" onClick={next} type="button">{revealed ? "下一个流水线" : "显示运行过程"}</button></div>; }
