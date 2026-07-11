@@ -196,7 +196,7 @@ export const COURSES: Course[] = [
     skill: "账号安全",
     minutes: 9,
     difficulty: 1,
-    playable: false,
+    playable: true,
   },
   {
     id: "private-information",

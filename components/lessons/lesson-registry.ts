@@ -13,6 +13,7 @@ import { GridCityNavigationLesson } from "@/components/lessons/GridCityNavigatio
 import { RepeatPowerLesson } from "@/components/lessons/RepeatPowerLesson";
 import { RainyConditionLesson } from "@/components/lessons/RainyConditionLesson";
 import { BugCatcherLesson } from "@/components/lessons/BugCatcherLesson";
+import { PasswordGuardianLesson } from "@/components/lessons/PasswordGuardianLesson";
 import type { LessonDefinition } from "@/components/lessons/types";
 
 export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
@@ -135,6 +136,14 @@ export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
     completionTitle: "机器人工坊的程序小虫全部找到",
     completionSummary: "你会预测、观察证据、找到第一个不同点、修改一处并重新测试。",
     Component: BugCatcherLesson,
+  },
+  "password-guardian": {
+    courseId: "password-guardian",
+    badgeId: "password-guardian",
+    badgeName: "密码守护者",
+    completionTitle: "安全灯塔的账号大门锁好了",
+    completionSummary: "你知道使用长而独特的密码、保持保密，并在需要时请家长帮助。",
+    Component: PasswordGuardianLesson,
   },
 };
 

@@ -1,0 +1,5 @@
+import { useState } from "react";
+import { evaluatePassphrase } from "@/lib/password-guardian-lesson";
+const TOKENS = ["blue", "river", "robot", "planet", "47", "cloud", "panda"];
+interface Props { onSuccess: () => void; }
+export function PassphraseBuilder({ onSuccess }: Props) { const [parts, setParts] = useState<string[]>([]); const value = parts.join("-"); const result = evaluatePassphrase(value); return <div className="passphrase-builder"><p className="fictional-warning">只组合虚构词，不要输入或告诉网站任何真实密码。</p><div className="token-bank">{TOKENS.map((token) => <button disabled={parts.includes(token)} key={token} onClick={() => setParts((items) => [...items, token])} type="button">{token}</button>)}</div><div className="practice-passphrase" aria-label="虚构练习口令">{value || "选择词语开始组合"}</div><p role="status">{result.feedback}</p><div className="passphrase-actions"><button onClick={() => setParts([])} type="button">重新组合</button><button className="primary-action" disabled={!result.strong} onClick={onSuccess} type="button">完成虚构口令</button></div><aside>真实账号：每个账号用不同密码，不告诉同学；需要保存时请家长帮助使用可信的密码管理工具。</aside></div>; }
