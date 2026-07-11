@@ -5,6 +5,7 @@ import { DesktopAdventureLesson } from "@/components/lessons/DesktopAdventureLes
 import { ProgramLandingLesson } from "@/components/lessons/ProgramLandingLesson";
 import { FileHomeLesson } from "@/components/lessons/FileHomeLesson";
 import { NameYourWorkLesson } from "@/components/lessons/NameYourWorkLesson";
+import { MoveAndCopyLesson } from "@/components/lessons/MoveAndCopyLesson";
 import type { LessonDefinition } from "@/components/lessons/types";
 
 export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
@@ -63,6 +64,14 @@ export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
     completionTitle: "作品有了清楚的名字和住处",
     completionSummary: "你会用内容线索命名、保留扩展名、处理重名并选择正确的保存位置。",
     Component: NameYourWorkLesson,
+  },
+  "move-and-copy": {
+    courseId: "move-and-copy",
+    badgeId: "file-mover",
+    badgeName: "文件搬运师",
+    completionTitle: "文件整理台恢复整齐",
+    completionSummary: "你能分清移动与复制，会使用剪切、复制、粘贴和撤销。",
+    Component: MoveAndCopyLesson,
   },
 };
 

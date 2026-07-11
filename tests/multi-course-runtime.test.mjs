@@ -17,7 +17,8 @@ test("selects the next incomplete playable course in catalog order", () => {
   assert.equal(getNextPlayableCourse(["keyboard-flight", "mouse-precision", "bilingual-input", "desktop-adventure"])?.id, "program-landing");
   assert.equal(getNextPlayableCourse(["keyboard-flight", "mouse-precision", "bilingual-input", "desktop-adventure", "program-landing"])?.id, "file-home");
   assert.equal(getNextPlayableCourse(["keyboard-flight", "mouse-precision", "bilingual-input", "desktop-adventure", "program-landing", "file-home"])?.id, "name-your-work");
-  assert.equal(getNextPlayableCourse(["keyboard-flight", "mouse-precision", "bilingual-input", "desktop-adventure", "program-landing", "file-home", "name-your-work"]), undefined);
+  assert.equal(getNextPlayableCourse(["keyboard-flight", "mouse-precision", "bilingual-input", "desktop-adventure", "program-landing", "file-home", "name-your-work"])?.id, "move-and-copy");
+  assert.equal(getNextPlayableCourse(["keyboard-flight", "mouse-precision", "bilingual-input", "desktop-adventure", "program-landing", "file-home", "name-your-work", "move-and-copy"]), undefined);
 });
 
 test("keeps every playable course backed by a lesson definition", async () => {

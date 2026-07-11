@@ -108,7 +108,7 @@ export const COURSES: Course[] = [
     skill: "文件管理",
     minutes: 9,
     difficulty: 2,
-    playable: false,
+    playable: true,
   },
   {
     id: "file-types",
