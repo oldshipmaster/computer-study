@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { CHALLENGE, moveShip, runProgram } from "../lib/flight-engine.mjs";
+import { CHALLENGE, DIRECTIONS, moveShip, runProgram } from "../lib/flight-engine.mjs";
 
 test("moves inside the grid and blocks an asteroid", () => {
   assert.deepEqual(moveShip({ x: 0, y: 2 }, "east", CHALLENGE),
@@ -22,4 +22,19 @@ test("returns safely to a failed result without mutating the challenge", () => {
   const result = runProgram(["forward", "left", "forward"], CHALLENGE);
   assert.equal(result.success, false);
   assert.equal(JSON.stringify(CHALLENGE), before);
+});
+
+test("external direction mutation cannot alter program results", () => {
+  const program = ["forward", "forward", "left", "forward", "collect"];
+  const before = runProgram(program, CHALLENGE);
+
+  try {
+    DIRECTIONS.reverse();
+  } catch (error) {
+    assert.ok(error instanceof TypeError);
+  }
+
+  const after = runProgram(program, CHALLENGE);
+  assert.deepEqual(after, before);
+  assert.equal(after.success, true);
 });
