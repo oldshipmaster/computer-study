@@ -119,6 +119,22 @@ test("server-renders the complete curriculum map", async () => {
   assert.match(html, /data-course-id="keyboard-flight"/);
   assert.doesNotMatch(html, /即将开放/);
   assert.equal((html.match(/开始任务/g) ?? []).length, 30);
+  assert.equal((html.match(/route-curve route-curve--/g) ?? []).length, 5);
+});
+
+test("supports alternating route curves for all six islands", () => {
+  const css = sourceFile("app/globals.css");
+  assert.match(css, /\.route-curve--2,\s*\.route-curve--4/);
+  assert.match(css, /\.route-curve--2 span,\s*\.route-curve--4 span/);
+});
+
+test("stacks dense hardware and network labs on child-sized screens", () => {
+  const css = sourceFile("app/globals.css");
+
+  assert.match(css, /@media \(max-width: 38rem\)[\s\S]*?\.pipeline-roles[\s\S]*?grid-template-columns: 1fr/);
+  assert.match(css, /@media \(max-width: 38rem\)[\s\S]*?\.bit-switches[\s\S]*?grid-template-columns: repeat\(2, 1fr\)/);
+  assert.match(css, /@media \(max-width: 38rem\)[\s\S]*?\.search-lab li[\s\S]*?flex-direction: column/);
+  assert.match(css, /@media \(max-width: 38rem\)[\s\S]*?\.copy-map[\s\S]*?grid-template-columns: 1fr/);
 });
 
 test("keeps the playable keyboard-flight lesson contract in source", () => {
