@@ -25,6 +25,7 @@ import { HardwareSoftwareLesson } from "@/components/lessons/HardwareSoftwareLes
 import { TroubleshootMachineLesson } from "@/components/lessons/TroubleshootMachineLesson";
 import { NetworkJourneyLesson } from "@/components/lessons/NetworkJourneyLesson";
 import { WebAddressLesson } from "@/components/lessons/WebAddressLesson";
+import { SearchAndLinksLesson } from "@/components/lessons/SearchAndLinksLesson";
 import type { LessonDefinition } from "@/components/lessons/types";
 
 export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
@@ -243,6 +244,14 @@ export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
     completionTitle: "五张网络地址卡检查完成",
     completionSummary: "你会区分连接方式、网站身份和路径，并能发现相似但不同的虚构地址。",
     Component: WebAddressLesson,
+  },
+  "search-and-links": {
+    courseId: "search-and-links",
+    badgeId: "search-navigator",
+    badgeName: "搜索导航员",
+    completionTitle: "虚拟搜索航线成功往返",
+    completionSummary: "你会提炼关键词、比较结果线索，并使用链接和标签页保持方向。",
+    Component: SearchAndLinksLesson,
   },
 };
 

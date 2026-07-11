@@ -272,7 +272,7 @@ export const COURSES: Course[] = [
   },
   {
     id: "search-and-links", islandId: "network-bay", order: 28,
-    title: "搜索与链接导航", summary: "关键词、结果线索、链接和标签页。", skill: "信息检索", minutes: 9, difficulty: 2, playable: false,
+    title: "搜索与链接导航", summary: "关键词、结果线索、链接和标签页。", skill: "信息检索", minutes: 9, difficulty: 2, playable: true,
   },
   {
     id: "downloads-and-cloud", islandId: "network-bay", order: 29,
