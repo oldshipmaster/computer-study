@@ -22,6 +22,7 @@ import { InputProcessOutputLesson } from "@/components/lessons/InputProcessOutpu
 import { CpuMemoryStorageLesson } from "@/components/lessons/CpuMemoryStorageLesson";
 import { BitsAndDataLesson } from "@/components/lessons/BitsAndDataLesson";
 import { HardwareSoftwareLesson } from "@/components/lessons/HardwareSoftwareLesson";
+import { TroubleshootMachineLesson } from "@/components/lessons/TroubleshootMachineLesson";
 import type { LessonDefinition } from "@/components/lessons/types";
 
 export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
@@ -216,6 +217,14 @@ export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
     completionTitle: "硬件和软件搭档任务全部启动",
     completionSummary: "你会区分物理部件与程序，也理解操作系统和软硬件怎样合作。",
     Component: HardwareSoftwareLesson,
+  },
+  "troubleshoot-machine": {
+    courseId: "troubleshoot-machine",
+    badgeId: "device-doctor",
+    badgeName: "电脑小医生",
+    completionTitle: "硬件实验岛的四个案例诊断完成",
+    completionSummary: "你会描述现象、检查简单原因、一次改变一处、重新测试并安全求助。",
+    Component: TroubleshootMachineLesson,
   },
 };
 

@@ -1,0 +1,5 @@
+import { useState } from "react";
+import { DEVICE_CASES, tryDeviceCheck } from "@/lib/troubleshoot-machine-lesson";
+const CHECKS = [{ id: "check-power", label: "检查外部电源状态" }, { id: "check-volume", label: "检查静音和音量" }, { id: "restart-app", label: "只重开无响应程序" }, { id: "check-focus", label: "检查焦点并请大人看连接" }];
+interface Props { onComplete: () => void; }
+export function DeviceClinic({ onComplete }: Props) { const [index, setIndex] = useState(0); const [feedback, setFeedback] = useState("读现象和线索，选择最简单、可逆的检查。" ); const deviceCase = DEVICE_CASES[index]; function check(id: string) { const result = tryDeviceCheck(deviceCase, id); setFeedback(result.feedback); if (result.solved) { if (index === DEVICE_CASES.length - 1) onComplete(); else setIndex((value) => value + 1); } } return <div className="device-clinic"><section><span>🩺 案例 {index + 1}/4</span><h2>{deviceCase.symptom}</h2><p>观察线索：{deviceCase.clue}</p></section><div>{CHECKS.map((item) => <button key={item.id} onClick={() => check(item.id)} type="button">{item.label}</button>)}</div><p role="status">{feedback}</p><aside>停止并找大人：有液体、焦味、异常发热、火花，或需要接触插座和设备内部时。</aside></div>; }

@@ -260,7 +260,7 @@ export const COURSES: Course[] = [
   },
   {
     id: "troubleshoot-machine", islandId: "hardware-lab", order: 25,
-    title: "电脑小医生", summary: "观察、检查、改变一处、再测试。", skill: "设备排障", minutes: 9, difficulty: 3, playable: false,
+    title: "电脑小医生", summary: "观察、检查、改变一处、再测试。", skill: "设备排障", minutes: 9, difficulty: 3, playable: true,
   },
   {
     id: "network-journey", islandId: "network-bay", order: 26,
