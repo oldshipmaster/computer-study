@@ -5,6 +5,7 @@ import {
   ISLANDS,
   getCourse,
   getCourseCardState,
+  getMapMission,
   getNextPlayableCourse,
 } from "../lib/course-data.ts";
 
@@ -119,4 +120,14 @@ test("finds the next unfinished playable lesson without hiding replayable cards"
   assert.equal(getNextPlayableCourse([])?.id, "keyboard-flight");
   assert.equal(getNextPlayableCourse(["keyboard-flight"])?.id, "mouse-precision");
   assert.equal(getCourseCardState(getCourse("keyboard-flight"), ["keyboard-flight"]), "completed");
+});
+
+test("turns the map mission into a celebration after all lessons are complete", () => {
+  const first = getMapMission([]);
+  assert.equal(first.complete, false);
+  assert.equal(first.course?.id, "keyboard-flight");
+
+  const finished = getMapMission(COURSES.map((course) => course.id));
+  assert.equal(finished.complete, true);
+  assert.equal(finished.course?.id, "keyboard-flight");
 });

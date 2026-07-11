@@ -4,7 +4,7 @@ import {
   ISLANDS,
   getCourse,
   getCourseCardState,
-  getNextPlayableCourse,
+  getMapMission,
   type Course,
   type CourseCardState,
 } from "@/lib/course-data";
@@ -67,11 +67,8 @@ export function IslandMap({
   headingRef,
   onStartCourse,
 }: IslandMapProps) {
-  const currentCourse =
-    getNextPlayableCourse(completedCourseIds) ??
-    ISLANDS.flatMap((island) => island.courseIds)
-      .map((courseId) => getCourse(courseId))
-      .find((course) => course?.playable);
+  const mission = getMapMission(completedCourseIds);
+  const currentCourse = mission.course;
 
   return (
     <main className="island-app-shell">
@@ -87,22 +84,30 @@ export function IslandMap({
 
       <section className="map-hero" aria-labelledby="map-heading">
         <div className="hero-copy">
-          <p className="hero-kicker">今天的探险任务</p>
+          <p className="hero-kicker">
+            {mission.complete ? "全岛已点亮" : "今天的探险任务"}
+          </p>
           <h1
             className="screen-focus-heading"
             id="map-heading"
             ref={headingRef}
             tabIndex={-1}
           >
-            跟比比一起，学会真正的电脑本领
+            {mission.complete
+              ? "二十段航线全部完成，继续自由探索"
+              : "跟比比一起，学会真正的电脑本领"}
           </h1>
           <p className="hero-summary">
-            每次用 9 分钟完成一个小任务，从键盘驾驶一直探索到安全灯塔。
+            {mission.complete
+              ? "你已经学会电脑操作、文件管理、编程思维和数字安全，可以随时重玩喜欢的课程。"
+              : "每次用 9 分钟完成一个小任务，从键盘驾驶一直探索到安全灯塔。"}
           </p>
 
           {currentCourse ? (
             <div className="current-mission" aria-label="当前任务">
-              <span className="mission-label">当前任务</span>
+              <span className="mission-label">
+                {mission.complete ? "自由重玩" : "当前任务"}
+              </span>
               <div>
                 <strong>{currentCourse.title}</strong>
                 <span>{currentCourse.summary}</span>
@@ -112,7 +117,7 @@ export function IslandMap({
                 onClick={() => onStartCourse(currentCourse.id)}
                 type="button"
               >
-                继续冒险
+                {mission.complete ? "重玩第一课" : "继续冒险"}
                 <span aria-hidden="true">→</span>
               </button>
             </div>
@@ -127,7 +132,14 @@ export function IslandMap({
             <span className="launch-island-palm" />
             <span className="launch-island-ship">▲</span>
           </div>
-          <Bibi mood="happy" message="我是比比！今天先从启航港学会驾驶飞船。" />
+          <Bibi
+            mood={mission.complete ? "celebrating" : "happy"}
+            message={
+              mission.complete
+                ? "太棒了！四座岛都亮起来了。选一课重玩，看看你还能发现什么。"
+                : "我是比比！今天先从启航港学会驾驶飞船。"
+            }
+          />
         </div>
       </section>
 

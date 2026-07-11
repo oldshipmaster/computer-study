@@ -315,6 +315,20 @@ export function getNextPlayableCourse(
   );
 }
 
+export function getMapMission(completedCourseIds: readonly string[]): {
+  course: Course | undefined;
+  complete: boolean;
+} {
+  const playableCourses = COURSES.filter((course) => course.playable);
+  const nextCourse = getNextPlayableCourse(completedCourseIds);
+  return {
+    course: nextCourse ?? playableCourses[0],
+    complete:
+      playableCourses.length > 0 &&
+      playableCourses.every((course) => completedCourseIds.includes(course.id)),
+  };
+}
+
 export function getCourseCardState(
   course: Course,
   completedCourseIds: readonly string[],
