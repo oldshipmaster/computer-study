@@ -119,14 +119,6 @@ export function BitIslandApp() {
     queueMicrotask(() => keyboardConfirmationButtonRef.current?.focus());
   }, [keyboardConfirmationVisible]);
 
-  useEffect(() => {
-    return () => {
-      if (parentHoldTimerRef.current !== null) {
-        window.clearTimeout(parentHoldTimerRef.current);
-      }
-    };
-  }, []);
-
   const cancelParentHold = useCallback(() => {
     if (parentHoldTimerRef.current !== null) {
       window.clearTimeout(parentHoldTimerRef.current);
@@ -134,6 +126,27 @@ export function BitIslandApp() {
     }
     setParentGateHolding(false);
   }, []);
+
+  useEffect(() => {
+    function cancelParentHoldOnVisibilityLoss() {
+      if (document.visibilityState !== "visible") {
+        cancelParentHold();
+      }
+    }
+
+    window.addEventListener("blur", cancelParentHold);
+    document.addEventListener("visibilitychange", cancelParentHoldOnVisibilityLoss);
+
+    return () => {
+      window.removeEventListener("blur", cancelParentHold);
+      document.removeEventListener("visibilitychange", cancelParentHoldOnVisibilityLoss);
+
+      if (parentHoldTimerRef.current !== null) {
+        window.clearTimeout(parentHoldTimerRef.current);
+        parentHoldTimerRef.current = null;
+      }
+    };
+  }, [cancelParentHold]);
 
   function startCourse(courseId: string) {
     const course = getCourse(courseId);

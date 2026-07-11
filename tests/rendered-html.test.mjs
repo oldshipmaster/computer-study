@@ -170,6 +170,34 @@ test("keeps the guarded parent-area contract in source", () => {
   assert.match(appSource, /\.focus\(\)/);
 });
 
+test("cancels a pending parent hold when the page loses interaction", () => {
+  const appSource = sourceFile("components/BitIslandApp.tsx");
+
+  assert.match(
+    appSource,
+    /window\.addEventListener\(["']blur["'],\s*cancelParentHold\)/,
+  );
+  assert.match(appSource, /document\.addEventListener\(["']visibilitychange["']/);
+  assert.match(appSource, /document\.visibilityState\s*!==\s*["']visible["']/);
+  assert.match(
+    appSource,
+    /window\.removeEventListener\(["']blur["'],\s*cancelParentHold\)/,
+  );
+  assert.match(appSource, /document\.removeEventListener\(["']visibilitychange["']/);
+});
+
+test("contains forward and backward focus when it starts outside the parent dialog", () => {
+  const parentSource = sourceFile("components/ParentPanel.tsx");
+
+  assert.match(parentSource, /useLayoutEffect/);
+  assert.match(parentSource, /document\.addEventListener\(["']focusin["']/);
+  assert.match(
+    parentSource,
+    /!panelRef\.current\.contains\(document\.activeElement\)/,
+  );
+  assert.match(parentSource, /event\.shiftKey\s*\?\s*lastElement\s*:\s*firstElement/);
+});
+
 test("keeps the final motion, focus, and responsive accessibility rules", () => {
   const lessonHookSource = sourceFile(
     "components/keyboard-flight/useKeyboardFlightLesson.ts",

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { COURSES } from "@/lib/course-data";
 
 export interface ParentProgress {
@@ -37,8 +37,18 @@ export function ParentPanel({
   const resetActionButtonRef = useRef<HTMLButtonElement>(null);
   const resetConfirmationButtonRef = useRef<HTMLButtonElement>(null);
 
-  useEffect(() => {
-    const focusTimer = window.setTimeout(() => closeButtonRef.current?.focus(), 0);
+  useLayoutEffect(() => {
+    closeButtonRef.current?.focus();
+
+    function handleFocusIn(event: FocusEvent) {
+      const panel = panelRef.current;
+
+      if (!panel || (event.target instanceof Node && panel.contains(event.target))) {
+        return;
+      }
+
+      closeButtonRef.current?.focus();
+    }
 
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") {
@@ -60,14 +70,16 @@ export function ParentPanel({
           return;
         }
 
+        if (!panelRef.current.contains(document.activeElement)) {
+          event.preventDefault();
+          (event.shiftKey ? lastElement : firstElement).focus();
+          return;
+        }
+
         if (event.shiftKey && document.activeElement === firstElement) {
           event.preventDefault();
           lastElement.focus();
-        } else if (
-          !event.shiftKey &&
-          (document.activeElement === lastElement ||
-            !panelRef.current.contains(document.activeElement))
-        ) {
+        } else if (!event.shiftKey && document.activeElement === lastElement) {
           event.preventDefault();
           firstElement.focus();
         }
@@ -75,9 +87,10 @@ export function ParentPanel({
     }
 
     window.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("focusin", handleFocusIn);
     return () => {
-      window.clearTimeout(focusTimer);
       window.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("focusin", handleFocusIn);
     };
   }, [onClose]);
 
