@@ -45,5 +45,6 @@ next-env.d.ts
 .superpowers/
 .vinext/
 dist/
+out-pages/
 .env*
 !.env.example
