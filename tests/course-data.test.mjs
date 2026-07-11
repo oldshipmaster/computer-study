@@ -45,7 +45,7 @@ test("publishes four islands and twenty ordered lessons", () => {
 test("publishes only lessons with complete interactive implementations", () => {
   assert.deepEqual(
     COURSES.filter((course) => course.playable).map((course) => course.id),
-    ["keyboard-flight", "mouse-precision", "bilingual-input", "desktop-adventure", "program-landing", "file-home", "name-your-work", "move-and-copy", "file-types", "learning-backpack", "instruction-order", "grid-city-navigation", "repeat-power"],
+    ["keyboard-flight", "mouse-precision", "bilingual-input", "desktop-adventure", "program-landing", "file-home", "name-your-work", "move-and-copy", "file-types", "learning-backpack", "instruction-order", "grid-city-navigation", "repeat-power", "rainy-condition"],
   );
   assert.equal(getCourse("keyboard-flight")?.title, "键盘驾驶飞船");
 });
@@ -65,6 +65,7 @@ test("distinguishes completed, available, and upcoming lesson cards", () => {
   const twelfthCourse = getCourse("grid-city-navigation");
   const thirteenthCourse = getCourse("repeat-power");
   const fourteenthCourse = getCourse("rainy-condition");
+  const fifteenthCourse = getCourse("bug-catcher");
 
   assert.ok(firstCourse);
   assert.ok(secondCourse);
@@ -80,6 +81,7 @@ test("distinguishes completed, available, and upcoming lesson cards", () => {
   assert.ok(twelfthCourse);
   assert.ok(thirteenthCourse);
   assert.ok(fourteenthCourse);
+  assert.ok(fifteenthCourse);
   assert.equal(getCourseCardState(firstCourse, []), "available");
   assert.equal(getCourseCardState(firstCourse, [firstCourse.id]), "completed");
   assert.equal(getCourseCardState(secondCourse, []), "available");
@@ -94,7 +96,8 @@ test("distinguishes completed, available, and upcoming lesson cards", () => {
   assert.equal(getCourseCardState(eleventhCourse, []), "available");
   assert.equal(getCourseCardState(twelfthCourse, []), "available");
   assert.equal(getCourseCardState(thirteenthCourse, []), "available");
-  assert.equal(getCourseCardState(fourteenthCourse, []), "upcoming");
+  assert.equal(getCourseCardState(fourteenthCourse, []), "available");
+  assert.equal(getCourseCardState(fifteenthCourse, []), "upcoming");
 });
 
 test("finds the next unfinished playable lesson without hiding replayable cards", () => {

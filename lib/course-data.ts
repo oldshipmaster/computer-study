@@ -174,7 +174,7 @@ export const COURSES: Course[] = [
     skill: "条件判断",
     minutes: 9,
     difficulty: 2,
-    playable: false,
+    playable: true,
   },
   {
     id: "bug-catcher",

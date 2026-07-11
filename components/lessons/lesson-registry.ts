@@ -11,6 +11,7 @@ import { LearningBackpackLesson } from "@/components/lessons/LearningBackpackLes
 import { InstructionOrderLesson } from "@/components/lessons/InstructionOrderLesson";
 import { GridCityNavigationLesson } from "@/components/lessons/GridCityNavigationLesson";
 import { RepeatPowerLesson } from "@/components/lessons/RepeatPowerLesson";
+import { RainyConditionLesson } from "@/components/lessons/RainyConditionLesson";
 import type { LessonDefinition } from "@/components/lessons/types";
 
 export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
@@ -117,6 +118,14 @@ export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
     completionTitle: "重复能源环稳定运行",
     completionSummary: "你会发现重复模式、设置循环次数，并用更短的程序完成正方形任务。",
     Component: RepeatPowerLesson,
+  },
+  "rainy-condition": {
+    courseId: "rainy-condition",
+    badgeId: "condition-captain",
+    badgeName: "条件判断员",
+    completionTitle: "机器人学会根据情况安全行动",
+    completionSummary: "你会判断真和假，理解那么与否则分支，也知道输入变化会改变结果。",
+    Component: RainyConditionLesson,
   },
 };
 

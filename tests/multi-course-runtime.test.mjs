@@ -23,7 +23,8 @@ test("selects the next incomplete playable course in catalog order", () => {
   assert.equal(getNextPlayableCourse(["keyboard-flight", "mouse-precision", "bilingual-input", "desktop-adventure", "program-landing", "file-home", "name-your-work", "move-and-copy", "file-types", "learning-backpack"])?.id, "instruction-order");
   assert.equal(getNextPlayableCourse(["keyboard-flight", "mouse-precision", "bilingual-input", "desktop-adventure", "program-landing", "file-home", "name-your-work", "move-and-copy", "file-types", "learning-backpack", "instruction-order"])?.id, "grid-city-navigation");
   assert.equal(getNextPlayableCourse(["keyboard-flight", "mouse-precision", "bilingual-input", "desktop-adventure", "program-landing", "file-home", "name-your-work", "move-and-copy", "file-types", "learning-backpack", "instruction-order", "grid-city-navigation"])?.id, "repeat-power");
-  assert.equal(getNextPlayableCourse(["keyboard-flight", "mouse-precision", "bilingual-input", "desktop-adventure", "program-landing", "file-home", "name-your-work", "move-and-copy", "file-types", "learning-backpack", "instruction-order", "grid-city-navigation", "repeat-power"]), undefined);
+  assert.equal(getNextPlayableCourse(["keyboard-flight", "mouse-precision", "bilingual-input", "desktop-adventure", "program-landing", "file-home", "name-your-work", "move-and-copy", "file-types", "learning-backpack", "instruction-order", "grid-city-navigation", "repeat-power"])?.id, "rainy-condition");
+  assert.equal(getNextPlayableCourse(["keyboard-flight", "mouse-precision", "bilingual-input", "desktop-adventure", "program-landing", "file-home", "name-your-work", "move-and-copy", "file-types", "learning-backpack", "instruction-order", "grid-city-navigation", "repeat-power", "rainy-condition"]), undefined);
 });
 
 test("keeps every playable course backed by a lesson definition", async () => {
