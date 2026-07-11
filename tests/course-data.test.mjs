@@ -42,10 +42,10 @@ test("publishes four islands and twenty ordered lessons", () => {
   assert.ok(ISLANDS.every((island) => island.courseIds.length === 5));
 });
 
-test("only the keyboard flight lesson is playable in release one", () => {
+test("publishes completed Launch Harbor lessons only", () => {
   assert.deepEqual(
     COURSES.filter((course) => course.playable).map((course) => course.id),
-    ["keyboard-flight"],
+    ["keyboard-flight", "mouse-precision"],
   );
   assert.equal(getCourse("keyboard-flight")?.title, "键盘驾驶飞船");
 });
@@ -53,16 +53,19 @@ test("only the keyboard flight lesson is playable in release one", () => {
 test("distinguishes completed, available, and upcoming lesson cards", () => {
   const firstCourse = getCourse("keyboard-flight");
   const secondCourse = getCourse("mouse-precision");
+  const thirdCourse = getCourse("bilingual-input");
 
   assert.ok(firstCourse);
   assert.ok(secondCourse);
+  assert.ok(thirdCourse);
   assert.equal(getCourseCardState(firstCourse, []), "available");
   assert.equal(getCourseCardState(firstCourse, [firstCourse.id]), "completed");
-  assert.equal(getCourseCardState(secondCourse, []), "upcoming");
+  assert.equal(getCourseCardState(secondCourse, []), "available");
+  assert.equal(getCourseCardState(thirdCourse, []), "upcoming");
 });
 
 test("finds the next unfinished playable lesson without hiding replayable cards", () => {
   assert.equal(getNextPlayableCourse([])?.id, "keyboard-flight");
-  assert.equal(getNextPlayableCourse(["keyboard-flight"]), undefined);
+  assert.equal(getNextPlayableCourse(["keyboard-flight"])?.id, "mouse-precision");
   assert.equal(getCourseCardState(getCourse("keyboard-flight"), ["keyboard-flight"]), "completed");
 });

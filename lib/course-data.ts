@@ -42,7 +42,7 @@ export const COURSES: Course[] = [
     skill: "鼠标操作",
     minutes: 9,
     difficulty: 1,
-    playable: false,
+    playable: true,
   },
   {
     id: "bilingual-input",

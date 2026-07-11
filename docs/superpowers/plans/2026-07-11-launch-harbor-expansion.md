@@ -102,33 +102,33 @@ git commit -m "feat: add reusable multi-course lesson runtime"
 - `advanceMouseSequence(state, action)`: pure state transition.
 - `isUsefulMouseAction(previous, next)`: resets hints only for measurable progress.
 
-- [ ] **Step 1: Write failing mouse-lesson tests**
+- [x] **Step 1: Write failing mouse-lesson tests**
 
 Cover ordered stage progression, single-click not satisfying double-click, wrong-target clicks preserving progress, drag drop requiring the correct destination, useful-input classification, resume normalization, and exact challenge completion.
 
-- [ ] **Step 2: Verify RED**
+- [x] **Step 2: Verify RED**
 
 Run: `node --experimental-strip-types --test tests/mouse-lesson.test.mjs`
 
 Expected: FAIL with missing `lib/mouse-lesson.ts`.
 
-- [ ] **Step 3: Implement the pure model**
+- [x] **Step 3: Implement the pure model**
 
 Use stable target IDs and semantic actions rather than pointer coordinates in the model. Keep browser coordinates in the visual layer. Export a safe resume normalizer that never maps directly to completion.
 
-- [ ] **Step 4: Build the six-stage lesson**
+- [x] **Step 4: Build the six-stage lesson**
 
 Story: repair the harbor’s navigation console. Practice: follow three moving light targets, single-click the yellow beacon, double-click the blue hatch, drag three supply crates to matching bays. Challenge: independently move, click, double-click, and drag in one sequence. Provide buttons/arrow-key alternatives for moving focus and moving crates.
 
-- [ ] **Step 5: Add hints and accessibility**
+- [x] **Step 5: Add hints and accessibility**
 
 After 8 seconds without useful progress, highlight the next relevant target. After two wrong attempts, demonstrate only the next action. Pointer targets are at least 48px; keyboard focus is never moved unexpectedly; reduced motion keeps targets stationary but changes their highlight.
 
-- [ ] **Step 6: Register and enable the course**
+- [x] **Step 6: Register and enable the course**
 
 Add the lesson definition with badge ID `mouse-navigator` and badge name `鼠标导航员`; set `mouse-precision.playable = true` only after the component and tests exist.
 
-- [ ] **Step 7: Verify and commit**
+- [x] **Step 7: Verify and commit**
 
 Run all pure tests, `npm test`, `npm run test:pages`, and lint. Commit as `feat: add mouse precision adventure`.
 
