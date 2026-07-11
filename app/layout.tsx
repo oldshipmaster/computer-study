@@ -73,13 +73,11 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: SITE_NAME,
       title: SITE_TITLE,
       description: SITE_DESCRIPTION,
-      images: ["/og.png"],
     },
     twitter: {
-      card: "summary_large_image",
+      card: "summary",
       title: SITE_TITLE,
       description: SITE_DESCRIPTION,
-      images: ["/og.png"],
     },
   };
 }
