@@ -7,6 +7,8 @@ const stagedComponents = [
   "PromptInspector.tsx",
   "../network/AddressInspector.tsx",
   "../network/NetworkClinic.tsx",
+  "../network/PacketJourneyLab.tsx",
+  "../hardware/BitBoard.tsx",
   "../hardware/DeviceClinic.tsx",
   "../hardware/PipelineLab.tsx",
   "../hardware/SystemPairingLab.tsx",
