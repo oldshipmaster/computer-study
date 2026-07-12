@@ -29,7 +29,8 @@ test("search, instruction-cycle, routing, and network layers require prediction"
   assert.match(routing, /这条路线现在不可达/);
   assert.match(layers, /选择下一层/);
   assert.match(layers, /顺序不对/);
-  assert.match(layers, /layer-envelope--opened/);
+  assert.match(layers, /envelope--opened/);
+  assert.match(layers, /nested-envelopes/);
   assert.match(scheduling, /预测下一个获得 CPU 的任务/);
   assert.match(scheduling, /还没轮到这个任务/);
   assert.match(scheduling, /expectedTaskId/);
