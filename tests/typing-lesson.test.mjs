@@ -37,3 +37,12 @@ test("disables mobile text transformations for exact typing tasks", () => {
   assert.match(source, /autoCorrect="off"/);
   assert.match(source, /spellCheck=\{false\}/);
 });
+
+test("visualizes character progress and IME composition state", () => {
+  const source = readFileSync(new URL("../components/lessons/typing/TypingConsole.tsx", import.meta.url), "utf8");
+  assert.match(source, /typing-character-progress/);
+  assert.match(source, /typing-char--matched/);
+  assert.match(source, /typing-char--current/);
+  assert.match(source, /ime-status--composing/);
+  assert.match(source, /正在选词/);
+});
