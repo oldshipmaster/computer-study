@@ -29,6 +29,18 @@ export const REVIEW_QUESTIONS: ReviewQuestion[] = [
   { id: "spaceport-2", islandId: "code-spaceport", islandName: "代码星港", prompt: "三处都要执行相同的画星步骤，怎样更容易维护？", options: ["定义画星函数并复用", "复制后分别乱改", "删除两处"], answer: "定义画星函数并复用", explanation: "函数把共同逻辑集中在一处，调用时可以重复使用。" },
 ];
 
+export const REVIEW_REQUIREMENTS: Record<string, string> = {
+  "launch-1": "keyboard-flight", "launch-2": "program-landing",
+  "files-1": "file-home", "files-2": "learning-backpack",
+  "code-1": "instruction-order", "code-2": "bug-catcher",
+  "safe-1": "password-guardian", "safe-2": "light-bit-island",
+  "hardware-1": "input-process-output", "hardware-2": "troubleshoot-machine",
+  "network-1": "network-journey", "network-2": "network-troubleshooting",
+  "creative-1": "pixel-art", "creative-2": "data-table",
+  "future-1": "email-message", "future-2": "digital-project",
+  "spaceport-1": "events-handlers", "spaceport-2": "game-design",
+};
+
 export interface ReviewState {
   index: number;
   score: number;
@@ -40,14 +52,19 @@ export function createReviewState(): ReviewState {
   return { index: 0, score: 0, completed: false, feedback: { kind: "idle", message: "选择你认为最有道理的答案。" } };
 }
 
-export function answerReviewQuestion(state: ReviewState, optionIndex: number): ReviewState {
+export function getAvailableReviewQuestions(completedCourseIds: readonly string[]): ReviewQuestion[] {
+  const completed = new Set(completedCourseIds);
+  return REVIEW_QUESTIONS.filter((question) => completed.has(REVIEW_REQUIREMENTS[question.id]));
+}
+
+export function answerReviewQuestion(state: ReviewState, optionIndex: number, questions: readonly ReviewQuestion[] = REVIEW_QUESTIONS): ReviewState {
   if (state.completed) return state;
-  const question = REVIEW_QUESTIONS[state.index];
+  const question = questions[state.index];
   const selected = question?.options[optionIndex];
   if (!question || selected !== question.answer) {
     return { ...state, feedback: { kind: "retry", message: `再想一想：${question?.explanation ?? "先读清题目。"}` } };
   }
-  const isLast = state.index === REVIEW_QUESTIONS.length - 1;
+  const isLast = state.index === questions.length - 1;
   return {
     index: isLast ? state.index : state.index + 1,
     score: state.score + 1,

@@ -158,7 +158,7 @@ export function IslandMap({
       {mission.complete ? <CompletionCertificate /> : null}
 
       <KnowledgeAtlas completedCourseIds={completedCourseIds} />
-      <ReviewChallenge />
+      <ReviewChallenge completedCourseIds={completedCourseIds} key={completedCourseIds.join("|")} />
 
       <section className="adventure-map" id="adventure-map" aria-labelledby="islands-heading">
         <div className="map-intro">

@@ -808,6 +808,7 @@ input {
 .review-console { min-height: 360px; padding: 22px; border: 4px solid #0a2638; border-radius: 24px; background: #f7fcff; color: var(--deep-sea); }
 .review-progress { display: grid; grid-template-columns: repeat(9, 1fr); gap: 5px; margin-bottom: 22px; }
 .review-progress span { color: #c9d4da; font-size: clamp(.9rem, 2vw, 1.35rem); text-align: center; }
+.review-progress span.is-unlocked { color: #477a9a; }
 .review-progress span.is-lit { color: #e0a400; }
 .review-question > span { font-size: .9rem; font-weight: 850; color: #526875; }
 .review-question h3 { margin: 10px 0 18px; font-size: clamp(1.35rem, 3vw, 2rem); }
@@ -820,6 +821,10 @@ input {
 .review-finish { display: grid; min-height: 285px; place-items: center; align-content: center; text-align: center; }
 .review-finish > span { font-size: 4rem; }
 .review-finish h3 { margin: 10px 0 0; font-size: 2rem; }
+.review-locked { display: grid; min-height: 280px; place-items: center; align-content: center; text-align: center; }
+.review-locked > span { font-size: 3.5rem; }
+.review-locked h3 { margin: 10px 0 4px; font-size: 1.6rem; }
+.review-locked p { margin: 0; }
 
 @media (max-width: 680px) {
   .review-challenge { grid-template-columns: 1fr; gap: 22px; margin: 0 16px 48px; padding: 28px 18px; }
