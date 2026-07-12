@@ -46,3 +46,12 @@ test("reliable transfer visualizes every packet state and its route", () => {
   assert.match(lab, /发送站/);
   assert.match(lab, /接收站/);
 });
+
+test("cache station visualizes distance, capacity, and wait across the hierarchy", () => {
+  const lab = readFileSync(new URL("components/lessons/advanced/systems/CacheStationLab.tsx", root), "utf8");
+  assert.match(lab, /memory-hierarchy/);
+  assert.match(lab, /离 CPU 最近/);
+  assert.match(lab, /容量/);
+  assert.match(lab, /等待.*单位/);
+  assert.match(lab, /aria-current/);
+});
