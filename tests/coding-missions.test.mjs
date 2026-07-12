@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { readFileSync } from "node:fs";
 import { CODING_MISSIONS, answerCodingCard, createCodingState } from "../lib/coding-missions.ts";
 
 test("defines five advanced-foundation coding missions", () => {
@@ -37,4 +38,14 @@ test("coding challenge ignores a repeated pointer activation", () => {
   const state = createCodingState();
   const answer = mission.cards[0].options.indexOf(mission.cards[0].answer);
   assert.equal(answerCodingCard(mission, state, answer, 2), state);
+});
+
+test("coding mission requires stepping through each statement before answering", () => {
+  const source = readFileSync(new URL("../components/lessons/coding/CodingMissionLesson.tsx", import.meta.url), "utf8");
+  assert.match(source, /code-trace-lane/);
+  assert.match(source, /traceStep/);
+  assert.match(source, /逐句执行/);
+  assert.match(source, /disabled=\{traceStep < traceParts\.length\}/);
+  assert.match(source, /追踪总结/);
+  assert.match(source, /领取编程徽章/);
 });

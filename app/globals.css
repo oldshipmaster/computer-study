@@ -3798,21 +3798,6 @@ html.bit-island-document--reduced-motion *::after,
 @media (max-width: 38rem) { .future-options { grid-template-columns: 1fr; } .future-options button { min-height: 3.6rem; } }
 
 /* Event, variable, function, and game-design lessons */
-.coding-mission { padding: 1.4rem; border-radius: 1.5rem; background: #efeaff; color: #15384e; }
-.coding-demo { display: grid; min-height: 18rem; place-items: center; align-content: center; gap: 2rem; }
-.coding-mission pre { width: min(100%, 42rem); margin: 0; padding: 1.2rem; overflow-x: auto; border: 3px solid #4f3b82; border-radius: 1rem; background: #17263a; color: #f4f7fb; font-size: clamp(1rem, 2.5vw, 1.35rem); white-space: pre-wrap; }
-.coding-challenge { display: grid; gap: 1rem; }
-.coding-progress { display: grid; grid-template-columns: repeat(4, 1fr); gap: .6rem; }
-.coding-progress span { display: grid; min-height: 3rem; place-items: center; border: 2px solid #4f3b82; border-radius: .7rem; background: white; font-weight: 900; }
-.coding-progress span.is-complete { background: #dff7e8; color: #176145; }
-.coding-challenge h2 { margin: 0; font-size: clamp(1.3rem, 3vw, 1.9rem); }
-.coding-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: .7rem; }
-.coding-options button { min-height: 4.5rem; padding: .8rem; border: 3px solid #15384e; border-radius: .8rem; background: white; color: #15384e; font-size: 1rem; font-weight: 850; }
-.coding-options button:hover { background: #ffe36e; }
-.coding-feedback { min-height: 4rem; margin: 0; padding: .8rem; border-radius: .7rem; background: white; }
-.coding-feedback--retry { background: #ffe2d7; color: #783c2d; }
-.coding-feedback--correct { background: #dff7e8; color: #176145; }
-@media (max-width: 38rem) { .coding-options { grid-template-columns: 1fr; } .coding-options button { min-height: 3.6rem; } }
 
 /* Advanced computer foundations: data structures, algorithms, OS, architecture and networks */
 .foundation-roadmap { width: min(100% - 48px, 1320px); margin: 54px auto; padding: clamp(1.2rem, 4vw, 2.5rem); border: 3px solid #15384e; border-radius: 2rem; background: #102f45; color: white; box-shadow: 12px 14px 0 rgb(18 50 74 / 14%); }

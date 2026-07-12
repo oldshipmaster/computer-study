@@ -34,3 +34,11 @@ test("defers rich programming and hardware labs until a child opens them", () =>
     assert.doesNotMatch(source, new RegExp(`import \\{ ${lesson} \\} from`));
   }
 });
+
+test("defers the shared advanced coding mission bundle", () => {
+  assert.match(source, /const loadCoding = \(\) => import\("@\/components\/lessons\/CodingLessons"\)/);
+  for (const lesson of ["EventsHandlersLesson", "VariablesScoreLesson", "FunctionsToolsLesson", "BooleanLogicLesson", "GameDesignLesson"]) {
+    assert.match(source, new RegExp(`const ${lesson} = advancedLesson\\(loadCoding`));
+  }
+  assert.doesNotMatch(source, /import \{ BooleanLogicLesson, EventsHandlersLesson/);
+});
