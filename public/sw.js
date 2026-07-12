@@ -50,10 +50,7 @@ async function networkFirst(request, allowShellFallback = false) {
   const cache = await caches.open(CACHE_NAME);
   try {
     const response = await fetch(request);
-    if (response.ok) {
-      if (request.mode === "navigate") await storeShell(cache, response.clone(), request.url);
-      else await cache.put(request, response.clone());
-    }
+    if (response.ok) await updateCache(cache, request, response.clone());
     return response;
   } catch {
     const cached = await cache.match(request);
@@ -63,6 +60,15 @@ async function networkFirst(request, allowShellFallback = false) {
       if (shell) return shell;
     }
     return Response.error();
+  }
+}
+
+async function updateCache(cache, request, response) {
+  try {
+    if (request.mode === "navigate") await storeShell(cache, response, request.url);
+    else await cache.put(request, response);
+  } catch {
+    // A successful network response stays usable even when offline storage is full or unavailable.
   }
 }
 

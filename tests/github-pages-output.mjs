@@ -36,6 +36,8 @@ test("emits a GitHub Pages artifact under the repository base path", async () =>
   assert.match(serviceWorker, /cachedUrl\.pathname\.includes\("\/assets\/"\)/);
   assert.match(serviceWorker, /cache\.delete\(cachedRequest\)/);
   assert.match(serviceWorker, /request\.mode === "navigate"\) await storeShell/);
+  assert.match(serviceWorker, /async function updateCache/);
+  assert.match(serviceWorker, /await updateCache\(cache, request, response\.clone\(\)\)/);
   assert.doesNotMatch(serviceWorker, /https?:\/\//);
   const manifest = JSON.parse(await readFile(new URL("manifest.webmanifest", outputRoot), "utf8"));
   assert.equal(manifest.name, "比特岛大冒险｜儿童计算机启蒙课");
