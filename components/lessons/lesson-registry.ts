@@ -31,6 +31,7 @@ import { NetworkTroubleshootingLesson } from "@/components/lessons/NetworkTroubl
 import { DataTableLesson, DocumentDesignLesson, MediaCopyrightLesson, PixelArtLesson, SlideStoryLesson } from "@/components/lessons/CreativeLessons";
 import { AiHelperLesson, DigitalProjectLesson, EmailMessageLesson, OnlineCollaborationLesson, VerifyAiLesson } from "@/components/lessons/FutureLessons";
 import { BooleanLogicLesson, EventsHandlersLesson, FunctionsToolsLesson, GameDesignLesson, VariablesScoreLesson } from "@/components/lessons/CodingLessons";
+import { ArrayLockersLesson, GraphRoutesLesson, LinkedTreasureLesson, StackQueueDockLesson, TreeLibraryLesson } from "@/components/lessons/advanced/DataStructureLessons";
 import type { LessonDefinition } from "@/components/lessons/types";
 
 export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
@@ -339,6 +340,11 @@ export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
   "functions-tools": { courseId: "functions-tools", badgeId: "function-builder", badgeName: "函数建造师", completionTitle: "函数工具箱组装完成", completionSummary: "你会区分定义和调用，理解参数与返回值，并用函数复用指令。", Component: FunctionsToolsLesson },
   "boolean-logic": { courseId: "boolean-logic", badgeId: "logic-gate-keeper", badgeName: "逻辑门卫", completionTitle: "四座真假逻辑门全部打开", completionSummary: "你会追踪并且、或者、不是，并用括号理解组合条件。", Component: BooleanLogicLesson },
   "game-design": { courseId: "game-design", badgeId: "game-designer", badgeName: "小游戏设计师", completionTitle: "代码星港小游戏完成总装", completionSummary: "你综合使用目标、事件、变量、条件、循环、测试和安全原则设计游戏。", Component: GameDesignLesson },
+  "array-lockers": { courseId: "array-lockers", badgeId: "array-navigator", badgeName: "数组导航员", completionTitle: "四个数组储物柜定位完成", completionSummary: "你会用从 0 开始的索引读取和更新数组中的指定位置。", Component: ArrayLockersLesson },
+  "linked-treasure": { courseId: "linked-treasure", badgeId: "link-pathfinder", badgeName: "连接寻路员", completionTitle: "链表寻宝线重新连接", completionSummary: "你会沿下一站遍历节点，并能在中间插入、删除和重新连接。", Component: LinkedTreasureLesson },
+  "stack-queue-dock": { courseId: "stack-queue-dock", badgeId: "stack-queue-captain", badgeName: "规则码头长", completionTitle: "栈与队列的两条航线运行正确", completionSummary: "你会比较栈的后进先出和队列的先进先出。", Component: StackQueueDockLesson },
+  "tree-library": { courseId: "tree-library", badgeId: "tree-librarian", badgeName: "树形图书管理员", completionTitle: "太空图书沿树形路径找到", completionSummary: "你会从根节点沿父子分支找到叶节点，并说出完整路径。", Component: TreeLibraryLesson },
+  "graph-routes": { courseId: "graph-routes", badgeId: "graph-navigator", badgeName: "图航线导航员", completionTitle: "图结构航线抵达山洞", completionSummary: "你会识别节点和边，沿相邻连接寻找可达路线并避免环。", Component: GraphRoutesLesson },
 };
 
 export function getLessonDefinition(courseId: string): LessonDefinition | undefined {
