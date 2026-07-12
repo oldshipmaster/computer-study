@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 test("search, instruction-cycle, routing, and network layers require prediction", async () => {
-  const [search, cycle, routing, layers, scheduling, devices, sort, stackQueue, linked] = await Promise.all([
+  const [search, cycle, routing, layers, scheduling, devices, sort, stackQueue, linked, array] = await Promise.all([
     readFile(new URL("../components/lessons/advanced/algorithms/SearchLab.tsx", import.meta.url), "utf8"),
     readFile(new URL("../components/lessons/advanced/systems/InstructionCycleLab.tsx", import.meta.url), "utf8"),
     readFile(new URL("../components/lessons/advanced/network/RoutingMazeLab.tsx", import.meta.url), "utf8"),
@@ -13,6 +13,7 @@ test("search, instruction-cycle, routing, and network layers require prediction"
     readFile(new URL("../components/lessons/advanced/algorithms/SortLab.tsx", import.meta.url), "utf8"),
     readFile(new URL("../components/lessons/advanced/data-structures/StackQueueLab.tsx", import.meta.url), "utf8"),
     readFile(new URL("../components/lessons/advanced/data-structures/LinkedTreasureLab.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../components/lessons/advanced/data-structures/ArrayLockerLab.tsx", import.meta.url), "utf8"),
   ]);
   assert.match(search, /预测下一次检查哪个索引/);
   assert.match(search, /expectedIndex/);
@@ -45,4 +46,7 @@ test("search, instruction-cycle, routing, and network layers require prediction"
   assert.match(linked, /插在灯塔和山洞之间/);
   assert.match(linked, /灯塔重新指向山洞/);
   assert.match(linked, /这会让路线位置不对/);
+  assert.match(array, /选择要更新的索引/);
+  assert.match(array, /index !== 1/);
+  assert.match(array, /只会改变指定索引/);
 });
