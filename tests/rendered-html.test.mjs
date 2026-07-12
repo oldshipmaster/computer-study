@@ -141,6 +141,15 @@ test("supports alternating route curves for all nine islands", () => {
   assert.match(css, /\.route-curve--2 span,\s*\.route-curve--4 span,\s*\.route-curve--6 span,\s*\.route-curve--8 span/);
 });
 
+test("gives course search a visible recoverable empty state", () => {
+  const source = sourceFile("components/IslandMap.tsx");
+  assert.match(source, /visibleCourseIds\.size === 0/);
+  assert.match(source, /罗盘暂时没找到这门课/);
+  assert.match(source, /setCourseQuery\(""\)/);
+  assert.match(source, /setSelectedIslandId\("all"\)/);
+  assert.match(source, /清除筛选，显示 45 课/);
+});
+
 test("stacks dense hardware and network labs on child-sized screens", () => {
   const css = sourceFile("app/globals.css");
 

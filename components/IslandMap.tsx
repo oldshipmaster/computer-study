@@ -187,7 +187,14 @@ export function IslandMap({
           <p role="status">找到 {visibleCourseIds.size} 节课程{courseQuery || selectedIslandId !== "all" ? "，下面只显示匹配结果" : "，按完整航线排列"}。</p>
         </div>
 
-        <div className="map-route">
+        {visibleCourseIds.size === 0 ? (
+          <div className="course-empty-state" role="status">
+            <span aria-hidden="true">🧭</span>
+            <h3>罗盘暂时没找到这门课</h3>
+            <p>试试“文件”“循环”“安全”“AI”，或者清除筛选查看完整航线。</p>
+            <button className="primary-action" onClick={() => { setCourseQuery(""); setSelectedIslandId("all"); }} type="button">清除筛选，显示 45 课</button>
+          </div>
+        ) : <div className="map-route">
           {ISLANDS.map((island, islandIndex) => {
             const islandCourses = island.courseIds
               .map((courseId) => getCourse(courseId))
@@ -241,7 +248,7 @@ export function IslandMap({
               </div>
             );
           })}
-        </div>
+        </div>}
       </section>
 
       <footer className="map-footer">
