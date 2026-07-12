@@ -803,7 +803,7 @@ input {
 .knowledge-chapter > ol > li.is-unlocked { background: #e8f8ee; }
 .knowledge-chapter > ol > li.is-locked { background: #edf1f3; color: #526875; }
 .knowledge-card-number { display: grid; width: 42px; height: 42px; place-items: center; border-radius: 50%; background: var(--deep-sea); color: white; font-weight: 900; }
-.knowledge-chapter li.is-unlocked button { min-height: 40px; margin-top: 10px; padding: 0 11px; border: 2px solid var(--deep-sea); border-radius: 9px; background: white; color: inherit; font: inherit; font-size: .8rem; font-weight: 850; }
+.knowledge-chapter li.is-unlocked button { min-height: 44px; margin-top: 10px; padding: 0 11px; border: 2px solid var(--deep-sea); border-radius: 9px; background: white; color: inherit; font: inherit; font-size: .8rem; font-weight: 850; }
 .knowledge-chapter ul { display: grid; gap: 4px; margin: 8px 0 0; padding-left: 20px; }
 .knowledge-chapter p { margin: 5px 0 0; }
 
@@ -1218,7 +1218,7 @@ input {
 .dictionary-groups dd p { margin: 0 0 9px; }
 .dictionary-groups dd span { display: block; padding-top: 8px; border-top: 1px dashed #d9c47c; color: #405b6d; font-size: .88rem; }
 .dictionary-actions { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 11px; }
-.dictionary-groups dd button { min-height: 40px; padding: 0 11px; border: 2px solid #22465e; border-radius: 9px; background: #eef9ff; color: #12324a; font: inherit; font-size: .82rem; font-weight: 850; }
+.dictionary-groups dd button { min-height: 44px; padding: 0 11px; border: 2px solid #22465e; border-radius: 9px; background: #eef9ff; color: #12324a; font: inherit; font-size: .82rem; font-weight: 850; }
 .dictionary-groups dd .dictionary-actions button:last-child { background: #12324a; color: white; }
 .dictionary-groups dd button:disabled { border-color: #aab7bd; background: #edf0f1; color: #66777f; cursor: not-allowed; }
 .dictionary-empty { display: grid; justify-items: center; gap: 10px; padding: 28px; border: 2px dashed #d2b95f; border-radius: 18px; text-align: center; }
@@ -1251,7 +1251,7 @@ input {
 .child-review-queue li > span { font-size: 1.35rem; }
 .child-review-queue li div { display: grid; gap: 2px; }
 .child-review-queue li small { color: #527165; }
-.child-review-queue button { min-height: 42px; padding: 0 13px; border: 0; border-radius: 10px; background: #174f3b; color: white; font: inherit; font-weight: 850; }
+.child-review-queue button { min-height: 44px; padding: 0 13px; border: 0; border-radius: 10px; background: #174f3b; color: white; font: inherit; font-weight: 850; }
 .child-review-more { grid-column: 2; margin: 0; color: #48675b; font-size: .86rem; font-weight: 750; }
 @media (max-width: 720px) { .child-review-queue { grid-template-columns: 1fr; } .child-review-queue li { grid-template-columns: auto 1fr; } .child-review-queue button { grid-column: 1 / -1; } }
 @media (max-width: 720px) { .child-review-more { grid-column: 1; } }
