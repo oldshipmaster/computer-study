@@ -3,6 +3,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { LessonChrome } from "@/components/lessons/LessonChrome";
 import { TypingConsole } from "@/components/lessons/typing/TypingConsole";
+import "@/components/lessons/typing/TypingConsole.css";
 import type { LessonProps } from "@/components/lessons/types";
 import { normalizeTypingResumeStage, type TypingTask } from "@/lib/typing-lesson";
 
