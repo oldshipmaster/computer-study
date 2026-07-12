@@ -19,10 +19,10 @@
 
 ## 本地运行
 
-需要 Node.js `>=22.13.0`。首次运行先安装依赖：
+需要 Node.js `>=22.13.0`。从仓库检出后按锁文件安装依赖：
 
 ```bash
-npm install
+npm ci
 ```
 
 常用命令：
@@ -33,6 +33,7 @@ npm test
 npm run lint
 npm run typecheck
 npm run audit:prod
+npm audit
 npm run test:pages
 ```
 
@@ -41,6 +42,7 @@ npm run test:pages
 - `npm run lint`：检查代码质量与格式规则。
 - `npm run typecheck`：严格检查课程、进度与发布代码的 TypeScript 类型。
 - `npm run audit:prod`：阻止带有中高危运行时依赖的版本进入发布流程。
+- `npm audit`：同时检查本地构建工具与运行时依赖。
 - `npm run test:pages`：构建并验证部署在 `/computer-study/` 下的 GitHub Pages 静态版本。
 
 ## 在线版本
