@@ -44,6 +44,12 @@ test("search, instruction-cycle, routing, and network layers require prediction"
   assert.match(stackQueue, /从队尾出发/);
   assert.match(stackQueue, /后进先出/);
   assert.match(stackQueue, /先进先出/);
+  assert.match(stackQueue, /栈顶 TOP/);
+  assert.match(stackQueue, /队首 FRONT/);
+  assert.match(stackQueue, /队尾 REAR/);
+  assert.match(stackQueue, /操作记录/);
+  assert.match(stackQueue, /最后放入.*最先取出/s);
+  assert.match(stackQueue, /最早到达.*最先离开/s);
   assert.match(linked, /插在灯塔和山洞之间/);
   assert.match(linked, /灯塔重新指向山洞/);
   assert.match(linked, /这会让路线位置不对/);
