@@ -71,3 +71,12 @@ test("device lab shows requests crossing the OS and driver boundary", () => {
   assert.match(lab, /硬件设备/);
   assert.match(lab, /队首/);
 });
+
+test("scheduler visualizes the round-robin pointer, time slices, and history", () => {
+  const lab = readFileSync(new URL("components/lessons/advanced/os/SchedulingLab.tsx", root), "utf8");
+  assert.match(lab, /schedule-turntable/);
+  assert.match(lab, /schedule-task--next/);
+  assert.match(lab, /time-slice/);
+  assert.match(lab, /schedule-history/);
+  assert.match(lab, /调度指针/);
+});
