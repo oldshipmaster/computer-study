@@ -34,4 +34,10 @@ test("the transfer lab visualizes direction, copies, versions, and permissions",
   assert.match(source, /云端副本/);
   assert.match(source, /访问权限/);
   assert.match(source, /lastAction/);
+  assert.match(source, /transfer-history/);
+  assert.match(source, /版本不同/);
+  assert.match(source, /再次修改，制造版本差/);
+  assert.match(source, /phase !== 0/);
+  assert.match(source, /phase !== 5/);
+  assert.match(source, /完成云端副本实验/);
 });
