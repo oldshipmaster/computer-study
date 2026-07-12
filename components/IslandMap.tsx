@@ -43,9 +43,12 @@ interface CourseCardProps {
   course: Course;
   state: CourseCardState;
   onStartCourse: (courseId: string) => void;
+  confidence?: CourseConfidence;
 }
 
-function CourseCard({ course, state, onStartCourse }: CourseCardProps) {
+const CONFIDENCE_LABELS: Record<CourseConfidence, string> = { confident: "🙂 会讲", practice: "↻ 再练", help: "🙋 需帮助" };
+
+function CourseCard({ course, state, onStartCourse, confidence }: CourseCardProps) {
   const available = course.playable;
   const completed = state === "completed";
   const status = completed ? "已完成" : state === "available" ? "开始任务" : "即将开放";
@@ -74,6 +77,7 @@ function CourseCard({ course, state, onStartCourse }: CourseCardProps) {
           <span>{course.skill}</span>
           <span>{course.minutes} 分钟</span>
           <span>{DIFFICULTY_LABELS[course.difficulty]}</span>
+          {completed && confidence ? <span className={`course-confidence course-confidence--${confidence}`}>{CONFIDENCE_LABELS[confidence]}</span> : null}
         </span>
       </button>
     </li>
@@ -296,6 +300,7 @@ export function IslandMap({
                     {visibleIslandCourses.map((course) => (
                       <CourseCard
                         course={course}
+                        confidence={confidenceByCourse[course.id]}
                         key={course.id}
                         onStartCourse={onStartCourse}
                         state={getCourseCardState(course, completedCourseIds)}

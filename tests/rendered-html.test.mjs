@@ -204,6 +204,9 @@ test("collects a private structured confidence check for parent review", () => {
   assert.match(parentSource, /打开这课/);
   assert.match(parentSource, /buildConfidenceStats/);
   assert.match(parentSource, /未自评/);
+  const mapSource = sourceFile("components/IslandMap.tsx");
+  assert.match(mapSource, /CONFIDENCE_LABELS/);
+  assert.match(mapSource, /course-confidence--\$\{confidence\}/);
 });
 
 test("offers child-led review from structured confidence choices", () => {

@@ -1070,6 +1070,10 @@ input {
 .course-card--available:focus-visible {
   animation: none;
 }
+.course-confidence { border: 1px solid currentColor; border-radius: 999px; padding: 2px 7px; font-weight: 850; }
+.course-confidence--confident { color: #23664c; background: #e8f8ee; }
+.course-confidence--practice { color: #7a5600; background: #fff3c9; }
+.course-confidence--help { color: #873c2b; background: #ffe7df; }
 
 .course-card--complete {
   border-color: var(--mint-deep);
