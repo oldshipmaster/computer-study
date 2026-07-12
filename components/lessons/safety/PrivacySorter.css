@@ -1,0 +1,26 @@
+.privacy-mission { padding: 1.4rem; border-radius: 1.5rem; background: #e9f8ee; }
+.privacy-rule { display: grid; min-height: 13rem; place-items: center; }
+.privacy-rule p { padding: 1rem; border: 3px solid #24734a; border-radius: 1rem; background: white; color: #15384e; font-weight: 850; }
+.privacy-sorter { display: grid; gap: 1rem; color: #15384e; }
+.privacy-lens-rule { margin: 0; padding: .7rem; border-radius: .65rem; background: #fff4cf; }
+.privacy-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: .6rem; }
+.privacy-cards button { min-height: 4rem; border: 2px solid #24734a; border-radius: .7rem; background: white; color: #15384e; font-weight: 750; }
+.privacy-cards button[aria-pressed="true"] { background: #fff3bd; }
+.privacy-risk-lenses { display: grid; grid-template-columns: repeat(4, 1fr); gap: .5rem; }
+.privacy-risk-lenses span { display: grid; justify-items: center; gap: .15rem; padding: .55rem; border: 2px dashed #8ba6b5; border-radius: .6rem; background: #edf2f4; }
+.privacy-risk-lenses span.is-risk { border-style: solid; border-color: #9b3039; background: #ffe4e1; }
+.privacy-risk-lenses b { font-size: 1.3rem; }
+.privacy-risk-lenses small { font-weight: 850; }
+.privacy-risk-lenses em { font-size: .62rem; font-style: normal; }
+.privacy-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: .7rem; }
+.privacy-actions button { min-height: 4rem; border: 3px solid #15384e; border-radius: .8rem; background: white; color: #15384e; font-weight: 850; }
+.privacy-summary { display: grid; justify-items: stretch; gap: .6rem; padding: .8rem; border: 3px solid #24734a; border-radius: .8rem; background: #fff; }
+.privacy-summary > span, .privacy-summary h2 { justify-self: center; margin: 0; }
+.privacy-summary > span { font-size: 2.2rem; }
+.privacy-summary-row { display: grid; grid-template-columns: 8rem 1fr; gap: .6rem; padding: .55rem; border-radius: .55rem; }
+.privacy-summary-row--share { background: #dff7e8; }
+.privacy-summary-row--ask { background: #fff3bd; }
+.privacy-summary-row--stop { background: #ffe4e1; }
+.privacy-summary-row ul { display: flex; flex-wrap: wrap; gap: .25rem 1rem; margin: 0; padding-left: 1rem; }
+.privacy-sorter aside { padding: .8rem; border-radius: .7rem; background: #fff0df; font-weight: 750; }
+@media (max-width: 35rem) { .privacy-actions, .privacy-risk-lenses { grid-template-columns: repeat(2, 1fr); } .privacy-summary-row { grid-template-columns: 1fr; } }
