@@ -70,6 +70,7 @@ export async function generateMetadata(): Promise<Metadata> {
     icons: {
       icon: "/favicon.svg",
       shortcut: "/favicon.svg",
+      apple: "/icon-192.png",
     },
     openGraph: {
       type: "website",
