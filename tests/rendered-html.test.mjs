@@ -259,6 +259,12 @@ test("keeps the playable keyboard-flight lesson contract in source", () => {
   assert.match(source, /addEventListener\(["']keydown["']/);
 });
 
+test("announces only the eight and ten minute pacing milestones", () => {
+  const source = sourceFile("components/lessons/LessonSessionClock.tsx");
+  assert.match(source, /clock\.phase === "explore" \? "off" : "polite"/);
+  assert.match(source, /aria-atomic="true"/);
+});
+
 test("keeps the guarded parent-area contract in source", () => {
   const parentSource = sourceFile("components/ParentPanel.tsx");
   const appSource = sourceFile("components/BitIslandApp.tsx");
