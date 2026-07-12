@@ -4,8 +4,8 @@ import { DICTIONARY_ENTRIES, searchDictionary } from "../lib/computer-dictionary
 import { COURSES, ISLANDS } from "../lib/course-data.ts";
 
 test("teaches five child-readable terms for every island", () => {
-  assert.equal(DICTIONARY_ENTRIES.length, 45);
-  assert.equal(new Set(DICTIONARY_ENTRIES.map((entry) => entry.id)).size, 45);
+  assert.equal(DICTIONARY_ENTRIES.length, 65);
+  assert.equal(new Set(DICTIONARY_ENTRIES.map((entry) => entry.id)).size, 65);
   for (const island of ISLANDS) {
     const entries = DICTIONARY_ENTRIES.filter((entry) => entry.islandId === island.id);
     assert.equal(entries.length, 5, island.name);
@@ -34,7 +34,7 @@ test("keeps every explanation short and free of personal-data prompts", () => {
 
 test("searches Chinese, English, explanations, and examples", () => {
   assert.deepEqual(searchDictionary("循环").map((entry) => entry.id), ["loop"]);
-  assert.deepEqual(searchDictionary("cpu").map((entry) => entry.id), ["cpu-memory-storage"]);
+  assert.deepEqual(searchDictionary("cpu").map((entry) => entry.id), ["cpu-memory-storage", "instruction-cycle"]);
   assert.ok(searchDictionary("网络").length >= 3);
   assert.deepEqual(searchDictionary("  Ai  ").map((entry) => entry.id), ["ai"]);
   assert.deepEqual(searchDictionary("it").map((entry) => entry.id), []);

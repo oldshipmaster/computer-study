@@ -27,6 +27,14 @@ export const REVIEW_QUESTIONS: ReviewQuestion[] = [
   { id: "future-2", islandId: "future-station", islandName: "未来协作站", prompt: "给只需查看作品的同学共享时，选什么权限？", options: ["查看权限", "管理所有账号", "公开编辑"], answer: "查看权限", explanation: "最小权限只提供完成任务所需的能力，降低误改和泄露风险。" },
   { id: "spaceport-1", islandId: "code-spaceport", islandName: "代码星港", prompt: "分数从0开始，连续收到三次“碰到星星”事件，每次加1，最后是多少？", options: ["3", "1", "0"], answer: "3", explanation: "每次事件都运行处理器，变量基于当前值连续更新。" },
   { id: "spaceport-2", islandId: "code-spaceport", islandName: "代码星港", prompt: "三处都要执行相同的画星步骤，怎样更容易维护？", options: ["定义画星函数并复用", "复制后分别乱改", "删除两处"], answer: "定义画星函数并复用", explanation: "函数把共同逻辑集中在一处，调用时可以重复使用。" },
+  { id: "structures-1", islandId: "data-structures", islandName: "数据结构群岛", prompt: "排队登船时，哪一种结构最符合先来先上？", options: ["队列", "栈", "随机选择"], answer: "队列", explanation: "队列遵守先进先出，先加入的人会先离开队列。" },
+  { id: "structures-2", islandId: "data-structures", islandName: "数据结构群岛", prompt: "要表示城市和道路组成的复杂连接，最适合什么结构？", options: ["图", "一个数字", "一张空卡"], answer: "图", explanation: "图用节点表示城市、用边表示道路，适合描述多对多连接。" },
+  { id: "algorithms-1", islandId: "algorithm-arena", islandName: "算法竞技场", prompt: "在已经排好序的100张卡片中寻找数字，哪种方法通常比较更少？", options: ["二分搜索", "每次从头逐个找", "随机猜"], answer: "二分搜索", explanation: "二分搜索每次舍弃一半不可能的范围，资料越多优势越明显。" },
+  { id: "algorithms-2", islandId: "algorithm-arena", islandName: "算法竞技场", prompt: "比较两个算法是否高效，可以先记录什么？", options: ["完成需要的步骤数", "按钮颜色", "名字长短"], answer: "完成需要的步骤数", explanation: "步骤数能帮助我们用证据比较不同方法的工作量。" },
+  { id: "os-1", islandId: "os-control-tower", islandName: "操作系统控制塔", prompt: "任务等待键盘输入时，进程最合适的状态是什么？", options: ["等待", "运行", "已经删除"], answer: "等待", explanation: "任务暂时缺少输入，操作系统让它等待，把处理器交给其他任务。" },
+  { id: "os-2", islandId: "os-control-tower", islandName: "操作系统控制塔", prompt: "一个任务结束后，分给它的内存应该怎样处理？", options: ["释放给其他任务", "永远占着", "变成打印纸"], answer: "释放给其他任务", explanation: "内存空间有限，任务结束后释放才能被后续任务重新使用。" },
+  { id: "depths-1", islandId: "systems-network-depths", islandName: "系统与网络深海站", prompt: "CPU 完成一条指令时，正确顺序是什么？", options: ["取指、译码、执行、写回", "写回、关机、取指", "只执行不取指"], answer: "取指、译码、执行、写回", explanation: "处理器先取得指令并理解它，再执行操作并保存结果。" },
+  { id: "depths-2", islandId: "systems-network-depths", islandName: "系统与网络深海站", prompt: "发送方一直没收到某个数据包的确认，可靠传输会怎么做？", options: ["超时后重传", "假装已经收到", "删除所有网络"], answer: "超时后重传", explanation: "序号、确认和超时重传共同帮助数据完整到达。" },
 ];
 
 export const REVIEW_REQUIREMENTS: Record<string, string> = {
@@ -39,6 +47,10 @@ export const REVIEW_REQUIREMENTS: Record<string, string> = {
   "creative-1": "pixel-art", "creative-2": "data-table",
   "future-1": "email-message", "future-2": "digital-project",
   "spaceport-1": "events-handlers", "spaceport-2": "game-design",
+  "structures-1": "stack-queue-dock", "structures-2": "graph-routes",
+  "algorithms-1": "binary-search", "algorithms-2": "algorithm-efficiency",
+  "os-1": "program-process", "os-2": "memory-allocation",
+  "depths-1": "instruction-cycle", "depths-2": "reliable-transfer",
 };
 
 export interface ReviewState {

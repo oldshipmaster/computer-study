@@ -1,3 +1,5 @@
+import { ADVANCED_ISLAND_COURSE_IDS } from "./advanced-foundations/course-ids.ts";
+
 export interface Course {
   id: string;
   islandId: string;
@@ -327,6 +329,26 @@ export const COURSES: Course[] = [
   { id: "functions-tools", islandId: "code-spaceport", order: 43, title: "函数工具箱", summary: "定义、调用、参数、返回与复用。", skill: "函数", minutes: 9, difficulty: 3, playable: true },
   { id: "boolean-logic", islandId: "code-spaceport", order: 44, title: "真假逻辑门", summary: "并且、或者、不是与组合条件。", skill: "布尔逻辑", minutes: 9, difficulty: 3, playable: true },
   { id: "game-design", islandId: "code-spaceport", order: 45, title: "小游戏设计总装", summary: "目标、事件、变量、循环与试玩。", skill: "游戏设计", minutes: 10, difficulty: 3, playable: true },
+  { id: "array-lockers", islandId: "data-structures", order: 46, title: "数组储物柜", summary: "用连续编号快速找到资料。", skill: "数组", minutes: 9, difficulty: 2, playable: true },
+  { id: "linked-treasure", islandId: "data-structures", order: 47, title: "链表寻宝队", summary: "跟随下一站线索连接资料。", skill: "链表", minutes: 9, difficulty: 2, playable: true },
+  { id: "stack-queue-dock", islandId: "data-structures", order: 48, title: "栈与队列码头", summary: "比较后进先出和先进先出。", skill: "栈与队列", minutes: 9, difficulty: 2, playable: true },
+  { id: "tree-library", islandId: "data-structures", order: 49, title: "树形图书馆", summary: "从根节点沿分支整理资料。", skill: "树结构", minutes: 9, difficulty: 3, playable: true },
+  { id: "graph-routes", islandId: "data-structures", order: 50, title: "图结构航线", summary: "用节点和边表示复杂连接。", skill: "图结构", minutes: 9, difficulty: 3, playable: true },
+  { id: "linear-search", islandId: "algorithm-arena", order: 51, title: "逐个搜索赛", summary: "从头开始逐项寻找目标。", skill: "线性搜索", minutes: 9, difficulty: 2, playable: true },
+  { id: "binary-search", islandId: "algorithm-arena", order: 52, title: "对半搜索赛", summary: "在有序资料中不断缩小范围。", skill: "二分搜索", minutes: 9, difficulty: 3, playable: true },
+  { id: "bubble-sort", islandId: "algorithm-arena", order: 53, title: "冒泡排序池", summary: "比较邻居并交换错误顺序。", skill: "排序算法", minutes: 9, difficulty: 3, playable: true },
+  { id: "task-decomposition", islandId: "algorithm-arena", order: 54, title: "任务拆解工坊", summary: "先完成依赖，再组合大任务。", skill: "任务分解", minutes: 9, difficulty: 2, playable: true },
+  { id: "algorithm-efficiency", islandId: "algorithm-arena", order: 55, title: "算法效率擂台", summary: "比较不同方法需要多少步。", skill: "算法效率", minutes: 10, difficulty: 3, playable: true },
+  { id: "program-process", islandId: "os-control-tower", order: 56, title: "程序变进程", summary: "观察程序运行时的状态变化。", skill: "进程状态", minutes: 9, difficulty: 2, playable: true },
+  { id: "cpu-scheduling", islandId: "os-control-tower", order: 57, title: "CPU 调度台", summary: "让多个任务轮流使用处理器。", skill: "CPU 调度", minutes: 10, difficulty: 3, playable: true },
+  { id: "memory-allocation", islandId: "os-control-tower", order: 58, title: "内存分配站", summary: "为任务申请、使用和释放内存。", skill: "内存管理", minutes: 9, difficulty: 3, playable: true },
+  { id: "file-system-tree", islandId: "os-control-tower", order: 59, title: "文件系统树", summary: "理解路径如何穿过层层目录。", skill: "文件系统", minutes: 9, difficulty: 2, playable: true },
+  { id: "device-coordination", islandId: "os-control-tower", order: 60, title: "设备协调队", summary: "排队共享打印机等外部设备。", skill: "设备管理", minutes: 9, difficulty: 3, playable: true },
+  { id: "instruction-cycle", islandId: "systems-network-depths", order: 61, title: "指令周期潜航", summary: "取指、译码、执行再写回。", skill: "计算机组成", minutes: 9, difficulty: 3, playable: true },
+  { id: "cache-station", islandId: "systems-network-depths", order: 62, title: "高速缓存中转站", summary: "用更近的存储加快访问。", skill: "存储层次", minutes: 9, difficulty: 3, playable: true },
+  { id: "network-layers", islandId: "systems-network-depths", order: 63, title: "网络分层潜水艇", summary: "消息逐层包装，再逐层拆开。", skill: "网络分层", minutes: 9, difficulty: 3, playable: true },
+  { id: "routing-maze", islandId: "systems-network-depths", order: 64, title: "路由迷宫", summary: "比较路线代价并寻找更短路径。", skill: "路由算法", minutes: 10, difficulty: 3, playable: true },
+  { id: "reliable-transfer", islandId: "systems-network-depths", order: 65, title: "可靠传输救援", summary: "用编号、确认和重传防止丢包。", skill: "可靠传输", minutes: 10, difficulty: 3, playable: true },
 ];
 
 export const ISLANDS: Island[] = [
@@ -419,6 +441,10 @@ export const ISLANDS: Island[] = [
     courseIds: ["email-message", "online-collaboration", "ai-helper", "verify-ai", "digital-project"],
   },
   { id: "code-spaceport", name: "代码星港", subtitle: "用事件、变量和函数造游戏", accent: "yellow", icon: "🧩", courseIds: ["events-handlers", "variables-score", "functions-tools", "boolean-logic", "game-design"] },
+  { id: "data-structures", name: "数据结构群岛", subtitle: "选择合适的方式组织信息", accent: "mint", icon: "🗂️", courseIds: [...ADVANCED_ISLAND_COURSE_IDS["data-structures"]] },
+  { id: "algorithm-arena", name: "算法竞技场", subtitle: "比较解决问题的步骤和效率", accent: "coral", icon: "🏁", courseIds: [...ADVANCED_ISLAND_COURSE_IDS["algorithm-arena"]] },
+  { id: "os-control-tower", name: "操作系统控制塔", subtitle: "协调任务、内存、文件和设备", accent: "yellow", icon: "🎛️", courseIds: [...ADVANCED_ISLAND_COURSE_IDS["os-control-tower"]] },
+  { id: "systems-network-depths", name: "系统与网络深海站", subtitle: "潜入指令、存储和网络深处", accent: "sky", icon: "🌊", courseIds: [...ADVANCED_ISLAND_COURSE_IDS["systems-network-depths"]] },
 ];
 
 export const RECOMMENDED_ROUTE_IDS: string[] = Array.from(

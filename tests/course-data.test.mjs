@@ -57,14 +57,18 @@ const COURSE_TITLES = [
   "函数工具箱",
   "真假逻辑门",
   "小游戏设计总装",
+  "数组储物柜", "链表寻宝队", "栈与队列码头", "树形图书馆", "图结构航线",
+  "逐个搜索赛", "对半搜索赛", "冒泡排序池", "任务拆解工坊", "算法效率擂台",
+  "程序变进程", "CPU 调度台", "内存分配站", "文件系统树", "设备协调队",
+  "指令周期潜航", "高速缓存中转站", "网络分层潜水艇", "路由迷宫", "可靠传输救援",
 ];
 
-test("publishes nine islands and forty-five ordered lessons", () => {
-  assert.equal(ISLANDS.length, 9);
-  assert.equal(COURSES.length, 45);
+test("publishes thirteen islands and sixty-five ordered lessons", () => {
+  assert.equal(ISLANDS.length, 13);
+  assert.equal(COURSES.length, 65);
   assert.deepEqual(
     COURSES.map((course) => course.order),
-    Array.from({ length: 45 }, (_, index) => index + 1),
+    Array.from({ length: 65 }, (_, index) => index + 1),
   );
   assert.deepEqual(COURSES.map((course) => course.title), COURSE_TITLES);
   assert.ok(ISLANDS.every((island) => island.courseIds.length === 5));
@@ -81,7 +85,7 @@ test("derives public curriculum facts from the live catalog", () => {
 });
 
 test("publishes only lessons with complete interactive implementations", () => {
-  assert.equal(COURSES.filter((course) => course.playable).length, 45);
+  assert.equal(COURSES.filter((course) => course.playable).length, 65);
   assert.equal(getCourse("input-process-output")?.playable, true);
   assert.equal(getCourse("cpu-memory-storage")?.playable, true);
   assert.equal(getCourse("bits-and-data")?.playable, true);
@@ -182,16 +186,18 @@ test("finds the next unfinished playable lesson without hiding replayable cards"
   assert.equal(getCourseCardState(getCourse("keyboard-flight"), ["keyboard-flight"]), "completed");
 });
 
-test("interleaves all nine domains in five learning rounds", () => {
-  assert.equal(RECOMMENDED_ROUTE_IDS.length, 45);
-  assert.equal(new Set(RECOMMENDED_ROUTE_IDS).size, 45);
-  assert.deepEqual(RECOMMENDED_ROUTE_IDS.slice(0, 9), [
+test("interleaves all thirteen domains in five learning rounds", () => {
+  assert.equal(RECOMMENDED_ROUTE_IDS.length, 65);
+  assert.equal(new Set(RECOMMENDED_ROUTE_IDS).size, 65);
+  assert.deepEqual(RECOMMENDED_ROUTE_IDS.slice(0, 13), [
     "keyboard-flight", "file-home", "instruction-order", "password-guardian",
     "input-process-output", "network-journey", "pixel-art", "email-message", "events-handlers",
+    "array-lockers", "linear-search", "program-process", "instruction-cycle",
   ]);
-  assert.deepEqual(RECOMMENDED_ROUTE_IDS.slice(-9), [
+  assert.deepEqual(RECOMMENDED_ROUTE_IDS.slice(-13), [
     "program-landing", "learning-backpack", "bug-catcher", "light-bit-island",
     "troubleshoot-machine", "network-troubleshooting", "data-table", "digital-project", "game-design",
+    "graph-routes", "algorithm-efficiency", "device-coordination", "reliable-transfer",
   ]);
   assert.deepEqual(new Set(RECOMMENDED_ROUTE_IDS), new Set(COURSES.map((course) => course.id)));
 });

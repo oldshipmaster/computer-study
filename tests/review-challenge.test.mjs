@@ -10,13 +10,13 @@ import {
 import { COURSES } from "../lib/course-data.ts";
 
 test("covers every island with two scenario questions", () => {
-  assert.equal(REVIEW_QUESTIONS.length, 18);
+  assert.equal(REVIEW_QUESTIONS.length, 26);
   const counts = REVIEW_QUESTIONS.reduce((result, question) => {
     result[question.islandId] = (result[question.islandId] ?? 0) + 1;
     return result;
   }, {});
-  assert.deepEqual(Object.values(counts), [2, 2, 2, 2, 2, 2, 2, 2, 2]);
-  assert.equal(new Set(REVIEW_QUESTIONS.map((question) => question.id)).size, 18);
+  assert.deepEqual(Object.values(counts), Array(13).fill(2));
+  assert.equal(new Set(REVIEW_QUESTIONS.map((question) => question.id)).size, 26);
 });
 
 test("wrong answers explain the idea without advancing", () => {
@@ -35,7 +35,7 @@ test("unlocks only review questions backed by completed lessons", () => {
   assert.deepEqual(getAvailableReviewQuestions([]), []);
   assert.deepEqual(getAvailableReviewQuestions(["keyboard-flight"]).map((question) => question.id), ["launch-1"]);
   assert.deepEqual(getAvailableReviewQuestions(["keyboard-flight", "program-landing"]).map((question) => question.id), ["launch-1", "launch-2"]);
-  assert.equal(getAvailableReviewQuestions(COURSES.map((course) => course.id)).length, 18);
+  assert.equal(getAvailableReviewQuestions(COURSES.map((course) => course.id)).length, 26);
   assert.deepEqual(new Set(Object.keys(REVIEW_REQUIREMENTS)), new Set(REVIEW_QUESTIONS.map((question) => question.id)));
   assert.ok(Object.values(REVIEW_REQUIREMENTS).every((id) => COURSES.some((course) => course.id === id)));
 });
@@ -47,8 +47,8 @@ test("correct answers advance once and complete after the final question", () =>
   }
 
   assert.equal(state.completed, true);
-  assert.equal(state.score, 18);
-  assert.equal(state.index, 17);
+  assert.equal(state.score, 26);
+  assert.equal(state.index, 25);
 });
 
 test("labels a carried explanation as belonging to the previous question", () => {
@@ -59,7 +59,7 @@ test("labels a carried explanation as belonging to the previous question", () =>
 });
 
 test("answering after completion is safe and deterministic", () => {
-  const state = { ...createReviewState(), index: 17, score: 18, completed: true };
+  const state = { ...createReviewState(), index: 25, score: 26, completed: true };
   assert.deepEqual(answerReviewQuestion(state, 0), state);
 });
 

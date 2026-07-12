@@ -14,8 +14,8 @@ test("keeps every complete lesson inside the promised 8 to 10 minute session", (
   }
 });
 
-test("owns every unique course exactly once across nine five-course islands", () => {
-  assert.equal(new Set(COURSES.map((course) => course.id)).size, 45);
+test("owns every unique course exactly once across thirteen five-course islands", () => {
+  assert.equal(new Set(COURSES.map((course) => course.id)).size, 65);
   const islandCourseIds = ISLANDS.flatMap((island) => {
     assert.equal(island.courseIds.length, 5);
     assert.equal(new Set(island.courseIds).size, 5);
@@ -26,11 +26,11 @@ test("owns every unique course exactly once across nine five-course islands", ()
 });
 
 test("alternates domains throughout all five recommended learning rounds", () => {
-  assert.equal(RECOMMENDED_ROUTE_IDS.length, 45);
+  assert.equal(RECOMMENDED_ROUTE_IDS.length, 65);
   const route = RECOMMENDED_ROUTE_IDS.map((id) => COURSES.find((course) => course.id === id));
   assert.ok(route.every(Boolean));
   for (let index = 1; index < route.length; index += 1) assert.notEqual(route[index].islandId, route[index - 1].islandId);
-  for (let round = 0; round < 5; round += 1) assert.equal(new Set(route.slice(round * 9, round * 9 + 9).map((course) => course.islandId)).size, 9);
+  for (let round = 0; round < 5; round += 1) assert.equal(new Set(route.slice(round * 13, round * 13 + 13).map((course) => course.islandId)).size, 13);
 });
 
 test("gives every lesson three objectives and one parent conversation prompt", () => {
