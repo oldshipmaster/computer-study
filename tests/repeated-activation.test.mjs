@@ -31,5 +31,6 @@ test("every staged case lab guards its advancing buttons", () => {
     const source = readFileSync(new URL(relativePath, safetyRoot), "utf8");
     assert.match(source, /isRepeatedPointerActivation/);
     assert.match(source, /event\.detail/);
+    assert.match(source, /aria-live="polite"/);
   }
 });
