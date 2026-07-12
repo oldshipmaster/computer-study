@@ -1,0 +1,23 @@
+.clinic-mission { padding: 1.4rem; border-radius: 1.5rem; background: #fff0df; }
+.clinic-demo { display: grid; min-height: 13rem; place-items: center; }
+.clinic-demo p { padding: 1rem; border: 3px solid #8a4937; border-radius: 1rem; background: white; color: #15384e; font-weight: 850; }
+.device-clinic { display: grid; gap: 1rem; color: #15384e; }
+.device-clinic section { padding: 1rem; border: 3px solid #8a4937; border-radius: .8rem; background: white; }
+.clinic-case > span { font-weight: 850; }
+.clinic-case h2 { margin: .35rem 0; }
+.diagnosis-evidence-chain { display: grid; grid-template-columns: repeat(4, 1fr); gap: .7rem; margin: 0; padding: 0; list-style: none; }
+.diagnosis-evidence-chain li { position: relative; display: grid; gap: .2rem; align-content: center; min-height: 6rem; padding: .55rem; border: 2px dashed #9a837b; border-radius: .65rem; background: #f4efed; text-align: center; }
+.diagnosis-evidence-chain li:not(:last-child)::after { position: absolute; top: 50%; right: -.65rem; z-index: 1; content: "→"; color: #8a4937; font-weight: 900; transform: translateY(-50%); }
+.diagnosis-evidence-chain li.is-complete { border-style: solid; border-color: #24734a; background: #dff7e8; }
+.diagnosis-evidence-chain small { color: #6e5b54; }
+.diagnosis-evidence-chain strong { font-size: .72rem; }
+.clinic-checks { display: grid; grid-template-columns: repeat(2, 1fr); gap: .6rem; }
+.clinic-checks button { min-height: 3.6rem; border: 2px solid #15384e; border-radius: .7rem; background: white; color: #15384e; font-weight: 750; }
+.clinic-checks button[aria-pressed="true"] { background: #fff3bd; }
+.clinic-attempts { max-height: 9rem; overflow: auto; padding: .65rem; border: 2px dashed #8a4937; border-radius: .65rem; background: #fff; }
+.clinic-attempts p, .clinic-attempts ol { margin: .35rem 0 0; }
+.device-clinic section.clinic-finish { display: grid; justify-items: center; gap: .5rem; text-align: center; }
+.clinic-finish > span { font-size: 2.3rem; }
+.clinic-finish h2, .clinic-finish p { margin: 0; }
+.device-clinic .clinic-safety { padding: .8rem; border-radius: .7rem; background: #ffe0d5; font-weight: 850; }
+@media (max-width: 38rem) { .diagnosis-evidence-chain, .clinic-checks { grid-template-columns: 1fr; } .diagnosis-evidence-chain li:not(:last-child)::after { top: auto; right: auto; bottom: -.75rem; left: 50%; transform: translateX(-50%) rotate(90deg); } }
