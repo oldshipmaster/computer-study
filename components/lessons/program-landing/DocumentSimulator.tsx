@@ -1,11 +1,12 @@
 import { useEffect } from "react";
 import type { DocumentAction, DocumentState } from "@/lib/program-landing-lesson";
+import { matchesPrimaryShortcut } from "@/lib/keyboard-shortcuts";
 interface Props { state: DocumentState; onAction: (action: DocumentAction) => void; }
 
 export function DocumentSimulator({ state, onAction }: Props) {
   useEffect(() => {
     function saveWithKeyboard(event: KeyboardEvent) {
-      if (!state.open || event.key.toLowerCase() !== "s" || !(event.ctrlKey || event.metaKey)) return;
+      if (!state.open || !matchesPrimaryShortcut(event, "s")) return;
       event.preventDefault();
       onAction({ type: "save", location: "任务文件夹" });
     }

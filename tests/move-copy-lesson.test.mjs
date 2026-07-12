@@ -27,7 +27,7 @@ test("undo restores the previous file locations", () => {
 
 test("the workspace teaches undo without stealing text editing shortcuts", () => {
   const source = readFileSync(new URL("../components/lessons/files/MoveCopyWorkspace.tsx", import.meta.url), "utf8");
-  assert.match(source, /event\.key\.toLowerCase\(\) !== "z"/);
+  assert.match(source, /matchesPrimaryShortcut\(event, "z"\)/);
   assert.match(source, /input, textarea, \[contenteditable/);
   assert.match(source, /event\.preventDefault\(\)/);
   assert.match(source, /Ctrl\/⌘/);

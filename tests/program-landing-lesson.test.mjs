@@ -38,8 +38,7 @@ test("save-and-close persists while discard is explicit", () => {
 
 test("the virtual document teaches a safe save shortcut", () => {
   const source = readFileSync(new URL("../components/lessons/program-landing/DocumentSimulator.tsx", import.meta.url), "utf8");
-  assert.match(source, /event\.key\.toLowerCase\(\) !== "s"/);
-  assert.match(source, /event\.ctrlKey \|\| event\.metaKey/);
+  assert.match(source, /matchesPrimaryShortcut\(event, "s"\)/);
   assert.match(source, /event\.preventDefault\(\)/);
   assert.match(source, /Ctrl\/⌘/);
   assert.match(source, /快捷保存/);

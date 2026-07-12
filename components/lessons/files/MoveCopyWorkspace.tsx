@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import type { MoveCopyAction, MoveCopyState } from "@/lib/move-copy-lesson";
+import { matchesPrimaryShortcut } from "@/lib/keyboard-shortcuts";
 interface Props { state: MoveCopyState; onAction: (action: MoveCopyAction) => void; }
 const FOLDERS = ["收件箱", "今日作业", "图片"];
 
@@ -8,7 +9,7 @@ export function MoveCopyWorkspace({ state, onAction }: Props) {
   useEffect(() => {
     function undoWithKeyboard(event: KeyboardEvent) {
       const target = event.target;
-      if (!state.previousFiles || event.key.toLowerCase() !== "z" || !(event.ctrlKey || event.metaKey) || (target instanceof Element && Boolean(target.closest("input, textarea, [contenteditable='true']")))) return;
+      if (!state.previousFiles || !matchesPrimaryShortcut(event, "z") || (target instanceof Element && Boolean(target.closest("input, textarea, [contenteditable='true']")))) return;
       event.preventDefault();
       onAction({ type: "undo" });
     }
