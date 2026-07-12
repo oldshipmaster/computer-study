@@ -216,6 +216,7 @@ test("offers child-led review from structured confidence choices", () => {
   assert.match(queueSource, /我的加练清单/);
   assert.match(queueSource, /不是错题榜/);
   assert.match(queueSource, /开始加练/);
+  assert.match(queueSource, /还有 \{remaining\} 课在加练清单里/);
 });
 
 test("reads dictionary explanations locally while respecting sound settings", () => {
