@@ -16,6 +16,9 @@ test("advanced labs finish with a reasoned explain-back choice", async () => {
   assert.match(gate, /aria-pressed/);
   assert.match(gate, /答对了/);
   assert.match(gate, /再想一想/);
+  assert.match(gate, /useLayoutEffect/);
+  assert.match(gate, /headingRef\.current\?\.focus/);
+  assert.match(gate, /tabIndex=\{-1\}/);
   for (const wrapper of [data, algorithms, os, systems]) {
     assert.match(wrapper, /labSolved/);
     assert.match(wrapper, /ConceptReflectionGate/);
