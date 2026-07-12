@@ -1,7 +1,7 @@
 "use client";
 
 import { useLayoutEffect, useRef, useState } from "react";
-import { COURSES } from "@/lib/course-data";
+import { COURSES, CURRICULUM_FACTS } from "@/lib/course-data";
 import { LESSON_DEFINITIONS } from "@/components/lessons/lesson-registry";
 import { summarizeIslandProgress } from "@/lib/parent-progress-summary";
 import { getNextCourseGuide } from "@/lib/curriculum-guide";
@@ -214,12 +214,12 @@ export function ParentPanel({
             <div className="parent-stat-grid">
               <div><strong>{progressStats.percent}%</strong><span>总体完成</span></div>
               <div><strong>{progressStats.completedMinutes}</strong><span>已探索分钟</span></div>
-              <div><strong>{progressStats.completedIslands} / 9</strong><span>岛屿印章</span></div>
+              <div><strong>{progressStats.completedIslands} / {CURRICULUM_FACTS.islandCount}</strong><span>岛屿印章</span></div>
               <div><strong>{progressStats.remainingRounds}</strong><span>约剩周数 · 每周5次</span></div>
             </div>
 
             <div className="parent-badge-summary">
-              <h3>九岛进度</h3>
+              <h3>{CURRICULUM_FACTS.islandCount} 岛进度</h3>
               <ul className="parent-island-progress">
                 {islandProgress.map((island) => (
                   <li key={island.id}>

@@ -272,7 +272,7 @@ test("keeps the guarded parent-area contract in source", () => {
     assert.match(combinedSource, new RegExp(label));
   }
 
-  assert.match(parentSource, /九岛进度/);
+  assert.match(parentSource, /CURRICULUM_FACTS\.islandCount.*岛进度/);
   assert.doesNotMatch(parentSource, /四岛进度|八岛进度/);
 
   assert.match(appSource, /1_500/);

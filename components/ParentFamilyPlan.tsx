@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { buildLearningPlan } from "@/lib/learning-plan";
 import { CURRICULUM_GUIDE } from "@/lib/curriculum-guide";
+import { CURRICULUM_FACTS } from "@/lib/course-data";
 
 export function ParentFamilyPlan({ completedCourseIds, resume }: { completedCourseIds: string[]; resume: { courseId: string; stage: number } | null }) {
   const plan = buildLearningPlan(completedCourseIds, 5, resume);
@@ -23,7 +24,7 @@ export function ParentFamilyPlan({ completedCourseIds, resume }: { completedCour
 
   return <section className="family-plan" aria-labelledby="family-plan-heading">
     <header><div><p className="section-kicker">家庭陪学卡</p><h2 id="family-plan-heading">接下来五次 · 一次 8–10 分钟</h2></div>{!plan.complete ? <button onClick={printPlan} type="button">打印五次学习卡</button> : null}</header>
-    {plan.complete ? <p>45 课已经完成。请孩子任选一课重玩，再用“是什么、为什么、还能怎么做”三句话讲给家长听。</p> : <ol>{plan.sessions.map((session) => {
+    {plan.complete ? <p>{CURRICULUM_FACTS.courseCount} 课已经完成。请孩子任选一课重玩，再用“是什么、为什么、还能怎么做”三句话讲给家长听。</p> : <ol>{plan.sessions.map((session) => {
       const guide = CURRICULUM_GUIDE[session.course.id];
       return <li key={session.course.id}>
         <div><span>第 {session.sessionNumber} 次</span><strong>第 {session.course.order} 课 · {session.course.title}</strong><small>{session.course.minutes} 分钟 · {session.course.skill}</small></div>
