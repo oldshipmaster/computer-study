@@ -3,13 +3,34 @@ import test from "node:test";
 import {
   accessMemoryHierarchy,
   advanceInstructionCycle,
+  advanceToyCpu,
   advanceReliableTransfer,
   assembleTransfer,
   createReliableTransfer,
+  createToyCpu,
   decapsulateMessage,
   encapsulateMessage,
   shortestRoute,
 } from "../lib/advanced-foundations/systems-network.ts";
+
+test("toy CPU fetches, decodes, executes, and writes a visible register result", () => {
+  let cpu = createToyCpu();
+  assert.equal(cpu.phase, "fetch");
+  assert.equal(cpu.instruction, null);
+  cpu = advanceToyCpu(cpu);
+  assert.equal(cpu.phase, "decode");
+  assert.equal(cpu.instruction, "ADD A B");
+  cpu = advanceToyCpu(cpu);
+  assert.equal(cpu.phase, "execute");
+  assert.equal(cpu.pendingResult, null);
+  cpu = advanceToyCpu(cpu);
+  assert.equal(cpu.phase, "writeback");
+  assert.equal(cpu.pendingResult, 7);
+  cpu = advanceToyCpu(cpu);
+  assert.equal(cpu.phase, "fetch");
+  assert.equal(cpu.registers.OUT, 7);
+  assert.equal(cpu.programCounter, 1);
+});
 
 test("instruction cycle repeats fetch decode execute and writeback", () => {
   assert.deepEqual([0, 1, 2, 3, 4].map((step) => advanceInstructionCycle(step).phase), [

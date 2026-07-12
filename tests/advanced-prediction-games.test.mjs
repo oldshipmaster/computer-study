@@ -13,4 +13,7 @@ test("search and instruction-cycle labs require prediction before advancing", as
   assert.match(cycle, /预测下一个阶段/);
   assert.match(cycle, /expectedPhase/);
   assert.match(cycle, /顺序不对/);
+  assert.match(cycle, /cpu-registers/);
+  assert.match(cycle, /寄存器 OUT/);
+  assert.match(cycle, /ADD A B/);
 });

@@ -9,6 +9,27 @@ export function advanceInstructionCycle(step: number) {
   };
 }
 
+export interface ToyCpuState {
+  phase: InstructionPhase;
+  programCounter: number;
+  instruction: "ADD A B" | null;
+  registers: { A: number; B: number; OUT: number };
+  pendingResult: number | null;
+}
+
+export function createToyCpu(): ToyCpuState {
+  return { phase: "fetch", programCounter: 0, instruction: null, registers: { A: 3, B: 4, OUT: 0 }, pendingResult: null };
+}
+
+export function advanceToyCpu(state: ToyCpuState): ToyCpuState {
+  const registers = { ...state.registers };
+  if (state.phase === "fetch") return { ...state, phase: "decode", instruction: "ADD A B", registers };
+  if (state.phase === "decode") return { ...state, phase: "execute", registers };
+  if (state.phase === "execute") return { ...state, phase: "writeback", registers, pendingResult: registers.A + registers.B };
+  if (state.pendingResult !== null) registers.OUT = state.pendingResult;
+  return { phase: "fetch", programCounter: state.programCounter + 1, instruction: null, registers, pendingResult: null };
+}
+
 export function accessMemoryHierarchy(
   cache: readonly string[],
   memory: readonly string[],
