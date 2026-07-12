@@ -184,6 +184,15 @@ test("collects a private structured confidence check for parent review", () => {
   assert.match(parentSource, /打开这课/);
 });
 
+test("offers child-led review from structured confidence choices", () => {
+  const mapSource = sourceFile("components/IslandMap.tsx");
+  const queueSource = sourceFile("components/ChildReviewQueue.tsx");
+  assert.match(mapSource, /ChildReviewQueue/);
+  assert.match(queueSource, /我的加练清单/);
+  assert.match(queueSource, /不是错题榜/);
+  assert.match(queueSource, /开始加练/);
+});
+
 test("keeps the playable keyboard-flight lesson contract in source", () => {
   const source = lessonSource();
   const childFacingLabels = [

@@ -10,6 +10,8 @@ import { IslandSealCollection } from "@/components/IslandSealCollection";
 import { PrivacyPromise } from "@/components/PrivacyPromise";
 import { OfflineStatus } from "@/components/OfflineStatus";
 import { ComputerDictionary } from "@/components/ComputerDictionary";
+import { ChildReviewQueue } from "@/components/ChildReviewQueue";
+import type { CourseConfidence } from "@/lib/review-queue";
 import {
   ISLANDS,
   COURSES,
@@ -27,6 +29,7 @@ interface IslandMapProps {
   headingRef: Ref<HTMLHeadingElement>;
   onStartCourse: (courseId: string) => void;
   resume: { courseId: string; stage: number } | null;
+  confidenceByCourse: Record<string, CourseConfidence>;
 }
 
 const DIFFICULTY_LABELS: Record<Course["difficulty"], string> = {
@@ -81,6 +84,7 @@ export function IslandMap({
   headingRef,
   onStartCourse,
   resume,
+  confidenceByCourse,
 }: IslandMapProps) {
   const [courseQuery, setCourseQuery] = useState("");
   const [selectedIslandId, setSelectedIslandId] = useState("all");
@@ -163,6 +167,7 @@ export function IslandMap({
       </section>
 
       <LearningPlan completedCourseIds={completedCourseIds} onStartCourse={onStartCourse} resume={resume} />
+      <ChildReviewQueue confidenceByCourse={confidenceByCourse} onStartCourse={onStartCourse} />
       <IslandSealCollection completedCourseIds={completedCourseIds} />
       {mission.complete ? <CompletionCertificate /> : null}
 

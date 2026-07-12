@@ -341,6 +341,7 @@ export function BitIslandApp() {
   } else {
     productScreen = (
       <IslandMap
+        confidenceByCourse={progress.confidenceByCourse}
         completedCourseIds={progress.completedCourseIds}
         headingRef={mapHeadingRef}
         onStartCourse={startCourse}
