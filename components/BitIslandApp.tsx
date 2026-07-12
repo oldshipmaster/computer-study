@@ -12,6 +12,7 @@ import {
 } from "react";
 import { IslandMap } from "@/components/IslandMap";
 import { LessonCompletion } from "@/components/lessons/LessonCompletion";
+import { LessonAudioProvider } from "@/components/lessons/LessonAudio";
 import { getLessonDefinition } from "@/components/lessons/lesson-registry";
 import { ParentPanel, type ParentProgress } from "@/components/ParentPanel";
 import { getCourse } from "@/lib/course-data";
@@ -291,17 +292,19 @@ export function BitIslandApp() {
   if (screen === "lesson" && currentCourse && lessonDefinition) {
     const LessonComponent = lessonDefinition.Component;
     productScreen = (
-      <LessonComponent
-        initialStage={
-          progress.resume?.courseId === activeCourseId ? progress.resume.stage : 0
-        }
-        onAward={() => awardCourse(lessonDefinition.courseId, lessonDefinition.badgeId)}
-        onComplete={finishCourse}
-        onExit={returnToMap}
-        onStageChange={saveLessonStage}
-        reducedMotion={effectiveReducedMotion}
-        sound={progress.settings.sound}
-      />
+      <LessonAudioProvider enabled={progress.settings.sound}>
+        <LessonComponent
+          initialStage={
+            progress.resume?.courseId === activeCourseId ? progress.resume.stage : 0
+          }
+          onAward={() => awardCourse(lessonDefinition.courseId, lessonDefinition.badgeId)}
+          onComplete={finishCourse}
+          onExit={returnToMap}
+          onStageChange={saveLessonStage}
+          reducedMotion={effectiveReducedMotion}
+          sound={progress.settings.sound}
+        />
+      </LessonAudioProvider>
     );
   } else if (screen === "complete" && lessonDefinition) {
     productScreen = (

@@ -1,4 +1,7 @@
+"use client";
+
 import type { ReactNode, Ref } from "react";
+import { useLessonAudio } from "@/components/lessons/LessonAudio";
 
 interface LessonChromeProps {
   children: ReactNode;
@@ -21,6 +24,7 @@ export function LessonChrome({
   onExit,
   stageNames,
 }: LessonChromeProps) {
+  useLessonAudio(message);
   return (
     <main className="interactive-lesson">
       <header className="lesson-topbar">
