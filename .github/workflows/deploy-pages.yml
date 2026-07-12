@@ -42,8 +42,11 @@ jobs:
       - name: Audit production dependencies
         run: npm run audit:prod
 
-      - name: Build static site
-        run: npm run build:pages
+      - name: Run lint checks
+        run: npm run lint
+
+      - name: Build and verify static site
+        run: npm run test:pages
         env:
           GITHUB_PAGES_BASE_PATH: /computer-study/
 
