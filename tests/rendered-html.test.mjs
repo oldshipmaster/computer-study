@@ -173,6 +173,16 @@ test("offers a privacy-preserving printable certificate after full completion", 
   assert.match(css, /@media print[\s\S]*?\.completion-certificate/);
 });
 
+test("collects a private structured confidence check for parent review", () => {
+  const completionSource = sourceFile("components/lessons/LessonCompletion.tsx");
+  const parentSource = sourceFile("components/ParentPanel.tsx");
+  assert.match(completionSource, /我会讲了/);
+  assert.match(completionSource, /我想再练/);
+  assert.match(completionSource, /请大人帮忙/);
+  assert.match(parentSource, /孩子标记的复习课/);
+  assert.match(parentSource, /confidenceByCourse/);
+});
+
 test("keeps the playable keyboard-flight lesson contract in source", () => {
   const source = lessonSource();
   const childFacingLabels = [

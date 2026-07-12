@@ -23,6 +23,7 @@ import {
   DEFAULT_PROGRESS,
   parseProgress,
   resetProgress,
+  setCourseConfidence,
   storeProgress,
 } from "@/lib/progress.mjs";
 import { sanitizeCatalogProgress } from "@/lib/catalog-progress";
@@ -218,6 +219,11 @@ export function BitIslandApp() {
     setScreen("complete");
   }, []);
 
+  const updateCourseConfidence = useCallback((confidence: "confident" | "practice" | "help") => {
+    if (!activeCourseId) return;
+    setProgress((currentProgress) => setCourseConfidence(currentProgress, activeCourseId, confidence));
+  }, [activeCourseId]);
+
   const returnToMap = useCallback(() => {
     pendingMapFocusIdRef.current = activeCourseId;
     setScreen("map");
@@ -325,9 +331,11 @@ export function BitIslandApp() {
   } else if (screen === "complete" && lessonDefinition) {
     productScreen = (
       <LessonCompletion
+        confidence={progress.confidenceByCourse[lessonDefinition.courseId]}
         definition={lessonDefinition}
         headingRef={completeHeadingRef}
         onReturn={returnToMap}
+        onConfidenceChange={updateCourseConfidence}
       />
     );
   } else {

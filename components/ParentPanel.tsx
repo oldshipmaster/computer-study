@@ -13,6 +13,7 @@ export interface ParentProgress {
   version: 1;
   completedCourseIds: string[];
   badgeIds: string[];
+  confidenceByCourse: Record<string, "confident" | "practice" | "help">;
   resume: { courseId: string; stage: number } | null;
   settings: {
     sound: boolean;
@@ -54,6 +55,7 @@ export function ParentPanel({
   const islandProgress = summarizeIslandProgress(progress.completedCourseIds);
   const nextCourseGuide = getNextCourseGuide(progress.completedCourseIds);
   const progressStats = buildProgressStats(progress.completedCourseIds);
+  const reviewCourses = COURSES.filter((course) => ["practice", "help"].includes(progress.confidenceByCourse[course.id]));
 
   useLayoutEffect(() => {
     closeButtonRef.current?.focus();
@@ -260,6 +262,10 @@ export function ParentPanel({
               ) : (
                 <p>请孩子挑选喜欢的课程重玩，并用自己的话讲解学到的本领。</p>
               )}
+            </div>
+            <div className="parent-review-guide">
+              <h3>孩子标记的复习课</h3>
+              {reviewCourses.length ? <ul>{reviewCourses.map((course) => <li key={course.id}><span>{progress.confidenceByCourse[course.id] === "help" ? "🙋" : "↻"}</span><strong>{course.title}</strong><small>{progress.confidenceByCourse[course.id] === "help" ? "希望大人一起看看" : "想再练一次"}</small></li>)}</ul> : <p>孩子还没有标记需要复习的课程。</p>}
             </div>
           </section>
 

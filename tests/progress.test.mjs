@@ -7,6 +7,7 @@ const {
   completeCourse,
   parseProgress,
   resetProgress,
+  setCourseConfidence,
   serializeProgress,
   storeProgress,
 } = progressModule;
@@ -15,6 +16,14 @@ test("falls back safely for empty or malformed storage", () => {
   assert.deepEqual(parseProgress(null), DEFAULT_PROGRESS);
   assert.deepEqual(parseProgress("not json"), DEFAULT_PROGRESS);
   assert.deepEqual(parseProgress('{"version":99}'), DEFAULT_PROGRESS);
+});
+
+test("stores one changeable confidence signal without free text", () => {
+  const first = setCourseConfidence(DEFAULT_PROGRESS, "keyboard-flight", "practice");
+  const changed = setCourseConfidence(first, "keyboard-flight", "confident");
+  assert.deepEqual(changed.confidenceByCourse, { "keyboard-flight": "confident" });
+  assert.equal(setCourseConfidence(changed, "keyboard-flight", "anything-else"), changed);
+  assert.deepEqual(parseProgress(serializeProgress(changed)), changed);
 });
 
 test("deduplicates completion and badge rewards", () => {

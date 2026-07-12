@@ -10,7 +10,14 @@ test("exports a versioned backup without personal fields", () => {
   assert.equal(data.exportedAt, "2026-07-12T00:00:00.000Z");
   assert.equal(data.progress.completedCourseIds[0], "keyboard-flight");
   assert.deepEqual(data.progress.resume, { courseId: "data-table", stage: 4 });
+  assert.deepEqual(data.progress.confidenceByCourse, {});
   assert.equal("name" in data, false);
+});
+
+test("restores confidence only for known courses and allowed choices", () => {
+  const result = parseProgressBackup(JSON.stringify({ kind: "bit-island-progress-backup", version: 1, progress: { ...DEFAULT_PROGRESS, confidenceByCourse: { "keyboard-flight": "help", unknown: "practice", "file-home": "free text" } } }));
+  assert.equal(result.ok, true);
+  assert.deepEqual(result.progress.confidenceByCourse, { "keyboard-flight": "help" });
 });
 
 test("restores known progress while removing unknown course ids and unsafe resume", () => {
