@@ -18,6 +18,13 @@ export function useLessonAudio(message: string) {
     utterance.rate = 0.92;
     window.speechSynthesis.cancel();
     window.speechSynthesis.speak(utterance);
-    return () => window.speechSynthesis.cancel();
+    const stopWhenHidden = () => {
+      if (document.visibilityState !== "visible") window.speechSynthesis.cancel();
+    };
+    document.addEventListener("visibilitychange", stopWhenHidden);
+    return () => {
+      document.removeEventListener("visibilitychange", stopWhenHidden);
+      window.speechSynthesis.cancel();
+    };
   }, [enabled, message]);
 }
