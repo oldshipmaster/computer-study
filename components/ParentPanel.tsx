@@ -150,8 +150,11 @@ export function ParentPanel({
     const link = document.createElement("a");
     link.href = url;
     link.download = `bit-island-progress-${new Date().toISOString().slice(0, 10)}.json`;
+    link.hidden = true;
+    document.body.append(link);
     link.click();
-    URL.revokeObjectURL(url);
+    link.remove();
+    window.setTimeout(() => URL.revokeObjectURL(url), 0);
     setBackupStatus("学习记录已导出到这台电脑的下载文件夹。请由家长妥善保管。");
   }
 
