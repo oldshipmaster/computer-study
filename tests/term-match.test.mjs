@@ -32,3 +32,10 @@ test("keeps progress on a wrong choice and completes after every correct choice"
   assert.equal(state.correct, 2);
   assert.equal(answerTermMatch(state, 0, questions), state);
 });
+
+test("ignores the second pointer activation from a double click", () => {
+  const questions = getUnlockedTermQuestions(["keyboard-flight", "mouse-precision"]);
+  const state = createTermMatchState();
+  const answerIndex = questions[0].options.indexOf(questions[0].answer);
+  assert.equal(answerTermMatch(state, answerIndex, questions, 2), state);
+});

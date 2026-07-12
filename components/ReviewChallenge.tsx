@@ -42,7 +42,7 @@ export function ReviewChallenge({ completedCourseIds }: { completedCourseIds: st
           <div className="review-question">
             <span>{question.islandName} · 本次第 {state.index + 1} / {availableQuestions.length} 题 · 全站已解锁 {availableQuestions.length} / {REVIEW_QUESTIONS.length}</span>
             <h3 ref={questionHeadingRef} tabIndex={-1}>{question.prompt}</h3>
-            <div>{question.options.map((option, optionIndex) => <button key={option} onClick={() => setState((current) => answerReviewQuestion(current, optionIndex, availableQuestions))} type="button">{option}</button>)}</div>
+            <div>{question.options.map((option, optionIndex) => <button key={option} onClick={(event) => setState((current) => answerReviewQuestion(current, optionIndex, availableQuestions, event.detail))} type="button">{option}</button>)}</div>
             <p className={`review-feedback review-feedback--${state.feedback.kind}`} role="status">{state.feedback.message}</p>
           </div>
         )}

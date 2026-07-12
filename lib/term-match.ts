@@ -34,8 +34,8 @@ export function createTermMatchState(): TermMatchState {
   return { index: 0, correct: 0, completed: false, feedback: "读解释，再选择最合适的电脑词语。" };
 }
 
-export function answerTermMatch(state: TermMatchState, optionIndex: number, questions: readonly TermMatchQuestion[]): TermMatchState {
-  if (state.completed || questions.length === 0) return state;
+export function answerTermMatch(state: TermMatchState, optionIndex: number, questions: readonly TermMatchQuestion[], activationDetail = 1): TermMatchState {
+  if (state.completed || questions.length === 0 || activationDetail > 1) return state;
   const question = questions[state.index];
   if (!question || question.options[optionIndex] !== question.answer) return { ...state, feedback: `再想一想。线索例子：${question?.example ?? "先完成一课解锁题目。"}` };
   const last = state.index === questions.length - 1;

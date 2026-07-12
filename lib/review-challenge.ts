@@ -57,8 +57,8 @@ export function getAvailableReviewQuestions(completedCourseIds: readonly string[
   return REVIEW_QUESTIONS.filter((question) => completed.has(REVIEW_REQUIREMENTS[question.id]));
 }
 
-export function answerReviewQuestion(state: ReviewState, optionIndex: number, questions: readonly ReviewQuestion[] = REVIEW_QUESTIONS): ReviewState {
-  if (state.completed) return state;
+export function answerReviewQuestion(state: ReviewState, optionIndex: number, questions: readonly ReviewQuestion[] = REVIEW_QUESTIONS, activationDetail = 1): ReviewState {
+  if (state.completed || activationDetail > 1) return state;
   const question = questions[state.index];
   const selected = question?.options[optionIndex];
   if (!question || selected !== question.answer) {

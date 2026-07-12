@@ -62,3 +62,9 @@ test("answering after completion is safe and deterministic", () => {
   const state = { ...createReviewState(), index: 17, score: 18, completed: true };
   assert.deepEqual(answerReviewQuestion(state, 0), state);
 });
+
+test("ignores the second pointer activation from a double click", () => {
+  const state = createReviewState();
+  const answerIndex = REVIEW_QUESTIONS[0].options.indexOf(REVIEW_QUESTIONS[0].answer);
+  assert.equal(answerReviewQuestion(state, answerIndex, REVIEW_QUESTIONS, 2), state);
+});
