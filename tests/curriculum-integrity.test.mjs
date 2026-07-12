@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { readFile } from "node:fs/promises";
 import { COURSES, ISLANDS, RECOMMENDED_ROUTE_IDS } from "../lib/course-data.ts";
 import { CURRICULUM_GUIDE } from "../lib/curriculum-guide.ts";
 
@@ -40,4 +41,14 @@ test("gives every lesson three objectives and one parent conversation prompt", (
     assert.ok(guide.objectives.every((objective) => objective.length >= 6));
     assert.ok(guide.parentPrompt.length >= 10);
   }
+});
+
+test("keeps the first capstone handoff aligned with the five later islands", async () => {
+  const [registry, lesson] = await Promise.all([
+    readFile(new URL("../components/lessons/lesson-registry.ts", import.meta.url), "utf8"),
+    readFile(new URL("../components/lessons/LightBitIslandLesson.tsx", import.meta.url), "utf8"),
+  ]);
+  assert.match(registry, /继续探索后五岛/);
+  assert.match(lesson, /代码星港做好准备/);
+  assert.doesNotMatch(registry, /继续探索后四岛/);
 });
