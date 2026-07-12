@@ -181,7 +181,7 @@ test("gives course search a visible recoverable empty state", () => {
 });
 
 test("stacks dense hardware and network labs on child-sized screens", () => {
-  const css = `${sourceFile("app/globals.css")}\n${sourceFile("components/lessons/network/TransferLab.css")}`;
+  const css = `${sourceFile("app/globals.css")}\n${sourceFile("components/lessons/hardware/BitBoard.css")}\n${sourceFile("components/lessons/network/TransferLab.css")}`;
 
   assert.match(css, /@media \(max-width: 38rem\)[\s\S]*?\.pipeline-roles[\s\S]*?grid-template-columns: 1fr/);
   assert.match(css, /@media \(max-width: 38rem\)[\s\S]*?\.bit-switches[\s\S]*?grid-template-columns: repeat\(2, 1fr\)/);
