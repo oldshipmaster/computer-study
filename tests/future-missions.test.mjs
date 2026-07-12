@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { readFileSync } from "node:fs";
 import { FUTURE_MISSIONS, answerFutureCard, createFutureState } from "../lib/future-missions.ts";
 
 test("defines five future-literacy courses with complete six-stage missions", () => {
@@ -37,4 +38,15 @@ test("future challenge ignores a repeated pointer activation", () => {
   const state = createFutureState();
   const answer = mission.cards[0].options.indexOf(mission.cards[0].answer);
   assert.equal(answerFutureCard(mission, state, answer, 2), state);
+});
+
+test("future mission keeps each decision's evidence before advancing", () => {
+  const source = readFileSync(new URL("../components/lessons/future/FutureMissionLesson.tsx", import.meta.url), "utf8");
+  assert.match(source, /decision-evidence-card/);
+  assert.match(source, /目标/);
+  assert.match(source, /我的选择/);
+  assert.match(source, /避开的风险/);
+  assert.match(source, /判断证据/);
+  assert.match(source, /确认记录，下一项/);
+  assert.match(source, /未来素养决策总结/);
 });
