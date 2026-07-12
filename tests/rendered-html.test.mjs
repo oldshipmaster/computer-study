@@ -191,6 +191,7 @@ test("keeps the guarded parent-area contract in source", () => {
     "备份学习记录",
     "导出 JSON 备份",
     "恢复以前的备份",
+    "ParentCurriculumOutline",
     "长按进入",
     "进入家长区",
     "确认清空这台电脑上的学习记录",
@@ -216,6 +217,15 @@ test("keeps the guarded parent-area contract in source", () => {
   assert.match(appSource, /inert=/);
   assert.match(appSource, /screen !== "lesson"/);
   assert.match(appSource, /\.focus\(\)/);
+});
+
+test("keeps the full parent curriculum outline aligned with catalog data", () => {
+  const source = sourceFile("components/ParentCurriculumOutline.tsx");
+  assert.match(source, /ISLANDS\.map/);
+  assert.match(source, /CURRICULUM_GUIDE/);
+  assert.match(source, /查看 45 课完整课程大纲/);
+  assert.match(source, /guide\.objectives\.map/);
+  assert.match(source, /completed\.has\(courseId\)/);
 });
 
 test("cancels a pending parent hold when the page loses interaction", () => {

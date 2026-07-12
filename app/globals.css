@@ -1484,6 +1484,23 @@ input {
 }
 
 .parent-backup-card { background: var(--mint-soft); }
+.parent-curriculum-outline { overflow: clip; border: 2px solid var(--deep-sea); border-radius: 20px; background: var(--paper); color: var(--deep-sea); }
+.parent-curriculum-outline > summary { display: flex; align-items: center; justify-content: space-between; min-height: 64px; gap: 18px; padding: 14px 18px; cursor: pointer; list-style: none; }
+.parent-curriculum-outline > summary::-webkit-details-marker { display: none; }
+.parent-curriculum-outline > summary > span:first-child { display: grid; gap: 4px; }
+.parent-curriculum-outline > summary small { color: var(--deep-sea-soft); }
+.parent-curriculum-outline > summary > span:last-child { font-size: 1.7rem; transition: transform 160ms ease; }
+.parent-curriculum-outline[open] > summary { border-bottom: 2px solid var(--deep-sea); background: var(--yellow-soft); }
+.parent-curriculum-outline[open] > summary > span:last-child { transform: rotate(45deg); }
+.parent-curriculum-outline > div { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; max-height: min(55vh, 650px); padding: 14px; overflow-y: auto; }
+.parent-curriculum-outline section { padding: 12px; border-radius: 14px; background: #eef4f6; }
+.parent-curriculum-outline h3 { display: flex; align-items: center; gap: 8px; margin: 0 0 10px; }
+.parent-curriculum-outline section > ol { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.parent-curriculum-outline section > ol > li { padding: 10px; border-left: 5px solid #8fa4ae; border-radius: 8px; background: white; }
+.parent-curriculum-outline section > ol > li.is-complete { border-left-color: #2d8a62; background: #e8f8ee; }
+.parent-curriculum-outline section > ol > li > div { display: flex; justify-content: space-between; gap: 10px; }
+.parent-curriculum-outline section > ol > li > div > span { color: var(--deep-sea-soft); font-size: .72rem; white-space: nowrap; }
+.parent-curriculum-outline section ul { margin: 7px 0 0; padding-left: 18px; font-size: .78rem; }
 .parent-backup-tools { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 14px 24px; }
 .parent-backup-tools p { margin: 7px 0 0; color: var(--deep-sea-soft); font-size: .8rem; }
 .parent-backup-tools > div:nth-child(2) { display: flex; flex-wrap: wrap; gap: 9px; }
@@ -2067,6 +2084,8 @@ input {
 
   .parent-backup-tools { grid-template-columns: 1fr; }
   .parent-backup-tools > div:nth-child(2) { display: grid; }
+  .parent-curriculum-outline > div { grid-template-columns: 1fr; }
+  .parent-curriculum-outline section > ol > li > div { flex-direction: column; }
 
   .parent-card-heading {
     align-items: flex-start;
