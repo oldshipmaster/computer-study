@@ -32,6 +32,7 @@ import { DataTableLesson, DocumentDesignLesson, MediaCopyrightLesson, PixelArtLe
 import { AiHelperLesson, DigitalProjectLesson, EmailMessageLesson, OnlineCollaborationLesson, VerifyAiLesson } from "@/components/lessons/FutureLessons";
 import { BooleanLogicLesson, EventsHandlersLesson, FunctionsToolsLesson, GameDesignLesson, VariablesScoreLesson } from "@/components/lessons/CodingLessons";
 import { ArrayLockersLesson, GraphRoutesLesson, LinkedTreasureLesson, StackQueueDockLesson, TreeLibraryLesson } from "@/components/lessons/advanced/DataStructureLessons";
+import { AlgorithmEfficiencyLesson, BinarySearchLesson, BubbleSortLesson, LinearSearchLesson, TaskDecompositionLesson } from "@/components/lessons/advanced/AlgorithmLessons";
 import type { LessonDefinition } from "@/components/lessons/types";
 
 export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
@@ -345,6 +346,11 @@ export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
   "stack-queue-dock": { courseId: "stack-queue-dock", badgeId: "stack-queue-captain", badgeName: "规则码头长", completionTitle: "栈与队列的两条航线运行正确", completionSummary: "你会比较栈的后进先出和队列的先进先出。", Component: StackQueueDockLesson },
   "tree-library": { courseId: "tree-library", badgeId: "tree-librarian", badgeName: "树形图书管理员", completionTitle: "太空图书沿树形路径找到", completionSummary: "你会从根节点沿父子分支找到叶节点，并说出完整路径。", Component: TreeLibraryLesson },
   "graph-routes": { courseId: "graph-routes", badgeId: "graph-navigator", badgeName: "图航线导航员", completionTitle: "图结构航线抵达山洞", completionSummary: "你会识别节点和边，沿相邻连接寻找可达路线并避免环。", Component: GraphRoutesLesson },
+  "linear-search": { courseId: "linear-search", badgeId: "linear-search-scout", badgeName: "顺序查找侦察员", completionTitle: "目标数字按顺序找到", completionSummary: "你会从第一项开始逐个比较，并记录找到或查完所需的次数。", Component: LinearSearchLesson },
+  "binary-search": { courseId: "binary-search", badgeId: "binary-search-scout", badgeName: "二分查找侦察员", completionTitle: "有序范围连续减半并找到目标", completionSummary: "你会检查中间位置，根据大小排除一半并更新查找边界。", Component: BinarySearchLesson },
+  "bubble-sort": { courseId: "bubble-sort", badgeId: "sort-robot", badgeName: "排序机器人工程师", completionTitle: "四个数字完成冒泡排序", completionSummary: "你会比较相邻项目、交换错误顺序并重复多轮直到有序。", Component: BubbleSortLesson },
+  "task-decomposition": { courseId: "task-decomposition", badgeId: "task-planner", badgeName: "任务规划师", completionTitle: "复杂任务拆分并正确组合", completionSummary: "你会拆分任务、识别依赖、安排可执行顺序并检查组合结果。", Component: TaskDecompositionLesson },
+  "algorithm-efficiency": { courseId: "algorithm-efficiency", badgeId: "efficiency-referee", badgeName: "算法效率裁判", completionTitle: "两种查找算法完成效率比赛", completionSummary: "你会用操作次数比较算法，并解释数据增加时两种方法的变化。", Component: AlgorithmEfficiencyLesson },
 };
 
 export function getLessonDefinition(courseId: string): LessonDefinition | undefined {
