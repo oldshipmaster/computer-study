@@ -8,11 +8,11 @@ const APPS: Array<{ id: DesktopAppId; label: string; icon: string }> = [
 
 export function SimulatedDesktop({ state, onAction }: SimulatedDesktopProps) {
   return (
-    <div className="simulated-desktop" aria-label="练习桌面">
-      <div className="desktop-icons" aria-label="桌面图标">
+    <div className="simulated-desktop" aria-label="练习桌面" role="group">
+      <div className="desktop-icons" aria-label="桌面图标" role="group">
         {APPS.map((app) => <button aria-pressed={state.selectedIcon === app.id} className="desktop-icon" key={app.id} onClick={() => onAction({ type: "selectIcon", appId: app.id })} onDoubleClick={() => onAction({ type: "openWindow", appId: app.id })} type="button"><span>{app.icon}</span>{app.label}<small>双击打开</small></button>)}
       </div>
-      <div className="desktop-open-buttons" aria-label="键盘打开程序">
+      <div className="desktop-open-buttons" aria-label="键盘打开程序" role="group">
         {APPS.map((app) => <button key={app.id} onClick={() => onAction({ type: "openWindow", appId: app.id })} type="button">打开{app.label}</button>)}
       </div>
       <div className="window-layer">

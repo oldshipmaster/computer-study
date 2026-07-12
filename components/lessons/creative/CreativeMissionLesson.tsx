@@ -36,7 +36,7 @@ export function CreativeMissionLesson({ mission, initialStage, onAward, onComple
           </div>
         ) : (
           <div className="creative-challenge">
-            <div className="creative-card-progress" aria-label={`已完成 ${challenge.solved} 张，共 4 张`}>
+            <div className="creative-card-progress" aria-label={`已完成 ${challenge.solved} 张，共 4 张`} role="status">
               {mission.cards.map((card, index) => <span className={index < challenge.solved ? "is-complete" : ""} key={card.id}>{index < challenge.solved ? "✓" : index + 1}</span>)}
             </div>
             <h2>{currentCard.prompt}</h2>

@@ -27,7 +27,7 @@ export function GridCityGame({ state, onMove }: Props) {
         </div>;
       })}
     </div>
-    <div className="grid-controls" aria-label="机器人方向控制">
+    <div className="grid-controls" aria-label="机器人方向控制" role="group">
       <button onClick={() => onMove("up")} type="button">↑ 上</button>
       <button onClick={() => onMove("left")} type="button">← 左</button>
       <button onClick={() => onMove("down")} type="button">↓ 下</button>

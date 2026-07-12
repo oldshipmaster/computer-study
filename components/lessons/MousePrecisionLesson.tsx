@@ -70,7 +70,7 @@ export function MousePrecisionLesson({
         {state.stage === "doubleClick" ? <div className="double-click-practice"><button className="mouse-hatch" onDoubleClick={() => act({ type: "doubleClickTarget", targetId: "blue-hatch" })} type="button">蓝色舱门 · 快速双击</button><button className="keyboard-alternative" onClick={() => act({ type: "doubleClickTarget", targetId: "blue-hatch" })} type="button">键盘操作：打开舱门</button></div> : null}
         {state.stage === "drag" ? <DragWorkshop delivered={state.draggedCrates} onDrop={(crateId, bayId) => act({ type: "dropCrate", crateId, bayId })} /> : null}
         {state.stage === "challenge" ? (
-          <div className="mouse-challenge" aria-label="鼠标独立挑战">
+          <div className="mouse-challenge" aria-label="鼠标独立挑战" role="group">
             {(["move", "click", "doubleClick", "drag"] as const).map((skill, index) => (
               <button disabled={state.challengeSkills.includes(skill)} key={skill} onClick={() => act({ type: "challengeSkill", skill })} type="button">
                 {state.challengeSkills.includes(skill) ? "✓ " : ""}{index + 1}. {STAGE_NAMES[index + 1]}

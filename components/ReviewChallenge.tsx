@@ -28,7 +28,7 @@ export function ReviewChallenge({ completedCourseIds }: { completedCourseIds: st
         <p>每座岛的第一课和第五课各解锁一道情境题。答错可以继续想，重要的是读懂解释。</p>
       </div>
       <div className="review-console">
-        <div className="review-progress" aria-label={`已经点亮 ${state.score} 颗，本次可答 ${availableQuestions.length} 颗，共 ${REVIEW_QUESTIONS.length} 颗`}>
+        <div className="review-progress" aria-label={`已经点亮 ${state.score} 颗，本次可答 ${availableQuestions.length} 颗，共 ${REVIEW_QUESTIONS.length} 颗`} role="status">
           {REVIEW_QUESTIONS.map((item) => { const unlockedIndex = availableQuestions.findIndex((question) => question.id === item.id); return <span className={unlockedIndex < 0 ? "" : unlockedIndex < state.score ? "is-lit" : "is-unlocked"} key={item.id} aria-hidden="true">★</span>; })}
         </div>
         {availableQuestions.length === 0 ? <div className="review-locked"><span aria-hidden="true">🔒</span><h3>先完成任意一座岛的第一课</h3><p>学会一个新概念后，第一颗思考星就会解锁。</p></div> : state.completed ? (

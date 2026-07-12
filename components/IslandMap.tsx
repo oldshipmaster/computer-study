@@ -175,7 +175,7 @@ export function IslandMap({
           </p>
 
           {currentCourse ? (
-            <div className="current-mission" aria-label="当前任务">
+            <div className="current-mission" aria-label="当前任务" role="group">
               <span className="mission-label">
                 {mission.complete ? "自由重玩" : resuming ? "续课任务" : "当前任务"}
               </span>
@@ -195,7 +195,7 @@ export function IslandMap({
           ) : null}
         </div>
 
-        <div className="hero-world" aria-label="比比在启航港等你">
+        <div className="hero-world" aria-label="比比在启航港等你" role="img">
           <div className="hero-sun" aria-hidden="true" />
           <div className="hero-cloud hero-cloud--one" aria-hidden="true" />
           <div className="hero-cloud hero-cloud--two" aria-hidden="true" />
@@ -242,15 +242,15 @@ export function IslandMap({
             <span>搜索课程 <kbd>/</kbd></span>
             <input onChange={(event) => setCourseQuery(event.target.value)} placeholder="例如：光标、循环、AI" ref={searchInputRef} type="search" value={courseQuery} />
           </label>
-          <div className="course-compass-islands" aria-label="按岛屿筛选">
+          <div className="course-compass-islands" aria-label="按岛屿筛选" role="group">
             <button aria-pressed={selectedIslandId === "all"} onClick={() => setSelectedIslandId("all")} type="button">全部</button>
             {ISLANDS.map((island) => <button aria-pressed={selectedIslandId === island.id} key={island.id} onClick={() => setSelectedIslandId(island.id)} type="button"><span aria-hidden="true">{island.icon}</span>{island.name}</button>)}
           </div>
-          <div className="course-compass-difficulty" aria-label="按难度筛选">
+          <div className="course-compass-difficulty" aria-label="按难度筛选" role="group">
             <span>难度</span>
             {(["all", 1, 2, 3] as const).map((difficulty) => <button aria-pressed={selectedDifficulty === difficulty} key={difficulty} onClick={() => setSelectedDifficulty(difficulty)} type="button">{difficulty === "all" ? "全部" : DIFFICULTY_LABELS[difficulty]}</button>)}
           </div>
-          <div className="course-compass-completion" aria-label="按完成状态筛选">
+          <div className="course-compass-completion" aria-label="按完成状态筛选" role="group">
             <span>进度</span>
             {(["all", "unfinished", "completed"] as const).map((completion) => <button aria-pressed={selectedCompletion === completion} key={completion} onClick={() => setSelectedCompletion(completion)} type="button">{{ all: "全部", unfinished: "未完成", completed: "已完成" }[completion]}</button>)}
           </div>

@@ -36,7 +36,7 @@ export function LessonCompletion({ definition, headingRef, onReturn, confidence,
           </button>
         </div>
         <div className="completion-summary">
-          <div className="completion-badge" aria-label={`获得${definition.badgeName}徽章`}>
+          <div className="completion-badge" aria-label={`获得${definition.badgeName}徽章`} role="img">
             <span aria-hidden="true">★</span>
             <strong>{definition.badgeName}</strong>
             <small>新徽章</small>

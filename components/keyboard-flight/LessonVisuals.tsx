@@ -75,7 +75,7 @@ export function KeyboardDiagram({
   const trackedKeys = completedKeys ?? EMPTY_KEYS;
 
   return (
-    <div className="lesson-keyboard" aria-label="方向键和空格键">
+    <div className="lesson-keyboard" aria-label="方向键和空格键" role="group">
       {KEY_DEFINITIONS.map((item) => {
         const completed = trackedKeys.has(item.key);
         const classNames = [

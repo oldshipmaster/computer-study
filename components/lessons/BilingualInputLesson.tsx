@@ -40,7 +40,7 @@ export function BilingualInputLesson({ initialStage, onAward, onComplete, onExit
     <LessonChrome courseName="中英文输入站" currentStage={stage} heading={current.heading} headingRef={headingRef} message={current.message} onExit={onExit} stageNames={STAGE_NAMES}>
       <div className="typing-mission">
         {current.task ? <TypingConsole initialValue={current.initialValue} instruction="在这里输入，不会上传或保存你的文字" key={stage} onSuccess={next} task={current.task} /> : <button className="primary-action" onClick={next} type="button">开始发送通信</button>}
-        <div className="onscreen-key-guide" aria-label="键盘提示"><kbd>A–Z</kbd><kbd>0–9</kbd><kbd>Backspace</kbd><kbd>中 / 英</kbd></div>
+        <div className="onscreen-key-guide" aria-label="键盘提示" role="img"><kbd>A–Z</kbd><kbd>0–9</kbd><kbd>Backspace</kbd><kbd>中 / 英</kbd></div>
       </div>
     </LessonChrome>
   );

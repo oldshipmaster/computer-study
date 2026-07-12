@@ -16,7 +16,7 @@ export function DragWorkshop({ delivered, onDrop }: DragWorkshopProps) {
 
   return (
     <div className="drag-workshop">
-      <div className="crate-row" aria-label="补给箱">
+      <div className="crate-row" aria-label="补给箱" role="group">
         {ITEMS.map((item) => (
           <button
             aria-pressed={selectedCrate === item.id}
@@ -32,7 +32,7 @@ export function DragWorkshop({ delivered, onDrop }: DragWorkshopProps) {
           </button>
         ))}
       </div>
-      <div className="bay-row" aria-label="停靠位">
+      <div className="bay-row" aria-label="停靠位" role="group">
         {ITEMS.map((item) => (
           <button
             className={`supply-bay supply-bay--${item.id}`}

@@ -78,7 +78,7 @@ export function ProgramStage({
 
       <div className="program-layout">
         <div className="program-workbench">
-          <div className="instruction-palette" aria-label="可以添加的指令积木">
+          <div className="instruction-palette" aria-label="可以添加的指令积木" role="group">
             {PROGRAM_DEFINITIONS.map((definition) => (
               <button
                 className={`instruction-add instruction-add--${definition.instruction} ${

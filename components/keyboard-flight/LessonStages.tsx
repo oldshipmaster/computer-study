@@ -210,7 +210,7 @@ export function CompleteStage({ badgeName, headingRef, onExit }: CompleteStagePr
       className="flight-stage-card flight-stage-card--complete"
       aria-labelledby="lesson-complete-title"
     >
-      <div className="completion-badge" aria-label={`获得${badgeName}徽章`}>
+      <div className="completion-badge" aria-label={`获得${badgeName}徽章`} role="img">
         <span aria-hidden="true">★</span>
         <strong>{badgeName}</strong>
         <small>新徽章</small>
