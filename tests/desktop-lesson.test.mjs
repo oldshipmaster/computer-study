@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { readFileSync } from "node:fs";
 import { INITIAL_DESKTOP_STATE, updateDesktop } from "../lib/desktop-lesson.ts";
 
 test("selects an icon before opening one window", () => {
@@ -30,4 +31,15 @@ test("closes cleanly and can replay without duplicate windows", () => {
   state = updateDesktop(state, { type: "closeWindow", appId: "notes" });
   assert.deepEqual(state.openWindows, []);
   assert.equal(state.focusedWindow, null);
+});
+
+test("desktop lesson distinguishes foreground, minimized, and closed states", () => {
+  const desktop = readFileSync(new URL("../components/lessons/desktop/SimulatedDesktop.tsx", import.meta.url), "utf8");
+  const lesson = readFileSync(new URL("../components/lessons/DesktopAdventureLesson.tsx", import.meta.url), "utf8");
+  assert.match(desktop, /desktop-state-panel/);
+  assert.match(desktop, /前台窗口/);
+  assert.match(desktop, /已最小化/);
+  assert.match(desktop, /window-operation-history/);
+  assert.match(lesson, /桌面状态总结/);
+  assert.match(lesson, /完成桌面探险/);
 });

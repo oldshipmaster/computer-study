@@ -28,6 +28,7 @@ const deferredLessons = [
   "PrivateInformationLesson",
   "PopupFogLesson",
   "PasswordGuardianLesson",
+  "DesktopAdventureLesson",
 ];
 
 test("defers rich programming and hardware labs until a child opens them", () => {

@@ -12,6 +12,8 @@ export function DesktopAdventureLesson({ initialStage, onAward, onComplete, onEx
   const [stage, setStage] = useState(() => Math.max(0, Math.min(5, Math.floor(initialStage || 0))));
   const [desktop, setDesktop] = useState(INITIAL_DESKTOP_STATE);
   const [minimizedOnce, setMinimizedOnce] = useState(false);
+  const [history, setHistory] = useState<string[]>([]);
+  const [readyToFinish, setReadyToFinish] = useState(false);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const awardedRef = useRef(false);
   useLayoutEffect(() => headingRef.current?.focus(), [stage]);
@@ -20,15 +22,23 @@ export function DesktopAdventureLesson({ initialStage, onAward, onComplete, onEx
   function act(action: DesktopAction) {
     const next = updateDesktop(desktop, action);
     setDesktop(next);
+    const app = action.appId === "notes" ? "记事本" : "画图";
+    const verbs: Record<DesktopAction["type"], string> = { selectIcon: "选中", openWindow: "打开", focusWindow: "切换到", minimizeWindow: "最小化", restoreWindow: "恢复", closeWindow: "关闭" };
+    setHistory((items) => [...items, `${verbs[action.type]}${app}`]);
     if (stage === 1 && action.type === "openWindow" && action.appId === "notes") setStage(2);
     else if (stage === 2 && action.type === "openWindow" && action.appId === "paint") setStage(3);
     else if (stage === 3 && action.type === "focusWindow" && action.appId === "notes") setStage(4);
     else if (stage === 4 && action.type === "minimizeWindow" && action.appId === "notes") setMinimizedOnce(true);
     else if (stage === 4 && minimizedOnce && action.type === "restoreWindow" && action.appId === "notes") setStage(5);
-    else if (stage === 5 && action.type === "closeWindow" && next.openWindows.length === 0 && !awardedRef.current) {
-      awardedRef.current = true; onAward("desktop-adventure", "desktop-explorer"); onComplete();
-    }
+    else if (stage === 5 && action.type === "closeWindow" && next.openWindows.length === 0) setReadyToFinish(true);
   }
 
-  return <LessonChrome courseName="桌面探险" currentStage={stage} heading={STAGES[stage]} headingRef={headingRef} message={MESSAGES[stage]} onExit={onExit} stageNames={STAGES}><div className="desktop-mission">{stage === 0 ? <button className="primary-action" onClick={() => setStage(1)} type="button">进入模拟桌面</button> : <SimulatedDesktop onAction={act} state={desktop} />}</div></LessonChrome>;
+  function finish() {
+    if (awardedRef.current) return;
+    awardedRef.current = true;
+    onAward("desktop-adventure", "desktop-explorer");
+    onComplete();
+  }
+
+  return <LessonChrome courseName="桌面探险" currentStage={stage} heading={STAGES[stage]} headingRef={headingRef} message={MESSAGES[stage]} onExit={onExit} stageNames={STAGES}><div className="desktop-mission">{stage === 0 ? <button className="primary-action" onClick={() => setStage(1)} type="button">进入模拟桌面</button> : <><SimulatedDesktop history={history} onAction={act} state={desktop} />{readyToFinish ? <section className="desktop-finish"><h2>桌面状态总结</h2><p>所有窗口都已关闭，任务栏也恢复整洁。你已经会打开、切换、最小化、恢复和关闭窗口了。</p><button className="primary-action" onClick={finish} type="button">完成桌面探险</button></section> : null}</>}</div></LessonChrome>;
 }
