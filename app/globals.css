@@ -3924,3 +3924,15 @@ html.bit-island-document--reduced-motion *::after,
 @keyframes advanced-float { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-8px) rotate(2deg); } }
 @media (max-width: 38rem) { .advanced-foundation-lesson { padding: .75rem; } .advanced-concept-demo { min-height: 15rem; } .concept-journey-track { grid-template-columns: repeat(5, minmax(3.2rem, 1fr)); overflow-x: auto; padding: .35rem .25rem .75rem; } .concept-journey-track::before { right: 2rem; left: 2rem; } .concept-journey-node small { font-size: .58rem; } .advanced-lab { padding: .8rem; box-shadow: 4px 5px 0 rgb(18 50 74 / 12%); } .advanced-lab [role="group"], .concept-reflection [role="group"] { grid-template-columns: 1fr; } .advanced-lab [role="group"] button, .concept-reflection [role="group"] button { width: 100%; } .advanced-lab .array-lockers, .advanced-lab .search-items, .advanced-lab .graph-node-map { grid-template-columns: repeat(2, 1fr) !important; } .stack-queue-columns { grid-template-columns: 1fr; } .stack-queue-columns [role="group"] { grid-template-columns: repeat(2, 1fr); } .concept-reflection [role="group"] button { min-height: 3.8rem; } .memory-grid { grid-template-columns: repeat(4, 1fr); } .process-state-machine { grid-template-columns: repeat(2, 1fr); } .toy-cpu-board { grid-template-columns: 1fr; } .routing-choice-map { grid-template-columns: repeat(2, 1fr); } .instruction-phases, .layer-stack, .transfer-chunks { grid-template-columns: repeat(2, 1fr); } }
 @media (prefers-reduced-motion: reduce) { .advanced-concept-demo .concept-journey-icon { animation: none; } }
+@media (forced-colors: active) {
+  .concept-journey-node--active b,
+  .process-state-machine span.process-node--current,
+  .instruction-phases button.is-current,
+  .routing-maze-lab .route-choice--selected,
+  .array-lockers button[aria-pressed="true"] {
+    border: 4px solid Highlight;
+    background: Canvas;
+    color: CanvasText;
+    forced-color-adjust: auto;
+  }
+}

@@ -200,6 +200,9 @@ test("styles advanced foundation labs for touch and small screens", () => {
   }
   assert.match(css, /@media \(max-width: 38rem\)[\s\S]*?\.advanced-lab \[role="group"\][\s\S]*?grid-template-columns:\s*1fr/);
   assert.match(css, /@media \(prefers-reduced-motion: reduce\)[\s\S]*?\.advanced-concept-demo/);
+  assert.match(css, /@media \(forced-colors: active\)[\s\S]*?\.concept-journey-node--active/);
+  assert.match(css, /@media \(forced-colors: active\)[\s\S]*?\.process-node--current/);
+  assert.match(css, /@media \(forced-colors: active\)[\s\S]*?\.instruction-phases button\.is-current/);
 });
 
 test("constrains the mobile hero to the viewport width", () => {
