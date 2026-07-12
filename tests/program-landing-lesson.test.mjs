@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 import { INITIAL_DOCUMENT_STATE, updateDocument } from "../lib/program-landing-lesson.ts";
 
@@ -33,4 +34,13 @@ test("save-and-close persists while discard is explicit", () => {
   assert.equal(saved.savedContent, "呼号");
   const discarded = updateDocument(state, { type: "discardAndClose" });
   assert.equal(discarded.open, false);
+});
+
+test("the virtual document teaches a safe save shortcut", () => {
+  const source = readFileSync(new URL("../components/lessons/program-landing/DocumentSimulator.tsx", import.meta.url), "utf8");
+  assert.match(source, /event\.key\.toLowerCase\(\) !== "s"/);
+  assert.match(source, /event\.ctrlKey \|\| event\.metaKey/);
+  assert.match(source, /event\.preventDefault\(\)/);
+  assert.match(source, /Ctrl\/⌘/);
+  assert.match(source, /快捷保存/);
 });
