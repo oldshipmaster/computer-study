@@ -91,10 +91,11 @@ export function IslandMap({
   const [courseQuery, setCourseQuery] = useState("");
   const [selectedIslandId, setSelectedIslandId] = useState("all");
   const [selectedDifficulty, setSelectedDifficulty] = useState<Course["difficulty"] | "all">("all");
+  const [selectedCompletion, setSelectedCompletion] = useState<"all" | "completed" | "unfinished">("all");
   const mission = getMapMission(completedCourseIds, resume);
   const currentCourse = mission.course;
   const resuming = Boolean(resume && currentCourse?.id === resume.courseId);
-  const visibleCourseIds = new Set(filterCourses(COURSES, { islandId: selectedIslandId, query: courseQuery, difficulty: selectedDifficulty }).map((course) => course.id));
+  const visibleCourseIds = new Set(filterCourses(COURSES, { islandId: selectedIslandId, query: courseQuery, difficulty: selectedDifficulty, completion: selectedCompletion, completedCourseIds }).map((course) => course.id));
 
   return (
     <main className="island-app-shell">
@@ -211,7 +212,11 @@ export function IslandMap({
             <span>难度</span>
             {(["all", 1, 2, 3] as const).map((difficulty) => <button aria-pressed={selectedDifficulty === difficulty} key={difficulty} onClick={() => setSelectedDifficulty(difficulty)} type="button">{difficulty === "all" ? "全部" : DIFFICULTY_LABELS[difficulty]}</button>)}
           </div>
-          <p role="status">找到 {visibleCourseIds.size} 节课程{courseQuery || selectedIslandId !== "all" || selectedDifficulty !== "all" ? "，下面只显示匹配结果" : "，按完整航线排列"}。</p>
+          <div className="course-compass-completion" aria-label="按完成状态筛选">
+            <span>进度</span>
+            {(["all", "unfinished", "completed"] as const).map((completion) => <button aria-pressed={selectedCompletion === completion} key={completion} onClick={() => setSelectedCompletion(completion)} type="button">{{ all: "全部", unfinished: "未完成", completed: "已完成" }[completion]}</button>)}
+          </div>
+          <p role="status">找到 {visibleCourseIds.size} 节课程{courseQuery || selectedIslandId !== "all" || selectedDifficulty !== "all" || selectedCompletion !== "all" ? "，下面只显示匹配结果" : "，按完整航线排列"}。</p>
         </div>
 
         {visibleCourseIds.size === 0 ? (
@@ -219,7 +224,7 @@ export function IslandMap({
             <span aria-hidden="true">🧭</span>
             <h3>罗盘暂时没找到这门课</h3>
             <p>试试“文件”“循环”“安全”“AI”，或者清除筛选查看完整航线。</p>
-            <button className="primary-action" onClick={() => { setCourseQuery(""); setSelectedIslandId("all"); setSelectedDifficulty("all"); }} type="button">清除筛选，显示 {CURRICULUM_FACTS.courseCount} 课</button>
+            <button className="primary-action" onClick={() => { setCourseQuery(""); setSelectedIslandId("all"); setSelectedDifficulty("all"); setSelectedCompletion("all"); }} type="button">清除筛选，显示 {CURRICULUM_FACTS.courseCount} 课</button>
           </div>
         ) : <div className="map-route">
           {ISLANDS.map((island, islandIndex) => {

@@ -30,3 +30,11 @@ test("combines difficulty with island and keyword filters", () => {
   assert.deepEqual(filterCourses(COURSES, { islandId: "code-spaceport", query: "函数", difficulty: 3 }).map((course) => course.id), ["functions-tools"]);
   assert.deepEqual(filterCourses(COURSES, { islandId: "code-spaceport", query: "函数", difficulty: 2 }), []);
 });
+
+test("filters completed and unfinished courses without changing order", () => {
+  const completedCourseIds = ["keyboard-flight", "file-home", "ai-helper"];
+  assert.deepEqual(filterCourses(COURSES, { islandId: "all", query: "", completion: "completed", completedCourseIds }).map((course) => course.id), completedCourseIds);
+  const unfinished = filterCourses(COURSES, { islandId: "launch-harbor", query: "", completion: "unfinished", completedCourseIds });
+  assert.deepEqual(unfinished.map((course) => course.id), ["mouse-precision", "bilingual-input", "desktop-adventure", "program-landing"]);
+  assert.equal(filterCourses(COURSES, { islandId: "all", query: "", completion: "unfinished", completedCourseIds }).length, 42);
+});

@@ -156,7 +156,9 @@ test("gives course search a visible recoverable empty state", () => {
   assert.match(source, /setCourseQuery\(""\)/);
   assert.match(source, /setSelectedIslandId\("all"\)/);
   assert.match(source, /setSelectedDifficulty\("all"\)/);
+  assert.match(source, /setSelectedCompletion\("all"\)/);
   assert.match(source, /aria-label="按难度筛选"/);
+  assert.match(source, /aria-label="按完成状态筛选"/);
   assert.match(source, /清除筛选，显示 \{CURRICULUM_FACTS\.courseCount\} 课/);
 });
 
