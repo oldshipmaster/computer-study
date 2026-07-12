@@ -1680,6 +1680,17 @@ input {
 .parent-curriculum-outline section > ol > li > div { display: flex; justify-content: space-between; gap: 10px; }
 .parent-curriculum-outline section > ol > li > div > span { color: var(--deep-sea-soft); font-size: .72rem; white-space: nowrap; }
 .parent-curriculum-outline section ul { margin: 7px 0 0; padding-left: 18px; font-size: .78rem; }
+.advanced-parent-coach { margin: 18px 0; padding: 18px; border: 2px solid #315c9a; border-radius: 18px; background: #edf4ff; }
+.advanced-parent-coach header h2 { margin: 0; }
+.advanced-parent-coach header > p:last-child { color: #456377; }
+.advanced-parent-coach > div { display: grid; grid-template-columns: repeat(2, 1fr); gap: .7rem; }
+.advanced-parent-coach details { overflow: clip; border: 2px solid #315c9a; border-radius: .8rem; background: white; }
+.advanced-parent-coach summary { display: flex; min-height: 52px; align-items: center; justify-content: space-between; gap: .7rem; padding: .7rem; cursor: pointer; }
+.advanced-parent-coach summary span { color: #456377; font-size: .7rem; }
+.advanced-parent-coach details section { padding: 0 .8rem .8rem; border-top: 1px solid #c8d8e2; }
+.advanced-parent-coach details h3 { margin: .8rem 0 .2rem; font-size: .86rem; }
+.advanced-parent-coach details p, .advanced-parent-coach details ul { margin: .2rem 0; font-size: .78rem; }
+@media (max-width: 42rem) { .advanced-parent-coach > div { grid-template-columns: 1fr; } }
 .parent-backup-tools { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 14px 24px; }
 .parent-backup-tools p { margin: 7px 0 0; color: var(--deep-sea-soft); font-size: .8rem; }
 .parent-backup-tools > div:nth-child(2) { display: flex; flex-wrap: wrap; gap: 9px; }

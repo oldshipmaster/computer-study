@@ -5,6 +5,7 @@ import { COURSES, CURRICULUM_FACTS } from "@/lib/course-data";
 import { LESSON_DEFINITIONS } from "@/components/lessons/lesson-registry";
 import { summarizeIslandProgress } from "@/lib/parent-progress-summary";
 import { getNextCourseGuide } from "@/lib/curriculum-guide";
+import { AdvancedParentCoach } from "@/components/AdvancedParentCoach";
 import { createProgressBackup, parseProgressBackup } from "@/lib/progress-backup";
 import { ParentCurriculumOutline } from "@/components/ParentCurriculumOutline";
 import { buildProgressStats } from "@/lib/progress-stats";
@@ -326,6 +327,7 @@ export function ParentPanel({
         </div>
 
         <ParentCurriculumOutline completedCourseIds={progress.completedCourseIds} />
+        <AdvancedParentCoach />
         <ParentFamilyPlan completedCourseIds={progress.completedCourseIds} confidenceByCourse={progress.confidenceByCourse} resume={progress.resume} />
 
         <section className="parent-backup-card" aria-labelledby="backup-progress-title">
