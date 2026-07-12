@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 import { evaluateCondition, runSafetyProgram } from "../lib/rainy-condition-lesson.ts";
 
@@ -17,4 +18,13 @@ test("the same program produces different safe outcomes for changing input", () 
   const sun = runSafetyProgram({ raining: false, bridgeOpen: true });
   assert.notEqual(rain.equipment, sun.equipment);
   assert.equal(rain.bridgeAction, sun.bridgeAction);
+});
+
+test("the condition lab exposes both decision trees and selected paths", () => {
+  const source = readFileSync(new URL("../components/lessons/programming/ConditionLab.tsx", import.meta.url), "utf8");
+  assert.match(source, /decision-tree/);
+  assert.match(source, /decision-branch--selected/);
+  assert.match(source, /条件为真/);
+  assert.match(source, /条件为假/);
+  assert.match(source, /program-output/);
 });

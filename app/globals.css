@@ -3622,7 +3622,10 @@ html.bit-island-document--reduced-motion *::after,
 .condition-lab { display: grid; gap: 1rem; color: #15384e; }
 .condition-weather { display: grid; grid-template-columns: auto 1fr auto 1fr; align-items: center; gap: .7rem; padding: 1rem; border-radius: .8rem; background: white; } .condition-weather span { font-size: 2rem; }
 .condition-program { display: grid; grid-template-columns: repeat(2, 1fr); gap: .8rem; } .condition-program section { display: grid; gap: .5rem; padding: .8rem; border: 3px solid #287aa5; border-radius: .8rem; background: #d8f1ff; } .condition-program code { padding: .6rem; background: #15384e; color: white; font-weight: 800; } .condition-program button { min-height: 3rem; border: 2px solid #15384e; border-radius: .6rem; background: white; } .condition-program button[aria-pressed="true"] { background: #fff1a8; border-color: #9b6a12; }
+.decision-tree > [role="group"] { position: relative; display: grid; grid-template-columns: repeat(2, 1fr); gap: .65rem; padding-top: .8rem; } .decision-tree > [role="group"]::before { position: absolute; top: 0; right: 20%; left: 20%; height: .65rem; border-top: 2px solid #287aa5; border-right: 2px solid #287aa5; border-left: 2px solid #287aa5; content: ""; } .decision-tree button { display: grid; gap: .2rem; place-items: center; } .decision-tree button small { font-size: .62rem; } .decision-tree .decision-branch--selected { background: #fff1a8; box-shadow: 0 0 0 3px rgb(243 189 40 / 35%); }
+.program-output { display: grid; grid-template-columns: auto 1fr auto 1fr; align-items: center; gap: .5rem; padding: .75rem; border: 2px solid #24734a; border-radius: .8rem; background: #e3f8ed; text-align: center; } .program-output strong { grid-column: 1 / -1; } .program-output span { padding: .45rem; border-radius: .45rem; background: white; }
 @media (max-width: 40rem) { .condition-program { grid-template-columns: 1fr; } .condition-weather { grid-template-columns: auto 1fr; } }
+@media (max-width: 40rem) { .program-output { grid-template-columns: 1fr; } }
 
 /* Debugging lesson */
 .bug-mission { padding: 1.4rem; border-radius: 1.5rem; background: #f2eaff; }
