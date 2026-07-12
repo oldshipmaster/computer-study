@@ -263,6 +263,7 @@ test("reads dictionary explanations locally while respecting sound settings", ()
   assert.match(source, /document\.addEventListener\("visibilitychange"/);
   assert.match(source, /document\.removeEventListener\("visibilitychange"/);
   assert.match(source, /window\.speechSynthesis\.cancel/);
+  assert.match(source, /safelyRunSpeech\(\(\) => \{\s*const utterance = new window\.SpeechSynthesisUtterance/);
   assert.match(source, /🔊 听解释/);
   assert.match(source, /去学这节课/);
   assert.match(source, /onStartCourse\(entry\.courseId\)/);

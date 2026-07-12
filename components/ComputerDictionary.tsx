@@ -35,10 +35,10 @@ export function ComputerDictionary({ soundEnabled, onStartCourse }: { soundEnabl
 
   function speak(term: string, explanation: string, example: string) {
     if (!soundEnabled || !canSpeak || document.visibilityState !== "visible") return;
-    const utterance = new window.SpeechSynthesisUtterance(`${term}。${explanation}。举个例子：${example}`);
-    utterance.lang = "zh-CN";
-    utterance.rate = 0.9;
     safelyRunSpeech(() => {
+      const utterance = new window.SpeechSynthesisUtterance(`${term}。${explanation}。举个例子：${example}`);
+      utterance.lang = "zh-CN";
+      utterance.rate = 0.9;
       window.speechSynthesis.cancel();
       window.speechSynthesis.speak(utterance);
     });

@@ -28,4 +28,5 @@ test("cancels shared lesson speech when the page is hidden or the lesson closes"
   assert.match(source, /document\.removeEventListener\("visibilitychange"/);
   assert.match(source, /document\.visibilityState !== "visible"/);
   assert.match(source, /return \(\) => \{[\s\S]{0,240}window\.speechSynthesis\.cancel\(\)/);
+  assert.match(source, /safelyRunSpeech\(\(\) => \{\s*const utterance = new window\.SpeechSynthesisUtterance/);
 });

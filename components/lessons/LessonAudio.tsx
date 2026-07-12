@@ -13,10 +13,10 @@ export function useLessonAudio(message: string) {
   useEffect(() => {
     const hasApi = "speechSynthesis" in window && typeof window.SpeechSynthesisUtterance === "function";
     if (!shouldSpeakLesson({ enabled, hidden: document.visibilityState !== "visible", hasApi, message })) return;
-    const utterance = new window.SpeechSynthesisUtterance(message.trim());
-    utterance.lang = "zh-CN";
-    utterance.rate = 0.92;
     safelyRunSpeech(() => {
+      const utterance = new window.SpeechSynthesisUtterance(message.trim());
+      utterance.lang = "zh-CN";
+      utterance.rate = 0.92;
       window.speechSynthesis.cancel();
       window.speechSynthesis.speak(utterance);
     });
