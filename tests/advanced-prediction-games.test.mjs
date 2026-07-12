@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 test("search, instruction-cycle, routing, and network layers require prediction", async () => {
-  const [search, cycle, routing, layers, scheduling, devices, sort] = await Promise.all([
+  const [search, cycle, routing, layers, scheduling, devices, sort, stackQueue] = await Promise.all([
     readFile(new URL("../components/lessons/advanced/algorithms/SearchLab.tsx", import.meta.url), "utf8"),
     readFile(new URL("../components/lessons/advanced/systems/InstructionCycleLab.tsx", import.meta.url), "utf8"),
     readFile(new URL("../components/lessons/advanced/network/RoutingMazeLab.tsx", import.meta.url), "utf8"),
@@ -11,6 +11,7 @@ test("search, instruction-cycle, routing, and network layers require prediction"
     readFile(new URL("../components/lessons/advanced/os/SchedulingLab.tsx", import.meta.url), "utf8"),
     readFile(new URL("../components/lessons/advanced/os/DeviceCoordinationLab.tsx", import.meta.url), "utf8"),
     readFile(new URL("../components/lessons/advanced/algorithms/SortLab.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../components/lessons/advanced/data-structures/StackQueueLab.tsx", import.meta.url), "utf8"),
   ]);
   assert.match(search, /预测下一次检查哪个索引/);
   assert.match(search, /expectedIndex/);
@@ -36,4 +37,8 @@ test("search, instruction-cycle, routing, and network layers require prediction"
   assert.match(sort, /预测这一轮结束后的顺序/);
   assert.match(sort, /只比较相邻数字/);
   assert.match(sort, /expected\.join/);
+  assert.match(stackQueue, /从栈底取/);
+  assert.match(stackQueue, /从队尾出发/);
+  assert.match(stackQueue, /后进先出/);
+  assert.match(stackQueue, /先进先出/);
 });
