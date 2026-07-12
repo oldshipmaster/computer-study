@@ -19,8 +19,8 @@ async function storeShell(cache, shellResponse, shellUrl) {
     .filter((url) => url.origin === scopeUrl.origin && url.pathname.startsWith(scopeUrl.pathname) && url.hash === "")
     .map((url) => url.href);
   const currentResources = [...new Set([...CORE_FILES, ...resourceUrls])];
-  await cache.put(new URL("./", scopeUrl).href, shellResponse);
   await cache.addAll(currentResources);
+  await cache.put(new URL("./", scopeUrl).href, shellResponse);
   const currentResourceSet = new Set(currentResources);
   const cachedRequests = await cache.keys();
   await Promise.all(cachedRequests.map((cachedRequest) => {

@@ -38,6 +38,10 @@ test("emits a GitHub Pages artifact under the repository base path", async () =>
   assert.match(serviceWorker, /url\.hash === ""/);
   assert.match(serviceWorker, /new Set\(\[\.\.\.CORE_FILES, \.\.\.resourceUrls\]\)/);
   assert.match(serviceWorker, /cache\.addAll\(currentResources\)/);
+  assert.ok(
+    serviceWorker.indexOf("cache.addAll(currentResources)") < serviceWorker.indexOf("cache.put(new URL"),
+    "offline resources must finish caching before the shell switches to their URLs",
+  );
   assert.match(serviceWorker, /cachedUrl\.pathname\.includes\("\/assets\/"\)/);
   assert.match(serviceWorker, /cache\.delete\(cachedRequest\)/);
   assert.match(serviceWorker, /request\.mode === "navigate"\) await storeShell/);
