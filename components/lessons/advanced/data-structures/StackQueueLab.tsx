@@ -34,7 +34,7 @@ export function StackQueueLab({ onComplete }: { onComplete: () => void }) {
         <section>
           <h3>盘子栈</h3>
           <p className="structure-rule"><strong>后进先出</strong>：最后放入，最先取出</p>
-          <div className="stack-visual" aria-label={`盘子栈，共 ${stack.length} 个盘子`}>
+          <div className="stack-visual" aria-label={`盘子栈，共 ${stack.length} 个盘子`} role="img">
             <span className="end-marker top-marker">栈顶 TOP ↓</span>
             <ol>{stack.toReversed().map((item, index) => <li className={index === 0 ? "active-end" : ""} key={item}>{item}</li>)}</ol>
             <span className="end-marker">栈底</span>
@@ -44,7 +44,7 @@ export function StackQueueLab({ onComplete }: { onComplete: () => void }) {
         <section>
           <h3>候船队列</h3>
           <p className="structure-rule"><strong>先进先出</strong>：最早到达，最先离开</p>
-          <div className="queue-visual" aria-label={`候船队列，共 ${queue.length} 艘船`}>
+          <div className="queue-visual" aria-label={`候船队列，共 ${queue.length} 艘船`} role="img">
             <div className="queue-markers"><span className="end-marker">队首 FRONT ↓</span><span className="end-marker">队尾 REAR ↓</span></div>
             <ol>{queue.map((item, index) => <li className={index === 0 ? "active-end" : ""} key={item}>{item}</li>)}</ol>
           </div>

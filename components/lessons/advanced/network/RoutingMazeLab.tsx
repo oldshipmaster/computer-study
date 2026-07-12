@@ -25,7 +25,7 @@ export function RoutingMazeLab({ onComplete }: { onComplete: () => void }) {
     <div className="advanced-lab routing-maze-lab">
       <h2>路由选择迷宫</h2>
       <p>每条线旁的数字是链路成本。把同一路线的两段成本相加，再排除断掉的线。</p>
-      <div className="network-route-diagram" aria-label="设备到服务器有上下两条候选路线">
+      <div className="network-route-diagram" aria-label="设备到服务器有上下两条候选路线" role="img">
         <span className="route-node route-node--device">💻<b>设备</b></span>
         <div className={`route-lane route-lane--a ${selected === "a" ? "is-selected" : ""} ${broken ? "is-broken" : ""}`}>
           <span className="route-edge"><small>链路成本 1</small></span>
@@ -41,7 +41,7 @@ export function RoutingMazeLab({ onComplete }: { onComplete: () => void }) {
         </div>
         <span className="route-node route-node--server">🗄️<b>服务器</b></span>
       </div>
-      <div className="route-cost-summary" aria-label="候选路线成本"><span className={broken ? "is-broken" : ""}>A 路线：1 + 2 = <strong>3</strong></span><span>B 路线：2 + 3 = <strong>5</strong></span></div>
+      <div className="route-cost-summary" aria-label="候选路线成本" role="group"><span className={broken ? "is-broken" : ""}>A 路线：1 + 2 = <strong>3</strong></span><span>B 路线：2 + 3 = <strong>5</strong></span></div>
       <div role="group" aria-label="选择总代价最低的可达路线"><button aria-pressed={selected === "a"} className={selected === "a" ? "route-choice--selected" : ""} onClick={() => choose("a")} type="button">设备 → A → 服务器</button><button aria-pressed={selected === "b"} className={selected === "b" ? "route-choice--selected" : ""} onClick={() => choose("b")} type="button">设备 → B → 服务器</button></div>
       <p className="route-path">{solved ? route.path.map((id) => LABELS[id]).join(" → ") : "等待选择路线"}</p>
       <p role="status">{feedback}</p>
