@@ -37,3 +37,9 @@ test("rejects malformed, unrelated, and future backup files", () => {
     assert.equal(parseProgressBackup(input).ok, false);
   }
 });
+
+test("drops a stale resume for an already completed course", () => {
+  const result = parseProgressBackup(JSON.stringify({ kind: "bit-island-progress-backup", version: 1, progress: { ...DEFAULT_PROGRESS, completedCourseIds: ["keyboard-flight"], resume: { courseId: "keyboard-flight", stage: 2 } } }));
+  assert.equal(result.ok, true);
+  assert.equal(result.progress.resume, null);
+});

@@ -26,8 +26,8 @@ export function parseProgressBackup(text: string): BackupParseResult {
     if (!backup || typeof backup !== "object" || backup.kind !== "bit-island-progress-backup" || backup.version !== 1 || !backup.progress) return { ok: false, message: "这不是可识别的比特岛学习记录文件。" };
     const parsed = parseProgress(JSON.stringify(backup.progress)) as BackupProgress;
     const completedCourseIds = parsed.completedCourseIds.filter((id) => KNOWN_COURSE_IDS.has(id));
-    const resume = parsed.resume && KNOWN_COURSE_IDS.has(parsed.resume.courseId) && parsed.resume.stage <= 5 ? parsed.resume : null;
     const completed = new Set(completedCourseIds);
+    const resume = parsed.resume && KNOWN_COURSE_IDS.has(parsed.resume.courseId) && !completed.has(parsed.resume.courseId) && parsed.resume.stage <= 5 ? parsed.resume : null;
     const confidenceByCourse = Object.fromEntries(Object.entries(parsed.confidenceByCourse).filter(([id]) => KNOWN_COURSE_IDS.has(id) && completed.has(id)));
     return { ok: true, progress: { ...parsed, completedCourseIds, badgeIds: parsed.badgeIds.filter((id) => /^[a-z0-9-]{1,64}$/i.test(id)), confidenceByCourse, resume } };
   } catch {

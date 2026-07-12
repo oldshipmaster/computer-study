@@ -12,6 +12,7 @@ test("keeps a valid resume and drops unknown or out-of-range stages", () => {
   assert.deepEqual(sanitizeCatalogProgress({ ...DEFAULT_PROGRESS, resume: { courseId: "file-home", stage: 5 } }).resume, { courseId: "file-home", stage: 5 });
   assert.equal(sanitizeCatalogProgress({ ...DEFAULT_PROGRESS, resume: { courseId: "unknown", stage: 2 } }).resume, null);
   assert.equal(sanitizeCatalogProgress({ ...DEFAULT_PROGRESS, resume: { courseId: "file-home", stage: 6 } }).resume, null);
+  assert.equal(sanitizeCatalogProgress({ ...DEFAULT_PROGRESS, completedCourseIds: ["file-home"], resume: { courseId: "file-home", stage: 2 } }).resume, null);
 });
 
 test("does not mutate settings, badges, or the original record", () => {
