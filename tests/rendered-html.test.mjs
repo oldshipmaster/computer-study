@@ -183,6 +183,9 @@ test("keeps the guarded parent-area contract in source", () => {
     assert.match(combinedSource, new RegExp(label));
   }
 
+  assert.match(parentSource, /八岛进度/);
+  assert.doesNotMatch(parentSource, /四岛进度/);
+
   assert.match(appSource, /1_500/);
   assert.match(appSource, /onPointerDown/);
   assert.match(appSource, /onPointerUp/);
