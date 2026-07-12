@@ -17,9 +17,14 @@ test("emits a GitHub Pages artifact under the repository base path", async () =>
   assert.match(html, /需要开启 JavaScript/);
   assert.match(html, /\/computer-study\/manifest\.webmanifest/);
   assert.match(html, /http-equiv="Content-Security-Policy"/);
+  assert.match(html, /script-src 'self'/);
+  assert.match(html, /style-src 'self'/);
+  assert.match(html, /worker-src 'self'/);
   assert.match(html, /connect-src 'none'/);
   assert.match(html, /form-action 'none'/);
   assert.match(html, /name="referrer" content="no-referrer"/);
+  assert.doesNotMatch(html, /<script(?![^>]*\bsrc=)[^>]*>/i);
+  assert.doesNotMatch(html, /\sstyle=/i);
   assert.doesNotMatch(html, /(?:src|href)="\/assets\//);
   await access(new URL("favicon.svg", outputRoot));
   for (const unusedStarterAsset of ["file.svg", "globe.svg", "window.svg"]) {
