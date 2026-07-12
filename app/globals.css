@@ -3578,7 +3578,7 @@ html.bit-island-document--reduced-motion *::after,
 .grid-city-mission { padding: 1.2rem; border-radius: 1.5rem; background: #e4f5ff; }
 .coordinate-demo { display: grid; min-height: 14rem; place-items: center; } .coordinate-demo strong { padding: 1.4rem; border: 3px solid #15384e; border-radius: 1rem; background: white; color: #15384e; font-size: 1.7rem; }
 .grid-city-game { display: grid; width: min(100%, 38rem); gap: .7rem; margin: 0 auto; color: #15384e; }
-.grid-label-row, .grid-city { display: grid; grid-template-columns: repeat(6, 1fr); } .grid-label-row span { text-align: center; font-size: .72rem; font-weight: 800; }
+.grid-label-row, .grid-row { display: grid; grid-template-columns: repeat(6, 1fr); } .grid-label-row span { text-align: center; font-size: .72rem; font-weight: 800; }
 .grid-city { border: 3px solid #15384e; background: white; } .grid-cell { position: relative; display: grid; aspect-ratio: 1; place-items: center; border: 1px solid #9ec6d8; } .grid-cell small { position: absolute; left: .15rem; top: .1rem; font-size: .55rem; } .grid-cell span { font-size: clamp(1rem, 4vw, 1.8rem); } .grid-cell.is-obstacle { background: #d4c7b8; } .grid-cell.is-visited { background: #fff2a8; }
 .grid-controls { display: grid; grid-template-columns: repeat(4, 1fr); gap: .5rem; } .grid-controls button { min-height: 3.2rem; border: 2px solid #15384e; border-radius: .6rem; background: white; color: #15384e; font-weight: 800; }
 

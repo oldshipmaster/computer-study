@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 import { INITIAL_GRID_STATE, moveRobot, coordinateLabel } from "../lib/grid-city-lesson.ts";
 
@@ -22,4 +23,10 @@ test("does not enter an obstacle and collects targets once", () => {
   const collected = moveRobot(nearTarget, "down");
   assert.deepEqual(collected.visitedTargets, ["2-3"]);
   assert.deepEqual(moveRobot(collected, "up").visitedTargets, ["2-3"]);
+});
+
+test("groups accessible grid cells into six semantic rows", () => {
+  const source = readFileSync(new URL("../components/lessons/programming/GridCityGame.tsx", import.meta.url), "utf8");
+  assert.match(source, /role="row"/);
+  assert.match(source, /Array\.from\(\{ length: GRID_SIZE \}, \(_, rowIndex\)/);
 });
