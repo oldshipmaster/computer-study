@@ -22,6 +22,9 @@ test("emits a GitHub Pages artifact under the repository base path", async () =>
   assert.match(html, /name="referrer" content="no-referrer"/);
   assert.doesNotMatch(html, /(?:src|href)="\/assets\//);
   await access(new URL("favicon.svg", outputRoot));
+  for (const unusedStarterAsset of ["file.svg", "globe.svg", "window.svg"]) {
+    await assert.rejects(access(new URL(unusedStarterAsset, outputRoot)));
+  }
   const serviceWorker = await readFile(new URL("sw.js", outputRoot), "utf8");
   assert.match(serviceWorker, /requestUrl\.origin !== scopeUrl\.origin/);
   assert.match(serviceWorker, /!requestUrl\.pathname\.startsWith\(scopeUrl\.pathname\)/);
