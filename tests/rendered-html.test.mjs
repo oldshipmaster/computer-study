@@ -169,6 +169,7 @@ test("gives course search a visible recoverable empty state", () => {
   assert.match(source, /event\.key === "Escape"/);
   assert.match(source, /searchInputRef\.current\?\.focus\(\)/);
   assert.match(source, /target instanceof HTMLInputElement/);
+  assert.match(source, /event\.isComposing/);
   assert.match(source, /清除筛选，显示 \{CURRICULUM_FACTS\.courseCount\} 课/);
 });
 

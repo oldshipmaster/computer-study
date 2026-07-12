@@ -108,6 +108,7 @@ export function IslandMap({
 
   useEffect(() => {
     function handleMapShortcut(event: KeyboardEvent) {
+      if (event.isComposing) return;
       const target = event.target;
       const typing = target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement || (target instanceof HTMLElement && target.isContentEditable);
       if (event.key === "/" && !typing && !event.metaKey && !event.ctrlKey && !event.altKey) {
