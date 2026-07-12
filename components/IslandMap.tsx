@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState, type Ref } from "react";
+import { lazy, Suspense, useCallback, useEffect, useRef, useState, type Ref } from "react";
 import { Bibi } from "@/components/Bibi";
 import { KnowledgeAtlas } from "@/components/KnowledgeAtlas";
 import { ReviewChallenge } from "@/components/ReviewChallenge";
@@ -12,8 +12,6 @@ import { OfflineStatus } from "@/components/OfflineStatus";
 import { ComputerDictionary } from "@/components/ComputerDictionary";
 import { ChildReviewQueue } from "@/components/ChildReviewQueue";
 import { TermMatchChallenge } from "@/components/TermMatchChallenge";
-import { FoundationRoadmap } from "@/components/FoundationRoadmap";
-import { FoundationPractice } from "@/components/FoundationPractice";
 import type { CourseConfidence } from "@/lib/review-queue";
 import {
   ISLANDS,
@@ -26,6 +24,9 @@ import {
   type CourseCardState,
 } from "@/lib/course-data";
 import { filterCourses } from "@/lib/course-filter";
+
+const FoundationPractice = lazy(() => import("@/components/FoundationPractice").then((module) => ({ default: module.FoundationPractice })));
+const FoundationRoadmap = lazy(() => import("@/components/FoundationRoadmap").then((module) => ({ default: module.FoundationRoadmap })));
 
 interface IslandMapProps {
   completedCourseIds: string[];
@@ -221,8 +222,8 @@ export function IslandMap({
       <IslandSealCollection completedCourseIds={completedCourseIds} />
       {mission.complete ? <CompletionCertificate /> : null}
 
-      <FoundationRoadmap completedCourseIds={completedCourseIds} onStartCourse={onStartCourse} />
-      <FoundationPractice onStartCourse={onStartCourse} />
+      <Suspense fallback={<section className="foundation-roadmap" role="status">正在绘制深度知识连接图…</section>}><FoundationRoadmap completedCourseIds={completedCourseIds} onStartCourse={onStartCourse} /></Suspense>
+      <Suspense fallback={<section className="foundation-practice-loading" role="status">正在准备底层脑力加练…</section>}><FoundationPractice onStartCourse={onStartCourse} /></Suspense>
       <KnowledgeAtlas completedCourseIds={completedCourseIds} onStartCourse={onStartCourse} />
       <ComputerDictionary onStartCourse={onStartCourse} soundEnabled={soundEnabled} />
       <TermMatchChallenge completedCourseIds={completedCourseIds} key={`terms-${completedCourseIds.join("|")}`} />

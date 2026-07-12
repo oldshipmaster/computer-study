@@ -81,16 +81,17 @@ test("emits a GitHub Pages artifact under the repository base path", async () =>
 
 test("keeps the complete curriculum inside a child-device performance budget", async () => {
   const assetNames = await readdir(new URL("assets/", outputRoot));
-  const javascriptName = assetNames.find((name) => name.endsWith(".js"));
+  const javascriptNames = assetNames.filter((name) => name.endsWith(".js"));
   const cssName = assetNames.find((name) => name.endsWith(".css"));
-  assert.ok(javascriptName);
+  assert.ok(javascriptNames.length);
   assert.ok(cssName);
-  const [html, javascript, css] = await Promise.all([
+  const [html, javascriptAssets, css] = await Promise.all([
     readFile(new URL("index.html", outputRoot)),
-    readFile(new URL(`assets/${javascriptName}`, outputRoot)),
+    Promise.all(javascriptNames.map((name) => readFile(new URL(`assets/${name}`, outputRoot)))),
     readFile(new URL(`assets/${cssName}`, outputRoot)),
   ]);
+  const javascript = javascriptAssets.sort((left, right) => right.byteLength - left.byteLength)[0];
   assert.ok(html.byteLength <= 12 * 1024, `HTML is ${html.byteLength} bytes`);
-  assert.ok(gzipSync(javascript).byteLength <= 160 * 1024, `JavaScript gzip is ${gzipSync(javascript).byteLength} bytes`);
+  assert.ok(gzipSync(javascript).byteLength <= 150 * 1024, `JavaScript gzip is ${gzipSync(javascript).byteLength} bytes`);
   assert.ok(gzipSync(css).byteLength <= 30 * 1024, `CSS gzip is ${gzipSync(css).byteLength} bytes`);
 });
