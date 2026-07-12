@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 import { classifyComputerPart, runInformationPipeline } from "../lib/input-process-output-lesson.ts";
 
@@ -19,4 +20,14 @@ test("traces information through all three stages in order", () => {
 test("an output device cannot replace the processing step", () => {
   assert.equal(classifyComputerPart("speaker"), "output");
   assert.equal(runInformationPipeline("unknown").length, 0);
+});
+
+test("the pipeline lab requires predictions for all three information stages", () => {
+  const source = readFileSync(new URL("../components/lessons/hardware/PipelineLab.tsx", import.meta.url), "utf8");
+  assert.match(source, /pipeline-choice-grid/);
+  assert.match(source, /pipeline-flow--active/);
+  assert.match(source, /输入设备/);
+  assert.match(source, /处理部分/);
+  assert.match(source, /输出设备/);
+  assert.match(source, /selection\.input.*answer\.input/s);
 });
