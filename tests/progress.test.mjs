@@ -18,6 +18,16 @@ test("falls back safely for empty or malformed storage", () => {
   assert.deepEqual(parseProgress('{"version":99}'), DEFAULT_PROGRESS);
 });
 
+test("bounds malformed local collections before rendering them", () => {
+  const manyIds = Array.from({ length: 150 }, (_, index) => `course-${index}`);
+  const manyConfidence = Object.fromEntries(manyIds.map((id) => [id, "practice"]));
+  const parsed = parseProgress(JSON.stringify({ ...DEFAULT_PROGRESS, completedCourseIds: [...manyIds, "x".repeat(65)], badgeIds: manyIds, confidenceByCourse: manyConfidence }));
+  assert.equal(parsed.completedCourseIds.length, 100);
+  assert.equal(parsed.badgeIds.length, 100);
+  assert.equal(Object.keys(parsed.confidenceByCourse).length, 100);
+  assert.equal(parsed.completedCourseIds.includes("x".repeat(65)), false);
+});
+
 test("stores one changeable confidence signal without free text", () => {
   const completed = completeCourse(DEFAULT_PROGRESS, "keyboard-flight", "keyboard-pilot");
   const first = setCourseConfidence(completed, "keyboard-flight", "practice");
