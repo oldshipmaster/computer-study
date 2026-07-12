@@ -1,13 +1,13 @@
-import { KeyboardFlightLesson } from "@/components/KeyboardFlightLesson";
-import { MousePrecisionLesson } from "@/components/lessons/MousePrecisionLesson";
-import { BilingualInputLesson } from "@/components/lessons/BilingualInputLesson";
-import { ProgramLandingLesson } from "@/components/lessons/ProgramLandingLesson";
-import { LightBitIslandLesson } from "@/components/lessons/LightBitIslandLesson";
 import type { LessonDefinition } from "@/components/lessons/types";
 import { lazy } from "react";
 
 const advancedLesson = <T extends Record<string, unknown>>(loader: () => Promise<T>, name: keyof T) => lazy(async () => ({ default: (await loader())[name] as LessonDefinition["Component"] }));
+const KeyboardFlightLesson = advancedLesson(() => import("@/components/KeyboardFlightLesson"), "KeyboardFlightLesson");
+const MousePrecisionLesson = advancedLesson(() => import("@/components/lessons/MousePrecisionLesson"), "MousePrecisionLesson");
+const BilingualInputLesson = advancedLesson(() => import("@/components/lessons/BilingualInputLesson"), "BilingualInputLesson");
 const DesktopAdventureLesson = advancedLesson(() => import("@/components/lessons/DesktopAdventureLesson"), "DesktopAdventureLesson");
+const ProgramLandingLesson = advancedLesson(() => import("@/components/lessons/ProgramLandingLesson"), "ProgramLandingLesson");
+const LightBitIslandLesson = advancedLesson(() => import("@/components/lessons/LightBitIslandLesson"), "LightBitIslandLesson");
 const InstructionOrderLesson = advancedLesson(() => import("@/components/lessons/InstructionOrderLesson"), "InstructionOrderLesson");
 const GridCityNavigationLesson = advancedLesson(() => import("@/components/lessons/GridCityNavigationLesson"), "GridCityNavigationLesson");
 const RepeatPowerLesson = advancedLesson(() => import("@/components/lessons/RepeatPowerLesson"), "RepeatPowerLesson");

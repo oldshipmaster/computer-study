@@ -29,6 +29,10 @@ const deferredLessons = [
   "PopupFogLesson",
   "PasswordGuardianLesson",
   "DesktopAdventureLesson",
+  "MousePrecisionLesson",
+  "BilingualInputLesson",
+  "ProgramLandingLesson",
+  "LightBitIslandLesson",
 ];
 
 test("defers rich programming and hardware labs until a child opens them", () => {
@@ -36,6 +40,11 @@ test("defers rich programming and hardware labs until a child opens them", () =>
     assert.match(source, new RegExp(`const ${lesson} = advancedLesson\\(\\(\\) => import\\("@/components/lessons/${lesson}"\\)`));
     assert.doesNotMatch(source, new RegExp(`import \\{ ${lesson} \\} from`));
   }
+});
+
+test("defers the flagship keyboard mission without losing its named export", () => {
+  assert.match(source, /const KeyboardFlightLesson = advancedLesson\(\(\) => import\("@\/components\/KeyboardFlightLesson"\), "KeyboardFlightLesson"\)/);
+  assert.doesNotMatch(source, /import \{ KeyboardFlightLesson \} from/);
 });
 
 test("defers the shared advanced coding mission bundle", () => {
