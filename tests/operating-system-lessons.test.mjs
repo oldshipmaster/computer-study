@@ -37,3 +37,11 @@ test("operating-system labs are visible simulations without browser system APIs"
     assert.doesNotMatch(lab, /navigator\.|showOpenFilePicker|showSaveFilePicker|indexedDB|Worker\(/);
   }
 });
+
+test("memory lab visualizes occupied and free rooms", () => {
+  const lab = readFileSync(new URL("components/lessons/advanced/os/MemoryRoomsLab.tsx", root), "utf8");
+  assert.match(lab, /occupiedRooms/);
+  assert.match(lab, /memory-room--occupied/);
+  assert.match(lab, /空闲/);
+  assert.match(lab, /已使用.*\/.*8/);
+});

@@ -3844,6 +3844,11 @@ html.bit-island-document--reduced-motion *::after,
 .concept-reflection-feedback.is-correct { background: #dff7e8; color: #176145; }
 .memory-grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: .35rem; }
 .memory-grid span { display: grid; min-height: 3rem; place-items: center; border: 2px solid #65469a; border-radius: .5rem; background: #f4edff; font-weight: 900; }
+.memory-grid span small { font-size: .58rem; }
+.memory-grid span.memory-room--occupied { background: #ffe36e; }
+.memory-grid span.memory-room--system { background: #d7e5ec; }
+.memory-grid span.memory-room--paint { background: #f8d5ef; }
+.memory-grid span.memory-room--game { background: #dff7e8; }
 .instruction-phases, .layer-stack, .transfer-chunks { display: grid; grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr)); gap: .55rem; }
 .instruction-phases button, .layer-stack span { display: grid; min-height: 3.5rem; place-items: center; padding: .5rem; border: 2px solid #197ba7; border-radius: .6rem; background: #e9f7ff; text-align: center; font-weight: 800; }
 .instruction-phases button.is-current { background: #ffe36e; box-shadow: 0 0 0 4px rgb(255 227 110 / 35%); }
