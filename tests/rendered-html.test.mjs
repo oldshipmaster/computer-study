@@ -316,7 +316,7 @@ test("keeps the playable keyboard-flight lesson contract in source", () => {
 test("announces only the eight and ten minute pacing milestones", () => {
   const source = sourceFile("components/lessons/LessonSessionClock.tsx");
   assert.match(source, /seconds === 480 \|\| seconds === 600/);
-  assert.doesNotMatch(source, /clock\.phase === "break"/);
+  assert.doesNotMatch(source, /aria-live=\{clock\.phase/);
   assert.match(source, /announceMilestone \? "polite" : "off"/);
   assert.match(source, /aria-atomic="true"/);
 });
