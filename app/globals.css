@@ -1199,9 +1199,15 @@ input {
 .dictionary-intro { max-width: 760px; margin: 18px 0 6px; line-height: 1.7; }
 .dictionary-result { margin: 0 0 18px; color: #456377; font-weight: 750; }
 .dictionary-groups { display: grid; gap: 18px; }
-.dictionary-groups > section { padding: 18px; border: 2px solid #ead899; border-radius: 18px; background: rgb(255 255 255 / 75%); }
-.dictionary-groups h3 { display: flex; align-items: center; gap: 8px; margin: 0 0 12px; font-family: var(--font-display); font-size: 1.25rem; }
+.dictionary-group { overflow: clip; border: 2px solid #ead899; border-radius: 18px; background: rgb(255 255 255 / 75%); }
+.dictionary-group > summary { display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 10px; min-height: 58px; padding: 10px 16px; cursor: pointer; list-style: none; font-family: var(--font-display); font-size: 1.15rem; }
+.dictionary-group > summary::-webkit-details-marker { display: none; }
+.dictionary-group > summary small { color: #607581; font-family: var(--font-body); font-size: .76rem; }
+.dictionary-group > summary > span:last-child { font-size: 1.35rem; transition: transform 160ms ease; }
+.dictionary-group[open] > summary { border-bottom: 1px solid #ead899; }
+.dictionary-group[open] > summary > span:last-child { transform: rotate(45deg); }
 .dictionary-groups dl { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 0; }
+.dictionary-group dl { padding: 16px; }
 .dictionary-groups dl > div { padding: 14px; border-radius: 13px; background: white; box-shadow: 0 8px 22px rgb(34 70 94 / 8%); }
 .dictionary-groups dt { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px; font-size: 1.08rem; font-weight: 900; }
 .dictionary-groups dt small { color: #557286; font-size: .74rem; }

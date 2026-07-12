@@ -228,6 +228,8 @@ test("reads dictionary explanations locally while respecting sound settings", ()
   assert.match(source, /🔊 听解释/);
   assert.match(source, /去学这节课/);
   assert.match(source, /onStartCourse\(entry\.courseId\)/);
+  assert.match(source, /className="dictionary-group"/);
+  assert.match(source, /open=\{query \? true : undefined\}/);
 });
 
 test("keeps the playable keyboard-flight lesson contract in source", () => {

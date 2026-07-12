@@ -41,13 +41,13 @@ export function ComputerDictionary({ soundEnabled, onStartCourse }: { soundEnabl
         {ISLANDS.map((island) => {
           const islandEntries = entries.filter((entry) => entry.islandId === island.id);
           if (!islandEntries.length) return null;
-          return <section aria-labelledby={`dictionary-${island.id}`} key={island.id}>
-            <h3 id={`dictionary-${island.id}`}><span aria-hidden="true">{island.icon}</span>{island.name}</h3>
+          return <details className="dictionary-group" key={`${island.id}-${query ? "search" : "browse"}`} open={query ? true : undefined}>
+            <summary><span aria-hidden="true">{island.icon}</span><strong>{island.name}</strong><small>{islandEntries.length} 个词</small><span aria-hidden="true">＋</span></summary>
             <dl>{islandEntries.map((entry) => <div key={entry.id}>
               <dt>{entry.term}<small>{entry.english}</small></dt>
               <dd><p>{entry.explanation}</p><span><strong>举个例子：</strong>{entry.example}</span><div className="dictionary-actions"><button disabled={!soundEnabled || !canSpeak} onClick={() => speak(entry.term, entry.explanation, entry.example)} type="button">{!soundEnabled ? "声音已关闭" : canSpeak ? "🔊 听解释" : "浏览器不支持朗读"}</button><button onClick={() => onStartCourse(entry.courseId)} type="button">去学这节课 →</button></div></dd>
             </div>)}</dl>
-          </section>;
+          </details>;
         })}
       </div> : <div className="dictionary-empty"><span aria-hidden="true">🔎</span><p>还没有找到这个词。试试“文件”“网络”“函数”或 “AI”。</p><button onClick={() => setQuery("")} type="button">查看全部词语</button></div>}
     </section>
