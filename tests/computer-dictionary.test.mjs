@@ -22,6 +22,16 @@ test("maps exactly one core term to every course", () => {
   );
 });
 
+test("keeps every explanation short and free of personal-data prompts", () => {
+  const unsafePrompt = /(?:输入|填写|告诉我|发来).{0,8}(?:真实密码|电话|住址|学校|姓名)/;
+  for (const entry of DICTIONARY_ENTRIES) {
+    assert.ok(entry.explanation.length >= 12 && entry.explanation.length <= 36, entry.id);
+    assert.ok(entry.example.length >= 10 && entry.example.length <= 40, entry.id);
+    assert.doesNotMatch(`${entry.explanation}${entry.example}`, /https?:\/\//i);
+    assert.doesNotMatch(`${entry.explanation}${entry.example}`, unsafePrompt);
+  }
+});
+
 test("searches Chinese, English, explanations, and examples", () => {
   assert.deepEqual(searchDictionary("循环").map((entry) => entry.id), ["loop"]);
   assert.deepEqual(searchDictionary("cpu").map((entry) => entry.id), ["cpu-memory-storage"]);
