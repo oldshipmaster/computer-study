@@ -2,6 +2,7 @@ import { useState } from "react";
 import {
   canCompleteTask,
   classifySystemItem,
+  getSystemSignalRoute,
 } from "@/lib/hardware-software-lesson";
 import { isRepeatedPointerActivation } from "@/lib/interaction-guard";
 
@@ -28,6 +29,7 @@ export function SystemPairingLab({ onComplete }: Props) {
   const [index, setIndex] = useState(0);
   const [selected, setSelected] = useState<string[]>([]);
   const [feedback, setFeedback] = useState("同时选择任务需要的硬件和软件。");
+  const [signalStep, setSignalStep] = useState<number | null>(null);
   const task = TASKS[index];
   const hardware = ITEMS.filter(
     (item) =>
@@ -38,6 +40,7 @@ export function SystemPairingLab({ onComplete }: Props) {
       selected.includes(item.id) && classifySystemItem(item.id) === "software",
   );
   const systemReady = canCompleteTask(task.id, selected);
+  const route = getSystemSignalRoute(task.id);
 
   function check(detail: number) {
     if (isRepeatedPointerActivation(detail)) return;
@@ -45,10 +48,20 @@ export function SystemPairingLab({ onComplete }: Props) {
       setFeedback("还缺搭档：检查是否既有能摸到的硬件，也有负责指令的软件。");
       return;
     }
-    if (index === TASKS.length - 1) onComplete();
+    setSignalStep(0);
+    setFeedback("应用程序已经发出请求，沿着路线执行下一站。");
+  }
+
+  function advanceSignal(detail: number) {
+    if (isRepeatedPointerActivation(detail) || signalStep === null) return;
+    if (signalStep < route.length - 1) {
+      setSignalStep((value) => (value ?? 0) + 1);
+      setFeedback(signalStep === 0 ? "请求传给操作系统，由它协调硬件资源。" : signalStep === 1 ? "操作系统把指令交给硬件执行。" : "硬件执行完成，系统产生了可见输出。");
+    } else if (index === TASKS.length - 1) onComplete();
     else {
       setIndex((value) => value + 1);
       setSelected([]);
+      setSignalStep(null);
       setFeedback("搭档成功，换一个任务继续。");
     }
   }
@@ -78,6 +91,7 @@ export function SystemPairingLab({ onComplete }: Props) {
           </button>
         ))}
       </div>
+      {signalStep !== null ? <ol aria-label="从软件到硬件的指令路线" className="system-signal-route">{route.map((stop, routeIndex) => <li aria-current={routeIndex === signalStep ? "step" : undefined} className={routeIndex <= signalStep ? "is-reached" : ""} key={stop.kind}><small>{routeIndex + 1}</small><strong>{stop.label}</strong>{routeIndex < route.length - 1 ? <span aria-hidden="true">→</span> : null}</li>)}</ol> : null}
       <div
         aria-label="当前组装的计算机系统"
         className="system-blueprint"
@@ -118,10 +132,10 @@ export function SystemPairingLab({ onComplete }: Props) {
       </p>
       <button
         className="primary-action"
-        onClick={(event) => check(event.detail)}
+        onClick={(event) => signalStep === null ? check(event.detail) : advanceSignal(event.detail)}
         type="button"
       >
-        启动这组搭档
+        {signalStep === null ? "启动这组搭档" : signalStep < route.length - 1 ? "执行下一站" : index === TASKS.length - 1 ? "完成系统路线" : "进入下一项任务"}
       </button>
     </div>
   );
