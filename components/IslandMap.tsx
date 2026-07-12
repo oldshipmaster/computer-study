@@ -129,6 +129,7 @@ export function IslandMap({
 
   return (
     <main className="island-app-shell">
+      <a className="skip-link" href="#map-heading">跳到今天任务</a>
       <header className="site-header" id="site-top" aria-label="比特岛导航">
         <a className="brand-mark" href="#adventure-map" aria-label="比特岛大冒险课程地图">
           <span className="brand-orbit" aria-hidden="true">

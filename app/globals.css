@@ -81,6 +81,8 @@ input {
 .island-app-shell {
   min-height: 100dvh;
 }
+.skip-link { position: fixed; z-index: 200; top: 10px; left: 10px; padding: 10px 14px; border: 3px solid var(--deep-sea); border-radius: 10px; background: white; color: var(--deep-sea); font-weight: 900; text-decoration: none; transform: translateY(-180%); }
+.skip-link:focus { transform: translateY(0); }
 
 .site-header {
   position: relative;

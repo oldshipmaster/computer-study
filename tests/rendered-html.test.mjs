@@ -130,6 +130,7 @@ test("server-renders the complete curriculum map", async () => {
   assert.match(html, /儿童隐私与安全说明/);
   assert.match(html, /aria-label="全部课程完成进度"/);
   assert.match(html, /href="#site-top"/);
+  assert.match(html, /class="skip-link" href="#map-heading">跳到今天任务/);
   assert.match(html, /回到顶部与快捷航线/);
   assert.match(html, /已完成.*0.*\/.*45.*课/);
   assert.match(html, /aria-label="学习区域快捷航线"/);
