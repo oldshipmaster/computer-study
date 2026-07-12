@@ -13,6 +13,7 @@ import { ComputerDictionary } from "@/components/ComputerDictionary";
 import { ChildReviewQueue } from "@/components/ChildReviewQueue";
 import { TermMatchChallenge } from "@/components/TermMatchChallenge";
 import { FoundationRoadmap } from "@/components/FoundationRoadmap";
+import { FoundationPractice } from "@/components/FoundationPractice";
 import type { CourseConfidence } from "@/lib/review-queue";
 import {
   ISLANDS,
@@ -221,6 +222,7 @@ export function IslandMap({
       {mission.complete ? <CompletionCertificate /> : null}
 
       <FoundationRoadmap completedCourseIds={completedCourseIds} onStartCourse={onStartCourse} />
+      <FoundationPractice onStartCourse={onStartCourse} />
       <KnowledgeAtlas completedCourseIds={completedCourseIds} onStartCourse={onStartCourse} />
       <ComputerDictionary onStartCourse={onStartCourse} soundEnabled={soundEnabled} />
       <TermMatchChallenge completedCourseIds={completedCourseIds} key={`terms-${completedCourseIds.join("|")}`} />
