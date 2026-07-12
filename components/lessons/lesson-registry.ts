@@ -33,6 +33,7 @@ import { AiHelperLesson, DigitalProjectLesson, EmailMessageLesson, OnlineCollabo
 import { BooleanLogicLesson, EventsHandlersLesson, FunctionsToolsLesson, GameDesignLesson, VariablesScoreLesson } from "@/components/lessons/CodingLessons";
 import { ArrayLockersLesson, GraphRoutesLesson, LinkedTreasureLesson, StackQueueDockLesson, TreeLibraryLesson } from "@/components/lessons/advanced/DataStructureLessons";
 import { AlgorithmEfficiencyLesson, BinarySearchLesson, BubbleSortLesson, LinearSearchLesson, TaskDecompositionLesson } from "@/components/lessons/advanced/AlgorithmLessons";
+import { CpuSchedulingLesson, DeviceCoordinationLesson, FileSystemTreeLesson, MemoryAllocationLesson, ProgramProcessLesson } from "@/components/lessons/advanced/OperatingSystemLessons";
 import type { LessonDefinition } from "@/components/lessons/types";
 
 export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
@@ -351,6 +352,11 @@ export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
   "bubble-sort": { courseId: "bubble-sort", badgeId: "sort-robot", badgeName: "排序机器人工程师", completionTitle: "四个数字完成冒泡排序", completionSummary: "你会比较相邻项目、交换错误顺序并重复多轮直到有序。", Component: BubbleSortLesson },
   "task-decomposition": { courseId: "task-decomposition", badgeId: "task-planner", badgeName: "任务规划师", completionTitle: "复杂任务拆分并正确组合", completionSummary: "你会拆分任务、识别依赖、安排可执行顺序并检查组合结果。", Component: TaskDecompositionLesson },
   "algorithm-efficiency": { courseId: "algorithm-efficiency", badgeId: "efficiency-referee", badgeName: "算法效率裁判", completionTitle: "两种查找算法完成效率比赛", completionSummary: "你会用操作次数比较算法，并解释数据增加时两种方法的变化。", Component: AlgorithmEfficiencyLesson },
+  "program-process": { courseId: "program-process", badgeId: "process-controller", badgeName: "进程控制员", completionTitle: "虚拟进程完成完整生命周期", completionSummary: "你会区分程序和进程，并解释就绪、运行、等待、唤醒与结束。", Component: ProgramProcessLesson },
+  "cpu-scheduling": { courseId: "cpu-scheduling", badgeId: "schedule-controller", badgeName: "调度控制员", completionTitle: "三个任务公平获得 CPU 时间片", completionSummary: "你会用时间片让多个任务轮流运行，并追踪剩余工作。", Component: CpuSchedulingLesson },
+  "memory-allocation": { courseId: "memory-allocation", badgeId: "memory-room-manager", badgeName: "内存房间管理员", completionTitle: "有限内存完成分配与回收", completionSummary: "你会检查容量、拒绝超额申请，并在进程结束后释放空间。", Component: MemoryAllocationLesson },
+  "file-system-tree": { courseId: "file-system-tree", badgeId: "file-system-guide", badgeName: "文件系统向导", completionTitle: "虚拟目录树中的目标文件找到", completionSummary: "你会从根目录沿路径找到文件，也理解层级和只读权限。", Component: FileSystemTreeLesson },
+  "device-coordination": { courseId: "device-coordination", badgeId: "device-coordinator", badgeName: "设备协调员", completionTitle: "三个虚拟设备请求依次完成", completionSummary: "你会解释程序、操作系统、驱动和设备怎样合作处理请求。", Component: DeviceCoordinationLesson },
 };
 
 export function getLessonDefinition(courseId: string): LessonDefinition | undefined {
