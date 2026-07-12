@@ -8,6 +8,7 @@ import { getNextCourseGuide } from "@/lib/curriculum-guide";
 import { createProgressBackup, parseProgressBackup } from "@/lib/progress-backup";
 import { ParentCurriculumOutline } from "@/components/ParentCurriculumOutline";
 import { buildProgressStats } from "@/lib/progress-stats";
+import { ParentFamilyPlan } from "@/components/ParentFamilyPlan";
 
 export interface ParentProgress {
   version: 1;
@@ -308,6 +309,7 @@ export function ParentPanel({
         </div>
 
         <ParentCurriculumOutline completedCourseIds={progress.completedCourseIds} />
+        <ParentFamilyPlan completedCourseIds={progress.completedCourseIds} resume={progress.resume} />
 
         <section className="parent-backup-card" aria-labelledby="backup-progress-title">
           <div className="parent-backup-tools">

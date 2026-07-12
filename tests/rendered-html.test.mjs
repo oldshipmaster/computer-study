@@ -276,6 +276,19 @@ test("keeps the full parent curriculum outline aligned with catalog data", () =>
   assert.match(source, /completed\.has\(courseId\)/);
 });
 
+test("builds a private printable five-session family plan", () => {
+  const source = sourceFile("components/ParentFamilyPlan.tsx");
+  const parentSource = sourceFile("components/ParentPanel.tsx");
+  const css = sourceFile("app/globals.css");
+  assert.match(parentSource, /ParentFamilyPlan/);
+  assert.match(source, /buildLearningPlan\(completedCourseIds, 5, resume\)/);
+  assert.match(source, /CURRICULUM_GUIDE/);
+  assert.match(source, /打印五次学习卡/);
+  assert.match(source, /不含孩子姓名、答题内容或账号信息/);
+  assert.match(source, /window\.addEventListener\("afterprint"/);
+  assert.match(css, /\.print-family-plan \.family-plan/);
+});
+
 test("cancels a pending parent hold when the page loses interaction", () => {
   const appSource = sourceFile("components/BitIslandApp.tsx");
 

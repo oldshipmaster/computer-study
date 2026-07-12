@@ -1218,6 +1218,27 @@ input {
 .child-review-queue li small { color: #527165; }
 .child-review-queue button { min-height: 42px; padding: 0 13px; border: 0; border-radius: 10px; background: #174f3b; color: white; font: inherit; font-weight: 850; }
 @media (max-width: 720px) { .child-review-queue { grid-template-columns: 1fr; } .child-review-queue li { grid-template-columns: auto 1fr; } .child-review-queue button { grid-column: 1 / -1; } }
+.family-plan { padding: 22px; border: 2px solid var(--line); border-radius: 20px; background: #f9fcff; }
+.family-plan > header { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.family-plan h2 { margin: 4px 0 0; font-family: var(--font-display); font-size: 1.55rem; }
+.family-plan > header button { min-height: 44px; padding: 0 14px; border: 2px solid var(--deep-sea); border-radius: 11px; background: var(--yellow-soft); color: inherit; font: inherit; font-weight: 850; }
+.family-plan > ol { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 9px; margin: 18px 0 10px; padding: 0; list-style: none; }
+.family-plan > ol > li { display: flex; min-width: 0; padding: 12px; flex-direction: column; border: 1px solid #cbdce5; border-radius: 12px; background: white; }
+.family-plan > ol > li > div { display: grid; gap: 3px; }
+.family-plan > ol > li > div span { color: #557286; font-size: .74rem; font-weight: 850; }
+.family-plan > ol > li > div small { color: #557286; }
+.family-plan li ul { display: grid; gap: 4px; margin: 10px 0; padding-left: 17px; font-size: .78rem; line-height: 1.4; }
+.family-plan li p { margin: 0 0 10px; font-size: .78rem; line-height: 1.45; }
+.family-plan li footer { margin-top: auto; padding-top: 8px; border-top: 1px dashed #c4d2d9; color: #526c79; font-size: .72rem; }
+.family-plan > small { color: #607581; }
+@media (max-width: 900px) { .family-plan > ol { grid-template-columns: 1fr; } .family-plan > header { align-items: stretch; flex-direction: column; } }
+@media print {
+  .print-family-plan .completion-certificate { display: none !important; }
+  .print-family-plan .family-plan, .print-family-plan .family-plan * { visibility: visible !important; }
+  .print-family-plan .family-plan { position: fixed; inset: 0; padding: 12mm; border: 0; background: white; color: #12324a; }
+  .print-family-plan .family-plan > header button { display: none !important; }
+  .print-family-plan .family-plan > ol { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+}
 @media (max-width: 760px) { .dictionary-heading { align-items: stretch; flex-direction: column; } .dictionary-groups dl { grid-template-columns: 1fr; } }
 .privacy-promise summary { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px; min-height: 62px; padding: 12px 16px; cursor: pointer; list-style: none; }
 .privacy-promise summary::-webkit-details-marker { display: none; }
