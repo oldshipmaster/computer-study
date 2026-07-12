@@ -54,6 +54,11 @@ test("cache station visualizes distance, capacity, and wait across the hierarchy
   assert.match(lab, /容量/);
   assert.match(lab, /等待.*单位/);
   assert.match(lab, /aria-current/);
+  assert.match(lab, /逐层探查/);
+  assert.match(lab, /缓存未命中/);
+  assert.match(lab, /累计等待/);
+  assert.match(lab, /取数记录/);
+  assert.match(lab, /完成缓存实验/);
 });
 
 test("network layers remain visible as nested envelopes during packing and opening", () => {
