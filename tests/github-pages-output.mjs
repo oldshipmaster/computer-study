@@ -26,6 +26,7 @@ test("emits a GitHub Pages artifact under the repository base path", async () =>
     await assert.rejects(access(new URL(unusedStarterAsset, outputRoot)));
   }
   const serviceWorker = await readFile(new URL("sw.js", outputRoot), "utf8");
+  assert.match(serviceWorker, /const CACHE_NAME = "bit-island-shell-v2"/);
   assert.match(serviceWorker, /requestUrl\.origin !== scopeUrl\.origin/);
   assert.match(serviceWorker, /!requestUrl\.pathname\.startsWith\(scopeUrl\.pathname\)/);
   assert.match(serviceWorker, /event\.request\.mode === "navigate"/);
