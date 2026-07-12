@@ -36,7 +36,7 @@ export const DICTIONARY_ENTRIES: readonly DictionaryEntry[] = [
   { id: "troubleshooting", islandId: "hardware-lab", courseId: "troubleshoot-machine", term: "故障排查", english: "Troubleshooting", explanation: "从简单安全的现象开始，一次检查一个原因并观察结果。", example: "先看音量是否关闭，不自己拆开设备。" },
   { id: "network", islandId: "network-bay", courseId: "network-troubleshooting", term: "网络故障范围", english: "Network scope", explanation: "比较一台还是多台设备、一个还是所有网站失败，以缩小原因范围。", example: "只有一个网站打不开和全家都断网可能是不同问题。" },
   { id: "packet", islandId: "network-bay", courseId: "network-journey", term: "数据包", english: "Packet", explanation: "网络把大消息拆成的小块，每块都带着目的地信息。", example: "像把一套积木分装进几个有地址的小盒子。" },
-  { id: "url", islandId: "network-bay", courseId: "web-address", term: "网址", english: "URL", explanation: "告诉浏览器去哪里找到某个网络资源的地址。", example: "要先看清网站身份，再决定是否打开链接。" },
+  { id: "url", islandId: "network-bay", courseId: "web-address", term: "网址", english: "URL / DNS", explanation: "网址写出网络位置，DNS 帮设备把网站名字找到对应的数字地址。", example: "能解析出数字地址不等于可信，仍要看清网站身份。" },
   { id: "search-terms", islandId: "network-bay", courseId: "search-and-links", term: "搜索关键词", english: "Search terms", explanation: "从问题中挑出的核心词语，帮助搜索工具找到更相关的结果。", example: "把“为什么月亮会变化形状”提炼为“月相 原因 儿童”。" },
   { id: "cloud", islandId: "network-bay", courseId: "downloads-and-cloud", term: "云端", english: "Cloud", explanation: "通过网络访问的远程服务器和存储空间。", example: "下载会把云端文件复制到本机，上传方向相反。" },
   { id: "pixel", islandId: "creative-workshop", courseId: "pixel-art", term: "像素", english: "Pixel", explanation: "数字图片中最小的颜色小方格。", example: "许多不同颜色的像素排在一起就形成图画。" },

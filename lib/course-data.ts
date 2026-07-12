@@ -270,7 +270,7 @@ export const COURSES: Course[] = [
   },
   {
     id: "web-address", islandId: "network-bay", order: 27,
-    title: "网址是网络地址", summary: "网站身份、路径与仿冒地址。", skill: "网址识别", minutes: 9, difficulty: 2, playable: true,
+    title: "网址是网络地址", summary: "网站身份、虚拟 DNS、路径与仿冒地址。", skill: "网址与名字解析", minutes: 9, difficulty: 2, playable: true,
   },
   {
     id: "search-and-links", islandId: "network-bay", order: 28,
