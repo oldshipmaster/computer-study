@@ -9,6 +9,7 @@ import { CompletionCertificate } from "@/components/CompletionCertificate";
 import { IslandSealCollection } from "@/components/IslandSealCollection";
 import { PrivacyPromise } from "@/components/PrivacyPromise";
 import { OfflineStatus } from "@/components/OfflineStatus";
+import { ComputerDictionary } from "@/components/ComputerDictionary";
 import {
   ISLANDS,
   COURSES,
@@ -166,6 +167,7 @@ export function IslandMap({
       {mission.complete ? <CompletionCertificate /> : null}
 
       <KnowledgeAtlas completedCourseIds={completedCourseIds} />
+      <ComputerDictionary />
       <ReviewChallenge completedCourseIds={completedCourseIds} key={completedCourseIds.join("|")} />
 
       <section className="adventure-map" id="adventure-map" aria-labelledby="islands-heading">

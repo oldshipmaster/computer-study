@@ -1,4 +1,5 @@
 import { buildKnowledgeAtlas } from "@/lib/knowledge-atlas";
+import { CURRICULUM_FACTS } from "@/lib/course-data";
 
 interface KnowledgeAtlasProps {
   completedCourseIds: string[];
@@ -15,7 +16,7 @@ export function KnowledgeAtlas({ completedCourseIds }: KnowledgeAtlasProps) {
           <p className="section-kicker">你的知识图鉴</p>
           <h2 id="knowledge-atlas-heading">把学会的电脑知识收进口袋</h2>
         </div>
-        <strong aria-label={`已经解锁 ${unlockedTotal} 个知识卡`}>{unlockedTotal} / 45</strong>
+        <strong aria-label={`已经解锁 ${unlockedTotal} 个知识卡`}>{unlockedTotal} / {CURRICULUM_FACTS.courseCount}</strong>
       </div>
       <p className="knowledge-atlas-intro">完成一课会解锁一张复习卡。打开岛屿章节，试着不看答案先讲给家长听。</p>
       <div className="knowledge-chapters">

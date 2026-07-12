@@ -1,0 +1,34 @@
+"use client";
+
+import { useState } from "react";
+import { ISLANDS } from "@/lib/course-data";
+import { searchDictionary } from "@/lib/computer-dictionary";
+
+export function ComputerDictionary() {
+  const [query, setQuery] = useState("");
+  const entries = searchDictionary(query);
+
+  return (
+    <section className="computer-dictionary" aria-labelledby="computer-dictionary-heading">
+      <div className="dictionary-heading">
+        <div><p className="section-kicker">比比电脑词典</p><h2 id="computer-dictionary-heading">会操作，也能把原理讲清楚</h2></div>
+        <label>查一个词<input onChange={(event) => setQuery(event.target.value)} placeholder="例如：循环、CPU、AI" type="search" value={query} /></label>
+      </div>
+      <p className="dictionary-intro">每学完一课，找出相关词语，用自己的话向家长解释，再举一个新例子。</p>
+      <p className="dictionary-result" role="status">找到 {entries.length} 个电脑词语</p>
+      {entries.length ? <div className="dictionary-groups">
+        {ISLANDS.map((island) => {
+          const islandEntries = entries.filter((entry) => entry.islandId === island.id);
+          if (!islandEntries.length) return null;
+          return <section aria-labelledby={`dictionary-${island.id}`} key={island.id}>
+            <h3 id={`dictionary-${island.id}`}><span aria-hidden="true">{island.icon}</span>{island.name}</h3>
+            <dl>{islandEntries.map((entry) => <div key={entry.id}>
+              <dt>{entry.term}<small>{entry.english}</small></dt>
+              <dd><p>{entry.explanation}</p><span><strong>举个例子：</strong>{entry.example}</span></dd>
+            </div>)}</dl>
+          </section>;
+        })}
+      </div> : <div className="dictionary-empty"><span aria-hidden="true">🔎</span><p>还没有找到这个词。试试“文件”“网络”“函数”或 “AI”。</p><button onClick={() => setQuery("")} type="button">查看全部词语</button></div>}
+    </section>
+  );
+}
