@@ -8,6 +8,7 @@ const START_NODES: LinkedNodes<string> = {
   lighthouse: { value: "灯塔", next: "cave" },
   cave: { value: "山洞", next: null },
 };
+const ADDRESSES: Record<string, number> = { lighthouse: 2048, dock: 4096, cave: 8192 };
 
 export function LinkedTreasureLab({ onComplete }: { onComplete: () => void }) {
   const [nodes, setNodes] = useState(START_NODES);
@@ -36,7 +37,8 @@ export function LinkedTreasureLab({ onComplete }: { onComplete: () => void }) {
       <div aria-label="沿下一站连接的节点" className="linked-path" role="list">
         {path.map((id, index) => <span key={id} role="listitem"><strong>{nodes[id].value}</strong><small>{index < path.length - 1 ? "下一站 →" : "终点"}</small></span>)}
       </div>
-      <p role="status">{feedback}</p>
+      <div aria-label="链表节点在内存中的地址与指针" className="linked-memory-map" role="list">{Object.entries(nodes).map(([id, node]) => <span className={id === "dock" ? "linked-memory-node--new" : step === 2 && id === "lighthouse" ? "linked-memory-node--reconnected" : ""} key={id} role="listitem"><small>节点地址 {ADDRESSES[id]}</small><strong>{node.value}</strong><b>next 指针</b><em>{node.next ? `→ ${ADDRESSES[node.next]}（${nodes[node.next].value}）` : "→ null（终点）"}</em></span>)}</div><p className="linked-memory-note">链表节点的地址不需要连续；每个 next 指针负责告诉电脑下一站在哪里。</p>
+      <p aria-live="polite" role="status">{feedback}</p>
       {step === 0 ? <div role="group" aria-label="选择码头插入位置"><button onClick={(event) => advance("between", event.detail)} type="button">插在灯塔和山洞之间</button><button onClick={(event) => advance("after", event.detail)} type="button">插在山洞终点之后</button></div> : step === 1 ? <div role="group" aria-label="选择删除后的连接"><button onClick={(event) => advance("reconnect", event.detail)} type="button">让灯塔重新指向山洞</button><button onClick={(event) => advance("break", event.detail)} type="button">让灯塔指向不存在的位置</button></div> : <button onClick={onComplete} type="button">完成链表任务</button>}
     </div>
   );

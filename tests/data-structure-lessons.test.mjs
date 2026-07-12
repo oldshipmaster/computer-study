@@ -65,3 +65,13 @@ test("array lab aligns each index with one consecutive memory address", () => {
   assert.match(lab, /array-cell--selected/);
   assert.match(lab, /只定位一个位置/);
 });
+
+test("linked list lab shows nonconsecutive addresses connected by next pointers", () => {
+  const lab = readFileSync(new URL("components/lessons/advanced/data-structures/LinkedTreasureLab.tsx", root), "utf8");
+  assert.match(lab, /linked-memory-map/);
+  assert.match(lab, /节点地址/);
+  assert.match(lab, /next 指针/);
+  assert.match(lab, /2048/);
+  assert.match(lab, /8192/);
+  assert.match(lab, /不需要连续/);
+});
