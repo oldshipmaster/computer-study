@@ -65,3 +65,13 @@ test("network layers remain visible as nested envelopes during packing and openi
   assert.match(lab, /消息核心/);
   assert.match(lab, /发送端.*接收端/);
 });
+
+test("instruction cycle traces data through all four CPU stages", () => {
+  const lab = readFileSync(new URL("components/lessons/advanced/systems/InstructionCycleLab.tsx", root), "utf8");
+  assert.match(lab, /instruction-data-flow/);
+  assert.match(lab, /phase-node--current/);
+  assert.match(lab, /读取.*PC/);
+  assert.match(lab, /指令寄存器/);
+  assert.match(lab, /运算单元/);
+  assert.match(lab, /写入.*OUT/);
+});

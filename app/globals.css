@@ -3932,6 +3932,7 @@ html.bit-island-document--reduced-motion *::after,
 .toy-cpu-board span { color: #c9e4f1; font-size: .7rem; }
 .toy-cpu-board strong { overflow-wrap: anywhere; color: #ffe36e; font-family: var(--font-geist-mono), monospace; font-size: 1.1rem; }
 .toy-cpu-board .cpu-registers { grid-template-columns: repeat(3, 1fr); }
+.instruction-data-flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: .85rem; margin: 0; padding: 0; list-style: none; } .instruction-data-flow li { position: relative; display: grid; gap: .2rem; padding: .65rem; border: 2px solid #315c9a; border-radius: .7rem; background: #eef7ff; text-align: center; } .instruction-data-flow li:not(:last-child)::after { position: absolute; top: 50%; right: -.8rem; content: "→"; color: #197ba7; font-size: 1.15rem; font-weight: 900; transform: translateY(-50%); } .instruction-data-flow .phase-node--current { background: #fff0a8; box-shadow: 0 0 0 3px #f3bd28; } .instruction-data-flow small, .instruction-data-flow span { font-size: .63rem; }
 .search-items { display: grid !important; grid-template-columns: repeat(4, 1fr) !important; }
 .search-items button { display: grid; min-width: 0; font-size: 1.25rem; }
 .search-items button small { font-size: .62rem; }
