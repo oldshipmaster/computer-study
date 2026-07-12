@@ -228,6 +228,13 @@ test("adds one unlocked concept-match question per completed course", () => {
   assert.match(source, /45 节课各有一道概念题/);
   assert.match(source, /answerTermMatch/);
   assert.match(source, /本次概念配对进度/);
+  assert.match(source, /questionHeadingRef\.current\?\.focus\(\)/);
+});
+
+test("moves focus to each new scenario review question", () => {
+  const source = sourceFile("components/ReviewChallenge.tsx");
+  assert.match(source, /questionHeadingRef\.current\?\.focus\(\)/);
+  assert.match(source, /ref=\{questionHeadingRef\} tabIndex=\{-1\}/);
 });
 
 test("lets unlocked knowledge cards launch lesson replay", () => {
