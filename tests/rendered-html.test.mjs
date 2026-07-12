@@ -622,6 +622,10 @@ test("marks the executing instruction in forced-colors mode", () => {
     forcedColorsCss,
     /\.program-block\.is-current\s*\{[^}]*outline\s*:\s*3px double CanvasText;/,
   );
+  assert.match(
+    forcedColorsCss,
+    /\[aria-pressed="true"\]\s*\{[^}]*outline\s*:\s*3px solid Highlight;/,
+  );
 });
 
 test("composes ambient transforms with responsive and interactive transforms", () => {

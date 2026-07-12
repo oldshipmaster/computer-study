@@ -3447,6 +3447,11 @@ html.bit-island-document--reduced-motion *::after,
 }
 
 @media (forced-colors: active) {
+  [aria-pressed="true"] {
+    outline: 3px solid Highlight;
+    outline-offset: 3px;
+  }
+
   .lesson-progress li.is-current > span {
     outline: 3px double CanvasText;
     outline-offset: 3px;
