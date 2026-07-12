@@ -1,7 +1,10 @@
 import { Bibi } from "@/components/Bibi";
 import type { LessonCompletionProps } from "@/components/lessons/types";
+import { LessonReflection } from "@/components/lessons/LessonReflection";
+import { CURRICULUM_GUIDE } from "@/lib/curriculum-guide";
 
 export function LessonCompletion({ definition, headingRef, onReturn }: LessonCompletionProps) {
+  const guide = CURRICULUM_GUIDE[definition.courseId];
   return (
     <main className="lesson-preview">
       <section className="lesson-preview-card" aria-labelledby="complete-title">
@@ -18,6 +21,7 @@ export function LessonCompletion({ definition, headingRef, onReturn }: LessonCom
             {definition.completionTitle}
           </h1>
           <p>{definition.completionSummary}</p>
+          {guide ? <LessonReflection guide={guide} /> : null}
           <button className="primary-action" onClick={onReturn} type="button">
             回到岛屿地图
           </button>

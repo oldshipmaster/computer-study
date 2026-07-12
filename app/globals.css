@@ -2975,6 +2975,14 @@ input {
   border-radius: 20px;
 }
 
+.lesson-reflection { display: grid; gap: 10px; margin: 24px 0; padding: 18px; border: 3px solid var(--deep-sea); border-radius: 18px; background: #f7fcff; color: var(--deep-sea); }
+.lesson-reflection h2 { margin: 0; font-size: clamp(1.3rem, 2.5vw, 1.8rem); }
+.lesson-reflection > div { display: grid; gap: 8px; }
+.lesson-reflection button { display: flex; align-items: center; min-height: 48px; gap: 10px; padding: 8px 11px; border: 2px solid var(--deep-sea); border-radius: 10px; background: white; color: var(--deep-sea); font-weight: 800; text-align: left; }
+.lesson-reflection button[aria-pressed="true"] { background: #dff7e8; border-color: #176145; }
+.lesson-reflection button span { font-size: 1.3rem; }
+.lesson-reflection > p:last-child { margin: 0; padding: 10px; border-radius: 9px; background: var(--yellow-soft); line-height: 1.5; }
+
 @keyframes lesson-ship-launch {
   0% {
     transform: translate(-80%, 65%) rotate(-12deg) scale(0.84);
