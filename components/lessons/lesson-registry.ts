@@ -6,7 +6,6 @@ import { ProgramLandingLesson } from "@/components/lessons/ProgramLandingLesson"
 import { PasswordGuardianLesson } from "@/components/lessons/PasswordGuardianLesson";
 import { PopupFogLesson } from "@/components/lessons/PopupFogLesson";
 import { LightBitIslandLesson } from "@/components/lessons/LightBitIslandLesson";
-import { DataTableLesson, DocumentDesignLesson, MediaCopyrightLesson, PixelArtLesson, SlideStoryLesson } from "@/components/lessons/CreativeLessons";
 import type { LessonDefinition } from "@/components/lessons/types";
 import { lazy } from "react";
 
@@ -45,6 +44,12 @@ const OnlineCollaborationLesson = advancedLesson(loadFuture, "OnlineCollaboratio
 const AiHelperLesson = advancedLesson(loadFuture, "AiHelperLesson");
 const VerifyAiLesson = advancedLesson(loadFuture, "VerifyAiLesson");
 const DigitalProjectLesson = advancedLesson(loadFuture, "DigitalProjectLesson");
+const loadCreative = () => import("@/components/lessons/CreativeLessons");
+const PixelArtLesson = advancedLesson(loadCreative, "PixelArtLesson");
+const SlideStoryLesson = advancedLesson(loadCreative, "SlideStoryLesson");
+const DocumentDesignLesson = advancedLesson(loadCreative, "DocumentDesignLesson");
+const DataTableLesson = advancedLesson(loadCreative, "DataTableLesson");
+const MediaCopyrightLesson = advancedLesson(loadCreative, "MediaCopyrightLesson");
 const loadDataStructures = () => import("@/components/lessons/advanced/DataStructureLessons");
 const loadAlgorithms = () => import("@/components/lessons/advanced/AlgorithmLessons");
 const loadOperatingSystem = () => import("@/components/lessons/advanced/OperatingSystemLessons");

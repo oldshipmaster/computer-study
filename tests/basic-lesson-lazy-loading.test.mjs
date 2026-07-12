@@ -50,3 +50,11 @@ test("defers the shared future-literacy mission bundle", () => {
   }
   assert.doesNotMatch(source, /import \{ AiHelperLesson, DigitalProjectLesson/);
 });
+
+test("defers the shared creative-tools mission bundle", () => {
+  assert.match(source, /const loadCreative = \(\) => import\("@\/components\/lessons\/CreativeLessons"\)/);
+  for (const lesson of ["PixelArtLesson", "SlideStoryLesson", "DocumentDesignLesson", "DataTableLesson", "MediaCopyrightLesson"]) {
+    assert.match(source, new RegExp(`const ${lesson} = advancedLesson\\(loadCreative`));
+  }
+  assert.doesNotMatch(source, /import \{ DataTableLesson, DocumentDesignLesson/);
+});

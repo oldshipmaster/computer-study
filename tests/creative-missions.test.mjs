@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { readFileSync } from "node:fs";
 import { CREATIVE_MISSIONS, answerCreativeCard, createCreativeState } from "../lib/creative-missions.ts";
 
 test("defines five complete creative courses with four challenge cards each", () => {
@@ -42,4 +43,14 @@ test("creative challenge ignores a repeated pointer activation", () => {
   const state = createCreativeState();
   const answer = mission.cards[0].options.indexOf(mission.cards[0].answer);
   assert.equal(answerCreativeCard(mission, state, answer, 2), state);
+});
+
+test("creative mission builds a visible project quality checklist", () => {
+  const source = readFileSync(new URL("../components/lessons/creative/CreativeMissionLesson.tsx", import.meta.url), "utf8");
+  assert.match(source, /creative-proof-card/);
+  assert.match(source, /设计决定/);
+  assert.match(source, /为什么这样做/);
+  assert.match(source, /加入作品检查单/);
+  assert.match(source, /作品质量总结/);
+  assert.match(source, /领取创作徽章/);
 });
