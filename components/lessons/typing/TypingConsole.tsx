@@ -24,6 +24,7 @@ export function TypingConsole({ instruction, initialValue = "", onSuccess, task 
       <p className="typing-target"><span>目标</span><strong>{task.target}</strong></p>
       <label htmlFor="lesson-typing-input">{instruction}</label>
       <input
+        autoCapitalize="none"
         autoComplete="off"
         autoCorrect="off"
         id="lesson-typing-input"

@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 import { evaluateTypingTask, normalizeTypingResumeStage } from "../lib/typing-lesson.ts";
 
@@ -24,4 +25,15 @@ test("gives useful, non-punitive correction feedback", () => {
 test("clamps resume to a playable stage", () => {
   assert.equal(normalizeTypingResumeStage(-1), 0);
   assert.equal(normalizeTypingResumeStage(99), 5);
+});
+
+test("disables mobile text transformations for exact typing tasks", () => {
+  const source = readFileSync(
+    new URL("../components/lessons/typing/TypingConsole.tsx", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(source, /autoCapitalize="none"/);
+  assert.match(source, /autoCorrect="off"/);
+  assert.match(source, /spellCheck=\{false\}/);
 });
