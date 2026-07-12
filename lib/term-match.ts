@@ -1,4 +1,5 @@
 import { DICTIONARY_ENTRIES } from "./computer-dictionary.ts";
+import { RECOMMENDED_ROUTE_IDS } from "./course-data.ts";
 
 export interface TermMatchQuestion {
   id: string;
@@ -10,7 +11,11 @@ export interface TermMatchQuestion {
   example: string;
 }
 
-export const TERM_MATCH_QUESTIONS: readonly TermMatchQuestion[] = DICTIONARY_ENTRIES.map((entry, index) => {
+const ENTRY_BY_COURSE = new Map(DICTIONARY_ENTRIES.map((entry) => [entry.courseId, entry]));
+
+export const TERM_MATCH_QUESTIONS: readonly TermMatchQuestion[] = RECOMMENDED_ROUTE_IDS.map((courseId, index) => {
+  const entry = ENTRY_BY_COURSE.get(courseId);
+  if (!entry) throw new Error(`Missing dictionary entry for ${courseId}`);
   const islandEntries = DICTIONARY_ENTRIES.filter((candidate) => candidate.islandId === entry.islandId);
   const position = islandEntries.findIndex((candidate) => candidate.id === entry.id);
   const terms = [entry.term, islandEntries[(position + 1) % islandEntries.length].term, islandEntries[(position + 2) % islandEntries.length].term];

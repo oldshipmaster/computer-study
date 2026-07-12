@@ -1,11 +1,12 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { TERM_MATCH_QUESTIONS, answerTermMatch, createTermMatchState, getUnlockedTermQuestions } from "../lib/term-match.ts";
-import { COURSES, ISLANDS } from "../lib/course-data.ts";
+import { COURSES, ISLANDS, RECOMMENDED_ROUTE_IDS } from "../lib/course-data.ts";
 
 test("builds one deterministic three-option concept question per course", () => {
   assert.equal(TERM_MATCH_QUESTIONS.length, COURSES.length);
   assert.deepEqual(new Set(TERM_MATCH_QUESTIONS.map((question) => question.courseId)), new Set(COURSES.map((course) => course.id)));
+  assert.deepEqual(TERM_MATCH_QUESTIONS.map((question) => question.courseId), RECOMMENDED_ROUTE_IDS);
   for (const question of TERM_MATCH_QUESTIONS) {
     assert.equal(question.options.length, 3);
     assert.equal(new Set(question.options).size, 3);
