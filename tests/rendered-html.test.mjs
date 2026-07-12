@@ -261,7 +261,8 @@ test("keeps the playable keyboard-flight lesson contract in source", () => {
 
 test("announces only the eight and ten minute pacing milestones", () => {
   const source = sourceFile("components/lessons/LessonSessionClock.tsx");
-  assert.match(source, /clock\.phase === "explore" \? "off" : "polite"/);
+  assert.match(source, /seconds === 480 \|\| clock\.phase === "break"/);
+  assert.match(source, /announceMilestone \? "polite" : "off"/);
   assert.match(source, /aria-atomic="true"/);
 });
 

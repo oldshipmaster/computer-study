@@ -10,5 +10,6 @@ export function LessonSessionClock() {
     return () => window.clearInterval(timer);
   }, []);
   const clock = getSessionClockState(seconds);
-  return <div className={`lesson-session-clock lesson-session-clock--${clock.phase}`} role="timer" aria-live={clock.phase === "explore" ? "off" : "polite"} aria-atomic="true"><span aria-hidden="true">◷</span><span>{clock.label}</span></div>;
+  const announceMilestone = seconds === 480 || clock.phase === "break";
+  return <div className={`lesson-session-clock lesson-session-clock--${clock.phase}`} role="timer" aria-live={announceMilestone ? "polite" : "off"} aria-atomic="true"><span aria-hidden="true">◷</span><span>{clock.label}</span></div>;
 }
