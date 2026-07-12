@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import {
   COURSES,
+  CURRICULUM_FACTS,
   ISLANDS,
   getCourse,
   getCourseCardState,
@@ -67,6 +68,16 @@ test("publishes nine islands and forty-five ordered lessons", () => {
   );
   assert.deepEqual(COURSES.map((course) => course.title), COURSE_TITLES);
   assert.ok(ISLANDS.every((island) => island.courseIds.length === 5));
+});
+
+test("derives public curriculum facts from the live catalog", () => {
+  assert.deepEqual(CURRICULUM_FACTS, {
+    islandCount: ISLANDS.length,
+    courseCount: COURSES.length,
+    minutesPerCourse: { minimum: 9, maximum: 10 },
+  });
+  assert.ok(Object.isFrozen(CURRICULUM_FACTS));
+  assert.ok(Object.isFrozen(CURRICULUM_FACTS.minutesPerCourse));
 });
 
 test("publishes only lessons with complete interactive implementations", () => {

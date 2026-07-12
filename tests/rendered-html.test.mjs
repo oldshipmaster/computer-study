@@ -150,7 +150,7 @@ test("gives course search a visible recoverable empty state", () => {
   assert.match(source, /罗盘暂时没找到这门课/);
   assert.match(source, /setCourseQuery\(""\)/);
   assert.match(source, /setSelectedIslandId\("all"\)/);
-  assert.match(source, /清除筛选，显示 45 课/);
+  assert.match(source, /清除筛选，显示 \{CURRICULUM_FACTS\.courseCount\} 课/);
 });
 
 test("stacks dense hardware and network labs on child-sized screens", () => {
@@ -167,7 +167,7 @@ test("offers a privacy-preserving printable certificate after full completion", 
   const certificateSource = sourceFile("components/CompletionCertificate.tsx");
   const css = sourceFile("app/globals.css");
   assert.match(mapSource, /mission\.complete\s*\?\s*<CompletionCertificate/);
-  assert.match(certificateSource, /四十五节互动课程/);
+  assert.match(certificateSource, /CURRICULUM_FACTS\.courseCount/);
   assert.match(certificateSource, /不会上传任何学习记录/);
   assert.match(certificateSource, /window\.print\(\)/);
   assert.match(css, /@media print[\s\S]*?\.completion-certificate/);
@@ -237,7 +237,7 @@ test("keeps the full parent curriculum outline aligned with catalog data", () =>
   const source = sourceFile("components/ParentCurriculumOutline.tsx");
   assert.match(source, /ISLANDS\.map/);
   assert.match(source, /CURRICULUM_GUIDE/);
-  assert.match(source, /查看 45 课完整课程大纲/);
+  assert.match(source, /查看 \{CURRICULUM_FACTS\.courseCount\} 课完整课程大纲/);
   assert.match(source, /guide\.objectives\.map/);
   assert.match(source, /completed\.has\(courseId\)/);
 });

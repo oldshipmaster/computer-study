@@ -426,6 +426,15 @@ export const RECOMMENDED_ROUTE_IDS: string[] = Array.from(
   (_, round) => ISLANDS.flatMap((island) => island.courseIds[round] ?? []),
 ).flat();
 
+export const CURRICULUM_FACTS = Object.freeze({
+  islandCount: ISLANDS.length,
+  courseCount: COURSES.length,
+  minutesPerCourse: Object.freeze({
+    minimum: Math.min(...COURSES.map((course) => course.minutes)),
+    maximum: Math.max(...COURSES.map((course) => course.minutes)),
+  }),
+});
+
 export function getCourse(id: string): Course | undefined {
   return COURSES.find((course) => course.id === id);
 }

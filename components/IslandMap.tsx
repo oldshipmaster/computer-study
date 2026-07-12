@@ -11,6 +11,7 @@ import { PrivacyPromise } from "@/components/PrivacyPromise";
 import {
   ISLANDS,
   COURSES,
+  CURRICULUM_FACTS,
   getCourse,
   getCourseCardState,
   getMapMission,
@@ -95,7 +96,7 @@ export function IslandMap({
           </span>
           <span>比特岛大冒险</span>
         </a>
-        <span className="island-count">九座知识岛等你探索</span>
+        <span className="island-count">{CURRICULUM_FACTS.islandCount} 座知识岛等你探索</span>
       </header>
 
       <section className="map-hero" aria-labelledby="map-heading">
@@ -110,13 +111,13 @@ export function IslandMap({
             tabIndex={-1}
           >
             {mission.complete
-              ? "四十五段航线全部完成，继续自由探索"
+              ? `${CURRICULUM_FACTS.courseCount} 段航线全部完成，继续自由探索`
               : "跟比比一起，学会真正的电脑本领"}
           </h1>
           <p className="hero-summary">
             {mission.complete
               ? "你已经学会电脑操作、文件管理、编程思维和数字安全，可以随时重玩喜欢的课程。"
-              : "每次用 9 分钟完成一个小任务，九座岛轮换探索，让操作、编程、安全和创作穿插进行。"}
+              : `每次用 ${CURRICULUM_FACTS.minutesPerCourse.minimum}–${CURRICULUM_FACTS.minutesPerCourse.maximum} 分钟完成一个小任务，${CURRICULUM_FACTS.islandCount} 座岛轮换探索，让操作、编程、安全和创作穿插进行。`}
           </p>
 
           {currentCourse ? (
@@ -152,7 +153,7 @@ export function IslandMap({
             mood={mission.complete ? "celebrating" : "happy"}
             message={
               mission.complete
-                ? "太棒了！九座岛都亮起来了。选一课重玩，看看你还能发现什么。"
+                ? `太棒了！${CURRICULUM_FACTS.islandCount} 座岛都亮起来了。选一课重玩，看看你还能发现什么。`
                 : "我是比比！今天先从启航港学会驾驶飞船。"
             }
           />
@@ -170,9 +171,9 @@ export function IslandMap({
         <div className="map-intro">
           <div>
             <p className="section-kicker">你的学习航线</p>
-            <h2 id="islands-heading">九座岛，四十五次真本领练习</h2>
+            <h2 id="islands-heading">{CURRICULUM_FACTS.islandCount} 座岛，{CURRICULUM_FACTS.courseCount} 次真本领练习</h2>
           </div>
-          <p>推荐路线会在九座岛之间轮换；也可以从课程罗盘自由选择已开放的任意一课。</p>
+          <p>推荐路线会在 {CURRICULUM_FACTS.islandCount} 座岛之间轮换；也可以从课程罗盘自由选择已开放的任意一课。</p>
         </div>
 
         <div className="course-compass" aria-labelledby="course-compass-heading">
@@ -196,7 +197,7 @@ export function IslandMap({
             <span aria-hidden="true">🧭</span>
             <h3>罗盘暂时没找到这门课</h3>
             <p>试试“文件”“循环”“安全”“AI”，或者清除筛选查看完整航线。</p>
-            <button className="primary-action" onClick={() => { setCourseQuery(""); setSelectedIslandId("all"); }} type="button">清除筛选，显示 45 课</button>
+            <button className="primary-action" onClick={() => { setCourseQuery(""); setSelectedIslandId("all"); }} type="button">清除筛选，显示 {CURRICULUM_FACTS.courseCount} 课</button>
           </div>
         ) : <div className="map-route">
           {ISLANDS.map((island, islandIndex) => {

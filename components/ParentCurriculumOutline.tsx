@@ -1,11 +1,11 @@
-import { COURSES, ISLANDS } from "@/lib/course-data";
+import { COURSES, CURRICULUM_FACTS, ISLANDS } from "@/lib/course-data";
 import { CURRICULUM_GUIDE } from "@/lib/curriculum-guide";
 
 export function ParentCurriculumOutline({ completedCourseIds }: { completedCourseIds: string[] }) {
   const completed = new Set(completedCourseIds);
   return (
     <details className="parent-curriculum-outline">
-      <summary><span><strong>查看 45 课完整课程大纲</strong><small>九座岛 · 每课 3 个目标 · 8–10 分钟</small></span><span aria-hidden="true">＋</span></summary>
+      <summary><span><strong>查看 {CURRICULUM_FACTS.courseCount} 课完整课程大纲</strong><small>{CURRICULUM_FACTS.islandCount} 座岛 · 每课 3 个目标 · {CURRICULUM_FACTS.minutesPerCourse.minimum}–{CURRICULUM_FACTS.minutesPerCourse.maximum} 分钟</small></span><span aria-hidden="true">＋</span></summary>
       <div>
         {ISLANDS.map((island) => <section aria-labelledby={`parent-outline-${island.id}`} key={island.id}>
           <h3 id={`parent-outline-${island.id}`}><span aria-hidden="true">{island.icon}</span>{island.name}</h3>
