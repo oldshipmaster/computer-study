@@ -5,6 +5,7 @@ import { COURSES } from "@/lib/course-data";
 import { LESSON_DEFINITIONS } from "@/components/lessons/lesson-registry";
 import { summarizeIslandProgress } from "@/lib/parent-progress-summary";
 import { getNextCourseGuide } from "@/lib/curriculum-guide";
+import { createProgressBackup, parseProgressBackup } from "@/lib/progress-backup";
 
 export interface ParentProgress {
   completedCourseIds: string[];
@@ -20,6 +21,7 @@ export interface ParentPanelProps {
   storageUnavailable: boolean;
   onSettingsChange: (settings: ParentProgress["settings"]) => void;
   onReset: () => void;
+  onRestore: (progress: ParentProgress & { version: 1; resume: { courseId: string; stage: number } | null }) => void;
   onClose: () => void;
 }
 
@@ -35,13 +37,16 @@ export function ParentPanel({
   storageUnavailable,
   onSettingsChange,
   onReset,
+  onRestore,
   onClose,
 }: ParentPanelProps) {
   const [resetConfirmationVisible, setResetConfirmationVisible] = useState(false);
+  const [backupStatus, setBackupStatus] = useState("");
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLElement>(null);
   const resetActionButtonRef = useRef<HTMLButtonElement>(null);
   const resetKeepButtonRef = useRef<HTMLButtonElement>(null);
+  const backupInputRef = useRef<HTMLInputElement>(null);
   const islandProgress = summarizeIslandProgress(progress.completedCourseIds);
   const nextCourseGuide = getNextCourseGuide(progress.completedCourseIds);
 
@@ -123,6 +128,26 @@ export function ParentPanel({
   function closeResetConfirmation() {
     setResetConfirmationVisible(false);
     window.setTimeout(() => resetActionButtonRef.current?.focus(), 0);
+  }
+
+  function downloadBackup() {
+    const text = createProgressBackup({ version: 1, ...progress, resume: null });
+    const url = URL.createObjectURL(new Blob([text], { type: "application/json" }));
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `bit-island-progress-${new Date().toISOString().slice(0, 10)}.json`;
+    link.click();
+    URL.revokeObjectURL(url);
+    setBackupStatus("学习记录已导出到这台电脑的下载文件夹。请由家长妥善保管。");
+  }
+
+  async function restoreBackup(file: File | undefined) {
+    if (!file) return;
+    const result = parseProgressBackup(await file.text());
+    if (!result.ok) { setBackupStatus(result.message); return; }
+    onRestore(result.progress);
+    setBackupStatus(`已恢复 ${result.progress.completedCourseIds.length} 节课程记录。`);
+    if (backupInputRef.current) backupInputRef.current.value = "";
   }
 
   return (
@@ -261,6 +286,18 @@ export function ParentPanel({
             </label>
           </section>
         </div>
+
+        <section className="parent-backup-card" aria-labelledby="backup-progress-title">
+          <div className="parent-backup-tools">
+            <div><h2 id="backup-progress-title">备份学习记录</h2><p>只保存课程、徽章和设置，不含姓名、账号或答题内容。</p></div>
+            <div>
+              <button className="parent-secondary-action" onClick={downloadBackup} type="button">导出 JSON 备份</button>
+              <button className="parent-secondary-action" onClick={() => backupInputRef.current?.click()} type="button">恢复以前的备份</button>
+              <input accept="application/json,.json" className="visually-hidden" onChange={(event) => void restoreBackup(event.target.files?.[0])} ref={backupInputRef} type="file" />
+            </div>
+            {backupStatus ? <p className="parent-backup-status" role="status">{backupStatus}</p> : null}
+          </div>
+        </section>
 
         <section className="parent-reset-card" aria-labelledby="reset-progress-title">
           <div>

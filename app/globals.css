@@ -1456,6 +1456,7 @@ input {
 
 .parent-progress-card,
 .parent-settings-card,
+.parent-backup-card,
 .parent-reset-card {
   min-width: 0;
   padding: 23px;
@@ -1473,6 +1474,7 @@ input {
 }
 
 .parent-card-heading h2,
+.parent-backup-card h2,
 .parent-reset-card h2 {
   margin: 0;
   font-size: 1.35rem;
@@ -1480,6 +1482,13 @@ input {
   letter-spacing: -0.035em;
   line-height: 1.15;
 }
+
+.parent-backup-card { background: var(--mint-soft); }
+.parent-backup-tools { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 14px 24px; }
+.parent-backup-tools p { margin: 7px 0 0; color: var(--deep-sea-soft); font-size: .8rem; }
+.parent-backup-tools > div:nth-child(2) { display: flex; flex-wrap: wrap; gap: 9px; }
+.parent-backup-status { grid-column: 1 / -1; padding: 9px 11px; border-radius: 10px; background: var(--paper); font-weight: 750; }
+.visually-hidden { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; overflow: hidden !important; clip: rect(0, 0, 0, 0) !important; white-space: nowrap !important; border: 0 !important; }
 
 .parent-course-count {
   flex: 0 0 auto;
@@ -2051,9 +2060,13 @@ input {
 
   .parent-progress-card,
   .parent-settings-card,
+  .parent-backup-card,
   .parent-reset-card {
     padding: 18px 14px;
   }
+
+  .parent-backup-tools { grid-template-columns: 1fr; }
+  .parent-backup-tools > div:nth-child(2) { display: grid; }
 
   .parent-card-heading {
     align-items: flex-start;
