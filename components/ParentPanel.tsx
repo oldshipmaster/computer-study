@@ -10,8 +10,10 @@ import { ParentCurriculumOutline } from "@/components/ParentCurriculumOutline";
 import { buildProgressStats } from "@/lib/progress-stats";
 
 export interface ParentProgress {
+  version: 1;
   completedCourseIds: string[];
   badgeIds: string[];
+  resume: { courseId: string; stage: number } | null;
   settings: {
     sound: boolean;
     reducedMotion: boolean;
@@ -23,7 +25,7 @@ export interface ParentPanelProps {
   storageUnavailable: boolean;
   onSettingsChange: (settings: ParentProgress["settings"]) => void;
   onReset: () => void;
-  onRestore: (progress: ParentProgress & { version: 1; resume: { courseId: string; stage: number } | null }) => void;
+  onRestore: (progress: ParentProgress) => void;
   onClose: () => void;
 }
 
@@ -134,7 +136,7 @@ export function ParentPanel({
   }
 
   function downloadBackup() {
-    const text = createProgressBackup({ version: 1, ...progress, resume: null });
+    const text = createProgressBackup(progress);
     const url = URL.createObjectURL(new Blob([text], { type: "application/json" }));
     const link = document.createElement("a");
     link.href = url;

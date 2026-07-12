@@ -4,11 +4,12 @@ import { createProgressBackup, parseProgressBackup } from "../lib/progress-backu
 import { DEFAULT_PROGRESS } from "../lib/progress.mjs";
 
 test("exports a versioned backup without personal fields", () => {
-  const text = createProgressBackup({ ...DEFAULT_PROGRESS, completedCourseIds: ["keyboard-flight"], badgeIds: ["keyboard-pilot"] }, "2026-07-12T00:00:00.000Z");
+  const text = createProgressBackup({ ...DEFAULT_PROGRESS, completedCourseIds: ["keyboard-flight"], badgeIds: ["keyboard-pilot"], resume: { courseId: "data-table", stage: 4 } }, "2026-07-12T00:00:00.000Z");
   const data = JSON.parse(text);
   assert.equal(data.kind, "bit-island-progress-backup");
   assert.equal(data.exportedAt, "2026-07-12T00:00:00.000Z");
   assert.equal(data.progress.completedCourseIds[0], "keyboard-flight");
+  assert.deepEqual(data.progress.resume, { courseId: "data-table", stage: 4 });
   assert.equal("name" in data, false);
 });
 
