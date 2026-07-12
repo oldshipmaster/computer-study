@@ -9,13 +9,25 @@ async function warmShellCache() {
   const shellUrl = new URL("./", scopeUrl).href;
   const shellResponse = await fetch(shellUrl, { cache: "reload" });
   if (!shellResponse.ok) throw new Error("Unable to cache the course shell");
+  await storeShell(cache, shellResponse, shellUrl);
+}
+
+async function storeShell(cache, shellResponse, shellUrl) {
   const html = await shellResponse.clone().text();
   const resourceUrls = [...html.matchAll(/(?:src|href)="([^"]+)"/g)]
     .map((match) => new URL(match[1], shellUrl))
     .filter((url) => url.origin === scopeUrl.origin && url.pathname.startsWith(scopeUrl.pathname))
     .map((url) => url.href);
-  await cache.put(shellUrl, shellResponse);
-  await cache.addAll([...new Set([...CORE_FILES, ...resourceUrls])]);
+  const currentResources = [...new Set([...CORE_FILES, ...resourceUrls])];
+  await cache.put(new URL("./", scopeUrl).href, shellResponse);
+  await cache.addAll(currentResources);
+  const currentResourceSet = new Set(currentResources);
+  const cachedRequests = await cache.keys();
+  await Promise.all(cachedRequests.map((cachedRequest) => {
+    const cachedUrl = new URL(cachedRequest.url);
+    const oldBuildAsset = cachedUrl.pathname.includes("/assets/") && !currentResourceSet.has(cachedUrl.href);
+    return oldBuildAsset ? cache.delete(cachedRequest) : false;
+  }));
 }
 
 self.addEventListener("install", (event) => {
@@ -38,7 +50,10 @@ async function networkFirst(request, allowShellFallback = false) {
   const cache = await caches.open(CACHE_NAME);
   try {
     const response = await fetch(request);
-    if (response.ok) await cache.put(request, response.clone());
+    if (response.ok) {
+      if (request.mode === "navigate") await storeShell(cache, response.clone(), request.url);
+      else await cache.put(request, response.clone());
+    }
     return response;
   } catch {
     const cached = await cache.match(request);
