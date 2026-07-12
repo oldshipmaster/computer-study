@@ -1,0 +1,19 @@
+{
+  "name": "比特岛大冒险｜儿童计算机启蒙课",
+  "short_name": "比特岛",
+  "description": "九座知识岛、四十五节可完整游玩的儿童计算机互动课。",
+  "lang": "zh-CN",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "background_color": "#f7fcff",
+  "theme_color": "#12324a",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

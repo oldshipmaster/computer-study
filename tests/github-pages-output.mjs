@@ -13,8 +13,14 @@ test("emits a GitHub Pages artifact under the repository base path", async () =>
   assert.match(html, /九岛四十五课互动计算机课程/);
   assert.match(html, /rel="canonical" href="https:\/\/oldshipmaster\.github\.io\/computer-study\/"/);
   assert.match(html, /需要开启 JavaScript/);
+  assert.match(html, /\/computer-study\/manifest\.webmanifest/);
   assert.doesNotMatch(html, /(?:src|href)="\/assets\//);
   await access(new URL("favicon.svg", outputRoot));
+  const manifest = JSON.parse(await readFile(new URL("manifest.webmanifest", outputRoot), "utf8"));
+  assert.equal(manifest.name, "比特岛大冒险｜儿童计算机启蒙课");
+  assert.equal(manifest.start_url, ".");
+  assert.equal(manifest.display, "standalone");
+  assert.equal(manifest.theme_color, "#12324a");
 });
 
 test("keeps the complete curriculum inside a child-device performance budget", async () => {

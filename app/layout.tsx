@@ -66,6 +66,7 @@ export async function generateMetadata(): Promise<Metadata> {
     category: "education",
     keywords: ["儿童计算机", "编程启蒙", "电脑基础", "数字安全", "AI 素养"],
     themeColor: "#12324a",
+    manifest: "/manifest.webmanifest",
     icons: {
       icon: "/favicon.svg",
       shortcut: "/favicon.svg",
