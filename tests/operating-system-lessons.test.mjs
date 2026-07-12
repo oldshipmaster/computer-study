@@ -53,3 +53,11 @@ test("process lab shows the lifecycle as a visible state machine", () => {
   assert.match(lab, /process-node--current/);
   assert.match(lab, /aria-label="进程生命周期状态图"/);
 });
+
+test("file system lab shows a persistent directory tree and path breadcrumbs", () => {
+  const lab = readFileSync(new URL("components/lessons/advanced/os/FileSystemLab.tsx", root), "utf8");
+  assert.match(lab, /file-tree/);
+  assert.match(lab, /path-breadcrumbs/);
+  assert.match(lab, /aria-current/);
+  assert.match(lab, /根目录/);
+});

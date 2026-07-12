@@ -3908,6 +3908,11 @@ html.bit-island-document--reduced-motion *::after,
 .transfer-packet b { font-size: 1rem; } .transfer-packet small { font-size: 1.35rem; } .transfer-packet em { font-size: .65rem; font-style: normal; font-weight: 750; }
 .packet--waiting { opacity: .7; } .packet--lost { border-color: #b94444; background: #ffe4e1; transform: rotate(-4deg); } .packet--received { border-color: #19734a; background: #dcf8e8; transform: translateX(.25rem); }
 .transfer-assembly { padding: .8rem; border-radius: .8rem; background: #dcf8e8; text-align: center; } .transfer-assembly strong { letter-spacing: .3em; font-size: 1.45rem; }
+.path-breadcrumbs { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem; padding: .55rem; border-radius: .75rem; background: #eef7ff; }
+.path-breadcrumbs span { display: flex; align-items: center; gap: .35rem; } .path-breadcrumbs button { min-height: 2.5rem; padding: .35rem .6rem; border: 0; border-radius: .5rem; background: white; color: #15384e; font-weight: 750; } .path-breadcrumbs button[aria-current="page"] { background: #ffe36e; }
+.file-explorer { display: grid; grid-template-columns: minmax(11rem, .8fr) 1.4fr; gap: .8rem; } .file-explorer > * { padding: .85rem; border: 2px solid #315c9a; border-radius: .8rem; background: white; }
+.file-tree { display: grid; align-content: start; gap: .45rem; font-size: .8rem; } .file-tree span { padding: .25rem; border-radius: .3rem; } .file-tree .is-current { background: #fff0a8; font-weight: 800; } .file-tree .is-locked { color: #8b5151; }
+.file-preview { min-height: 5rem; padding: 1rem; border: 2px dashed #79a5bd; border-radius: .6rem; background: #fffdf4; }
 .instruction-phases button, .layer-stack span { display: grid; min-height: 3.5rem; place-items: center; padding: .5rem; border: 2px solid #197ba7; border-radius: .6rem; background: #e9f7ff; text-align: center; font-weight: 800; }
 .instruction-phases button.is-current { background: #ffe36e; box-shadow: 0 0 0 4px rgb(255 227 110 / 35%); }
 .layer-stack span.layer-envelope--opened { border-style: dashed; background: #edf2f4; color: #647985; opacity: .7; }
