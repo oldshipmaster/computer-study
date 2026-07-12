@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 import { classifySystemItem, canCompleteTask } from "../lib/hardware-software-lesson.ts";
 
@@ -17,4 +18,13 @@ test("requires both hardware and software for a drawing task", () => {
 test("unknown items do not silently count as a working system", () => {
   assert.equal(classifySystemItem("magic-box"), "unknown");
   assert.equal(canCompleteTask("print", ["printer", "magic-box"]), false);
+});
+
+test("the pairing lab shows hardware and software as one working system", () => {
+  const source = readFileSync(new URL("../components/lessons/hardware/SystemPairingLab.tsx", import.meta.url), "utf8");
+  assert.match(source, /system-blueprint/);
+  assert.match(source, /hardware-slot/);
+  assert.match(source, /software-slot/);
+  assert.match(source, /系统输出/);
+  assert.match(source, /硬件.*软件.*一起/);
 });
