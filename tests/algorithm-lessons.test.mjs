@@ -63,3 +63,13 @@ test("bubble sort lab reveals each adjacent comparison and swap after prediction
   assert.match(lab, /冒到最右边/);
   assert.match(lab, /lastTrace/);
 });
+
+test("binary search shows its shrinking candidate range without revealing the next answer", () => {
+  const lab = readFileSync(new URL("components/lessons/advanced/algorithms/SearchLab.tsx", root), "utf8");
+  assert.match(lab, /binary-range/);
+  assert.match(lab, /search-item--excluded/);
+  assert.match(lab, /search-item--midpoint/);
+  assert.match(lab, /候选区间/);
+  assert.match(lab, /排除/);
+  assert.match(lab, /lastChecked/);
+});
