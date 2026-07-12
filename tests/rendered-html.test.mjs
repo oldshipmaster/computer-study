@@ -134,7 +134,7 @@ test("server-renders the complete curriculum map", async () => {
   assert.match(html, /回到顶部与快捷航线/);
   assert.match(html, /已完成.*0.*\/.*45.*课/);
   assert.match(html, /aria-label="学习区域快捷航线"/);
-  for (const target of ["learning-plan", "adventure-map", "knowledge-atlas", "computer-dictionary", "review-station"]) {
+  for (const target of ["learning-plan", "adventure-map", "knowledge-atlas", "computer-dictionary", "term-match", "review-station"]) {
     assert.match(html, new RegExp(`href="#${target}"`));
     assert.match(html, new RegExp(`id="${target}"`));
   }

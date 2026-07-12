@@ -8,7 +8,7 @@ export function TermMatchChallenge({ completedCourseIds }: { completedCourseIds:
   const questions = getUnlockedTermQuestions(completedCourseIds);
   const question = questions[state.index];
   const restart = () => setState(createTermMatchState());
-  return <section className="term-match" aria-labelledby="term-match-heading">
+  return <section className="term-match" id="term-match" aria-labelledby="term-match-heading">
     <div><p className="section-kicker">概念配对舱</p><h2 id="term-match-heading">每完成一课，解锁一个核心词</h2><p>读懂解释再选词，不用背英文。45 节课各有一道概念题。</p></div>
     <div className="term-match-console">
       <div className="term-match-progress"><progress aria-label="本次概念配对进度" max={Math.max(questions.length, 1)} value={state.correct} /><span>{state.correct} / {questions.length} 已配对 · 全站 {questions.length} / {TERM_MATCH_QUESTIONS.length} 已解锁</span></div>

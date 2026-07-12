@@ -145,7 +145,8 @@ export function IslandMap({
           <a href="#adventure-map">课程地图</a>
           <a href="#knowledge-atlas">知识图鉴</a>
           <a href="#computer-dictionary">电脑词典</a>
-          <a href="#review-station">问答站</a>
+          <a href="#term-match">概念配对</a>
+          <a href="#review-station">情境问答</a>
         </nav>
         <div className="header-progress"><span>{CURRICULUM_FACTS.islandCount} 岛 · 已完成 {completedCourseIds.length} / {CURRICULUM_FACTS.courseCount} 课</span><progress aria-label="全部课程完成进度" max={CURRICULUM_FACTS.courseCount} value={completedCourseIds.length} /></div>
       </header>
