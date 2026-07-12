@@ -6,6 +6,7 @@ import {
   useLayoutEffect,
   useRef,
   useState,
+  Suspense,
   type KeyboardEvent as ReactKeyboardEvent,
   type MouseEvent as ReactMouseEvent,
   type PointerEvent as ReactPointerEvent,
@@ -323,7 +324,7 @@ export function BitIslandApp() {
       <LessonErrorBoundary key={activeCourseId} onExit={returnToMap}>
         <LessonAudioProvider enabled={progress.settings.sound}>
           <LessonSessionClock />
-          <LessonComponent
+          <Suspense fallback={<div className="lesson-loading" role="status">正在打开互动实验室…</div>}><LessonComponent
           initialStage={
             progress.resume?.courseId === activeCourseId ? progress.resume.stage : 0
           }
@@ -333,7 +334,7 @@ export function BitIslandApp() {
           onStageChange={saveLessonStage}
           reducedMotion={effectiveReducedMotion}
           sound={progress.settings.sound}
-          />
+          /></Suspense>
         </LessonAudioProvider>
       </LessonErrorBoundary>
     );

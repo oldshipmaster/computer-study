@@ -31,11 +31,34 @@ import { NetworkTroubleshootingLesson } from "@/components/lessons/NetworkTroubl
 import { DataTableLesson, DocumentDesignLesson, MediaCopyrightLesson, PixelArtLesson, SlideStoryLesson } from "@/components/lessons/CreativeLessons";
 import { AiHelperLesson, DigitalProjectLesson, EmailMessageLesson, OnlineCollaborationLesson, VerifyAiLesson } from "@/components/lessons/FutureLessons";
 import { BooleanLogicLesson, EventsHandlersLesson, FunctionsToolsLesson, GameDesignLesson, VariablesScoreLesson } from "@/components/lessons/CodingLessons";
-import { ArrayLockersLesson, GraphRoutesLesson, LinkedTreasureLesson, StackQueueDockLesson, TreeLibraryLesson } from "@/components/lessons/advanced/DataStructureLessons";
-import { AlgorithmEfficiencyLesson, BinarySearchLesson, BubbleSortLesson, LinearSearchLesson, TaskDecompositionLesson } from "@/components/lessons/advanced/AlgorithmLessons";
-import { CpuSchedulingLesson, DeviceCoordinationLesson, FileSystemTreeLesson, MemoryAllocationLesson, ProgramProcessLesson } from "@/components/lessons/advanced/OperatingSystemLessons";
-import { CacheStationLesson, InstructionCycleLesson, NetworkLayersLesson, ReliableTransferLesson, RoutingMazeLesson } from "@/components/lessons/advanced/SystemsNetworkLessons";
 import type { LessonDefinition } from "@/components/lessons/types";
+import { lazy } from "react";
+
+const advancedLesson = <T extends Record<string, unknown>>(loader: () => Promise<T>, name: keyof T) => lazy(async () => ({ default: (await loader())[name] as LessonDefinition["Component"] }));
+const loadDataStructures = () => import("@/components/lessons/advanced/DataStructureLessons");
+const loadAlgorithms = () => import("@/components/lessons/advanced/AlgorithmLessons");
+const loadOperatingSystem = () => import("@/components/lessons/advanced/OperatingSystemLessons");
+const loadSystemsNetwork = () => import("@/components/lessons/advanced/SystemsNetworkLessons");
+const ArrayLockersLesson = advancedLesson(loadDataStructures, "ArrayLockersLesson");
+const LinkedTreasureLesson = advancedLesson(loadDataStructures, "LinkedTreasureLesson");
+const StackQueueDockLesson = advancedLesson(loadDataStructures, "StackQueueDockLesson");
+const TreeLibraryLesson = advancedLesson(loadDataStructures, "TreeLibraryLesson");
+const GraphRoutesLesson = advancedLesson(loadDataStructures, "GraphRoutesLesson");
+const LinearSearchLesson = advancedLesson(loadAlgorithms, "LinearSearchLesson");
+const BinarySearchLesson = advancedLesson(loadAlgorithms, "BinarySearchLesson");
+const BubbleSortLesson = advancedLesson(loadAlgorithms, "BubbleSortLesson");
+const TaskDecompositionLesson = advancedLesson(loadAlgorithms, "TaskDecompositionLesson");
+const AlgorithmEfficiencyLesson = advancedLesson(loadAlgorithms, "AlgorithmEfficiencyLesson");
+const ProgramProcessLesson = advancedLesson(loadOperatingSystem, "ProgramProcessLesson");
+const CpuSchedulingLesson = advancedLesson(loadOperatingSystem, "CpuSchedulingLesson");
+const MemoryAllocationLesson = advancedLesson(loadOperatingSystem, "MemoryAllocationLesson");
+const FileSystemTreeLesson = advancedLesson(loadOperatingSystem, "FileSystemTreeLesson");
+const DeviceCoordinationLesson = advancedLesson(loadOperatingSystem, "DeviceCoordinationLesson");
+const InstructionCycleLesson = advancedLesson(loadSystemsNetwork, "InstructionCycleLesson");
+const CacheStationLesson = advancedLesson(loadSystemsNetwork, "CacheStationLesson");
+const NetworkLayersLesson = advancedLesson(loadSystemsNetwork, "NetworkLayersLesson");
+const RoutingMazeLesson = advancedLesson(loadSystemsNetwork, "RoutingMazeLesson");
+const ReliableTransferLesson = advancedLesson(loadSystemsNetwork, "ReliableTransferLesson");
 
 export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
   "keyboard-flight": {
