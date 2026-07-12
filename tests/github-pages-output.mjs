@@ -26,7 +26,8 @@ test("emits a GitHub Pages artifact under the repository base path", async () =>
   assert.match(serviceWorker, /requestUrl\.origin !== scopeUrl\.origin/);
   assert.match(serviceWorker, /event\.request\.mode === "navigate"/);
   assert.match(serviceWorker, /mutableCoreFile/);
-  assert.match(serviceWorker, /event\.request\.mode === "navigate" \|\| mutableCoreFile \? networkFirst/);
+  assert.match(serviceWorker, /event\.request\.mode === "navigate" \? networkFirst\(event\.request, true\)/);
+  assert.match(serviceWorker, /return Response\.error\(\)/);
   assert.match(serviceWorker, /html\.matchAll/);
   assert.match(serviceWorker, /url\.pathname\.startsWith\(scopeUrl\.pathname\)/);
   assert.match(serviceWorker, /cache\.addAll\(\[\.\.\.new Set/);

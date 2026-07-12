@@ -34,14 +34,20 @@ self.addEventListener("activate", (event) => {
   );
 });
 
-async function networkFirst(request) {
+async function networkFirst(request, allowShellFallback = false) {
   const cache = await caches.open(CACHE_NAME);
   try {
     const response = await fetch(request);
     if (response.ok) await cache.put(request, response.clone());
     return response;
   } catch {
-    return (await cache.match(request)) ?? cache.match(new URL("./", scopeUrl));
+    const cached = await cache.match(request);
+    if (cached) return cached;
+    if (allowShellFallback) {
+      const shell = await cache.match(new URL("./", scopeUrl));
+      if (shell) return shell;
+    }
+    return Response.error();
   }
 }
 
@@ -58,5 +64,5 @@ self.addEventListener("fetch", (event) => {
   const requestUrl = new URL(event.request.url);
   if (event.request.method !== "GET" || requestUrl.origin !== scopeUrl.origin) return;
   const mutableCoreFile = ["manifest.webmanifest", "favicon.svg", "icon-192.png", "icon-512.png"].some((name) => requestUrl.pathname.endsWith(`/${name}`));
-  event.respondWith(event.request.mode === "navigate" || mutableCoreFile ? networkFirst(event.request) : cacheFirst(event.request));
+  event.respondWith(event.request.mode === "navigate" ? networkFirst(event.request, true) : mutableCoreFile ? networkFirst(event.request) : cacheFirst(event.request));
 });
