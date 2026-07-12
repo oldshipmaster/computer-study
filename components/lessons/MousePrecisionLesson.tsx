@@ -5,6 +5,7 @@ import { LessonChrome } from "@/components/lessons/LessonChrome";
 import type { LessonProps } from "@/components/lessons/types";
 import { DragWorkshop } from "@/components/lessons/mouse/DragWorkshop";
 import { MouseTargetField } from "@/components/lessons/mouse/MouseTargetField";
+import "@/components/lessons/mouse/MousePrecisionLesson.css";
 import {
   INITIAL_MOUSE_STATE,
   MOUSE_STAGES,
