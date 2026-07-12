@@ -58,6 +58,12 @@ test("process lab shows the lifecycle as a visible state machine", () => {
   assert.match(lab, /PROCESS_LABELS/);
   assert.match(lab, /process-node--current/);
   assert.match(lab, /aria-label="进程生命周期状态图"/);
+  assert.match(lab, /程序文件/);
+  assert.match(lab, /进程实例/);
+  assert.match(lab, /PID 2048/);
+  assert.match(lab, /等待 → 就绪/);
+  assert.match(lab, /状态历史/);
+  assert.match(lab, /资源已回收/);
 });
 
 test("file system lab shows a persistent directory tree and path breadcrumbs", () => {
