@@ -63,4 +63,9 @@ test("the lesson explains mouse parts and visualizes double-click progress", () 
   assert.match(source, /右键/);
   assert.match(source, /double-click-meter/);
   assert.match(source, /doubleClickCount/);
+  assert.match(source, /mouse-scroll-simulator/);
+  assert.match(source, /onWheel/);
+  assert.match(source, /向上浏览/);
+  assert.match(source, /向下浏览/);
+  assert.match(source, /scrollDirections\.length < 2/);
 });

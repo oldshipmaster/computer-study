@@ -33,6 +33,8 @@ export function MousePrecisionLesson({
   const initial = normalizeMouseResumeStage(initialStage);
   const [state, setState] = useState({ ...INITIAL_MOUSE_STATE, stage: initial });
   const [doubleClickCount, setDoubleClickCount] = useState(0);
+  const [scrollPosition, setScrollPosition] = useState(1);
+  const [scrollDirections, setScrollDirections] = useState<Array<"up" | "down">>([]);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const awardedRef = useRef(false);
   const doubleClickTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -59,6 +61,10 @@ export function MousePrecisionLesson({
     if (doubleClickTimerRef.current) clearTimeout(doubleClickTimerRef.current);
     act({ type: "doubleClickTarget", targetId: "blue-hatch" });
   }
+  function practiceScroll(direction: "up" | "down") {
+    setScrollPosition((position) => Math.max(0, Math.min(2, position + (direction === "down" ? 1 : -1))));
+    setScrollDirections((directions) => directions.includes(direction) ? directions : [...directions, direction]);
+  }
 
   const [heading, message] = COPY[state.stage];
 
@@ -74,7 +80,7 @@ export function MousePrecisionLesson({
     >
       <div className="mouse-mission" data-stage={state.stage}>
         {state.stage === "intro" ? (
-          <div className="mouse-intro"><div aria-label="鼠标结构：左键、滚轮和右键" className="mouse-anatomy" role="img"><span className="mouse-part mouse-part--left"><strong>左键</strong><small>选择、单击、双击、拖动</small></span><span className="mouse-part mouse-part--wheel"><strong>滚轮</strong><small>上下浏览页面</small></span><span className="mouse-part mouse-part--right"><strong>右键</strong><small>打开更多操作；不确定时先问大人</small></span><b aria-hidden="true">🖱️</b></div><button className="primary-action" onClick={() => act({ type: "continue" })} type="button">开始维修导航台</button></div>
+          <div className="mouse-intro"><div aria-label="鼠标结构：左键、滚轮和右键" className="mouse-anatomy" role="img"><span className="mouse-part mouse-part--left"><strong>左键</strong><small>选择、单击、双击、拖动</small></span><span className="mouse-part mouse-part--wheel"><strong>滚轮</strong><small>上下浏览页面</small></span><span className="mouse-part mouse-part--right"><strong>右键</strong><small>打开更多操作；不确定时先问大人</small></span><b aria-hidden="true">🖱️</b></div><section className="mouse-scroll-simulator"><h2>模拟滚轮浏览</h2><div aria-live="polite" onWheel={(event) => { event.preventDefault(); practiceScroll(event.deltaY > 0 ? "down" : "up"); }}><span>{["🚀 航线顶部", "🏝️ 比特岛中央", "⚓ 港口底部"][scrollPosition]}</span><small>视窗位置 {scrollPosition + 1} / 3</small></div><p>在视窗上滚动滚轮，或使用下面两个按钮。</p><span><button onClick={() => practiceScroll("up")} type="button">向上浏览</button><button onClick={() => practiceScroll("down")} type="button">向下浏览</button></span><strong role="status">{scrollDirections.length < 2 ? `还要练习：${scrollDirections.includes("up") ? "向下" : "向上"}浏览` : "上下两个方向都练会了"}</strong></section><button className="primary-action" disabled={scrollDirections.length < 2} onClick={() => act({ type: "continue" })} type="button">开始维修导航台</button></div>
         ) : null}
         {state.stage === "move" ? <MouseTargetField visited={state.movedTargets} onVisit={(targetId) => act({ type: "moveTarget", targetId })} /> : null}
         {state.stage === "click" ? <button className="mouse-beacon" onClick={() => act({ type: "clickTarget", targetId: "yellow-beacon" })} type="button">黄色信标 · 单击一次</button> : null}
