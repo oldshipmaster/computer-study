@@ -232,7 +232,7 @@ export function IslandMap({
           </div>
           <label>
             <span>搜索课程 <kbd>/</kbd></span>
-            <input onChange={(event) => setCourseQuery(event.target.value)} placeholder="例如：文件、循环、AI" ref={searchInputRef} type="search" value={courseQuery} />
+            <input onChange={(event) => setCourseQuery(event.target.value)} placeholder="例如：光标、循环、AI" ref={searchInputRef} type="search" value={courseQuery} />
           </label>
           <div className="course-compass-islands" aria-label="按岛屿筛选">
             <button aria-pressed={selectedIslandId === "all"} onClick={() => setSelectedIslandId("all")} type="button">全部</button>

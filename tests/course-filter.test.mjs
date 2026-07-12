@@ -18,6 +18,13 @@ test("matches title summary and skill with normalized whitespace and case", () =
   assert.ok(filterCourses(COURSES, { islandId: "all", query: "透明背景" }).length === 0);
 });
 
+test("finds courses through linked child dictionary terms", () => {
+  assert.deepEqual(filterCourses(COURSES, { islandId: "all", query: "光标" }).map((course) => course.id), ["mouse-precision"]);
+  assert.deepEqual(filterCourses(COURSES, { islandId: "all", query: "input method" }).map((course) => course.id), ["bilingual-input"]);
+  assert.deepEqual(filterCourses(COURSES, { islandId: "all", query: "坐标" }).map((course) => course.id), ["grid-city-navigation"]);
+  assert.deepEqual(filterCourses(COURSES, { islandId: "all", query: "AI" }).map((course) => course.id), ["ai-helper", "verify-ai"]);
+});
+
 test("combines island and keyword filters", () => {
   assert.deepEqual(filterCourses(COURSES, { islandId: "creative-workshop", query: "数据" }).map((course) => course.id), ["data-table"]);
   assert.deepEqual(filterCourses(COURSES, { islandId: "launch-harbor", query: "AI" }), []);
