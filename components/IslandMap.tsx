@@ -191,7 +191,7 @@ export function IslandMap({
       {mission.complete ? <CompletionCertificate /> : null}
 
       <KnowledgeAtlas completedCourseIds={completedCourseIds} />
-      <ComputerDictionary soundEnabled={soundEnabled} />
+      <ComputerDictionary onStartCourse={onStartCourse} soundEnabled={soundEnabled} />
       <ReviewChallenge completedCourseIds={completedCourseIds} key={completedCourseIds.join("|")} />
 
       <section className="adventure-map" id="adventure-map" aria-labelledby="islands-heading">

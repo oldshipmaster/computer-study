@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { ISLANDS } from "@/lib/course-data";
 import { searchDictionary } from "@/lib/computer-dictionary";
 
-export function ComputerDictionary({ soundEnabled }: { soundEnabled: boolean }) {
+export function ComputerDictionary({ soundEnabled, onStartCourse }: { soundEnabled: boolean; onStartCourse: (courseId: string) => void }) {
   const [query, setQuery] = useState("");
   const [canSpeak, setCanSpeak] = useState(false);
   const entries = searchDictionary(query);
@@ -45,7 +45,7 @@ export function ComputerDictionary({ soundEnabled }: { soundEnabled: boolean }) 
             <h3 id={`dictionary-${island.id}`}><span aria-hidden="true">{island.icon}</span>{island.name}</h3>
             <dl>{islandEntries.map((entry) => <div key={entry.id}>
               <dt>{entry.term}<small>{entry.english}</small></dt>
-              <dd><p>{entry.explanation}</p><span><strong>举个例子：</strong>{entry.example}</span><button disabled={!soundEnabled || !canSpeak} onClick={() => speak(entry.term, entry.explanation, entry.example)} type="button">{soundEnabled ? "🔊 听解释" : "声音已关闭"}</button></dd>
+              <dd><p>{entry.explanation}</p><span><strong>举个例子：</strong>{entry.example}</span><div className="dictionary-actions"><button disabled={!soundEnabled || !canSpeak} onClick={() => speak(entry.term, entry.explanation, entry.example)} type="button">{!soundEnabled ? "声音已关闭" : canSpeak ? "🔊 听解释" : "浏览器不支持朗读"}</button><button onClick={() => onStartCourse(entry.courseId)} type="button">去学这节课 →</button></div></dd>
             </div>)}</dl>
           </section>;
         })}

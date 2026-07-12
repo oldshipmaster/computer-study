@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { DICTIONARY_ENTRIES, searchDictionary } from "../lib/computer-dictionary.ts";
-import { ISLANDS } from "../lib/course-data.ts";
+import { COURSES, ISLANDS } from "../lib/course-data.ts";
 
 test("teaches three child-readable terms for every island", () => {
   assert.equal(DICTIONARY_ENTRIES.length, 27);
@@ -10,6 +10,7 @@ test("teaches three child-readable terms for every island", () => {
     const entries = DICTIONARY_ENTRIES.filter((entry) => entry.islandId === island.id);
     assert.equal(entries.length, 3, island.name);
     assert.ok(entries.every((entry) => entry.term && entry.english && entry.explanation && entry.example));
+    assert.ok(entries.every((entry) => COURSES.some((course) => course.id === entry.courseId && course.islandId === entry.islandId)));
   }
 });
 

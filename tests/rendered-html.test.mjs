@@ -211,6 +211,8 @@ test("reads dictionary explanations locally while respecting sound settings", ()
   assert.match(source, /soundEnabled/);
   assert.match(source, /window\.speechSynthesis\.cancel/);
   assert.match(source, /🔊 听解释/);
+  assert.match(source, /去学这节课/);
+  assert.match(source, /onStartCourse\(entry\.courseId\)/);
 });
 
 test("keeps the playable keyboard-flight lesson contract in source", () => {

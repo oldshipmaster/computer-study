@@ -1195,7 +1195,9 @@ input {
 .dictionary-groups dd { margin: 9px 0 0; line-height: 1.55; }
 .dictionary-groups dd p { margin: 0 0 9px; }
 .dictionary-groups dd span { display: block; padding-top: 8px; border-top: 1px dashed #d9c47c; color: #405b6d; font-size: .88rem; }
-.dictionary-groups dd button { min-height: 40px; margin-top: 11px; padding: 0 11px; border: 2px solid #22465e; border-radius: 9px; background: #eef9ff; color: #12324a; font: inherit; font-size: .82rem; font-weight: 850; }
+.dictionary-actions { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 11px; }
+.dictionary-groups dd button { min-height: 40px; padding: 0 11px; border: 2px solid #22465e; border-radius: 9px; background: #eef9ff; color: #12324a; font: inherit; font-size: .82rem; font-weight: 850; }
+.dictionary-groups dd .dictionary-actions button:last-child { background: #12324a; color: white; }
 .dictionary-groups dd button:disabled { border-color: #aab7bd; background: #edf0f1; color: #66777f; cursor: not-allowed; }
 .dictionary-empty { display: grid; justify-items: center; gap: 10px; padding: 28px; border: 2px dashed #d2b95f; border-radius: 18px; text-align: center; }
 .dictionary-empty span { font-size: 2rem; }
