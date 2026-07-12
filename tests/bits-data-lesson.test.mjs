@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
-import { bitsToNumber, numberToBits, bitsToColor } from "../lib/bits-data-lesson.ts";
+import { bitsToNumber, numberToBits, bitsToColor, byteToDemoCharacter } from "../lib/bits-data-lesson.ts";
 
 test("converts four bits to numbers and back", () => {
   assert.equal(bitsToNumber([1, 0, 1, 0]), 10);
@@ -18,6 +18,9 @@ test("represents one byte as exactly eight bits", () => {
   assert.equal(byte.length, 8);
   assert.deepEqual(byte, [0, 1, 0, 0, 0, 0, 0, 1]);
   assert.equal(bitsToNumber(byte), 65);
+  assert.equal(byteToDemoCharacter(byte), "A");
+  assert.equal(byteToDemoCharacter(numberToBits(66, 8)), "B");
+  assert.equal(byteToDemoCharacter([1, 0, 1, 0]), null);
 });
 
 test("interprets three channel bits as a color code", () => {
@@ -34,4 +37,7 @@ test("the bit board explains place values and RGB channels visually", () => {
   assert.match(source, /相加/);
   assert.match(source, /1 字节 = 8 比特/);
   assert.match(source, /target: 65/);
+  assert.match(source, /byte-interpretations/);
+  assert.match(source, /数字规则/);
+  assert.match(source, /演示文字规则/);
 });
