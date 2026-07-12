@@ -45,3 +45,11 @@ test("memory lab visualizes occupied and free rooms", () => {
   assert.match(lab, /空闲/);
   assert.match(lab, /已使用.*\/.*8/);
 });
+
+test("process lab shows the lifecycle as a visible state machine", () => {
+  const lab = readFileSync(new URL("components/lessons/advanced/os/ProcessLab.tsx", root), "utf8");
+  assert.match(lab, /process-state-machine/);
+  assert.match(lab, /PROCESS_LABELS/);
+  assert.match(lab, /process-node--current/);
+  assert.match(lab, /aria-label="进程生命周期状态图"/);
+});

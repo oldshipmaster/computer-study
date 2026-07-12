@@ -4,6 +4,7 @@ import { useState } from "react";
 import { transitionProcess, type ProcessAction, type ProcessState } from "@/lib/advanced-foundations/operating-system";
 
 const TARGET: ProcessState[] = ["running", "waiting", "ready", "running", "terminated"];
+const PROCESS_LABELS: Record<ProcessState, string> = { ready: "就绪", running: "运行", waiting: "等待", paused: "暂停", terminated: "结束" };
 
 export function ProcessLab({ onComplete }: { onComplete: () => void }) {
   const [state, setState] = useState<ProcessState>("ready");
@@ -21,5 +22,5 @@ export function ProcessLab({ onComplete }: { onComplete: () => void }) {
     setFeedback(`状态变化成功：${state} → ${result.state}`);
   }
 
-  return <div className="advanced-lab process-lab"><h2>程序变成进程挑战</h2><p className="process-state">当前状态：<strong>{state}</strong></p><div role="group"><button onClick={() => act("run")} type="button">获得 CPU</button><button onClick={() => act("wait")} type="button">等待输入</button><button onClick={() => act("wake")} type="button">输入到达</button><button onClick={() => act("terminate")} type="button">结束进程</button></div><p role="status">{feedback} 步骤 {step}/{TARGET.length}</p>{step === TARGET.length ? <button onClick={onComplete} type="button">完成进程生命周期</button> : null}</div>;
+  return <div className="advanced-lab process-lab"><h2>程序变成进程挑战</h2><div className="process-state-machine" aria-label="进程生命周期状态图" role="img">{(["ready", "running", "waiting", "terminated"] as ProcessState[]).map((item, index) => <span className={item === state ? "process-node--current" : ""} key={item}><b>{PROCESS_LABELS[item]}</b><small>{index < 3 ? "状态可转换 →" : "资源已回收"}</small></span>)}</div><p className="process-state">当前状态：<strong>{PROCESS_LABELS[state]}</strong></p><div role="group"><button onClick={() => act("run")} type="button">获得 CPU</button><button onClick={() => act("wait")} type="button">等待输入</button><button onClick={() => act("wake")} type="button">输入到达</button><button onClick={() => act("terminate")} type="button">结束进程</button></div><p role="status">{feedback} 步骤 {step}/{TARGET.length}</p>{step === TARGET.length ? <button onClick={onComplete} type="button">完成进程生命周期</button> : null}</div>;
 }
