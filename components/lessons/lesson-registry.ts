@@ -6,7 +6,6 @@ import { ProgramLandingLesson } from "@/components/lessons/ProgramLandingLesson"
 import { PasswordGuardianLesson } from "@/components/lessons/PasswordGuardianLesson";
 import { PrivateInformationLesson } from "@/components/lessons/PrivateInformationLesson";
 import { PopupFogLesson } from "@/components/lessons/PopupFogLesson";
-import { HealthyComputerHabitsLesson } from "@/components/lessons/HealthyComputerHabitsLesson";
 import { LightBitIslandLesson } from "@/components/lessons/LightBitIslandLesson";
 import { DataTableLesson, DocumentDesignLesson, MediaCopyrightLesson, PixelArtLesson, SlideStoryLesson } from "@/components/lessons/CreativeLessons";
 import { AiHelperLesson, DigitalProjectLesson, EmailMessageLesson, OnlineCollaborationLesson, VerifyAiLesson } from "@/components/lessons/FutureLessons";
@@ -35,6 +34,7 @@ const WebAddressLesson = advancedLesson(() => import("@/components/lessons/WebAd
 const SearchAndLinksLesson = advancedLesson(() => import("@/components/lessons/SearchAndLinksLesson"), "SearchAndLinksLesson");
 const DownloadsCloudLesson = advancedLesson(() => import("@/components/lessons/DownloadsCloudLesson"), "DownloadsCloudLesson");
 const NetworkTroubleshootingLesson = advancedLesson(() => import("@/components/lessons/NetworkTroubleshootingLesson"), "NetworkTroubleshootingLesson");
+const HealthyComputerHabitsLesson = advancedLesson(() => import("@/components/lessons/HealthyComputerHabitsLesson"), "HealthyComputerHabitsLesson");
 const loadDataStructures = () => import("@/components/lessons/advanced/DataStructureLessons");
 const loadAlgorithms = () => import("@/components/lessons/advanced/AlgorithmLessons");
 const loadOperatingSystem = () => import("@/components/lessons/advanced/OperatingSystemLessons");

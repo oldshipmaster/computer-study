@@ -24,6 +24,7 @@ const deferredLessons = [
   "SearchAndLinksLesson",
   "DownloadsCloudLesson",
   "NetworkTroubleshootingLesson",
+  "HealthyComputerHabitsLesson",
 ];
 
 test("defers rich programming and hardware labs until a child opens them", () => {

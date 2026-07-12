@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { evaluateRoutine, evaluateSetup, type SetupChoices } from "@/lib/healthy-habits-lesson";
+import "./HabitPlanner.css";
 
 const SETUP_LABELS: Array<[keyof SetupChoices, string]> = [["feetSupported", "双脚有支撑"], ["shouldersRelaxed", "肩膀放松"], ["screenComfortable", "屏幕距离和高度看着舒服"], ["lightComfortable", "光线不刺眼也不太暗"]];
 const ACTIONS = [{ id: "learn", label: "学习一节 9 分钟小课", short: "学习 9 分钟", icon: "💻" }, { id: "look-far", label: "离屏看远处", short: "看远处", icon: "👀" }, { id: "move", label: "站起来活动", short: "活动", icon: "🙆" }, { id: "offline-play", label: "进行离线游戏", short: "离线游戏", icon: "🧩" }];

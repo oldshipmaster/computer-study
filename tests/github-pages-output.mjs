@@ -83,7 +83,7 @@ test("emits a GitHub Pages artifact under the repository base path", async () =>
   const assetManifest = JSON.parse(await readFile(new URL("asset-manifest.json", outputRoot), "utf8"));
   const manifestFiles = JSON.stringify(assetManifest);
   const builtAssets = await readdir(new URL("assets/", outputRoot));
-  assert.ok(builtAssets.filter((name) => name.endsWith(".js")).every((name) => manifestFiles.includes(name)), "every lazy lesson chunk must be discoverable for offline caching");
+  assert.ok(builtAssets.filter((name) => /\.(?:js|css)$/.test(name)).every((name) => manifestFiles.includes(name)), "every lazy lesson script and stylesheet must be discoverable for offline caching");
 });
 
 test("keeps the complete curriculum inside a child-device performance budget", async () => {
