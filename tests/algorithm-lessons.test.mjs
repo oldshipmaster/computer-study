@@ -45,3 +45,12 @@ test("efficiency race plots comparable semantic work meters", () => {
   assert.match(lab, /value=\{costs\.binary\}/);
   assert.match(lab, /最多需要的比较次数/);
 });
+
+test("task decomposition visualizes dependencies and the next unblocked step", () => {
+  const lab = readFileSync(new URL("components/lessons/advanced/algorithms/TaskDecompositionLab.tsx", root), "utf8");
+  assert.match(lab, /dependency-map/);
+  assert.match(lab, /dependency-node--ready/);
+  assert.match(lab, /dependency-node--done/);
+  assert.match(lab, /依赖/);
+  assert.match(lab, /下一步/);
+});
