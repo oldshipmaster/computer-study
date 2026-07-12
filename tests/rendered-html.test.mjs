@@ -616,6 +616,7 @@ test("registers a scoped offline shell and shows connection status", () => {
   assert.match(statusSource, /scope: offlineBase\.pathname/);
   assert.match(statusSource, /navigator\.onLine/);
   assert.match(statusSource, /serviceWorker\.ready/);
+  assert.match(statusSource, /else\s*\{\s*queueMicrotask/);
   assert.match(statusSource, /addEventListener\("offline"/);
   assert.match(statusSource, /当前离线：继续学习已打开过的课程/);
   assert.match(statusSource, /离线功能未准备好 · 联网仍可学习/);

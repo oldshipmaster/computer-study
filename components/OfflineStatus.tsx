@@ -20,6 +20,10 @@ export function OfflineStatus() {
       void window.navigator.serviceWorker.ready.then(() => {
         if (!cancelled) setOfflineReady(true);
       });
+    } else {
+      queueMicrotask(() => {
+        if (!cancelled) setOfflineFailed(true);
+      });
     }
     window.addEventListener("online", sync);
     window.addEventListener("offline", sync);
