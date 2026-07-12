@@ -21,6 +21,7 @@ test("defines an isolated GitHub Pages static build", async () => {
   assert.match(packageJson, /"test:pages":\s*"npm run build:pages/);
   assert.match(packageJson, /"lint":[^\n]*--ignore-pattern out-pages/);
   assert.match(packageJson, /"typecheck":\s*"tsc --noEmit"/);
+  assert.match(packageJson, /"audit:prod":\s*"npm audit --omit=dev --audit-level=moderate"/);
   assert.match(viteConfig, /GITHUB_PAGES_BASE_PATH/);
   assert.match(viteConfig, /outDir:\s*"\.\.\/out-pages"/);
   assert.match(viteConfig, /root:\s*"github-pages"/);
@@ -44,6 +45,7 @@ test("deploys the static artifact with the official Pages actions", async () => 
   assert.match(workflow, /actions\/deploy-pages@v5/);
   assert.match(workflow, /npm run build:pages/);
   assert.match(workflow, /npm run typecheck/);
+  assert.match(workflow, /npm run audit:prod/);
   assert.match(workflow, /GITHUB_PAGES_BASE_PATH:\s*\/computer-study\//);
   assert.match(workflow, /path:\s*\.\/out-pages/);
 });

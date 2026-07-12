@@ -39,6 +39,9 @@ jobs:
       - name: Check TypeScript
         run: npm run typecheck
 
+      - name: Audit production dependencies
+        run: npm run audit:prod
+
       - name: Build static site
         run: npm run build:pages
         env:
