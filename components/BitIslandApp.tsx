@@ -24,6 +24,7 @@ import {
   resetProgress,
   storeProgress,
 } from "@/lib/progress.mjs";
+import { sanitizeCatalogProgress } from "@/lib/catalog-progress";
 
 type Screen = "map" | "lesson" | "complete";
 
@@ -85,7 +86,7 @@ export function BitIslandApp() {
       }
 
       try {
-        setProgress(parseProgress(window.localStorage.getItem(PROGRESS_STORAGE_KEY)));
+        setProgress(sanitizeCatalogProgress(parseProgress(window.localStorage.getItem(PROGRESS_STORAGE_KEY))));
       } catch {
         setStorageUnavailable(true);
       } finally {
