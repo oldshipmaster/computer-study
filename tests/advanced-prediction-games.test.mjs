@@ -3,13 +3,14 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 test("search, instruction-cycle, routing, and network layers require prediction", async () => {
-  const [search, cycle, routing, layers, scheduling, devices] = await Promise.all([
+  const [search, cycle, routing, layers, scheduling, devices, sort] = await Promise.all([
     readFile(new URL("../components/lessons/advanced/algorithms/SearchLab.tsx", import.meta.url), "utf8"),
     readFile(new URL("../components/lessons/advanced/systems/InstructionCycleLab.tsx", import.meta.url), "utf8"),
     readFile(new URL("../components/lessons/advanced/network/RoutingMazeLab.tsx", import.meta.url), "utf8"),
     readFile(new URL("../components/lessons/advanced/network/LayerEnvelopeLab.tsx", import.meta.url), "utf8"),
     readFile(new URL("../components/lessons/advanced/os/SchedulingLab.tsx", import.meta.url), "utf8"),
     readFile(new URL("../components/lessons/advanced/os/DeviceCoordinationLab.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../components/lessons/advanced/algorithms/SortLab.tsx", import.meta.url), "utf8"),
   ]);
   assert.match(search, /预测下一次检查哪个索引/);
   assert.match(search, /expectedIndex/);
@@ -32,4 +33,7 @@ test("search, instruction-cycle, routing, and network layers require prediction"
   assert.match(devices, /选择设备队首请求/);
   assert.match(devices, /队列要按顺序服务/);
   assert.match(devices, /request\.id !== pending\[0\]\.id/);
+  assert.match(sort, /预测这一轮结束后的顺序/);
+  assert.match(sort, /只比较相邻数字/);
+  assert.match(sort, /expected\.join/);
 });
