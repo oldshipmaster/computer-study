@@ -23,6 +23,7 @@ interface IslandMapProps {
   completedCourseIds: string[];
   headingRef: Ref<HTMLHeadingElement>;
   onStartCourse: (courseId: string) => void;
+  resume: { courseId: string; stage: number } | null;
 }
 
 const DIFFICULTY_LABELS: Record<Course["difficulty"], string> = {
@@ -76,11 +77,13 @@ export function IslandMap({
   completedCourseIds,
   headingRef,
   onStartCourse,
+  resume,
 }: IslandMapProps) {
   const [courseQuery, setCourseQuery] = useState("");
   const [selectedIslandId, setSelectedIslandId] = useState("all");
-  const mission = getMapMission(completedCourseIds);
+  const mission = getMapMission(completedCourseIds, resume);
   const currentCourse = mission.course;
+  const resuming = Boolean(resume && currentCourse?.id === resume.courseId);
   const visibleCourseIds = new Set(filterCourses(COURSES, { islandId: selectedIslandId, query: courseQuery }).map((course) => course.id));
 
   return (
@@ -119,7 +122,7 @@ export function IslandMap({
           {currentCourse ? (
             <div className="current-mission" aria-label="当前任务">
               <span className="mission-label">
-                {mission.complete ? "自由重玩" : "当前任务"}
+                {mission.complete ? "自由重玩" : resuming ? "续课任务" : "当前任务"}
               </span>
               <div>
                 <strong>{currentCourse.title}</strong>
@@ -130,7 +133,7 @@ export function IslandMap({
                 onClick={() => onStartCourse(currentCourse.id)}
                 type="button"
               >
-                {mission.complete ? "重玩第一课" : "继续冒险"}
+                {mission.complete ? "重玩第一课" : resuming ? `继续第 ${resume.stage + 1} 段` : "继续冒险"}
                 <span aria-hidden="true">→</span>
               </button>
             </div>

@@ -194,3 +194,12 @@ test("turns the map mission into a celebration after all lessons are complete", 
   assert.equal(finished.complete, true);
   assert.equal(finished.course?.id, "keyboard-flight");
 });
+
+test("prioritizes a valid unfinished resume without overriding completion", () => {
+  assert.equal(getMapMission([], { courseId: "data-table", stage: 4 }).course?.id, "data-table");
+  assert.equal(getMapMission(["data-table"], { courseId: "data-table", stage: 4 }).course?.id, "keyboard-flight");
+  assert.equal(getMapMission([], { courseId: "unknown", stage: 2 }).course?.id, "keyboard-flight");
+  assert.equal(getMapMission([], { courseId: "data-table", stage: 6 }).course?.id, "keyboard-flight");
+  const all = COURSES.map((course) => course.id);
+  assert.equal(getMapMission(all, { courseId: "data-table", stage: 4 }).complete, true);
+});

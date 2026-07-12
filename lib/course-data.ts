@@ -442,11 +442,20 @@ export function getNextPlayableCourse(
 export function getMapMission(completedCourseIds: readonly string[]): {
   course: Course | undefined;
   complete: boolean;
+};
+export function getMapMission(completedCourseIds: readonly string[], resume?: { courseId: string; stage: number } | null): {
+  course: Course | undefined;
+  complete: boolean;
+};
+export function getMapMission(completedCourseIds: readonly string[], resume?: { courseId: string; stage: number } | null): {
+  course: Course | undefined;
+  complete: boolean;
 } {
   const playableCourses = COURSES.filter((course) => course.playable);
   const nextCourse = getNextPlayableCourse(completedCourseIds);
+  const resumeCourse = resume && Number.isInteger(resume.stage) && resume.stage >= 0 && resume.stage <= 5 && !completedCourseIds.includes(resume.courseId) ? getCourse(resume.courseId) : undefined;
   return {
-    course: nextCourse ?? playableCourses[0],
+    course: resumeCourse?.playable ? resumeCourse : nextCourse ?? playableCourses[0],
     complete:
       playableCourses.length > 0 &&
       playableCourses.every((course) => completedCourseIds.includes(course.id)),

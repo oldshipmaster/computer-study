@@ -334,6 +334,7 @@ export function BitIslandApp() {
         completedCourseIds={progress.completedCourseIds}
         headingRef={mapHeadingRef}
         onStartCourse={startCourse}
+        resume={progress.resume}
       />
     );
   }
