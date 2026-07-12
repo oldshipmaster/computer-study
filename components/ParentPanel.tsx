@@ -155,6 +155,11 @@ export function ParentPanel({
 
   async function restoreBackup(file: File | undefined) {
     if (!file) return;
+    if (file.size > 1_000_000) {
+      setBackupStatus("这个文件超过 1 MB，不像比特岛学习记录。请重新选择。");
+      if (backupInputRef.current) backupInputRef.current.value = "";
+      return;
+    }
     const result = parseProgressBackup(await file.text());
     if (!result.ok) { setBackupStatus(result.message); return; }
     onRestore(result.progress);
