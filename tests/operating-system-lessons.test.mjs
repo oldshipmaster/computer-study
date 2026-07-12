@@ -61,3 +61,13 @@ test("file system lab shows a persistent directory tree and path breadcrumbs", (
   assert.match(lab, /aria-current/);
   assert.match(lab, /根目录/);
 });
+
+test("device lab shows requests crossing the OS and driver boundary", () => {
+  const lab = readFileSync(new URL("components/lessons/advanced/os/DeviceCoordinationLab.tsx", root), "utf8");
+  assert.match(lab, /device-request-flow/);
+  assert.match(lab, /应用程序/);
+  assert.match(lab, /操作系统队列/);
+  assert.match(lab, /驱动程序/);
+  assert.match(lab, /硬件设备/);
+  assert.match(lab, /队首/);
+});

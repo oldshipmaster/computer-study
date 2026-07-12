@@ -3935,6 +3935,7 @@ html.bit-island-document--reduced-motion *::after,
 .search-items button.is-checked { background: #dff7e8; color: #176145; opacity: 1; }
 .schedule-tasks { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: .6rem; }
 .schedule-tasks button { display: grid; margin: 0; padding: .7rem; border: 2px solid #315c9a; border-radius: .7rem; background: #edf4ff; color: #15384e; text-align: left; }
+.device-request-flow { display: grid; grid-template-columns: repeat(4, 1fr auto); align-items: center; gap: .4rem; overflow-x: auto; padding: .8rem; border-radius: 1rem; background: #eef7ff; } .device-request-flow span { display: grid; min-width: 7.5rem; gap: .25rem; padding: .65rem; border: 2px solid #315c9a; border-radius: .7rem; background: white; text-align: center; } .device-request-flow i { color: #197ba7; font-size: 1.35rem; font-style: normal; font-weight: 900; } .device-request-flow small { font-size: .68rem; }
 .process-state-machine { display: grid; grid-template-columns: repeat(4, 1fr); gap: .5rem; }
 .process-state-machine span { display: grid; min-height: 4.5rem; place-items: center; padding: .5rem; border: 2px solid #456377; border-radius: .7rem; background: #edf2f4; text-align: center; }
 .process-state-machine small { font-size: .58rem; }
