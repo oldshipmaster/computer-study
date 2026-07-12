@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import test from "node:test";
 
 const helperUrl = new URL("../lib/interaction-guard.ts", import.meta.url);
@@ -32,5 +32,19 @@ test("every staged case lab guards its advancing buttons", () => {
     assert.match(source, /isRepeatedPointerActivation/);
     assert.match(source, /event\.detail/);
     assert.match(source, /aria-live="polite"/);
+  }
+});
+
+test("lesson stage buttons cannot queue more than one increment per render", () => {
+  const lessonRoot = new URL("../components/lessons/", import.meta.url);
+  const files = readdirSync(lessonRoot, { withFileTypes: true })
+    .filter((entry) => entry.isFile() && entry.name.endsWith(".tsx"));
+  for (const file of files) {
+    const source = readFileSync(new URL(file.name, lessonRoot), "utf8");
+    assert.doesNotMatch(source, /setStage\(\(value\) => value \+ 1\)/, file.name);
+  }
+  for (const relativePath of ["coding/CodingMissionLesson.tsx", "creative/CreativeMissionLesson.tsx", "future/FutureMissionLesson.tsx"]) {
+    const source = readFileSync(new URL(relativePath, lessonRoot), "utf8");
+    assert.doesNotMatch(source, /setStage\(\(value\) => value \+ 1\)/, relativePath);
   }
 });

@@ -27,7 +27,7 @@ export function BilingualInputLesson({ initialStage, onAward, onComplete, onExit
 
   function next() {
     if (stage < TASKS.length - 1) {
-      setStage((value) => value + 1);
+      setStage(stage + 1);
       return;
     }
     if (awardedRef.current) return;

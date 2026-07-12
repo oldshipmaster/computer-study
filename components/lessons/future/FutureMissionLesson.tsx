@@ -25,7 +25,7 @@ export function FutureMissionLesson({ mission, initialStage, onAward, onComplete
   }
   return <LessonChrome courseName={mission.courseName} currentStage={stage} heading={mission.stages[stage]} headingRef={headingRef} message={mission.messages[stage]} onExit={onExit} stageNames={mission.stages}>
     <div className="future-mission">
-      {stage < 5 ? <div className="future-demo"><p>{mission.symbol}</p><button className="primary-action" onClick={() => setStage((value) => value + 1)} type="button">前往下一座未来站</button></div> : <div className="future-challenge">
+      {stage < 5 ? <div className="future-demo"><p>{mission.symbol}</p><button className="primary-action" onClick={() => setStage(stage + 1)} type="button">前往下一座未来站</button></div> : <div className="future-challenge">
         <div className="future-progress" aria-label={`已完成 ${challenge.solved} 项，共 4 项`} role="status">{mission.cards.map((item, index) => <span className={index < challenge.solved ? "is-complete" : ""} key={item.id}>{index < challenge.solved ? "✓" : index + 1}</span>)}</div>
         <h2>{current.prompt}</h2>
         <div className="future-options">{current.options.map((option, index) => <button key={option} onClick={(event) => choose(index, event.detail)} type="button">{option}</button>)}</div>

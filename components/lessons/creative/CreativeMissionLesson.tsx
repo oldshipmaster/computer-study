@@ -32,7 +32,7 @@ export function CreativeMissionLesson({ mission, initialStage, onAward, onComple
         {stage < 5 ? (
           <div className="creative-demo">
             <p>{mission.demo}</p>
-            <button className="primary-action" onClick={() => setStage((value) => value + 1)} type="button">探索下一个创作概念</button>
+            <button className="primary-action" onClick={() => setStage(stage + 1)} type="button">探索下一个创作概念</button>
           </div>
         ) : (
           <div className="creative-challenge">

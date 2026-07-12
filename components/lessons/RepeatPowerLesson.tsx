@@ -8,6 +8,6 @@ const MESSAGES = ["连续做同样的事时，可以用循环让程序更短。"
 export function RepeatPowerLesson({ initialStage, onAward, onComplete, onExit, onStageChange }: LessonProps) {
   const [stage, setStage] = useState(() => Math.max(0, Math.min(5, Math.floor(initialStage || 0)))); const headingRef = useRef<HTMLHeadingElement>(null); const awardedRef = useRef(false);
   useLayoutEffect(() => headingRef.current?.focus(), [stage]); useEffect(() => onStageChange(stage), [onStageChange, stage]);
-  function success() { if (stage < 5) { setStage((value) => value + 1); return; } if (!awardedRef.current) { awardedRef.current = true; onAward("repeat-power", "loop-builder"); onComplete(); } }
-  return <LessonChrome courseName="重复的力量" currentStage={stage} heading={STAGES[stage]} headingRef={headingRef} message={MESSAGES[stage]} onExit={onExit} stageNames={STAGES}><div className="repeat-mission">{stage < 2 ? <div className="repeat-demo"><p>前进 → 右转 → 前进 → 右转 → …</p><button className="primary-action" onClick={() => setStage((value) => value + 1)} type="button">用重复积木变短</button></div> : <LoopLab onSuccess={success}/>}</div></LessonChrome>;
+  function success() { if (stage < 5) { setStage(stage + 1); return; } if (!awardedRef.current) { awardedRef.current = true; onAward("repeat-power", "loop-builder"); onComplete(); } }
+  return <LessonChrome courseName="重复的力量" currentStage={stage} heading={STAGES[stage]} headingRef={headingRef} message={MESSAGES[stage]} onExit={onExit} stageNames={STAGES}><div className="repeat-mission">{stage < 2 ? <div className="repeat-demo"><p>前进 → 右转 → 前进 → 右转 → …</p><button className="primary-action" onClick={() => setStage(stage + 1)} type="button">用重复积木变短</button></div> : <LoopLab onSuccess={success}/>}</div></LessonChrome>;
 }
