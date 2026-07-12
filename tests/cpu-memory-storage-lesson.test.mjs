@@ -30,4 +30,10 @@ test("the lesson visualizes data flow and explains volatile memory", () => {
   assert.match(source, /lastAction/);
   assert.match(source, /RAM 会清空/);
   assert.match(source, /存储会保留/);
+  assert.match(source, /data-flow--load/);
+  assert.match(source, /data-flow--save/);
+  assert.match(source, /data-pulse/);
+  assert.match(source, /machine-history/);
+  assert.match(source, /phase !== 0/);
+  assert.match(source, /phase !== 4/);
 });
