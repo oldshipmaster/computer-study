@@ -14,6 +14,14 @@ test("teaches five child-readable terms for every island", () => {
   }
 });
 
+test("maps exactly one core term to every course", () => {
+  assert.equal(new Set(DICTIONARY_ENTRIES.map((entry) => entry.courseId)).size, COURSES.length);
+  assert.deepEqual(
+    new Set(DICTIONARY_ENTRIES.map((entry) => entry.courseId)),
+    new Set(COURSES.map((course) => course.id)),
+  );
+});
+
 test("searches Chinese, English, explanations, and examples", () => {
   assert.deepEqual(searchDictionary("循环").map((entry) => entry.id), ["loop"]);
   assert.deepEqual(searchDictionary("cpu").map((entry) => entry.id), ["cpu-memory-storage"]);
