@@ -27,6 +27,7 @@ import { filterCourses } from "@/lib/course-filter";
 
 const FoundationPractice = lazy(() => import("@/components/FoundationPractice").then((module) => ({ default: module.FoundationPractice })));
 const FoundationRoadmap = lazy(() => import("@/components/FoundationRoadmap").then((module) => ({ default: module.FoundationRoadmap })));
+const FoundationCapstone = lazy(() => import("@/components/FoundationCapstone").then((module) => ({ default: module.FoundationCapstone })));
 
 interface IslandMapProps {
   completedCourseIds: string[];
@@ -148,6 +149,7 @@ export function IslandMap({
           <a href="#adventure-map">课程地图</a>
           <a href="#foundation-roadmap">深度路线</a>
           <a href="#foundation-practice">脑力加练</a>
+          <a href="#foundation-capstone">系统总挑战</a>
           <a href="#knowledge-atlas">知识图鉴</a>
           <a href="#computer-dictionary">电脑词典</a>
           <a href="#term-match">概念配对</a>
@@ -226,6 +228,7 @@ export function IslandMap({
 
       <Suspense fallback={<section className="foundation-roadmap" id="foundation-roadmap" role="status">正在绘制深度知识连接图…</section>}><FoundationRoadmap completedCourseIds={completedCourseIds} onStartCourse={onStartCourse} /></Suspense>
       <Suspense fallback={<section className="foundation-practice-loading" id="foundation-practice" role="status">正在准备底层脑力加练…</section>}><FoundationPractice onStartCourse={onStartCourse} /></Suspense>
+      <Suspense fallback={<section className="foundation-capstone" id="foundation-capstone" role="status">正在连接系统总控台…</section>}><FoundationCapstone completedCourseIds={completedCourseIds} /></Suspense>
       <KnowledgeAtlas completedCourseIds={completedCourseIds} onStartCourse={onStartCourse} />
       <ComputerDictionary onStartCourse={onStartCourse} soundEnabled={soundEnabled} />
       <TermMatchChallenge completedCourseIds={completedCourseIds} key={`terms-${completedCourseIds.join("|")}`} />

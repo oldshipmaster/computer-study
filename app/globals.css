@@ -3824,6 +3824,22 @@ html.bit-island-document--reduced-motion *::after,
 .foundation-practice-actions button:last-child { background: #ffe36e; }
 @media (max-width: 48rem) { .foundation-practice { grid-template-columns: 1fr; } }
 @media (max-width: 38rem) { .foundation-practice { width: min(100% - 32px, 1100px); } .foundation-practice-console [role="group"] { grid-template-columns: 1fr; } .foundation-practice-console [role="group"] button { min-height: 3.6rem; } }
+.foundation-capstone { display: grid; width: min(100% - 48px, 1100px); margin: 54px auto; grid-template-columns: minmax(0, .75fr) minmax(0, 1.25fr); gap: clamp(1.2rem, 5vw, 4rem); align-items: center; padding: clamp(1.2rem, 4vw, 2.5rem); border: 3px solid #4f3b82; border-radius: 2rem; background: #efeaff; box-shadow: 10px 12px 0 rgb(79 59 130 / 14%); }
+.foundation-capstone > header h2 { margin: 0; font-size: clamp(1.8rem, 4vw, 3rem); line-height: 1.1; }
+.foundation-capstone-console { display: grid; gap: 1rem; min-width: 0; padding: clamp(1rem, 3vw, 1.5rem); border: 3px solid #4f3b82; border-radius: 1.2rem; background: white; }
+.foundation-capstone-console > p:first-child { margin: 0; color: #65469a; font-size: .78rem; font-weight: 850; }
+.foundation-capstone-console h3 { margin: 0; font-size: clamp(1.25rem, 3vw, 1.75rem); }
+.foundation-capstone-console [role="group"] { display: grid; gap: .6rem; }
+.foundation-capstone-console [role="group"] button { min-height: 3.8rem; padding: .7rem; border: 2px solid #4f3b82; border-radius: .7rem; background: #f8f5ff; color: #15384e; text-align: left; font-weight: 800; }
+.foundation-capstone-console [role="group"] button[aria-pressed="true"] { background: #ffe36e; }
+.foundation-capstone-console [role="status"] { min-height: 4rem; margin: 0; padding: .75rem; border-radius: .7rem; background: #fff0df; color: #783c2d; font-weight: 750; }
+.foundation-capstone-console [role="status"].is-correct { background: #dff7e8; color: #176145; }
+.foundation-capstone-finish { display: grid; min-height: 20rem; place-items: center; align-content: center; gap: .8rem; text-align: center; }
+.foundation-capstone-finish span { font-size: 4rem; }
+.foundation-capstone-finish p { margin: 0; }
+.foundation-capstone-finish button { min-height: 44px; padding: .6rem 1rem; border: 2px solid #4f3b82; border-radius: .7rem; background: #ffe36e; font-weight: 850; }
+@media (max-width: 48rem) { .foundation-capstone { grid-template-columns: 1fr; } }
+@media (max-width: 38rem) { .foundation-capstone { width: min(100% - 32px, 1100px); } }
 .advanced-foundation-lesson { min-width: 0; padding: clamp(1rem, 3vw, 1.6rem); border-radius: 1.5rem; background: linear-gradient(145deg, #eef8ff, #fff7d9); color: #15384e; }
 .advanced-concept-demo { display: grid; min-height: 18rem; place-items: center; align-content: center; gap: 1.25rem; text-align: center; }
 .concept-journey { display: grid; width: min(100%, 44rem); justify-items: center; gap: 1.2rem; }
