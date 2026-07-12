@@ -3846,6 +3846,7 @@ html.bit-island-document--reduced-motion *::after,
 .advanced-concept-demo { display: grid; min-height: 18rem; place-items: center; align-content: center; gap: 1.25rem; text-align: center; }
 .concept-journey { display: grid; width: min(100%, 44rem); justify-items: center; gap: 1.2rem; }
 .concept-journey-icon { display: grid; width: 6rem; height: 6rem; place-items: center; border: 3px solid #15384e; border-radius: 35% 65% 48% 52%; background: white; box-shadow: 7px 8px 0 rgb(18 50 74 / 14%); font-size: 3rem; animation: advanced-float 2.8s ease-in-out infinite; }
+.concept-journey--still .concept-journey-icon { animation: none; }
 .concept-journey-track { position: relative; display: grid; width: 100%; grid-template-columns: repeat(5, 1fr); gap: .45rem; }
 .concept-journey-track::before { position: absolute; top: 1.05rem; right: 8%; left: 8%; height: 4px; border-radius: 999px; background: #b9cdd7; content: ""; }
 .concept-journey-node { position: relative; z-index: 1; display: grid; justify-items: center; gap: .35rem; color: #456377; }

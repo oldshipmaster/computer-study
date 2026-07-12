@@ -13,7 +13,7 @@ import { ConceptReflectionGate, type ConceptReflection } from "@/components/less
 
 interface Config { courseId: string; badgeId: string; courseName: string; stages: readonly [string, string, string, string, string, string]; messages: readonly [string, string, string, string, string, string]; Lab: ComponentType<{ onComplete: () => void }>; reflection: ConceptReflection; }
 
-function OperatingSystemLesson({ config, initialStage, onAward, onComplete, onExit, onStageChange }: LessonProps & { config: Config }) {
+function OperatingSystemLesson({ config, initialStage, onAward, onComplete, onExit, onStageChange, reducedMotion }: LessonProps & { config: Config }) {
   const [stage, setStage] = useState(() => Math.max(0, Math.min(5, Math.floor(initialStage || 0))));
   const [labSolved, setLabSolved] = useState(false);
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -22,7 +22,7 @@ function OperatingSystemLesson({ config, initialStage, onAward, onComplete, onEx
   useLayoutEffect(() => headingRef.current?.focus(), [stage]);
   useEffect(() => onStageChange(stage), [onStageChange, stage]);
   function finish() { if (awardedRef.current) return; awardedRef.current = true; onAward(config.courseId, config.badgeId); onComplete(); }
-  return <LessonChrome courseName={config.courseName} currentStage={stage} heading={config.stages[stage]} headingRef={headingRef} message={config.messages[stage]} onExit={onExit} stageNames={config.stages}><div className="advanced-foundation-lesson">{stage < 5 ? <div className="advanced-concept-demo"><ConceptJourney icon={["🖥️", "⏱️", "🧠", "📁", "⌨️"][stage]} label={`${config.courseName}：${config.stages[stage]}`} labels={config.stages.slice(0, 5)} stage={stage} /><p role="status">第 {stage + 1} 步：{config.messages[stage]}</p><button className="primary-action" onClick={() => setStage(stage + 1)} type="button">继续观察操作系统</button></div> : labSolved ? <ConceptReflectionGate onComplete={finish} reflection={config.reflection} /> : <Lab onComplete={() => setLabSolved(true)} />}</div></LessonChrome>;
+  return <LessonChrome courseName={config.courseName} currentStage={stage} heading={config.stages[stage]} headingRef={headingRef} message={config.messages[stage]} onExit={onExit} stageNames={config.stages}><div className="advanced-foundation-lesson">{stage < 5 ? <div className="advanced-concept-demo"><ConceptJourney icon={["🖥️", "⏱️", "🧠", "📁", "⌨️"][stage]} label={`${config.courseName}：${config.stages[stage]}`} labels={config.stages.slice(0, 5)} reducedMotion={reducedMotion} stage={stage} /><p role="status">第 {stage + 1} 步：{config.messages[stage]}</p><button className="primary-action" onClick={() => setStage(stage + 1)} type="button">继续观察操作系统</button></div> : labSolved ? <ConceptReflectionGate onComplete={finish} reflection={config.reflection} /> : <Lab onComplete={() => setLabSolved(true)} />}</div></LessonChrome>;
 }
 
 const CONFIGS = {

@@ -16,8 +16,11 @@ test("advanced lessons teach each concept with an accessible animated diagram", 
   assert.match(visual, /aria-label=\{label\}/);
   assert.match(visual, /concept-journey-node--active/);
   assert.match(visual, /Array\.from\(\{ length: 5 \}/);
+  assert.match(visual, /reducedMotion/);
+  assert.match(visual, /concept-journey--still/);
   for (const wrapper of [data, algorithms, os, systems]) {
     assert.match(wrapper, /ConceptJourney/);
     assert.match(wrapper, /labels=\{config\.stages\.slice\(0, 5\)\}/);
+    assert.match(wrapper, /reducedMotion=\{reducedMotion\}/);
   }
 });
