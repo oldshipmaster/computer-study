@@ -325,7 +325,7 @@ export function ParentPanel({
         </div>
 
         <ParentCurriculumOutline completedCourseIds={progress.completedCourseIds} />
-        <ParentFamilyPlan completedCourseIds={progress.completedCourseIds} resume={progress.resume} />
+        <ParentFamilyPlan completedCourseIds={progress.completedCourseIds} confidenceByCourse={progress.confidenceByCourse} resume={progress.resume} />
 
         <section className="parent-backup-card" aria-labelledby="backup-progress-title">
           <div className="parent-backup-tools">

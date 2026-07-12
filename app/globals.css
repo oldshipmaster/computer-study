@@ -1264,6 +1264,8 @@ input {
 .family-plan > header { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
 .family-plan h2 { margin: 4px 0 0; font-family: var(--font-display); font-size: 1.55rem; }
 .family-plan > header button { min-height: 44px; padding: 0 14px; border: 2px solid var(--deep-sea); border-radius: 11px; background: var(--yellow-soft); color: inherit; font: inherit; font-weight: 850; }
+.family-review-priority { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 16px; margin-top: 14px; padding: 11px 13px; border-radius: 11px; background: #fff2cc; }
+.family-review-priority ul { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 0; padding: 0; list-style: none; font-size: .8rem; }
 .family-plan > ol { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 9px; margin: 18px 0 10px; padding: 0; list-style: none; }
 .family-plan > ol > li { display: flex; min-width: 0; padding: 12px; flex-direction: column; border: 1px solid #cbdce5; border-radius: 12px; background: white; }
 .family-plan > ol > li > div { display: grid; gap: 3px; }

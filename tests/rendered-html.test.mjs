@@ -357,6 +357,8 @@ test("builds a private printable five-session family plan", () => {
   assert.match(parentSource, /ParentFamilyPlan/);
   assert.match(source, /buildLearningPlan\(completedCourseIds, 5, resume\)/);
   assert.match(source, /CURRICULUM_GUIDE/);
+  assert.match(source, /buildReviewQueue\(confidenceByCourse, 3\)/);
+  assert.match(source, /本周优先陪练/);
   assert.match(source, /打印五次学习卡/);
   assert.match(source, /不含孩子姓名、答题内容或账号信息/);
   assert.match(source, /window\.addEventListener\("afterprint"/);
