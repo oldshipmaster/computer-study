@@ -296,6 +296,8 @@ test("keeps the guarded parent-area contract in source", () => {
   assert.match(parentSource, /ref=\{backupInputRef\} tabIndex=\{-1\} type="file"/);
   assert.match(parentSource, /file\.size > 1_000_000/);
   assert.match(parentSource, /这个文件超过 1 MB/);
+  assert.match(parentSource, /无法读取这个文件/);
+  assert.match(parentSource, /finally/);
   assert.match(appSource, /matchMedia\("\(prefers-reduced-motion: reduce\)"\)/);
   assert.match(appSource, /document\.documentElement\.classList\.toggle/);
   assert.match(appSource, /inert=/);

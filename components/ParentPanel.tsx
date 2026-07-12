@@ -160,11 +160,16 @@ export function ParentPanel({
       if (backupInputRef.current) backupInputRef.current.value = "";
       return;
     }
-    const result = parseProgressBackup(await file.text());
-    if (!result.ok) { setBackupStatus(result.message); return; }
-    onRestore(result.progress);
-    setBackupStatus(`已恢复 ${result.progress.completedCourseIds.length} 节课程记录。`);
-    if (backupInputRef.current) backupInputRef.current.value = "";
+    try {
+      const result = parseProgressBackup(await file.text());
+      if (!result.ok) { setBackupStatus(result.message); return; }
+      onRestore(result.progress);
+      setBackupStatus(`已恢复 ${result.progress.completedCourseIds.length} 节课程记录。`);
+    } catch {
+      setBackupStatus("无法读取这个文件，请重新选择之前导出的 JSON 备份。");
+    } finally {
+      if (backupInputRef.current) backupInputRef.current.value = "";
+    }
   }
 
   return (
