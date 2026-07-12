@@ -99,6 +99,6 @@ test("keeps the complete curriculum inside a child-device performance budget", a
   ]);
   const javascript = javascriptAssets.sort((left, right) => right.byteLength - left.byteLength)[0];
   assert.ok(html.byteLength <= 12 * 1024, `HTML is ${html.byteLength} bytes`);
-  assert.ok(gzipSync(javascript).byteLength <= 150 * 1024, `JavaScript gzip is ${gzipSync(javascript).byteLength} bytes`);
+  assert.ok(gzipSync(javascript).byteLength <= 147 * 1024, `JavaScript gzip is ${gzipSync(javascript).byteLength} bytes`);
   assert.ok(gzipSync(css).byteLength <= 30 * 1024, `CSS gzip is ${gzipSync(css).byteLength} bytes`);
 });

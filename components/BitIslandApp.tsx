@@ -6,6 +6,7 @@ import {
   useLayoutEffect,
   useRef,
   useState,
+  lazy,
   Suspense,
   type KeyboardEvent as ReactKeyboardEvent,
   type MouseEvent as ReactMouseEvent,
@@ -17,7 +18,7 @@ import { LessonAudioProvider } from "@/components/lessons/LessonAudio";
 import { LessonErrorBoundary } from "@/components/lessons/LessonErrorBoundary";
 import { LessonSessionClock } from "@/components/lessons/LessonSessionClock";
 import { getLessonDefinition } from "@/components/lessons/lesson-registry";
-import { ParentPanel, type ParentProgress } from "@/components/ParentPanel";
+import type { ParentProgress } from "@/components/ParentPanel";
 import { getCourse } from "@/lib/course-data";
 import {
   completeCourse,
@@ -28,6 +29,8 @@ import {
   storeProgress,
 } from "@/lib/progress.mjs";
 import { sanitizeCatalogProgress } from "@/lib/catalog-progress";
+
+const ParentPanel = lazy(() => import("@/components/ParentPanel").then((module) => ({ default: module.ParentPanel })));
 
 type Screen = "map" | "lesson" | "complete";
 
@@ -434,7 +437,7 @@ export function BitIslandApp() {
       </div>
 
       {parentPanelOpen && screen !== "lesson" ? (
-        <ParentPanel
+        <Suspense fallback={<div className="parent-panel-backdrop" role="status">正在打开家长区…</div>}><ParentPanel
           onClose={closeParentPanel}
           onReset={resetLearningProgress}
           onRestore={restoreLearningProgress}
@@ -443,7 +446,7 @@ export function BitIslandApp() {
           onStartCourse={startCourse}
           progress={progress}
           storageUnavailable={storageUnavailable}
-        />
+        /></Suspense>
       ) : null}
     </div>
   );
