@@ -37,3 +37,12 @@ test("systems labs expose visible local-only button interactions", () => {
     assert.doesNotMatch(lab, /fetch\(|XMLHttpRequest|WebSocket|EventSource|sendBeacon/);
   }
 });
+
+test("reliable transfer visualizes every packet state and its route", () => {
+  const lab = readFileSync(new URL("components/lessons/advanced/network/ReliableTransferLab.tsx", root), "utf8");
+  assert.match(lab, /transfer-route/);
+  assert.match(lab, /packet--\$\{status\}/);
+  assert.match(lab, /"received"\s*:\s*lost\s*\?\s*"lost"\s*:\s*"waiting"/);
+  assert.match(lab, /发送站/);
+  assert.match(lab, /接收站/);
+});
