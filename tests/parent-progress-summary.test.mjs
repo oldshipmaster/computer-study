@@ -14,6 +14,10 @@ test("summarizes completed courses for each island", () => {
     ["creative-workshop", 0, 5],
     ["future-station", 0, 5],
     ["code-spaceport", 0, 5],
+    ["data-structures", 0, 5],
+    ["algorithm-arena", 0, 5],
+    ["os-control-tower", 0, 5],
+    ["systems-network-depths", 0, 5],
   ]);
 });
 

@@ -43,12 +43,12 @@ test("gives every lesson three objectives and one parent conversation prompt", (
   }
 });
 
-test("keeps the first capstone handoff aligned with the five later islands", async () => {
+test("keeps the first capstone handoff aligned with the nine later islands", async () => {
   const [registry, lesson] = await Promise.all([
     readFile(new URL("../components/lessons/lesson-registry.ts", import.meta.url), "utf8"),
     readFile(new URL("../components/lessons/LightBitIslandLesson.tsx", import.meta.url), "utf8"),
   ]);
-  assert.match(registry, /继续探索后五岛/);
+  assert.match(registry, /继续探索后九岛/);
   assert.match(lesson, /代码星港做好准备/);
-  assert.doesNotMatch(registry, /继续探索后四岛/);
+  assert.doesNotMatch(registry, /继续探索后五岛/);
 });

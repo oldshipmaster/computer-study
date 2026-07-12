@@ -17,12 +17,9 @@ test("defines four advanced islands with five unique courses each", () => {
   assert.equal(new Set(ADVANCED_COURSE_IDS).size, 20);
 });
 
-test("keeps advanced identities distinct from the original curriculum", () => {
-  const existingCourseIds = new Set(COURSES.map((course) => course.id));
-  const existingIslandIds = new Set(ISLANDS.map((island) => island.id));
-
-  assert.ok(ADVANCED_COURSE_IDS.every((id) => !existingCourseIds.has(id)));
-  assert.ok(ADVANCED_ISLAND_IDS.every((id) => !existingIslandIds.has(id)));
+test("integrates every advanced identity exactly once in the curriculum", () => {
+  assert.ok(ADVANCED_COURSE_IDS.every((id) => COURSES.filter((course) => course.id === id).length === 1));
+  assert.ok(ADVANCED_ISLAND_IDS.every((id) => ISLANDS.filter((island) => island.id === id).length === 1));
 });
 
 test("keeps the approved stable ids in domain order", () => {
