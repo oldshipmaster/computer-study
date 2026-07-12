@@ -3858,7 +3858,7 @@ html.bit-island-document--reduced-motion *::after,
 .search-items button small { font-size: .62rem; }
 .search-items button.is-checked { background: #dff7e8; color: #176145; opacity: 1; }
 .schedule-tasks { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: .6rem; }
-.schedule-tasks p { display: grid; margin: 0; padding: .7rem; border: 2px solid #315c9a; border-radius: .7rem; background: #edf4ff; }
+.schedule-tasks button { display: grid; margin: 0; padding: .7rem; border: 2px solid #315c9a; border-radius: .7rem; background: #edf4ff; color: #15384e; text-align: left; }
 .file-address, .route-path, .process-state { overflow-wrap: anywhere; padding: .75rem; border-radius: .65rem; background: #fff4cf; font-family: var(--font-geist-mono), monospace; }
 .routing-choice-map { display: grid; grid-template-columns: repeat(4, 1fr); gap: .5rem; align-items: center; }
 .routing-choice-map span { display: grid; min-height: 4rem; place-items: center; padding: .5rem; border: 2px solid #197ba7; border-radius: .65rem; background: #e9f7ff; text-align: center; font-weight: 800; }

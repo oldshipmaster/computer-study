@@ -9,7 +9,13 @@ export function SchedulingLab({ onComplete }: { onComplete: () => void }) {
   const [tasks, setTasks] = useState(START);
   const [cursor, setCursor] = useState(0);
   const [history, setHistory] = useState<string[]>([]);
+  const [feedback, setFeedback] = useState("预测下一个获得 CPU 的任务。" );
   const complete = tasks.every((task) => task.remaining === 0);
-  function tick() { const next = runRoundRobinTick(tasks, cursor); setTasks(next.tasks); setCursor(next.nextCursor); if (next.runningId) setHistory((items) => [...items, next.runningId]); }
-  return <div className="advanced-lab scheduling-lab"><h2>CPU 调度转盘挑战</h2><div className="schedule-tasks">{tasks.map((task) => <p key={task.id}><strong>{task.id}</strong><span>剩余 {task.remaining} 个时间片</span></p>)}</div><p role="status">执行记录：{history.length ? history.join(" → ") : "还没有任务获得 CPU"}</p>{complete ? <button onClick={onComplete} type="button">完成公平调度</button> : <button onClick={tick} type="button">转动一个时间片</button>}</div>;
+  const preview = runRoundRobinTick(tasks, cursor);
+  const expectedTaskId = preview.runningId;
+  function choose(id: string) {
+    if (id !== expectedTaskId) { setFeedback("还没轮到这个任务：时间片结束后要从队列下一位继续。" ); return; }
+    setTasks(preview.tasks); setCursor(preview.nextCursor); setHistory((items) => [...items, id]); setFeedback(`${id} 获得一个时间片，然后调度指针继续向后。`);
+  }
+  return <div className="advanced-lab scheduling-lab"><h2>CPU 调度转盘挑战</h2><div className="schedule-tasks" role="group" aria-label="预测下一个获得 CPU 的任务">{tasks.map((task) => <button disabled={task.remaining === 0 || complete} key={task.id} onClick={() => choose(task.id)} type="button"><strong>{task.id}</strong><span>剩余 {task.remaining} 个时间片</span></button>)}</div><p role="status">{feedback} 执行记录：{history.length ? history.join(" → ") : "还没有任务获得 CPU"}</p>{complete ? <button onClick={onComplete} type="button">完成公平调度</button> : null}</div>;
 }
