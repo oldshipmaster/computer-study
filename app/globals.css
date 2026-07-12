@@ -1163,6 +1163,20 @@ input {
   text-align: center;
 }
 
+.privacy-promise { width: min(100%, 980px); margin: 18px auto 0; overflow: clip; border: 2px solid rgb(255 255 255 / 70%); border-radius: 18px; text-align: left; }
+.privacy-promise summary { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px; min-height: 62px; padding: 12px 16px; cursor: pointer; list-style: none; }
+.privacy-promise summary::-webkit-details-marker { display: none; }
+.privacy-promise summary > span:first-child { font-size: 1.7rem; }
+.privacy-promise summary > span:nth-child(2) { display: grid; gap: 2px; }
+.privacy-promise summary > span:last-child { font-size: 1.5rem; transition: transform 160ms ease; }
+.privacy-promise[open] summary { border-bottom: 2px solid rgb(255 255 255 / 70%); }
+.privacy-promise[open] summary > span:last-child { transform: rotate(45deg); }
+.privacy-promise > div { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 16px; }
+.privacy-promise section { padding: 12px; border-radius: 12px; background: rgb(255 255 255 / 10%); }
+.privacy-promise h3 { margin: 0 0 8px; }
+.privacy-promise ul { display: grid; gap: 5px; margin: 0; padding-left: 18px; }
+@media (max-width: 680px) { .privacy-promise > div { grid-template-columns: 1fr; } }
+
 .map-footer > span {
   display: grid;
   flex: 0 0 auto;
