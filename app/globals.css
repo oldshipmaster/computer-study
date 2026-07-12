@@ -3024,6 +3024,11 @@ input {
 .lesson-error h1 { margin: 0; font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.05; }
 .lesson-error p { margin: 0; line-height: 1.7; }
 
+.lesson-session-clock { position: fixed; z-index: 40; right: 18px; bottom: 18px; display: flex; align-items: center; gap: 8px; max-width: calc(100vw - 36px); padding: 10px 13px; border: 3px solid var(--deep-sea); border-radius: 999px; background: var(--paper); color: var(--deep-sea); font-size: .82rem; font-weight: 850; box-shadow: 4px 5px 0 rgb(18 50 74 / 16%); }
+.lesson-session-clock--ready { background: var(--mint-soft); }
+.lesson-session-clock--break { background: var(--yellow-soft); border-color: var(--yellow-deep); }
+@media (max-width: 680px) { .lesson-session-clock { right: 10px; bottom: 10px; font-size: .72rem; } }
+
 @keyframes lesson-ship-launch {
   0% {
     transform: translate(-80%, 65%) rotate(-12deg) scale(0.84);
