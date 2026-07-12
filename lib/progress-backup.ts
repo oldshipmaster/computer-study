@@ -6,7 +6,18 @@ export type BackupParseResult = { ok: true; progress: BackupProgress } | { ok: f
 const KNOWN_COURSE_IDS = new Set(COURSES.map((course) => course.id));
 
 export function createProgressBackup(progress: BackupProgress, exportedAt = new Date().toISOString()): string {
-  return JSON.stringify({ kind: "bit-island-progress-backup", version: 1, exportedAt, progress }, null, 2);
+  const safeProgress: BackupProgress = {
+    version: 1,
+    completedCourseIds: [...progress.completedCourseIds],
+    badgeIds: [...progress.badgeIds],
+    confidenceByCourse: { ...progress.confidenceByCourse },
+    settings: {
+      sound: progress.settings.sound,
+      reducedMotion: progress.settings.reducedMotion,
+    },
+    resume: progress.resume ? { ...progress.resume } : null,
+  };
+  return JSON.stringify({ kind: "bit-island-progress-backup", version: 1, exportedAt, progress: safeProgress }, null, 2);
 }
 
 export function parseProgressBackup(text: string): BackupParseResult {

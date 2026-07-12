@@ -4,7 +4,7 @@ import { createProgressBackup, parseProgressBackup } from "../lib/progress-backu
 import { DEFAULT_PROGRESS } from "../lib/progress.mjs";
 
 test("exports a versioned backup without personal fields", () => {
-  const text = createProgressBackup({ ...DEFAULT_PROGRESS, completedCourseIds: ["keyboard-flight"], badgeIds: ["keyboard-pilot"], resume: { courseId: "data-table", stage: 4 } }, "2026-07-12T00:00:00.000Z");
+  const text = createProgressBackup({ ...DEFAULT_PROGRESS, completedCourseIds: ["keyboard-flight"], badgeIds: ["keyboard-pilot"], resume: { courseId: "data-table", stage: 4 }, name: "不应导出", email: "child@example.test", answers: ["不应导出"] }, "2026-07-12T00:00:00.000Z");
   const data = JSON.parse(text);
   assert.equal(data.kind, "bit-island-progress-backup");
   assert.equal(data.exportedAt, "2026-07-12T00:00:00.000Z");
@@ -12,6 +12,10 @@ test("exports a versioned backup without personal fields", () => {
   assert.deepEqual(data.progress.resume, { courseId: "data-table", stage: 4 });
   assert.deepEqual(data.progress.confidenceByCourse, {});
   assert.equal("name" in data, false);
+  assert.equal("name" in data.progress, false);
+  assert.equal("email" in data.progress, false);
+  assert.equal("answers" in data.progress, false);
+  assert.equal(text.includes("不应导出"), false);
 });
 
 test("restores confidence only for known courses and allowed choices", () => {
