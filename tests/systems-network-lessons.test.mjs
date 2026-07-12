@@ -45,6 +45,11 @@ test("reliable transfer visualizes every packet state and its route", () => {
   assert.match(lab, /"received"\s*:\s*lost\s*\?\s*"lost"\s*:\s*"waiting"/);
   assert.match(lab, /发送站/);
   assert.match(lab, /接收站/);
+  assert.match(lab, /receiver-slots/);
+  assert.match(lab, /ACK 确认/);
+  assert.match(lab, /模拟重复发送块 0/);
+  assert.match(lab, /重复块被忽略/);
+  assert.match(lab, /传输事件记录/);
 });
 
 test("cache station visualizes distance, capacity, and wait across the hierarchy", () => {
