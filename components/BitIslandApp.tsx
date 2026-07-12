@@ -13,6 +13,7 @@ import {
 import { IslandMap } from "@/components/IslandMap";
 import { LessonCompletion } from "@/components/lessons/LessonCompletion";
 import { LessonAudioProvider } from "@/components/lessons/LessonAudio";
+import { LessonErrorBoundary } from "@/components/lessons/LessonErrorBoundary";
 import { getLessonDefinition } from "@/components/lessons/lesson-registry";
 import { ParentPanel, type ParentProgress } from "@/components/ParentPanel";
 import { getCourse } from "@/lib/course-data";
@@ -302,8 +303,9 @@ export function BitIslandApp() {
   if (screen === "lesson" && currentCourse && lessonDefinition) {
     const LessonComponent = lessonDefinition.Component;
     productScreen = (
-      <LessonAudioProvider enabled={progress.settings.sound}>
-        <LessonComponent
+      <LessonErrorBoundary key={activeCourseId} onExit={returnToMap}>
+        <LessonAudioProvider enabled={progress.settings.sound}>
+          <LessonComponent
           initialStage={
             progress.resume?.courseId === activeCourseId ? progress.resume.stage : 0
           }
@@ -313,8 +315,9 @@ export function BitIslandApp() {
           onStageChange={saveLessonStage}
           reducedMotion={effectiveReducedMotion}
           sound={progress.settings.sound}
-        />
-      </LessonAudioProvider>
+          />
+        </LessonAudioProvider>
+      </LessonErrorBoundary>
     );
   } else if (screen === "complete" && lessonDefinition) {
     productScreen = (

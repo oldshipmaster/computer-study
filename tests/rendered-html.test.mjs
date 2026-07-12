@@ -344,6 +344,16 @@ test("hands focus across lesson, stage, completion, and map transitions", () => 
   assert.match(programSource, /tabIndex=\{-1\}/);
 });
 
+test("recovers a failed lesson without losing the course map", () => {
+  const appSource = sourceFile("components/BitIslandApp.tsx");
+  const boundarySource = sourceFile("components/lessons/LessonErrorBoundary.tsx");
+  assert.match(appSource, /<LessonErrorBoundary key=\{activeCourseId\} onExit=\{returnToMap\}>/);
+  assert.match(boundarySource, /getDerivedStateFromError/);
+  assert.match(boundarySource, /任务舱暂停/);
+  assert.match(boundarySource, /已完成课程和徽章还在/);
+  assert.match(boundarySource, /安全返回课程地图/);
+});
+
 test("keeps the final motion, focus, and responsive accessibility rules", () => {
   const lessonHookSource = sourceFile(
     "components/keyboard-flight/useKeyboardFlightLesson.ts",

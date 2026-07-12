@@ -3004,6 +3004,12 @@ input {
 .lesson-reflection button span { font-size: 1.3rem; }
 .lesson-reflection > p:last-child { margin: 0; padding: 10px; border-radius: 9px; background: var(--yellow-soft); line-height: 1.5; }
 
+.lesson-error { display: grid; min-height: 100vh; place-items: center; padding: 24px; background: var(--sky-soft); color: var(--deep-sea); }
+.lesson-error > div { display: grid; max-width: 620px; justify-items: center; gap: 14px; padding: clamp(28px, 6vw, 58px); border: 4px solid var(--deep-sea); border-radius: 28px; background: var(--paper); text-align: center; box-shadow: 10px 12px 0 rgb(18 50 74 / 16%); }
+.lesson-error > div > span { font-size: 4rem; }
+.lesson-error h1 { margin: 0; font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.05; }
+.lesson-error p { margin: 0; line-height: 1.7; }
+
 @keyframes lesson-ship-launch {
   0% {
     transform: translate(-80%, 65%) rotate(-12deg) scale(0.84);
