@@ -56,3 +56,12 @@ test("tree and graph labs keep their complete structures visible while exploring
   assert.match(graph, /graph-node--reachable/);
   assert.match(graph, /港口—森林/);
 });
+
+test("array lab aligns each index with one consecutive memory address", () => {
+  const lab = readFileSync(new URL("components/lessons/advanced/data-structures/ArrayLockerLab.tsx", root), "utf8");
+  assert.match(lab, /array-memory-table/);
+  assert.match(lab, /内存地址/);
+  assert.match(lab, /1000 \+ index \* 4/);
+  assert.match(lab, /array-cell--selected/);
+  assert.match(lab, /只定位一个位置/);
+});

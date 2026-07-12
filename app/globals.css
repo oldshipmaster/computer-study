@@ -3899,6 +3899,7 @@ html.bit-island-document--reduced-motion *::after,
 .array-lockers button { display: grid; min-height: 6rem; place-items: center; border-radius: .5rem .5rem 1rem 1rem; background: #e9f7ff; }
 .array-lockers button[aria-pressed="true"] { background: #ffe36e; box-shadow: inset 0 -8px 0 rgb(18 50 74 / 10%); }
 .array-lockers small { font-size: .65rem; }
+.array-memory-explainer { display: grid; gap: .45rem; overflow-x: auto; padding: .65rem; border-radius: .7rem; background: #f4faff; } .array-memory-explainer p { margin: 0; font-family: var(--font-geist-mono), monospace; font-size: .75rem; } .array-memory-table { width: 100%; min-width: 22rem; border-collapse: collapse; background: white; text-align: center; } .array-memory-table th, .array-memory-table td { padding: .4rem; border: 1px solid #8ba6b5; } .array-memory-table th { background: #dff3ff; font-size: .68rem; } .array-memory-table tr.array-cell--selected { background: #fff0a8; outline: 3px solid #f3bd28; outline-offset: -3px; } .array-memory-explainer > small { font-size: .67rem; }
 .linked-path { display: flex; overflow-x: auto; align-items: stretch; gap: 1.4rem; padding: .5rem; }
 .linked-path span { position: relative; display: grid; min-width: 8rem; place-items: center; gap: .3rem; padding: .8rem; border: 3px solid #176f59; border-radius: 1rem; background: #e3f8ed; text-align: center; }
 .linked-path span:not(:last-child)::after { position: absolute; right: -1.25rem; content: "→"; color: #15384e; font-size: 1.2rem; font-weight: 900; }

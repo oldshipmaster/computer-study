@@ -34,7 +34,8 @@ export function ArrayLockerLab({ onComplete }: { onComplete: () => void }) {
           </button>
         ))}
       </div>
-      <p role="status">{selected ? `读到：${selected}。${feedback}` : feedback}</p>
+      <div className="array-memory-explainer"><p><strong>地址计算：</strong>1000 + index * 4</p><table className="array-memory-table"><thead><tr><th>索引</th><th>内存地址</th><th>保存的值</th></tr></thead><tbody>{lockers.map((item, index) => <tr className={readIndex === index ? "array-cell--selected" : ""} key={index}><td>{index}</td><td>{1000 + index * 4}</td><td>{item}</td></tr>)}</tbody></table><small>数组把同样大小的位置连续排好，所以索引能只定位一个位置。</small></div>
+      <p aria-live="polite" role="status">{selected ? `读到：${selected}。${feedback}` : feedback}</p>
       {!updated && readIndex === 2 ? <div role="group" aria-label="选择要更新的索引">{lockers.map((_, index) => <button key={index} onClick={() => replaceSecondLocker(index)} type="button">把索引 {index} 更新为指南针</button>)}</div> : updated ? <button onClick={onComplete} type="button">确认数组任务完成</button> : null}
     </div>
   );
