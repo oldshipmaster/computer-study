@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 import { classifyFile, sortFile, INITIAL_SORT_STATE } from "../lib/file-types-lesson.ts";
 
@@ -17,4 +18,13 @@ test("sorts only into the matching tray and preserves prior progress", () => {
   assert.equal(right.sorted["海岛.png"], "image");
   const laterWrong = sortFile(right, "日记.txt", "image");
   assert.equal(laterWrong.sorted["海岛.png"], "image");
+});
+
+test("the sorter separates names from extensions before revealing file types", () => {
+  const source = readFileSync(new URL("../components/lessons/files/FileTypeSorter.tsx", import.meta.url), "utf8");
+  assert.match(source, /file-inspector/);
+  assert.match(source, /文件名称/);
+  assert.match(source, /扩展名/);
+  assert.match(source, /sorted-file-results/);
+  assert.match(source, /推荐打开方式/);
 });
