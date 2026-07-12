@@ -19,6 +19,9 @@ test("emits a GitHub Pages artifact under the repository base path", async () =>
   const serviceWorker = await readFile(new URL("sw.js", outputRoot), "utf8");
   assert.match(serviceWorker, /requestUrl\.origin !== scopeUrl\.origin/);
   assert.match(serviceWorker, /event\.request\.mode === "navigate"/);
+  assert.match(serviceWorker, /html\.matchAll/);
+  assert.match(serviceWorker, /url\.pathname\.startsWith\(scopeUrl\.pathname\)/);
+  assert.match(serviceWorker, /cache\.addAll\(\[\.\.\.new Set/);
   assert.doesNotMatch(serviceWorker, /https?:\/\//);
   const manifest = JSON.parse(await readFile(new URL("manifest.webmanifest", outputRoot), "utf8"));
   assert.equal(manifest.name, "比特岛大冒险｜儿童计算机启蒙课");

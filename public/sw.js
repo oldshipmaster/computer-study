@@ -1,12 +1,26 @@
 const CACHE_NAME = "bit-island-shell-v1";
 const scopeUrl = new URL(self.registration.scope);
-const CORE_FILES = ["./", "manifest.webmanifest", "favicon.svg"].map(
+const CORE_FILES = ["manifest.webmanifest", "favicon.svg"].map(
   (path) => new URL(path, scopeUrl).href,
 );
 
+async function warmShellCache() {
+  const cache = await caches.open(CACHE_NAME);
+  const shellUrl = new URL("./", scopeUrl).href;
+  const shellResponse = await fetch(shellUrl, { cache: "reload" });
+  if (!shellResponse.ok) throw new Error("Unable to cache the course shell");
+  const html = await shellResponse.clone().text();
+  const resourceUrls = [...html.matchAll(/(?:src|href)="([^"]+)"/g)]
+    .map((match) => new URL(match[1], shellUrl))
+    .filter((url) => url.origin === scopeUrl.origin && url.pathname.startsWith(scopeUrl.pathname))
+    .map((url) => url.href);
+  await cache.put(shellUrl, shellResponse);
+  await cache.addAll([...new Set([...CORE_FILES, ...resourceUrls])]);
+}
+
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(CORE_FILES)),
+    warmShellCache(),
   );
   self.skipWaiting();
 });
