@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 import { INITIAL_TRANSFER_STATE, updateTransfer } from "../lib/download-cloud-lesson.ts";
 
@@ -22,4 +23,15 @@ test("sharing changes access without moving or deleting copies", () => {
   assert.equal(state.sharedWith, "family");
   assert.equal(state.cloud.exists, true);
   assert.equal(state.local.exists, false);
+});
+
+test("the transfer lab visualizes direction, copies, versions, and permissions", () => {
+  const source = readFileSync(new URL("../components/lessons/network/TransferLab.tsx", import.meta.url), "utf8");
+  assert.match(source, /transfer-direction/);
+  assert.match(source, /transfer-direction--active/);
+  assert.match(source, /transfer-concepts/);
+  assert.match(source, /本机副本/);
+  assert.match(source, /云端副本/);
+  assert.match(source, /访问权限/);
+  assert.match(source, /lastAction/);
 });
