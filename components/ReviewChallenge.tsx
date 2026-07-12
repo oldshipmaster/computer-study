@@ -11,7 +11,7 @@ export function ReviewChallenge({ completedCourseIds }: { completedCourseIds: st
   function restart() { setState(createReviewState()); }
 
   return (
-    <section className="review-challenge" aria-labelledby="review-heading">
+    <section className="review-challenge" id="review-station" aria-labelledby="review-heading">
       <div className="review-copy">
         <p className="section-kicker">岛屿问答站</p>
         <h2 id="review-heading">用理由点亮十八颗思考星</h2>

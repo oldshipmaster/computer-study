@@ -5,7 +5,7 @@ interface Props { completedCourseIds: string[]; onStartCourse: (courseId: string
 export function LearningPlan({ completedCourseIds, onStartCourse, resume }: Props) {
   const plan = buildLearningPlan(completedCourseIds, 5, resume);
   return (
-    <section className="learning-plan" aria-labelledby="learning-plan-heading">
+    <section className="learning-plan" id="learning-plan" aria-labelledby="learning-plan-heading">
       <div className="learning-plan-heading">
         <div><p className="section-kicker">五次探险计划</p><h2 id="learning-plan-heading">一次一小步，{CURRICULUM_FACTS.islandCount} 座岛轮换练</h2></div>
         {!plan.complete ? <strong>约 {plan.totalMinutes} 分钟 · 分 5 次完成</strong> : null}

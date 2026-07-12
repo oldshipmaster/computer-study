@@ -30,7 +30,7 @@ export function ComputerDictionary({ soundEnabled }: { soundEnabled: boolean }) 
   }
 
   return (
-    <section className="computer-dictionary" aria-labelledby="computer-dictionary-heading">
+    <section className="computer-dictionary" id="computer-dictionary" aria-labelledby="computer-dictionary-heading">
       <div className="dictionary-heading">
         <div><p className="section-kicker">比比电脑词典</p><h2 id="computer-dictionary-heading">会操作，也能把原理讲清楚</h2></div>
         <label>查一个词<input onChange={(event) => setQuery(event.target.value)} placeholder="例如：循环、CPU、AI" type="search" value={query} /></label>

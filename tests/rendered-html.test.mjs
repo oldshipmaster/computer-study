@@ -128,6 +128,11 @@ test("server-renders the complete curriculum map", async () => {
   assert.match(html, /岛屿印章册/);
   assert.equal((html.match(/还差 5 课/g) ?? []).length, 9);
   assert.match(html, /儿童隐私与安全说明/);
+  assert.match(html, /aria-label="学习区域快捷航线"/);
+  for (const target of ["learning-plan", "adventure-map", "knowledge-atlas", "computer-dictionary", "review-station"]) {
+    assert.match(html, new RegExp(`href="#${target}"`));
+    assert.match(html, new RegExp(`id="${target}"`));
+  }
   assert.match(html, /不需要注册账号或填写姓名/);
   assert.match(html, /均为虚构模拟/);
   assert.match(html, /你的知识图鉴/);

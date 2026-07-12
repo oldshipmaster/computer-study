@@ -104,6 +104,13 @@ export function IslandMap({
           </span>
           <span>比特岛大冒险</span>
         </a>
+        <nav className="section-jump-nav" aria-label="学习区域快捷航线">
+          <a href="#learning-plan">今日计划</a>
+          <a href="#adventure-map">课程地图</a>
+          <a href="#knowledge-atlas">知识图鉴</a>
+          <a href="#computer-dictionary">电脑词典</a>
+          <a href="#review-station">问答站</a>
+        </nav>
         <span className="island-count">{CURRICULUM_FACTS.islandCount} 座知识岛等你探索</span>
       </header>
 

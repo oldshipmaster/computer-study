@@ -10,7 +10,7 @@ export function KnowledgeAtlas({ completedCourseIds }: KnowledgeAtlasProps) {
   const unlockedTotal = chapters.reduce((total, chapter) => total + chapter.unlockedCount, 0);
 
   return (
-    <section className="knowledge-atlas" aria-labelledby="knowledge-atlas-heading">
+    <section className="knowledge-atlas" id="knowledge-atlas" aria-labelledby="knowledge-atlas-heading">
       <div className="knowledge-atlas-heading">
         <div>
           <p className="section-kicker">你的知识图鉴</p>
