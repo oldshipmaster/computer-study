@@ -37,3 +37,11 @@ test("algorithm labs expose visible status and button controls", () => {
     assert.doesNotMatch(lab, /onDrag|onDrop|draggable/);
   }
 });
+
+test("efficiency race plots comparable semantic work meters", () => {
+  const lab = readFileSync(new URL("components/lessons/advanced/algorithms/EfficiencyRaceLab.tsx", root), "utf8");
+  assert.match(lab, /<meter/);
+  assert.match(lab, /value=\{costs\.linear\}/);
+  assert.match(lab, /value=\{costs\.binary\}/);
+  assert.match(lab, /最多需要的比较次数/);
+});

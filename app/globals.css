@@ -3884,8 +3884,9 @@ html.bit-island-document--reduced-motion *::after,
 .sort-values { display: flex; justify-content: center; gap: .6rem; padding: .8rem; }
 .sort-values span { display: grid; width: 4rem; height: 4rem; place-items: center; border: 3px solid #15384e; border-radius: .7rem; background: #ffe36e; font-size: 1.4rem; font-weight: 900; }
 .efficiency-bars { display: grid; gap: .6rem; }
-.efficiency-bars p { margin: 0; padding: .75rem; border-left: .8rem solid #c04023; border-radius: .5rem; background: #fff0e8; font-weight: 800; }
-.efficiency-bars p:last-child { border-left-color: #176f59; background: #e3f8ed; }
+.efficiency-bars label { display: grid; gap: .35rem; margin: 0; padding: .75rem; border-left: .8rem solid #c04023; border-radius: .5rem; background: #fff0e8; font-weight: 800; }
+.efficiency-bars label:last-child { border-left-color: #176f59; background: #e3f8ed; }
+.efficiency-bars meter { width: 100%; height: 1.4rem; accent-color: #c04023; } .efficiency-bars label:last-child meter { accent-color: #176f59; }
 .concept-reflection { display: grid; min-height: 22rem; align-content: center; gap: 1rem; padding: clamp(1rem, 4vw, 2rem); border: 3px solid #15384e; border-radius: 1.2rem; background: white; }
 .concept-reflection h2 { max-width: 32ch; margin: 0; font-size: clamp(1.45rem, 3vw, 2.2rem); }
 .concept-reflection [role="group"] { display: grid; grid-template-columns: repeat(3, 1fr); gap: .7rem; }
