@@ -560,6 +560,13 @@ test("keeps course compass touch targets child-sized", () => {
   assert.equal(cssProperty(".child-review-queue button", "min-height"), "44px");
 });
 
+test("keeps the mobile map header navigation child-sized", () => {
+  const css = sourceFile("app/globals.css");
+
+  assert.match(css, /\.brand-mark \{[^}]*min-height: 44px;/s);
+  assert.match(css, /\.section-jump-nav a \{[^}]*min-height: 44px;/s);
+});
+
 test("keeps final lesson controls inside a child-sized mobile viewport", () => {
   const css = sourceFile("app/globals.css");
 
