@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { binarySearchTrace, linearSearchTrace } from "@/lib/advanced-foundations/algorithms";
+import { isRepeatedPointerActivation } from "@/lib/interaction-guard";
 
 const ITEMS = [1, 3, 5, 7, 9, 11, 13, 15];
 
@@ -13,7 +14,8 @@ export function SearchLab({ onComplete, strategy }: { onComplete: () => void; st
   const done = step >= trace.checkedIndexes.length;
   const expectedIndex = trace.checkedIndexes[step];
 
-  function predict(index: number) {
+  function predict(index: number, detail: number) {
+    if (isRepeatedPointerActivation(detail)) return;
     if (index !== expectedIndex) {
       setFeedback("这个位置还不是算法的下一步。想想它从哪里开始、怎样缩小范围。" );
       return;
@@ -26,7 +28,7 @@ export function SearchLab({ onComplete, strategy }: { onComplete: () => void; st
     <div className="advanced-lab search-trace-lab">
       <h2>{strategy === "linear" ? "顺序查找" : "二分查找"}挑战</h2>
       <p>目标数字：11</p>
-      <div aria-label="预测下一次检查哪个索引" className="search-items" role="group">{ITEMS.map((value, index) => <button aria-pressed={checked.includes(index)} className={checked.includes(index) ? "is-checked" : ""} disabled={checked.includes(index) || done} key={value} onClick={() => predict(index)} type="button"><small>索引 {index}</small>{value}</button>)}</div>
+      <div aria-label="预测下一次检查哪个索引" className="search-items" role="group">{ITEMS.map((value, index) => <button aria-pressed={checked.includes(index)} className={checked.includes(index) ? "is-checked" : ""} disabled={checked.includes(index) || done} key={value} onClick={(event) => predict(index, event.detail)} type="button"><small>索引 {index}</small>{value}</button>)}</div>
       <p role="status">{done ? `找到索引 ${trace.foundIndex}，共检查 ${trace.checkedIndexes.length} 次。` : feedback}</p>
       {done ? <button onClick={onComplete} type="button">完成查找任务</button> : null}
     </div>

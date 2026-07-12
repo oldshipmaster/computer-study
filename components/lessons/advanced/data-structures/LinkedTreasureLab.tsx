@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { insertLinkedNode, removeLinkedNode, walkLinkedNodes, type LinkedNodes } from "@/lib/advanced-foundations/data-structures";
+import { isRepeatedPointerActivation } from "@/lib/interaction-guard";
 
 const START_NODES: LinkedNodes<string> = {
   lighthouse: { value: "灯塔", next: "cave" },
@@ -14,7 +15,8 @@ export function LinkedTreasureLab({ onComplete }: { onComplete: () => void }) {
   const [feedback, setFeedback] = useState("选择码头应该插入的位置。" );
   const path = walkLinkedNodes(nodes, "lighthouse");
 
-  function advance(choice: string) {
+  function advance(choice: string, detail: number) {
+    if (isRepeatedPointerActivation(detail)) return;
     if (step === 0 && choice === "between") {
       setNodes((current) => insertLinkedNode(current, "lighthouse", "dock", "码头"));
       setStep(1);
@@ -35,7 +37,7 @@ export function LinkedTreasureLab({ onComplete }: { onComplete: () => void }) {
         {path.map((id, index) => <span key={id} role="listitem"><strong>{nodes[id].value}</strong><small>{index < path.length - 1 ? "下一站 →" : "终点"}</small></span>)}
       </div>
       <p role="status">{feedback}</p>
-      {step === 0 ? <div role="group" aria-label="选择码头插入位置"><button onClick={() => advance("between")} type="button">插在灯塔和山洞之间</button><button onClick={() => advance("after")} type="button">插在山洞终点之后</button></div> : step === 1 ? <div role="group" aria-label="选择删除后的连接"><button onClick={() => advance("reconnect")} type="button">让灯塔重新指向山洞</button><button onClick={() => advance("break")} type="button">让灯塔指向不存在的位置</button></div> : <button onClick={onComplete} type="button">完成链表任务</button>}
+      {step === 0 ? <div role="group" aria-label="选择码头插入位置"><button onClick={(event) => advance("between", event.detail)} type="button">插在灯塔和山洞之间</button><button onClick={(event) => advance("after", event.detail)} type="button">插在山洞终点之后</button></div> : step === 1 ? <div role="group" aria-label="选择删除后的连接"><button onClick={(event) => advance("reconnect", event.detail)} type="button">让灯塔重新指向山洞</button><button onClick={(event) => advance("break", event.detail)} type="button">让灯塔指向不存在的位置</button></div> : <button onClick={onComplete} type="button">完成链表任务</button>}
     </div>
   );
 }
