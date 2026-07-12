@@ -22,3 +22,11 @@ test("combines island and keyword filters", () => {
   assert.deepEqual(filterCourses(COURSES, { islandId: "creative-workshop", query: "数据" }).map((course) => course.id), ["data-table"]);
   assert.deepEqual(filterCourses(COURSES, { islandId: "launch-harbor", query: "AI" }), []);
 });
+
+test("combines difficulty with island and keyword filters", () => {
+  const challenging = filterCourses(COURSES, { islandId: "all", query: "", difficulty: 3 });
+  assert.ok(challenging.length > 0);
+  assert.ok(challenging.every((course) => course.difficulty === 3));
+  assert.deepEqual(filterCourses(COURSES, { islandId: "code-spaceport", query: "函数", difficulty: 3 }).map((course) => course.id), ["functions-tools"]);
+  assert.deepEqual(filterCourses(COURSES, { islandId: "code-spaceport", query: "函数", difficulty: 2 }), []);
+});
