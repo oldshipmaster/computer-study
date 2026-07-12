@@ -27,3 +27,12 @@ test("ignores duplicate and unknown completion ids", () => {
   const plan = buildLearningPlan(["keyboard-flight", "keyboard-flight", "unknown"]);
   assert.equal(plan.sessions[0].course.id, "file-home");
 });
+
+test("puts a valid free-choice resume first without duplicating it", () => {
+  const plan = buildLearningPlan([], 5, { courseId: "data-table", stage: 4 });
+  assert.equal(plan.sessions[0].course.id, "data-table");
+  assert.equal(plan.sessions.filter((item) => item.course.id === "data-table").length, 1);
+  assert.equal(plan.sessions[1].course.id, "keyboard-flight");
+  assert.equal(buildLearningPlan(["data-table"], 5, { courseId: "data-table", stage: 4 }).sessions[0].course.id, "keyboard-flight");
+  assert.equal(buildLearningPlan([], 5, { courseId: "unknown", stage: 2 }).sessions[0].course.id, "keyboard-flight");
+});

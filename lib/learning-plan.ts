@@ -3,9 +3,11 @@ import { RECOMMENDED_ROUTE_IDS, getCourse, type Course } from "./course-data.ts"
 export interface PlannedSession { sessionNumber: number; course: Course; breakReminder: string; }
 export interface LearningPlan { sessions: PlannedSession[]; totalMinutes: number; complete: boolean; }
 
-export function buildLearningPlan(completedCourseIds: readonly string[], count = 5): LearningPlan {
+export function buildLearningPlan(completedCourseIds: readonly string[], count = 5, resume?: { courseId: string; stage: number } | null): LearningPlan {
   const completed = new Set(completedCourseIds);
-  const sessions = RECOMMENDED_ROUTE_IDS
+  const resumeCourse = resume && !completed.has(resume.courseId) && resume.stage >= 0 && resume.stage <= 5 ? getCourse(resume.courseId) : undefined;
+  const orderedIds = resumeCourse?.playable ? [resumeCourse.id, ...RECOMMENDED_ROUTE_IDS.filter((id) => id !== resumeCourse.id)] : RECOMMENDED_ROUTE_IDS;
+  const sessions = orderedIds
     .filter((courseId) => !completed.has(courseId))
     .map((courseId) => getCourse(courseId))
     .filter((course): course is Course => Boolean(course?.playable))

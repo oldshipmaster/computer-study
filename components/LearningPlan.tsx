@@ -1,8 +1,8 @@
 import { buildLearningPlan } from "@/lib/learning-plan";
 
-interface Props { completedCourseIds: string[]; onStartCourse: (courseId: string) => void; }
-export function LearningPlan({ completedCourseIds, onStartCourse }: Props) {
-  const plan = buildLearningPlan(completedCourseIds);
+interface Props { completedCourseIds: string[]; onStartCourse: (courseId: string) => void; resume: { courseId: string; stage: number } | null; }
+export function LearningPlan({ completedCourseIds, onStartCourse, resume }: Props) {
+  const plan = buildLearningPlan(completedCourseIds, 5, resume);
   return (
     <section className="learning-plan" aria-labelledby="learning-plan-heading">
       <div className="learning-plan-heading">
@@ -13,7 +13,7 @@ export function LearningPlan({ completedCourseIds, onStartCourse }: Props) {
         {plan.sessions.map((session) => <li key={session.course.id}>
           <span className="session-number">{session.sessionNumber}</span>
           <div><strong>{session.course.title}</strong><span>{session.course.skill} · {session.course.minutes} 分钟</span><small>{session.breakReminder}</small></div>
-          <button onClick={() => onStartCourse(session.course.id)} type="button">{session.sessionNumber === 1 ? "开始这次" : "提前探索"}</button>
+          <button onClick={() => onStartCourse(session.course.id)} type="button">{session.sessionNumber === 1 ? resume?.courseId === session.course.id ? `继续第 ${resume.stage + 1} 段` : "开始这次" : "提前探索"}</button>
         </li>)}
       </ol>}
     </section>

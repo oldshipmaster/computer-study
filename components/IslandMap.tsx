@@ -159,7 +159,7 @@ export function IslandMap({
         </div>
       </section>
 
-      <LearningPlan completedCourseIds={completedCourseIds} onStartCourse={onStartCourse} />
+      <LearningPlan completedCourseIds={completedCourseIds} onStartCourse={onStartCourse} resume={resume} />
       <IslandSealCollection completedCourseIds={completedCourseIds} />
       {mission.complete ? <CompletionCertificate /> : null}
 
