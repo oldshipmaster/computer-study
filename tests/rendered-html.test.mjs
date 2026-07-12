@@ -193,6 +193,8 @@ test("collects a private structured confidence check for parent review", () => {
   assert.match(parentSource, /孩子标记的复习课/);
   assert.match(parentSource, /confidenceByCourse/);
   assert.match(parentSource, /打开这课/);
+  assert.match(parentSource, /buildConfidenceStats/);
+  assert.match(parentSource, /未自评/);
 });
 
 test("offers child-led review from structured confidence choices", () => {

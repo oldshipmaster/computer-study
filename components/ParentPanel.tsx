@@ -9,6 +9,7 @@ import { createProgressBackup, parseProgressBackup } from "@/lib/progress-backup
 import { ParentCurriculumOutline } from "@/components/ParentCurriculumOutline";
 import { buildProgressStats } from "@/lib/progress-stats";
 import { ParentFamilyPlan } from "@/components/ParentFamilyPlan";
+import { buildConfidenceStats } from "@/lib/confidence-stats";
 
 export interface ParentProgress {
   version: 1;
@@ -59,6 +60,7 @@ export function ParentPanel({
   const nextCourseGuide = getNextCourseGuide(progress.completedCourseIds);
   const progressStats = buildProgressStats(progress.completedCourseIds);
   const reviewCourses = COURSES.filter((course) => ["practice", "help"].includes(progress.confidenceByCourse[course.id]));
+  const confidenceStats = buildConfidenceStats(progress.completedCourseIds, progress.confidenceByCourse);
 
   useLayoutEffect(() => {
     closeButtonRef.current?.focus();
@@ -268,6 +270,7 @@ export function ParentPanel({
             </div>
             <div className="parent-review-guide">
               <h3>孩子标记的复习课</h3>
+              <div className="parent-confidence-stats" aria-label={`已自评 ${confidenceStats.rated} 课`}><span><strong>{confidenceStats.confident}</strong>会讲</span><span><strong>{confidenceStats.practice}</strong>再练</span><span><strong>{confidenceStats.help}</strong>需帮助</span><span><strong>{confidenceStats.unrated}</strong>未自评</span></div>
               {reviewCourses.length ? <ul>{reviewCourses.map((course) => <li key={course.id}><span>{progress.confidenceByCourse[course.id] === "help" ? "🙋" : "↻"}</span><strong>{course.title}</strong><small>{progress.confidenceByCourse[course.id] === "help" ? "希望大人一起看看" : "想再练一次"}</small><button onClick={() => onStartCourse(course.id)} type="button">打开这课</button></li>)}</ul> : <p>孩子还没有标记需要复习的课程。</p>}
             </div>
           </section>
