@@ -181,6 +181,7 @@ test("collects a private structured confidence check for parent review", () => {
   assert.match(completionSource, /请大人帮忙/);
   assert.match(parentSource, /孩子标记的复习课/);
   assert.match(parentSource, /confidenceByCourse/);
+  assert.match(parentSource, /打开这课/);
 });
 
 test("keeps the playable keyboard-flight lesson contract in source", () => {

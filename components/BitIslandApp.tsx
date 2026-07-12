@@ -426,6 +426,7 @@ export function BitIslandApp() {
           onReset={resetLearningProgress}
           onRestore={restoreLearningProgress}
           onSettingsChange={updateSettings}
+          onStartCourse={startCourse}
           progress={progress}
           storageUnavailable={storageUnavailable}
         />

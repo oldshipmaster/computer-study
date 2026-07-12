@@ -27,6 +27,7 @@ export interface ParentPanelProps {
   onSettingsChange: (settings: ParentProgress["settings"]) => void;
   onReset: () => void;
   onRestore: (progress: ParentProgress) => void;
+  onStartCourse: (courseId: string) => void;
   onClose: () => void;
 }
 
@@ -43,6 +44,7 @@ export function ParentPanel({
   onSettingsChange,
   onReset,
   onRestore,
+  onStartCourse,
   onClose,
 }: ParentPanelProps) {
   const [resetConfirmationVisible, setResetConfirmationVisible] = useState(false);
@@ -265,7 +267,7 @@ export function ParentPanel({
             </div>
             <div className="parent-review-guide">
               <h3>孩子标记的复习课</h3>
-              {reviewCourses.length ? <ul>{reviewCourses.map((course) => <li key={course.id}><span>{progress.confidenceByCourse[course.id] === "help" ? "🙋" : "↻"}</span><strong>{course.title}</strong><small>{progress.confidenceByCourse[course.id] === "help" ? "希望大人一起看看" : "想再练一次"}</small></li>)}</ul> : <p>孩子还没有标记需要复习的课程。</p>}
+              {reviewCourses.length ? <ul>{reviewCourses.map((course) => <li key={course.id}><span>{progress.confidenceByCourse[course.id] === "help" ? "🙋" : "↻"}</span><strong>{course.title}</strong><small>{progress.confidenceByCourse[course.id] === "help" ? "希望大人一起看看" : "想再练一次"}</small><button onClick={() => onStartCourse(course.id)} type="button">打开这课</button></li>)}</ul> : <p>孩子还没有标记需要复习的课程。</p>}
             </div>
           </section>
 
@@ -309,7 +311,7 @@ export function ParentPanel({
 
         <section className="parent-backup-card" aria-labelledby="backup-progress-title">
           <div className="parent-backup-tools">
-            <div><h2 id="backup-progress-title">备份学习记录</h2><p>只保存课程、徽章和设置，不含姓名、账号或答题内容。</p></div>
+            <div><h2 id="backup-progress-title">备份学习记录</h2><p>只保存课程、徽章、自评选择和设置，不含姓名、账号、自由文本或答题内容。</p></div>
             <div>
               <button className="parent-secondary-action" onClick={downloadBackup} type="button">导出 JSON 备份</button>
               <button className="parent-secondary-action" onClick={() => backupInputRef.current?.click()} type="button">恢复以前的备份</button>
@@ -322,7 +324,7 @@ export function ParentPanel({
         <section className="parent-reset-card" aria-labelledby="reset-progress-title">
           <div>
             <h2 id="reset-progress-title">重置学习进度</h2>
-            <p>保留声音和动画设置，只清除已完成课程、徽章和续课位置。</p>
+            <p>保留声音和动画设置，只清除已完成课程、徽章、自评选择和续课位置。</p>
           </div>
           {resetConfirmationVisible ? (
             <div className="parent-reset-confirmation" role="alert">
