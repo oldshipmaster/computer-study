@@ -22,3 +22,13 @@ test("does not mutate settings, badges, or the original record", () => {
   assert.deepEqual(result.settings, source.settings);
   assert.deepEqual(source.completedCourseIds, ["keyboard-flight"]);
 });
+
+test("keeps confidence only for completed catalog courses", () => {
+  const progress = {
+    ...DEFAULT_PROGRESS,
+    completedCourseIds: ["keyboard-flight"],
+    confidenceByCourse: { "keyboard-flight": "confident", "file-home": "practice", unknown: "help" },
+  };
+  const sanitized = sanitizeCatalogProgress(progress);
+  assert.deepEqual(sanitized.confidenceByCourse, { "keyboard-flight": "confident" });
+});

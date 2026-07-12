@@ -27,7 +27,8 @@ export function parseProgressBackup(text: string): BackupParseResult {
     const parsed = parseProgress(JSON.stringify(backup.progress)) as BackupProgress;
     const completedCourseIds = parsed.completedCourseIds.filter((id) => KNOWN_COURSE_IDS.has(id));
     const resume = parsed.resume && KNOWN_COURSE_IDS.has(parsed.resume.courseId) && parsed.resume.stage <= 5 ? parsed.resume : null;
-    const confidenceByCourse = Object.fromEntries(Object.entries(parsed.confidenceByCourse).filter(([id]) => KNOWN_COURSE_IDS.has(id)));
+    const completed = new Set(completedCourseIds);
+    const confidenceByCourse = Object.fromEntries(Object.entries(parsed.confidenceByCourse).filter(([id]) => KNOWN_COURSE_IDS.has(id) && completed.has(id)));
     return { ok: true, progress: { ...parsed, completedCourseIds, badgeIds: parsed.badgeIds.filter((id) => /^[a-z0-9-]{1,64}$/i.test(id)), confidenceByCourse, resume } };
   } catch {
     return { ok: false, message: "文件内容无法读取，请选择之前导出的 JSON 文件。" };

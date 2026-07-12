@@ -19,10 +19,12 @@ test("falls back safely for empty or malformed storage", () => {
 });
 
 test("stores one changeable confidence signal without free text", () => {
-  const first = setCourseConfidence(DEFAULT_PROGRESS, "keyboard-flight", "practice");
+  const completed = completeCourse(DEFAULT_PROGRESS, "keyboard-flight", "keyboard-pilot");
+  const first = setCourseConfidence(completed, "keyboard-flight", "practice");
   const changed = setCourseConfidence(first, "keyboard-flight", "confident");
   assert.deepEqual(changed.confidenceByCourse, { "keyboard-flight": "confident" });
   assert.equal(setCourseConfidence(changed, "keyboard-flight", "anything-else"), changed);
+  assert.equal(setCourseConfidence(changed, "file-home", "practice"), changed);
   assert.deepEqual(parseProgress(serializeProgress(changed)), changed);
 });
 

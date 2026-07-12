@@ -18,8 +18,8 @@ test("exports a versioned backup without personal fields", () => {
   assert.equal(text.includes("不应导出"), false);
 });
 
-test("restores confidence only for known courses and allowed choices", () => {
-  const result = parseProgressBackup(JSON.stringify({ kind: "bit-island-progress-backup", version: 1, progress: { ...DEFAULT_PROGRESS, confidenceByCourse: { "keyboard-flight": "help", unknown: "practice", "file-home": "free text" } } }));
+test("restores confidence only for completed known courses and allowed choices", () => {
+  const result = parseProgressBackup(JSON.stringify({ kind: "bit-island-progress-backup", version: 1, progress: { ...DEFAULT_PROGRESS, completedCourseIds: ["keyboard-flight"], confidenceByCourse: { "keyboard-flight": "help", unknown: "practice", "file-home": "practice", "data-table": "free text" } } }));
   assert.equal(result.ok, true);
   assert.deepEqual(result.progress.confidenceByCourse, { "keyboard-flight": "help" });
 });
