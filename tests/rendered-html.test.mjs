@@ -98,6 +98,7 @@ test("server-renders the Bit Island product shell", async () => {
   assert.match(html, /<html lang="zh-CN"/i);
   assert.match(html, /<title>比特岛大冒险/);
   assert.match(html, /跟比比一起，学会真正的电脑本领/);
+  assert.match(html, /name="keywords" content="儿童计算机,编程启蒙,电脑基础,数据结构,算法,操作系统,计算机组成,计算机网络,数字安全,AI 素养"/);
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape/);
 });
 

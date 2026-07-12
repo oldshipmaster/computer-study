@@ -64,7 +64,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description: SITE_DESCRIPTION,
     applicationName: SITE_NAME,
     category: "education",
-    keywords: ["儿童计算机", "编程启蒙", "电脑基础", "数字安全", "AI 素养"],
+    keywords: ["儿童计算机", "编程启蒙", "电脑基础", "数据结构", "算法", "操作系统", "计算机组成", "计算机网络", "数字安全", "AI 素养"],
     themeColor: "#12324a",
     manifest: "/manifest.webmanifest",
     icons: {
