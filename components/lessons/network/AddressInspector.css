@@ -15,6 +15,7 @@
 .identity-comparison > b { font-size: 1.5rem; }
 .identity-comparison small { color: #526c7a; }
 .identity-comparison em { color: #783c2d; font-size: .68rem; font-style: normal; }
+.virtual-dns-lookup { display: grid; gap: .6rem; padding: .8rem; border: 2px solid #315c9a; border-radius: .8rem; background: #eef7ff; } .virtual-dns-lookup h2, .virtual-dns-lookup p { margin: 0; } .virtual-dns-lookup > div { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: center; gap: .4rem; } .virtual-dns-lookup > div span { display: grid; min-height: 4.5rem; place-items: center; padding: .5rem; border: 2px solid #8ba6b5; border-radius: .6rem; background: white; text-align: center; font-size: .7rem; overflow-wrap: anywhere; } .virtual-dns-lookup button { min-height: 44px; border: 2px solid #15384e; border-radius: .6rem; background: white; color: #15384e; font-weight: 800; } .virtual-dns-lookup p { font-size: .72rem; font-weight: 750; }
 .address-inspector dl { display: grid; grid-template-columns: repeat(3, 1fr); gap: .6rem; margin: 0; }
 .address-inspector dl div { padding: .7rem; border-radius: .6rem; background: white; }
 .address-inspector dt { font-weight: 850; }
@@ -25,3 +26,4 @@
 .address-finish h2, .address-finish p { margin: 0; }
 .address-inspector aside { padding: .8rem; border-radius: .7rem; background: #fff0df; }
 @media (max-width: 38rem) { .address-inspector dl, .address-actions, .identity-comparison { grid-template-columns: 1fr; } .identity-comparison > b { transform: rotate(90deg); text-align: center; } }
+@media (max-width: 38rem) { .virtual-dns-lookup > div { grid-template-columns: 1fr; } .virtual-dns-lookup > div > b { transform: rotate(90deg); text-align: center; } }
