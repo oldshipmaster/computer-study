@@ -7,13 +7,13 @@ import {
 } from "../lib/review-challenge.ts";
 
 test("covers every island with two scenario questions", () => {
-  assert.equal(REVIEW_QUESTIONS.length, 14);
+  assert.equal(REVIEW_QUESTIONS.length, 16);
   const counts = REVIEW_QUESTIONS.reduce((result, question) => {
     result[question.islandId] = (result[question.islandId] ?? 0) + 1;
     return result;
   }, {});
-  assert.deepEqual(Object.values(counts), [2, 2, 2, 2, 2, 2, 2]);
-  assert.equal(new Set(REVIEW_QUESTIONS.map((question) => question.id)).size, 14);
+  assert.deepEqual(Object.values(counts), [2, 2, 2, 2, 2, 2, 2, 2]);
+  assert.equal(new Set(REVIEW_QUESTIONS.map((question) => question.id)).size, 16);
 });
 
 test("wrong answers explain the idea without advancing", () => {
@@ -35,11 +35,11 @@ test("correct answers advance once and complete after the final question", () =>
   }
 
   assert.equal(state.completed, true);
-  assert.equal(state.score, 14);
-  assert.equal(state.index, 13);
+  assert.equal(state.score, 16);
+  assert.equal(state.index, 15);
 });
 
 test("answering after completion is safe and deterministic", () => {
-  const state = { ...createReviewState(), index: 13, score: 14, completed: true };
+  const state = { ...createReviewState(), index: 15, score: 16, completed: true };
   assert.deepEqual(answerReviewQuestion(state, 0), state);
 });

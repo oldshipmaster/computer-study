@@ -302,6 +302,26 @@ export const COURSES: Course[] = [
     id: "data-table", islandId: "creative-workshop", order: 35,
     title: "数据表格实验", summary: "行列、统一格式、筛选与图表。", skill: "数据素养", minutes: 9, difficulty: 3, playable: true,
   },
+  {
+    id: "email-message", islandId: "future-station", order: 36,
+    title: "电子邮件通信", summary: "收件人、主题、正文、附件与发送检查。", skill: "数字沟通", minutes: 9, difficulty: 2, playable: true,
+  },
+  {
+    id: "online-collaboration", islandId: "future-station", order: 37,
+    title: "在线协作实验室", summary: "分工、评论、版本与共享权限。", skill: "在线协作", minutes: 9, difficulty: 2, playable: true,
+  },
+  {
+    id: "ai-helper", islandId: "future-station", order: 38,
+    title: "AI 助手使用入门", summary: "清楚提问、保护隐私、核对并修改。", skill: "AI 素养", minutes: 9, difficulty: 2, playable: true,
+  },
+  {
+    id: "verify-ai", islandId: "future-station", order: 39,
+    title: "AI 信息核验站", summary: "拆分主张、查找来源、交叉核对。", skill: "事实核验", minutes: 9, difficulty: 3, playable: true,
+  },
+  {
+    id: "digital-project", islandId: "future-station", order: 40,
+    title: "数字项目总挑战", summary: "问题、计划、创作、测试、分享与反思。", skill: "综合项目", minutes: 10, difficulty: 3, playable: true,
+  },
 ];
 
 export const ISLANDS: Island[] = [
@@ -384,6 +404,14 @@ export const ISLANDS: Island[] = [
     accent: "coral",
     icon: "🎨",
     courseIds: ["pixel-art", "document-design", "slide-story", "media-copyright", "data-table"],
+  },
+  {
+    id: "future-station",
+    name: "未来协作站",
+    subtitle: "负责任地沟通、协作和使用 AI",
+    accent: "mint",
+    icon: "🛰️",
+    courseIds: ["email-message", "online-collaboration", "ai-helper", "verify-ai", "digital-project"],
   },
 ];
 

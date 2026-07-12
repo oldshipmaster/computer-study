@@ -12,6 +12,7 @@ test("summarizes completed courses for each island", () => {
     ["hardware-lab", 0, 5],
     ["network-bay", 0, 5],
     ["creative-workshop", 0, 5],
+    ["future-station", 0, 5],
   ]);
 });
 

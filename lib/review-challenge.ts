@@ -23,6 +23,8 @@ export const REVIEW_QUESTIONS: ReviewQuestion[] = [
   { id: "network-2", islandId: "network-bay", islandName: "网络海湾", prompt: "全家设备都无法联网，安全的第一项检查是什么？", options: ["看看设备是否连上家庭网络", "拆开路由器", "下载陌生修复工具"], answer: "看看设备是否连上家庭网络", explanation: "先做简单、可逆的观察；更改设备或电源设置要请大人帮助。" },
   { id: "creative-1", islandId: "creative-workshop", islandName: "创作工坊", prompt: "网上找到的图片要放进班级展示，第一步是什么？", options: ["查看作者与使用许可", "擦掉来源", "说成自己画的"], answer: "查看作者与使用许可", explanation: "能看到作品不等于可以随意使用，要尊重创作者和许可规则。" },
   { id: "creative-2", islandId: "creative-workshop", islandName: "创作工坊", prompt: "表格里同一列的长度有厘米也有米，应该怎么做？", options: ["统一单位后再比较", "直接画图", "把标题删掉"], answer: "统一单位后再比较", explanation: "同一属性使用一致单位，比较和图表才有意义。" },
+  { id: "future-1", islandId: "future-station", islandName: "未来协作站", prompt: "AI 给出一个很肯定的日期，应该怎么做？", options: ["查可靠来源并交叉核对", "因为语气肯定就相信", "直接转发"], answer: "查可靠来源并交叉核对", explanation: "AI 可能生成看似合理的错误，流畅和肯定都不是证据。" },
+  { id: "future-2", islandId: "future-station", islandName: "未来协作站", prompt: "给只需查看作品的同学共享时，选什么权限？", options: ["查看权限", "管理所有账号", "公开编辑"], answer: "查看权限", explanation: "最小权限只提供完成任务所需的能力，降低误改和泄露风险。" },
 ];
 
 export interface ReviewState {

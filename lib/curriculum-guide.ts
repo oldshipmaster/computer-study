@@ -39,6 +39,11 @@ export const CURRICULUM_GUIDE: Record<string, CourseGuide> = {
   "slide-story": guide("确定一句核心信息", "按顺序组织开场发展结尾", "用页面支持口头表达", "请孩子只看标题复述整段演示的故事顺序。"),
   "media-copyright": guide("知道数字作品有创作者", "查看使用许可与范围", "尊重署名并优先自己创作", "一起检查一份素材的作者与许可，不上传真实作品。"),
   "data-table": guide("用行列组织记录", "保持单位与格式一致", "用筛选和图表回答问题", "请孩子说明排序和筛选有什么不同，并举一个低风险数据例子。"),
+  "email-message": guide("核对收件人与主题", "写清楚礼貌的正文", "谨慎处理附件和真实发送", "使用虚构地址练习；真实账号、附件和发送必须由家长或老师协助。"),
+  "online-collaboration": guide("为共同目标明确分工", "给出具体友善的评论", "理解版本记录和最小权限", "请孩子把一句模糊评价改成针对作品、可以行动的建议。"),
+  "ai-helper": guide("理解 AI 生成而非真正理解", "用目标背景要求说清任务", "保护隐私并由人核对修改", "只用虚构内容练习提示，不上传孩子姓名、学校、照片或未获许可作品。"),
+  "verify-ai": guide("识别可核对的具体主张", "优先权威和原始来源", "交叉核对并表达不确定", "选一个低风险虚构主张，让孩子说明需要什么证据才能相信。"),
+  "digital-project": guide("从清楚问题开始", "拆分任务并选择工具", "测试改进后负责任分享", "请孩子用问题、计划、证据、改进四句话复盘项目，不要求公开发布。"),
 };
 
 export function getNextCourseGuide(completedCourseIds: readonly string[]): { course: Course; guide: CourseGuide } | undefined {

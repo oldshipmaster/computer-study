@@ -29,6 +29,7 @@ import { SearchAndLinksLesson } from "@/components/lessons/SearchAndLinksLesson"
 import { DownloadsCloudLesson } from "@/components/lessons/DownloadsCloudLesson";
 import { NetworkTroubleshootingLesson } from "@/components/lessons/NetworkTroubleshootingLesson";
 import { DataTableLesson, DocumentDesignLesson, MediaCopyrightLesson, PixelArtLesson, SlideStoryLesson } from "@/components/lessons/CreativeLessons";
+import { AiHelperLesson, DigitalProjectLesson, EmailMessageLesson, OnlineCollaborationLesson, VerifyAiLesson } from "@/components/lessons/FutureLessons";
 import type { LessonDefinition } from "@/components/lessons/types";
 
 export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
@@ -301,6 +302,36 @@ export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
     completionTitle: "四张数据表全部整理清楚",
     completionSummary: "你会用行列组织记录，保持格式与单位一致，并用筛选和图表回答问题。",
     Component: DataTableLesson,
+  },
+  "email-message": {
+    courseId: "email-message", badgeId: "email-captain", badgeName: "邮件通信员",
+    completionTitle: "四封虚拟邮件检查完成",
+    completionSummary: "你会核对收件人、写清主题和正文、谨慎处理附件，并在真实发送前请大人帮助。",
+    Component: EmailMessageLesson,
+  },
+  "online-collaboration": {
+    courseId: "online-collaboration", badgeId: "collaboration-builder", badgeName: "协作建造师",
+    completionTitle: "虚拟小组的协作冲突全部解决",
+    completionSummary: "你会分工、给出具体友善的评论、查看版本记录，并选择最小共享权限。",
+    Component: OnlineCollaborationLesson,
+  },
+  "ai-helper": {
+    courseId: "ai-helper", badgeId: "ai-prompt-guide", badgeName: "AI 提问向导",
+    completionTitle: "四项 AI 学习任务安全完成",
+    completionSummary: "你会说清目标和要求、不输入隐私，并把 AI 输出当作需要人来核对修改的草稿。",
+    Component: AiHelperLesson,
+  },
+  "verify-ai": {
+    courseId: "verify-ai", badgeId: "ai-fact-checker", badgeName: "AI 核验员",
+    completionTitle: "四条虚构 AI 回答完成核验",
+    completionSummary: "你会拆分可核对主张、优先可靠来源、交叉比较，并诚实说明不确定。",
+    Component: VerifyAiLesson,
+  },
+  "digital-project": {
+    courseId: "digital-project", badgeId: "digital-project-leader", badgeName: "数字项目领队",
+    completionTitle: "四十段基础课程航线全部点亮",
+    completionSummary: "你综合运用了问题定义、任务分解、工具选择、测试改进和负责任分享。",
+    Component: DigitalProjectLesson,
   },
 };
 
