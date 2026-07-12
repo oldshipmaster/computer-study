@@ -20,6 +20,18 @@ export function ComputerDictionary({ soundEnabled, onStartCourse }: { soundEnabl
     };
   }, []);
 
+  useEffect(() => {
+    if (!canSpeak) return;
+
+    const stopWhenHidden = () => {
+      if (document.visibilityState !== "visible") window.speechSynthesis.cancel();
+    };
+
+    if (!soundEnabled) window.speechSynthesis.cancel();
+    document.addEventListener("visibilitychange", stopWhenHidden);
+    return () => document.removeEventListener("visibilitychange", stopWhenHidden);
+  }, [canSpeak, soundEnabled]);
+
   function speak(term: string, explanation: string, example: string) {
     if (!soundEnabled || !canSpeak || document.visibilityState !== "visible") return;
     const utterance = new window.SpeechSynthesisUtterance(`${term}。${explanation}。举个例子：${example}`);
