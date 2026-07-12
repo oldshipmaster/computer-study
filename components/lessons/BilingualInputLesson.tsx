@@ -10,7 +10,7 @@ import { normalizeTypingResumeStage, type TypingTask } from "@/lib/typing-lesson
 const STAGE_NAMES = ["认识键位", "英文呼号", "数字坐标", "退格修正", "中文通信", "混合挑战"];
 const TASKS: Array<{ heading: string; message: string; task?: TypingTask; initialValue?: string }> = [
   { heading: "手指准备好", message: "键盘可以输入字母、数字和中文。真实输入框会保护输入法正常工作。" },
-  { heading: "发送英文呼号", message: "请准确输入三个小写字母。", task: { target: "bit", kind: "exact" } },
+  { heading: "发送英文呼号", message: "按住 Shift 再按 B，接着输入 it，发出首字母大写的呼号。", task: { target: "Bit", kind: "shift" } },
   { heading: "发送数字坐标", message: "数字键也能组成信息。", task: { target: "2026", kind: "exact" } },
   { heading: "用退格键修正", message: "末尾多了一个 X，用 Backspace 擦掉它。", task: { target: "BIBI", kind: "correction" }, initialValue: "BIBIX" },
   { heading: "切换中文输入", message: "使用电脑上的中文输入法输入比比，选词完成后再继续。", task: { target: "比比", kind: "ime" } },

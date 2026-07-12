@@ -11,7 +11,8 @@ interface TypingConsoleProps {
 export function TypingConsole({ instruction, initialValue = "", onSuccess, task }: TypingConsoleProps) {
   const [value, setValue] = useState(initialValue);
   const [composing, setComposing] = useState(false);
-  const evaluation = evaluateTypingTask(task, value, composing);
+  const [shiftUsed, setShiftUsed] = useState(false);
+  const evaluation = evaluateTypingTask(task, value, composing, { shiftUsed });
   const targetCharacters = [...task.target];
   const typedCharacters = [...value];
   const firstMismatch = targetCharacters.findIndex((character, index) => typedCharacters[index] !== character);
@@ -34,6 +35,7 @@ export function TypingConsole({ instruction, initialValue = "", onSuccess, task 
         onChange={(event) => setValue(event.target.value)}
         onCompositionEnd={finishComposition}
         onCompositionStart={() => setComposing(true)}
+        onKeyDown={(event) => { if (task.kind === "shift" && event.shiftKey && event.key.toLowerCase() === task.target[0]?.toLowerCase()) setShiftUsed(true); }}
         spellCheck={false}
         value={value}
       />
@@ -46,6 +48,7 @@ export function TypingConsole({ instruction, initialValue = "", onSuccess, task 
         {typedCharacters.length > targetCharacters.length ? <span className="typing-char--extra" role="listitem"><small>多余</small><strong>{typedCharacters.slice(targetCharacters.length).join("")}</strong></span> : null}
       </div>
       {task.kind === "ime" ? <p aria-live="polite" className={composing ? "ime-status ime-status--composing" : "ime-status"}><span aria-hidden="true">中</span>{composing ? "正在选词，请先完成输入法组合" : "中文输入法就绪，选词完成后会确认文字"}</p> : null}
+      {task.kind === "shift" ? <p aria-live="polite" className={shiftUsed ? "shift-combination-status is-complete" : "shift-combination-status"}><kbd>Shift</kbd><span aria-hidden="true">＋</span><kbd>{task.target[0]}</kbd>{shiftUsed ? "已检测到组合键" : "按住 Shift，再按字母"}</p> : null}
       <p aria-live="polite" className="typing-feedback">{evaluation.feedback}</p>
       <button className="primary-action" disabled={!evaluation.complete} onClick={onSuccess} type="button">信号正确，继续</button>
     </div>

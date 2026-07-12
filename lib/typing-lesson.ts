@@ -1,6 +1,6 @@
 export interface TypingTask {
   target: string;
-  kind: "exact" | "correction" | "ime";
+  kind: "exact" | "correction" | "ime" | "shift";
 }
 
 export interface TypingEvaluation {
@@ -13,11 +13,13 @@ export function evaluateTypingTask(
   task: TypingTask,
   value: string,
   compositionState: boolean,
+  evidence: { shiftUsed?: boolean } = {},
 ): TypingEvaluation {
   if (compositionState) {
     return { complete: false, feedback: "正在选择中文，请完成输入法选词。", useful: true };
   }
   if (value === task.target) {
+    if (task.kind === "shift" && !evidence.shiftUsed) return { complete: false, feedback: "字母对了，再用 Shift + 字母完成一次组合键。", useful: true };
     return { complete: true, feedback: "输入正确，通信信号已点亮！", useful: true };
   }
   if (task.kind === "correction" && value.startsWith(task.target)) {
