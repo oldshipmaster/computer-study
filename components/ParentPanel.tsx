@@ -29,6 +29,7 @@ export interface ParentPanelProps {
   onSettingsChange: (settings: ParentProgress["settings"]) => void;
   onReset: () => void;
   onRestore: (progress: ParentProgress) => void;
+  onRetryStorage: () => void;
   onStartCourse: (courseId: string) => void;
   onClose: () => void;
 }
@@ -46,6 +47,7 @@ export function ParentPanel({
   onSettingsChange,
   onReset,
   onRestore,
+  onRetryStorage,
   onStartCourse,
   onClose,
 }: ParentPanelProps) {
@@ -206,6 +208,7 @@ export function ParentPanel({
               <strong>目前无法保存到这台电脑</strong>
               <span>本次设置和学习进度可能会在关闭页面后丢失。</span>
             </p>
+            <button className="parent-secondary-action" onClick={onRetryStorage} type="button">重试保存当前进度</button>
           </div>
         ) : null}
 

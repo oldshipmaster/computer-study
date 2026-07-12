@@ -306,6 +306,15 @@ export function BitIslandApp() {
     }
   }, []);
 
+  const retryProgressStorage = useCallback(() => {
+    try {
+      storeProgress(window.localStorage, PROGRESS_STORAGE_KEY, progress);
+      setStorageUnavailable(false);
+    } catch {
+      setStorageUnavailable(true);
+    }
+  }, [progress]);
+
   let productScreen;
 
   if (screen === "lesson" && currentCourse && lessonDefinition) {
@@ -428,6 +437,7 @@ export function BitIslandApp() {
           onClose={closeParentPanel}
           onReset={resetLearningProgress}
           onRestore={restoreLearningProgress}
+          onRetryStorage={retryProgressStorage}
           onSettingsChange={updateSettings}
           onStartCourse={startCourse}
           progress={progress}

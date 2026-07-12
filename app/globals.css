@@ -1573,6 +1573,8 @@ input {
   background: var(--coral-soft);
   color: var(--coral-deep);
 }
+.parent-storage-notice > button { flex: 0 0 auto; }
+@media (max-width: 620px) { .parent-storage-notice { align-items: stretch; flex-direction: column; } .parent-storage-notice > button { width: 100%; } }
 
 .parent-storage-notice > span {
   display: grid;

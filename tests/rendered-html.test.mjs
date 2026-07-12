@@ -279,6 +279,7 @@ test("keeps the guarded parent-area contract in source", () => {
     "备份学习记录",
     "导出 JSON 备份",
     "恢复以前的备份",
+    "重试保存当前进度",
     "ParentCurriculumOutline",
     "长按进入",
     "进入家长区",
@@ -414,6 +415,17 @@ test("retries a reset write independently from the storage-unavailable latch", (
   );
   assert.match(resetSource, /catch\s*\{[\s\S]*setStorageUnavailable\(true\)/);
   assert.doesNotMatch(resetSource, /if\s*\([^)]*storageUnavailable/);
+});
+
+test("retries current progress storage without resetting learning", () => {
+  const appSource = sourceFile("components/BitIslandApp.tsx");
+  const retryStart = appSource.indexOf("const retryProgressStorage");
+  const retryEnd = appSource.indexOf("\n  },", retryStart);
+  const retrySource = appSource.slice(retryStart, retryEnd);
+  assert.ok(retryStart >= 0 && retryEnd > retryStart, "missing retry callback");
+  assert.match(retrySource, /storeProgress\(window\.localStorage, PROGRESS_STORAGE_KEY, progress\)/);
+  assert.match(retrySource, /setStorageUnavailable\(false\)/);
+  assert.doesNotMatch(retrySource, /resetProgress/);
 });
 
 test("hands focus across lesson, stage, completion, and map transitions", () => {
