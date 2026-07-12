@@ -1172,6 +1172,8 @@ input {
 .offline-status { display: inline-flex; align-items: center; gap: 8px; margin: 8px auto 0; padding: 7px 12px; border: 1px solid rgb(255 255 255 / 65%); border-radius: 999px; background: rgb(255 255 255 / 12%); font-size: .88rem; }
 .offline-status span { display: grid; width: 20px; height: 20px; place-items: center; border-radius: 50%; background: rgb(255 255 255 / 18%); font-weight: 800; }
 .offline-status.is-offline { background: rgb(255 221 113 / 20%); }
+.back-to-top { display: inline-flex; min-height: 44px; margin: 16px auto 0; padding: 0 15px; align-items: center; justify-content: center; border: 2px solid rgb(255 255 255 / 72%); border-radius: 999px; color: inherit; font-size: .86rem; font-weight: 850; text-decoration: none; }
+.back-to-top:hover, .back-to-top:focus-visible { background: rgb(255 255 255 / 15%); }
 .section-jump-nav { display: flex; align-items: center; justify-content: center; gap: 4px; min-width: 0; }
 .section-jump-nav a { min-height: 38px; padding: 9px 10px; border-radius: 999px; color: inherit; font-size: .78rem; font-weight: 850; text-decoration: none; white-space: nowrap; }
 .section-jump-nav a:hover, .section-jump-nav a:focus-visible { background: rgb(255 255 255 / 70%); }

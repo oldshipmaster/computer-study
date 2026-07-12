@@ -129,6 +129,8 @@ test("server-renders the complete curriculum map", async () => {
   assert.equal((html.match(/还差 5 课/g) ?? []).length, 9);
   assert.match(html, /儿童隐私与安全说明/);
   assert.match(html, /aria-label="全部课程完成进度"/);
+  assert.match(html, /href="#site-top"/);
+  assert.match(html, /回到顶部与快捷航线/);
   assert.match(html, /已完成.*0.*\/.*45.*课/);
   assert.match(html, /aria-label="学习区域快捷航线"/);
   for (const target of ["learning-plan", "adventure-map", "knowledge-atlas", "computer-dictionary", "review-station"]) {

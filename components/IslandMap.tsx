@@ -107,7 +107,7 @@ export function IslandMap({
 
   return (
     <main className="island-app-shell">
-      <header className="site-header" aria-label="比特岛导航">
+      <header className="site-header" id="site-top" aria-label="比特岛导航">
         <a className="brand-mark" href="#adventure-map" aria-label="比特岛大冒险课程地图">
           <span className="brand-orbit" aria-hidden="true">
             B
@@ -296,6 +296,7 @@ export function IslandMap({
         <p>完成一课后记得离开屏幕，看看远处，让眼睛休息一会儿。</p>
         <OfflineStatus />
         <PrivacyPromise />
+        <a className="back-to-top" href="#site-top">↑ 回到顶部与快捷航线</a>
       </footer>
     </main>
   );
