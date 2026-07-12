@@ -148,6 +148,17 @@ test("stacks dense hardware and network labs on child-sized screens", () => {
   assert.match(css, /@media \(max-width: 38rem\)[\s\S]*?\.copy-map[\s\S]*?grid-template-columns: 1fr/);
 });
 
+test("offers a privacy-preserving printable certificate after full completion", () => {
+  const mapSource = sourceFile("components/IslandMap.tsx");
+  const certificateSource = sourceFile("components/CompletionCertificate.tsx");
+  const css = sourceFile("app/globals.css");
+  assert.match(mapSource, /mission\.complete\s*\?\s*<CompletionCertificate/);
+  assert.match(certificateSource, /四十五节互动课程/);
+  assert.match(certificateSource, /不会上传任何学习记录/);
+  assert.match(certificateSource, /window\.print\(\)/);
+  assert.match(css, /@media print[\s\S]*?\.completion-certificate/);
+});
+
 test("keeps the playable keyboard-flight lesson contract in source", () => {
   const source = lessonSource();
   const childFacingLabels = [

@@ -5,6 +5,7 @@ import { Bibi } from "@/components/Bibi";
 import { KnowledgeAtlas } from "@/components/KnowledgeAtlas";
 import { ReviewChallenge } from "@/components/ReviewChallenge";
 import { LearningPlan } from "@/components/LearningPlan";
+import { CompletionCertificate } from "@/components/CompletionCertificate";
 import {
   ISLANDS,
   COURSES,
@@ -154,6 +155,7 @@ export function IslandMap({
       </section>
 
       <LearningPlan completedCourseIds={completedCourseIds} onStartCourse={onStartCourse} />
+      {mission.complete ? <CompletionCertificate /> : null}
 
       <KnowledgeAtlas completedCourseIds={completedCourseIds} />
       <ReviewChallenge />
