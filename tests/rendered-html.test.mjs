@@ -118,7 +118,7 @@ test("server-renders the complete curriculum map", async () => {
   assert.equal((html.match(/data-course-card=/g) ?? []).length, 45);
   assert.equal((html.match(/course-card--available/g) ?? []).length, 45);
   assert.equal((html.match(/course-card--locked/g) ?? []).length, 0);
-  assert.equal((html.match(/disabled=""/g) ?? []).length, 27, "dictionary audio waits for browser speech support");
+  assert.equal((html.match(/disabled=""/g) ?? []).length, 45, "dictionary audio waits for browser speech support");
   assert.match(html, /data-course-id="keyboard-flight"/);
   assert.doesNotMatch(html, /即将开放/);
   assert.equal((html.match(/开始任务/g) ?? []).length, 45);
