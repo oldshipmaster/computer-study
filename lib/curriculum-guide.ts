@@ -5,7 +5,7 @@ const guide = (a: string, b: string, c: string, parentPrompt: string): CourseGui
 
 export const CURRICULUM_GUIDE: Record<string, CourseGuide> = {
   "keyboard-flight": guide("认识方向键与空格键", "按顺序执行指令", "预测程序运行结果", "请孩子解释：飞船为什么严格按队列行动？"),
-  "mouse-precision": guide("移动与指向", "单击、双击和拖放", "使用键盘替代路径", "请孩子演示单击和双击有什么不同。"),
+  "mouse-precision": guide("准确移动鼠标与指向", "单击、双击和拖放", "使用键盘替代路径", "请孩子演示单击和双击有什么不同。"),
   "bilingual-input": guide("准确输入字母数字", "使用退格修正", "完成中文输入法选词", "请孩子说说输入法选词完成前为什么不能判定结果。"),
   "desktop-adventure": guide("认识图标与窗口", "切换和最小化程序", "从任务栏恢复并关闭", "请孩子指出当前哪个窗口在最前面，并说明线索。"),
   "program-landing": guide("打开与编辑程序内容", "选择位置并保存", "处理未保存更改提示", "请孩子解释关闭前什么时候会出现保存提醒。"),
