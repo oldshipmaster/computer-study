@@ -600,9 +600,10 @@ test("ships a Bit Island favicon instead of the Sites starter identity", () => {
 test("registers a scoped offline shell and shows connection status", () => {
   const pagesSource = sourceFile("github-pages/main.tsx");
   const statusSource = sourceFile("components/OfflineStatus.tsx");
-  assert.match(pagesSource, /navigator\.serviceWorker\.register/);
-  assert.match(pagesSource, /\.catch\(\(\) => window\.dispatchEvent/);
-  assert.match(pagesSource, /import\.meta\.env\.BASE_URL/);
+  assert.doesNotMatch(pagesSource, /navigator\.serviceWorker\.register/);
+  assert.match(statusSource, /navigator\.serviceWorker\.register/);
+  assert.match(statusSource, /link\[rel="manifest"\]/);
+  assert.match(statusSource, /scope: offlineBase\.pathname/);
   assert.match(statusSource, /navigator\.onLine/);
   assert.match(statusSource, /serviceWorker\.ready/);
   assert.match(statusSource, /addEventListener\("offline"/);

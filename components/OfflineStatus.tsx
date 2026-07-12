@@ -12,19 +12,21 @@ export function OfflineStatus() {
     sync();
     let cancelled = false;
     if ("serviceWorker" in window.navigator) {
+      const manifestLink = document.querySelector<HTMLLinkElement>('link[rel="manifest"]');
+      const offlineBase = new URL("./", manifestLink?.href ?? window.location.href);
+      void window.navigator.serviceWorker.register(new URL("sw.js", offlineBase), { scope: offlineBase.pathname }).catch(() => {
+        if (!cancelled) setOfflineFailed(true);
+      });
       void window.navigator.serviceWorker.ready.then(() => {
         if (!cancelled) setOfflineReady(true);
       });
     }
     window.addEventListener("online", sync);
     window.addEventListener("offline", sync);
-    const markOfflineFailed = () => setOfflineFailed(true);
-    window.addEventListener("bit-island-offline-error", markOfflineFailed);
     return () => {
       cancelled = true;
       window.removeEventListener("online", sync);
       window.removeEventListener("offline", sync);
-      window.removeEventListener("bit-island-offline-error", markOfflineFailed);
     };
   }, []);
 

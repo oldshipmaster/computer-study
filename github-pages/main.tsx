@@ -15,11 +15,3 @@ createRoot(root).render(
     <BitIslandApp />
   </StrictMode>,
 );
-
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    void navigator.serviceWorker.register(`${import.meta.env.BASE_URL}sw.js`, {
-      scope: import.meta.env.BASE_URL,
-    }).catch(() => window.dispatchEvent(new Event("bit-island-offline-error")));
-  });
-}
