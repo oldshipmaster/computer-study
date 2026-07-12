@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 import { INITIAL_MOVE_COPY_STATE, updateMoveCopy } from "../lib/move-copy-lesson.ts";
 
@@ -22,4 +23,13 @@ test("undo restores the previous file locations", () => {
   assert.equal(moved.files.find((file) => file.id === "note")?.folder, "图片");
   const restored = updateMoveCopy(moved, { type: "undo" });
   assert.equal(restored.files.find((file) => file.id === "note")?.folder, "收件箱");
+});
+
+test("the workspace teaches undo without stealing text editing shortcuts", () => {
+  const source = readFileSync(new URL("../components/lessons/files/MoveCopyWorkspace.tsx", import.meta.url), "utf8");
+  assert.match(source, /event\.key\.toLowerCase\(\) !== "z"/);
+  assert.match(source, /input, textarea, \[contenteditable/);
+  assert.match(source, /event\.preventDefault\(\)/);
+  assert.match(source, /Ctrl\/⌘/);
+  assert.match(source, /撤销上一步/);
 });

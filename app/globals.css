@@ -3536,6 +3536,7 @@ html.bit-island-document--reduced-motion *::after,
 .move-copy-mission { padding: 1.2rem; border-radius: 1.5rem; background: #e5f7ff; }
 .move-copy-workspace { overflow: hidden; border: 3px solid #15384e; border-radius: 1rem; background: white; }
 .file-command-bar { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem; padding: .7rem; background: #dcecf4; } .file-command-bar button { min-width: 44px; min-height: 44px; padding: .45rem .65rem; } .file-command-bar span { color: #15384e; font-weight: 750; }
+.undo-shortcut-hint { margin-left: auto; color: #15384e; } .undo-shortcut-hint kbd { padding: .15rem .3rem; border: 1px solid #607786; border-bottom-width: 3px; border-radius: .3rem; background: white; }
 .folder-board { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .8rem; padding: .8rem; }
 .folder-board section { min-height: 13rem; border: 2px solid #7da4b8; border-radius: .8rem; } .folder-board section header { display: grid; gap: .4rem; padding: .6rem; background: #eef8fc; color: #15384e; font-weight: 850; } .folder-board section header button { min-height: 44px; }
 .folder-board section > div { display: grid; gap: .5rem; padding: .6rem; }
