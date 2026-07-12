@@ -30,6 +30,7 @@ test("emits a GitHub Pages artifact under the repository base path", async () =>
   assert.match(serviceWorker, /return Response\.error\(\)/);
   assert.match(serviceWorker, /html\.matchAll/);
   assert.match(serviceWorker, /url\.pathname\.startsWith\(scopeUrl\.pathname\)/);
+  assert.match(serviceWorker, /url\.hash === ""/);
   assert.match(serviceWorker, /new Set\(\[\.\.\.CORE_FILES, \.\.\.resourceUrls\]\)/);
   assert.match(serviceWorker, /cache\.addAll\(currentResources\)/);
   assert.match(serviceWorker, /cachedUrl\.pathname\.includes\("\/assets\/"\)/);

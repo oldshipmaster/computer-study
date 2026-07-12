@@ -16,7 +16,7 @@ async function storeShell(cache, shellResponse, shellUrl) {
   const html = await shellResponse.clone().text();
   const resourceUrls = [...html.matchAll(/(?:src|href)="([^"]+)"/g)]
     .map((match) => new URL(match[1], shellUrl))
-    .filter((url) => url.origin === scopeUrl.origin && url.pathname.startsWith(scopeUrl.pathname))
+    .filter((url) => url.origin === scopeUrl.origin && url.pathname.startsWith(scopeUrl.pathname) && url.hash === "")
     .map((url) => url.href);
   const currentResources = [...new Set([...CORE_FILES, ...resourceUrls])];
   await cache.put(new URL("./", scopeUrl).href, shellResponse);
