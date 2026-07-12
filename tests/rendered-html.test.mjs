@@ -345,6 +345,14 @@ test("keeps the guarded parent-area contract in source", () => {
   assert.match(appSource, /\.focus\(\)/);
 });
 
+test("shows parent badges only for completed registered courses", () => {
+  const parentSource = sourceFile("components/ParentPanel.tsx");
+
+  assert.match(parentSource, /buildEarnedBadges\(progress\.completedCourseIds, LESSON_DEFINITIONS\)/);
+  assert.match(parentSource, /earnedBadges\.map/);
+  assert.doesNotMatch(parentSource, /progress\.badgeIds\.map/);
+});
+
 test("warns the learner when this browser cannot save progress", () => {
   const source = sourceFile("components/IslandMap.tsx");
   assert.match(source, /storageUnavailable/);

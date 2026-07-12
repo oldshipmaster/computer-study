@@ -10,6 +10,7 @@ import { ParentCurriculumOutline } from "@/components/ParentCurriculumOutline";
 import { buildProgressStats } from "@/lib/progress-stats";
 import { ParentFamilyPlan } from "@/components/ParentFamilyPlan";
 import { buildConfidenceStats } from "@/lib/confidence-stats";
+import { buildEarnedBadges } from "@/lib/earned-badges";
 
 export interface ParentProgress {
   version: 1;
@@ -34,13 +35,6 @@ export interface ParentPanelProps {
   onClose: () => void;
 }
 
-const BADGE_NAMES = Object.fromEntries(
-  Object.values(LESSON_DEFINITIONS).map((definition) => [
-    definition.badgeId,
-    definition.badgeName,
-  ]),
-);
-
 export function ParentPanel({
   progress,
   storageUnavailable,
@@ -63,6 +57,7 @@ export function ParentPanel({
   const progressStats = buildProgressStats(progress.completedCourseIds);
   const reviewCourses = COURSES.filter((course) => ["practice", "help"].includes(progress.confidenceByCourse[course.id]));
   const confidenceStats = buildConfidenceStats(progress.completedCourseIds, progress.confidenceByCourse);
+  const earnedBadges = buildEarnedBadges(progress.completedCourseIds, LESSON_DEFINITIONS);
 
   useLayoutEffect(() => {
     closeButtonRef.current?.focus();
@@ -254,12 +249,12 @@ export function ParentPanel({
               </ul>
 
               <h3>已获得徽章</h3>
-              {progress.badgeIds.length > 0 ? (
+              {earnedBadges.length > 0 ? (
                 <ul className="parent-badge-list">
-                  {progress.badgeIds.map((badgeId) => (
-                    <li key={badgeId}>
+                  {earnedBadges.map((badge) => (
+                    <li key={badge.id}>
                       <span aria-hidden="true">★</span>
-                      {BADGE_NAMES[badgeId] ?? badgeId}
+                      {badge.name}
                     </li>
                   ))}
                 </ul>
