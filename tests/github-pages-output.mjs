@@ -57,11 +57,13 @@ test("emits a GitHub Pages artifact under the repository base path", async () =>
     ["icon-192.png", "192x192", "image/png"],
     ["icon-512.png", "512x512", "image/png"],
   ]);
+  assert.equal(manifest.icons[1].purpose, "any");
   for (const [name, expectedSize] of [["icon-192.png", 192], ["icon-512.png", 512]]) {
     const png = await readFile(new URL(name, outputRoot));
     assert.equal(png.toString("ascii", 1, 4), "PNG");
     assert.equal(png.readUInt32BE(16), expectedSize);
     assert.equal(png.readUInt32BE(20), expectedSize);
+    assert.ok(png.byteLength >= expectedSize * 35, `${name} appears to contain only a tiny corner mark`);
   }
   const [robots, sitemap] = await Promise.all([
     readFile(new URL("robots.txt", outputRoot), "utf8"),
