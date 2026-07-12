@@ -31,3 +31,10 @@ test("coding mission completes and then remains stable", () => {
   assert.equal(state.solved, 4);
   assert.deepEqual(answerCodingCard(mission, state, 2), state);
 });
+
+test("coding challenge ignores a repeated pointer activation", () => {
+  const mission = CODING_MISSIONS["events-handlers"];
+  const state = createCodingState();
+  const answer = mission.cards[0].options.indexOf(mission.cards[0].answer);
+  assert.equal(answerCodingCard(mission, state, answer, 2), state);
+});

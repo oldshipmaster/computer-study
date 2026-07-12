@@ -37,8 +37,8 @@ export const FUTURE_MISSIONS: Record<string, FutureMission> = {
 
 export interface FutureState { index: number; solved: number; completed: boolean; feedback: { kind: "idle" | "retry" | "correct"; message: string }; }
 export const createFutureState = (): FutureState => ({ index: 0, solved: 0, completed: false, feedback: { kind: "idle", message: "读完情境，再选择最负责任的行动。" } });
-export function answerFutureCard(mission: FutureMission, state: FutureState, optionIndex: number): FutureState {
-  if (state.completed) return state;
+export function answerFutureCard(mission: FutureMission, state: FutureState, optionIndex: number, activationDetail = 1): FutureState {
+  if (state.completed || activationDetail > 1) return state;
   const current = mission.cards[state.index];
   if (!current || current.options[optionIndex] !== current.answer) return { ...state, feedback: { kind: "retry", message: `先别急：${current?.explanation ?? "重新读题。"}` } };
   const completed = state.index === mission.cards.length - 1;

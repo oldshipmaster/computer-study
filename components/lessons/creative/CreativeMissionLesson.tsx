@@ -15,8 +15,8 @@ export function CreativeMissionLesson({ mission, initialStage, onAward, onComple
   useLayoutEffect(() => headingRef.current?.focus(), [stage]);
   useEffect(() => onStageChange(stage), [onStageChange, stage]);
 
-  function choose(optionIndex: number) {
-    const next = answerCreativeCard(mission, challenge, optionIndex);
+  function choose(optionIndex: number, activationDetail: number) {
+    const next = answerCreativeCard(mission, challenge, optionIndex, activationDetail);
     setChallenge(next);
     if (next.completed && !awardedRef.current) {
       awardedRef.current = true;
@@ -40,7 +40,7 @@ export function CreativeMissionLesson({ mission, initialStage, onAward, onComple
               {mission.cards.map((card, index) => <span className={index < challenge.solved ? "is-complete" : ""} key={card.id}>{index < challenge.solved ? "✓" : index + 1}</span>)}
             </div>
             <h2>{currentCard.prompt}</h2>
-            <div className="creative-options">{currentCard.options.map((option, index) => <button key={option} onClick={() => choose(index)} type="button">{option}</button>)}</div>
+            <div className="creative-options">{currentCard.options.map((option, index) => <button key={option} onClick={(event) => choose(index, event.detail)} type="button">{option}</button>)}</div>
             <p className={`creative-feedback creative-feedback--${challenge.feedback.kind}`} role="status">{challenge.feedback.message}</p>
           </div>
         )}

@@ -36,3 +36,10 @@ test("creative challenge completes exactly after all four cards", () => {
   assert.equal(state.solved, 4);
   assert.deepEqual(answerCreativeCard(mission, state, 0), state);
 });
+
+test("creative challenge ignores a repeated pointer activation", () => {
+  const mission = CREATIVE_MISSIONS["pixel-art"];
+  const state = createCreativeState();
+  const answer = mission.cards[0].options.indexOf(mission.cards[0].answer);
+  assert.equal(answerCreativeCard(mission, state, answer, 2), state);
+});

@@ -14,8 +14,8 @@ export function FutureMissionLesson({ mission, initialStage, onAward, onComplete
   useLayoutEffect(() => headingRef.current?.focus(), [stage]);
   useEffect(() => onStageChange(stage), [onStageChange, stage]);
   const current = mission.cards[challenge.index];
-  function choose(index: number) {
-    const next = answerFutureCard(mission, challenge, index);
+  function choose(index: number, activationDetail: number) {
+    const next = answerFutureCard(mission, challenge, index, activationDetail);
     setChallenge(next);
     if (next.completed && !awardedRef.current) {
       awardedRef.current = true;
@@ -28,7 +28,7 @@ export function FutureMissionLesson({ mission, initialStage, onAward, onComplete
       {stage < 5 ? <div className="future-demo"><p>{mission.symbol}</p><button className="primary-action" onClick={() => setStage((value) => value + 1)} type="button">前往下一座未来站</button></div> : <div className="future-challenge">
         <div className="future-progress" aria-label={`已完成 ${challenge.solved} 项，共 4 项`} role="status">{mission.cards.map((item, index) => <span className={index < challenge.solved ? "is-complete" : ""} key={item.id}>{index < challenge.solved ? "✓" : index + 1}</span>)}</div>
         <h2>{current.prompt}</h2>
-        <div className="future-options">{current.options.map((option, index) => <button key={option} onClick={() => choose(index)} type="button">{option}</button>)}</div>
+        <div className="future-options">{current.options.map((option, index) => <button key={option} onClick={(event) => choose(index, event.detail)} type="button">{option}</button>)}</div>
         <p className={`future-feedback future-feedback--${challenge.feedback.kind}`} role="status">{challenge.feedback.message}</p>
       </div>}
     </div>

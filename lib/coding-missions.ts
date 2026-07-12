@@ -10,8 +10,8 @@ export const CODING_MISSIONS: Record<string, CodingMission> = {
 };
 export interface CodingState { index: number; solved: number; completed: boolean; feedback: { kind: "idle" | "retry" | "correct"; message: string }; }
 export const createCodingState = (): CodingState => ({ index: 0, solved: 0, completed: false, feedback: { kind: "idle", message: "先用手指追踪代码，再选择结果。" } });
-export function answerCodingCard(mission: CodingMission, state: CodingState, optionIndex: number): CodingState {
-  if (state.completed) return state;
+export function answerCodingCard(mission: CodingMission, state: CodingState, optionIndex: number, activationDetail = 1): CodingState {
+  if (state.completed || activationDetail > 1) return state;
   const current = mission.cards[state.index];
   if (!current || current.options[optionIndex] !== current.answer) return { ...state, feedback: { kind: "retry", message: `再追踪一次：${current?.explanation ?? "从第一行开始。"}` } };
   const completed = state.index === mission.cards.length - 1;

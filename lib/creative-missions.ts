@@ -37,8 +37,8 @@ export const CREATIVE_MISSIONS: Record<string, CreativeMission> = {
 
 export interface CreativeState { index: number; solved: number; completed: boolean; feedback: { kind: "idle" | "retry" | "correct"; message: string }; }
 export const createCreativeState = (): CreativeState => ({ index: 0, solved: 0, completed: false, feedback: { kind: "idle", message: "观察情境，选择最能说明理由的答案。" } });
-export function answerCreativeCard(mission: CreativeMission, state: CreativeState, optionIndex: number): CreativeState {
-  if (state.completed) return state;
+export function answerCreativeCard(mission: CreativeMission, state: CreativeState, optionIndex: number, activationDetail = 1): CreativeState {
+  if (state.completed || activationDetail > 1) return state;
   const current = mission.cards[state.index];
   if (!current || current.options[optionIndex] !== current.answer) return { ...state, feedback: { kind: "retry", message: `再观察一下：${current?.explanation ?? "先读清情境。"}` } };
   const completed = state.index === mission.cards.length - 1;

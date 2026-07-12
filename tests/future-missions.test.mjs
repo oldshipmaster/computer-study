@@ -31,3 +31,10 @@ test("future mission completes once after four correct decisions", () => {
   assert.equal(state.solved, 4);
   assert.deepEqual(answerFutureCard(mission, state, 0), state);
 });
+
+test("future challenge ignores a repeated pointer activation", () => {
+  const mission = FUTURE_MISSIONS["email-message"];
+  const state = createFutureState();
+  const answer = mission.cards[0].options.indexOf(mission.cards[0].answer);
+  assert.equal(answerFutureCard(mission, state, answer, 2), state);
+});
