@@ -353,6 +353,7 @@ test("shows parent badges only for completed registered courses", () => {
 
   assert.match(parentSource, /buildEarnedBadges\(progress\.completedCourseIds, LESSON_DEFINITIONS\)/);
   assert.match(parentSource, /earnedBadges\.map/);
+  assert.match(parentSource, /badgeIds: earnedBadges\.map\(\(badge\) => badge\.id\)/);
   assert.doesNotMatch(parentSource, /progress\.badgeIds\.map/);
 });
 

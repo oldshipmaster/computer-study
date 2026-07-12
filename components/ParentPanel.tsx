@@ -140,7 +140,10 @@ export function ParentPanel({
   }
 
   function downloadBackup() {
-    const text = createProgressBackup(progress);
+    const text = createProgressBackup({
+      ...progress,
+      badgeIds: earnedBadges.map((badge) => badge.id),
+    });
     const url = URL.createObjectURL(new Blob([text], { type: "application/json" }));
     const link = document.createElement("a");
     link.href = url;
