@@ -54,3 +54,12 @@ test("task decomposition visualizes dependencies and the next unblocked step", (
   assert.match(lab, /依赖/);
   assert.match(lab, /下一步/);
 });
+
+test("bubble sort lab reveals each adjacent comparison and swap after prediction", () => {
+  const lab = readFileSync(new URL("components/lessons/advanced/algorithms/SortLab.tsx", root), "utf8");
+  assert.match(lab, /bubble-pass-trace/);
+  assert.match(lab, /comparison--swapped/);
+  assert.match(lab, /相邻比较/);
+  assert.match(lab, /冒到最右边/);
+  assert.match(lab, /lastTrace/);
+});

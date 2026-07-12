@@ -3917,6 +3917,8 @@ html.bit-island-document--reduced-motion *::after,
 .graph-node-map button[aria-pressed="true"] { background: #ffe36e; }
 .sort-values { display: flex; justify-content: center; gap: .6rem; padding: .8rem; }
 .sort-values span { display: grid; width: 4rem; height: 4rem; place-items: center; border: 3px solid #15384e; border-radius: .7rem; background: #ffe36e; font-size: 1.4rem; font-weight: 900; }
+.bubble-pass-trace { display: grid; grid-template-columns: repeat(4, 1fr); gap: .5rem; margin: 0; padding: 0; list-style: none; } .bubble-pass-trace li { display: grid; gap: .2rem; padding: .55rem; border: 2px solid #8ba6b5; border-radius: .55rem; background: #edf2f4; text-align: center; } .bubble-pass-trace li.comparison--swapped { border-color: #c04023; background: #ffe8df; } .bubble-pass-trace li.bubble-settled { border-color: #24734a; background: #dff7e8; } .bubble-pass-trace small, .bubble-pass-trace span { font-size: .61rem; }
+@media (max-width: 38rem) { .bubble-pass-trace { grid-template-columns: repeat(2, 1fr); } }
 .efficiency-bars { display: grid; gap: .6rem; }
 .efficiency-bars label { display: grid; gap: .35rem; margin: 0; padding: .75rem; border-left: .8rem solid #c04023; border-radius: .5rem; background: #fff0e8; font-weight: 800; }
 .efficiency-bars label:last-child { border-left-color: #176f59; background: #e3f8ed; }
