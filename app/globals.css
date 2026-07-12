@@ -3954,6 +3954,22 @@ html.bit-island-document--reduced-motion *::after,
 .memory-grid span.memory-room--system { background: #d7e5ec; }
 .memory-grid span.memory-room--paint { background: #f8d5ef; }
 .memory-grid span.memory-room--game { background: #dff7e8; }
+.memory-lifecycle { margin: 0; padding: .65rem; border-radius: .65rem; background: #fff4cf; text-align: center; }
+.memory-meter { height: 1.15rem; overflow: hidden; border: 2px solid #65469a; border-radius: 1rem; background: #fff; }
+.memory-meter span { display: block; height: 100%; border-radius: inherit; background: #7456a8; transition: width .25s ease; }
+.memory-count { display: flex; justify-content: space-between; margin: -.35rem 0 0; font-size: .85rem; }
+.memory-owner-list { display: flex; flex-wrap: wrap; gap: .5rem 1rem; margin: 0; padding: 0; list-style: none; }
+.memory-owner-list li { display: flex; align-items: center; gap: .35rem; }
+.memory-owner-dot { width: .8rem; height: .8rem; border: 2px solid #65469a; border-radius: 50%; background: #ffe36e; }
+.memory-owner-dot--system { background: #d7e5ec; }
+.memory-owner-dot--paint { background: #f8d5ef; }
+.memory-owner-dot--game { background: #dff7e8; }
+.memory-challenge-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: .4rem; margin: 0; padding: 0; counter-reset: memory-step; list-style: none; }
+.memory-challenge-steps li { padding: .55rem; border: 2px dashed #9986b7; border-radius: .55rem; background: #fff; font-size: .75rem; font-weight: 800; text-align: center; }
+.memory-challenge-steps li.is-done { border-style: solid; border-color: #297b54; background: #dff7e8; }
+.memory-challenge-steps li.is-done::before { content: "✓ "; }
+.memory-history { padding: .65rem .75rem; border: 2px dashed #65469a; border-radius: .7rem; background: #fbf8ff; }
+.memory-history p, .memory-history ol { margin: .35rem 0 0; }
 .instruction-phases, .layer-stack, .transfer-chunks { display: grid; grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr)); gap: .55rem; }
 .transfer-route { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: .8rem; padding: 1rem; border: 2px dashed #315c9a; border-radius: 1rem; background: #eef7ff; }
 .transfer-route > strong { max-width: 4.5rem; text-align: center; }
@@ -4021,7 +4037,7 @@ html.bit-island-document--reduced-motion *::after,
 .route-cost-summary .is-broken { border-color: #9b3039; background: #ffe2d7; text-decoration: line-through; }
 @keyframes advanced-float { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-8px) rotate(2deg); } }
 @media (max-width: 38rem) { .advanced-foundation-lesson { padding: .75rem; } .advanced-concept-demo { min-height: 15rem; } .concept-journey-track { grid-template-columns: repeat(5, minmax(3.2rem, 1fr)); overflow-x: auto; padding: .35rem .25rem .75rem; } .concept-journey-track::before { right: 2rem; left: 2rem; } .concept-journey-node small { font-size: .58rem; } .advanced-lab { padding: .8rem; box-shadow: 4px 5px 0 rgb(18 50 74 / 12%); } .advanced-lab [role="group"], .concept-reflection [role="group"] { grid-template-columns: 1fr; } .advanced-lab [role="group"] button, .concept-reflection [role="group"] button { width: 100%; } .advanced-lab .array-lockers, .advanced-lab .search-items, .advanced-lab .graph-node-map { grid-template-columns: repeat(2, 1fr) !important; } .stack-queue-columns { grid-template-columns: 1fr; } .stack-queue-columns [role="group"] { grid-template-columns: repeat(2, 1fr); } .concept-reflection [role="group"] button { min-height: 3.8rem; } .memory-grid { grid-template-columns: repeat(4, 1fr); } .process-state-machine { grid-template-columns: repeat(2, 1fr); } .toy-cpu-board { grid-template-columns: 1fr; } .routing-choice-map { grid-template-columns: repeat(2, 1fr); } .instruction-phases, .layer-stack, .transfer-chunks { grid-template-columns: repeat(2, 1fr); } }
-@media (prefers-reduced-motion: reduce) { .advanced-concept-demo .concept-journey-icon, .route-packet { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .advanced-concept-demo .concept-journey-icon, .route-packet { animation: none; } .memory-meter span { transition: none; } }
 @media (max-width: 38rem) {
   .dependency-map { grid-template-columns: 1fr; }
   .dependency-map li:not(:last-child)::after { top: auto; right: auto; bottom: -1.05rem; left: 50%; transform: translateX(-50%) rotate(90deg); }
@@ -4033,6 +4049,7 @@ html.bit-island-document--reduced-motion *::after,
   .route-lane { grid-template-columns: 1fr minmax(4.2rem, .85fr) 1fr; }
   .route-edge small { font-size: .6rem; }
   .route-cost-summary { grid-template-columns: 1fr; }
+  .memory-challenge-steps { grid-template-columns: repeat(2, 1fr); }
 }
 @media (forced-colors: active) {
   .concept-journey-node--active b,

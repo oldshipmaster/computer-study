@@ -44,6 +44,12 @@ test("memory lab visualizes occupied and free rooms", () => {
   assert.match(lab, /memory-room--occupied/);
   assert.match(lab, /空闲/);
   assert.match(lab, /已使用.*\/.*8/);
+  assert.match(lab, /role="progressbar"/);
+  assert.match(lab, /内存操作记录/);
+  assert.match(lab, /申请成功/);
+  assert.match(lab, /申请失败/);
+  assert.match(lab, /回收成功/);
+  assert.match(lab, /申请 → 使用 → 回收 → 再利用/);
 });
 
 test("process lab shows the lifecycle as a visible state machine", () => {
