@@ -121,7 +121,7 @@ export function IslandMap({
           <a href="#computer-dictionary">电脑词典</a>
           <a href="#review-station">问答站</a>
         </nav>
-        <span className="island-count">{CURRICULUM_FACTS.islandCount} 座知识岛等你探索</span>
+        <div className="header-progress"><span>{CURRICULUM_FACTS.islandCount} 岛 · 已完成 {completedCourseIds.length} / {CURRICULUM_FACTS.courseCount} 课</span><progress aria-label="全部课程完成进度" max={CURRICULUM_FACTS.courseCount} value={completedCourseIds.length} /></div>
       </header>
 
       <section className="map-hero" aria-labelledby="map-heading">

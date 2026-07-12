@@ -124,6 +124,11 @@ input {
   font-size: 0.84rem;
   font-weight: 700;
 }
+.header-progress { display: grid; min-width: 155px; gap: 5px; color: var(--deep-sea-soft); font-size: .75rem; font-weight: 800; }
+.header-progress progress { width: 100%; height: 7px; overflow: hidden; border: 0; border-radius: 999px; background: #d5e3e9; }
+.header-progress progress::-webkit-progress-bar { background: #d5e3e9; }
+.header-progress progress::-webkit-progress-value { border-radius: 999px; background: var(--coral); }
+.header-progress progress::-moz-progress-bar { border-radius: 999px; background: var(--coral); }
 
 .map-hero {
   position: relative;
@@ -2000,6 +2005,7 @@ input {
   .island-count {
     display: none;
   }
+  .header-progress { display: none; }
 
   .brand-orbit {
     width: 36px;
