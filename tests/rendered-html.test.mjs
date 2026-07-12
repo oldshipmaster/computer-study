@@ -118,7 +118,7 @@ test("server-renders the complete curriculum map", async () => {
   assert.equal((html.match(/data-course-card=/g) ?? []).length, 45);
   assert.equal((html.match(/course-card--available/g) ?? []).length, 45);
   assert.equal((html.match(/course-card--locked/g) ?? []).length, 0);
-  assert.equal((html.match(/disabled=""/g) ?? []).length, 0);
+  assert.equal((html.match(/disabled=""/g) ?? []).length, 27, "dictionary audio waits for browser speech support");
   assert.match(html, /data-course-id="keyboard-flight"/);
   assert.doesNotMatch(html, /即将开放/);
   assert.equal((html.match(/开始任务/g) ?? []).length, 45);
@@ -191,6 +191,15 @@ test("offers child-led review from structured confidence choices", () => {
   assert.match(queueSource, /我的加练清单/);
   assert.match(queueSource, /不是错题榜/);
   assert.match(queueSource, /开始加练/);
+});
+
+test("reads dictionary explanations locally while respecting sound settings", () => {
+  const source = sourceFile("components/ComputerDictionary.tsx");
+  assert.match(source, /SpeechSynthesisUtterance/);
+  assert.match(source, /document\.visibilityState !== "visible"/);
+  assert.match(source, /soundEnabled/);
+  assert.match(source, /window\.speechSynthesis\.cancel/);
+  assert.match(source, /🔊 听解释/);
 });
 
 test("keeps the playable keyboard-flight lesson contract in source", () => {

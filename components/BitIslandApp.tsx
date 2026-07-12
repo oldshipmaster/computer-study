@@ -346,6 +346,7 @@ export function BitIslandApp() {
         headingRef={mapHeadingRef}
         onStartCourse={startCourse}
         resume={progress.resume}
+        soundEnabled={progress.settings.sound}
       />
     );
   }

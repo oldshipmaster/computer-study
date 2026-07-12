@@ -30,6 +30,7 @@ interface IslandMapProps {
   onStartCourse: (courseId: string) => void;
   resume: { courseId: string; stage: number } | null;
   confidenceByCourse: Record<string, CourseConfidence>;
+  soundEnabled: boolean;
 }
 
 const DIFFICULTY_LABELS: Record<Course["difficulty"], string> = {
@@ -85,6 +86,7 @@ export function IslandMap({
   onStartCourse,
   resume,
   confidenceByCourse,
+  soundEnabled,
 }: IslandMapProps) {
   const [courseQuery, setCourseQuery] = useState("");
   const [selectedIslandId, setSelectedIslandId] = useState("all");
@@ -172,7 +174,7 @@ export function IslandMap({
       {mission.complete ? <CompletionCertificate /> : null}
 
       <KnowledgeAtlas completedCourseIds={completedCourseIds} />
-      <ComputerDictionary />
+      <ComputerDictionary soundEnabled={soundEnabled} />
       <ReviewChallenge completedCourseIds={completedCourseIds} key={completedCourseIds.join("|")} />
 
       <section className="adventure-map" id="adventure-map" aria-labelledby="islands-heading">

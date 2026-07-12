@@ -1,12 +1,33 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ISLANDS } from "@/lib/course-data";
 import { searchDictionary } from "@/lib/computer-dictionary";
 
-export function ComputerDictionary() {
+export function ComputerDictionary({ soundEnabled }: { soundEnabled: boolean }) {
   const [query, setQuery] = useState("");
+  const [canSpeak, setCanSpeak] = useState(false);
   const entries = searchDictionary(query);
+
+  useEffect(() => {
+    let cancelled = false;
+    queueMicrotask(() => {
+      if (!cancelled) setCanSpeak("speechSynthesis" in window && typeof window.SpeechSynthesisUtterance === "function");
+    });
+    return () => {
+      cancelled = true;
+      if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+    };
+  }, []);
+
+  function speak(term: string, explanation: string, example: string) {
+    if (!soundEnabled || !canSpeak || document.visibilityState !== "visible") return;
+    const utterance = new window.SpeechSynthesisUtterance(`${term}。${explanation}。举个例子：${example}`);
+    utterance.lang = "zh-CN";
+    utterance.rate = 0.9;
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(utterance);
+  }
 
   return (
     <section className="computer-dictionary" aria-labelledby="computer-dictionary-heading">
@@ -24,7 +45,7 @@ export function ComputerDictionary() {
             <h3 id={`dictionary-${island.id}`}><span aria-hidden="true">{island.icon}</span>{island.name}</h3>
             <dl>{islandEntries.map((entry) => <div key={entry.id}>
               <dt>{entry.term}<small>{entry.english}</small></dt>
-              <dd><p>{entry.explanation}</p><span><strong>举个例子：</strong>{entry.example}</span></dd>
+              <dd><p>{entry.explanation}</p><span><strong>举个例子：</strong>{entry.example}</span><button disabled={!soundEnabled || !canSpeak} onClick={() => speak(entry.term, entry.explanation, entry.example)} type="button">{soundEnabled ? "🔊 听解释" : "声音已关闭"}</button></dd>
             </div>)}</dl>
           </section>;
         })}
