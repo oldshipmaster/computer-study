@@ -3747,7 +3747,9 @@ html.bit-island-document--reduced-motion *::after,
 .network-clinic-mission { padding: 1.4rem; border-radius: 1.5rem; background: #e9f7ff; }
 .network-clinic-demo { display: grid; min-height: 13rem; place-items: center; } .network-clinic-demo p { padding: 1rem; border: 3px solid #197ba7; border-radius: 1rem; background: white; color: #15384e; font-weight: 850; }
 .network-clinic { display: grid; gap: 1rem; color: #15384e; } .network-clinic section { padding: 1rem; border: 3px solid #197ba7; border-radius: .8rem; background: white; } .network-clinic > div { display: grid; grid-template-columns: repeat(2, 1fr); gap: .6rem; } .network-clinic > div button { min-height: 3.5rem; border: 2px solid #15384e; border-radius: .7rem; background: white; color: #15384e; font-weight: 750; } .network-clinic aside { padding: .8rem; border-radius: .7rem; background: #fff0df; font-weight: 800; }
+.network-clinic > .diagnostic-chain { display: grid; grid-template-columns: repeat(4, 1fr); gap: .8rem; } .diagnostic-chain button { position: relative; display: grid; gap: .2rem; place-items: center; min-width: 0; padding: .6rem; text-align: center; } .diagnostic-chain button:not(:last-child)::after { position: absolute; right: -.7rem; content: "→"; color: #197ba7; font-size: 1.2rem; } .diagnostic-chain button > span { font-size: 1.8rem; } .diagnostic-chain button small, .diagnostic-chain button em { font-size: .62rem; font-style: normal; } .diagnostic-chain .diagnostic-node--checked { background: #fff0a8; box-shadow: 0 0 0 3px rgb(243 189 40 / 35%); }
 @media (max-width: 38rem) { .network-clinic > div { grid-template-columns: 1fr; } }
+@media (max-width: 38rem) { .network-clinic > .diagnostic-chain { grid-template-columns: repeat(2, 1fr); } .diagnostic-chain button:not(:last-child)::after { display: none; } }
 
 /* Creative workshop lessons */
 .creative-mission { padding: 1.4rem; border-radius: 1.5rem; background: #fff4dc; color: #15384e; }
