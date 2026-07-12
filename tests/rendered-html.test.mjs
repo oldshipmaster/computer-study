@@ -115,25 +115,29 @@ test("server-renders the complete curriculum map", async () => {
   assert.match(html, /创作工坊/);
   assert.match(html, /未来协作站/);
   assert.match(html, /代码星港/);
-  assert.equal((html.match(/data-course-card=/g) ?? []).length, 45);
-  assert.equal((html.match(/course-card--available/g) ?? []).length, 45);
+  assert.match(html, /数据结构群岛/);
+  assert.match(html, /算法竞技场/);
+  assert.match(html, /操作系统控制塔/);
+  assert.match(html, /系统与网络深海站/);
+  assert.equal((html.match(/data-course-card=/g) ?? []).length, 65);
+  assert.equal((html.match(/course-card--available/g) ?? []).length, 65);
   assert.equal((html.match(/course-card--locked/g) ?? []).length, 0);
-  assert.equal((html.match(/disabled=""/g) ?? []).length, 45, "dictionary audio waits for browser speech support");
+  assert.equal((html.match(/disabled=""/g) ?? []).length, 65, "dictionary audio waits for browser speech support");
   assert.match(html, /data-course-id="keyboard-flight"/);
   assert.doesNotMatch(html, /即将开放/);
-  assert.equal((html.match(/开始任务/g) ?? []).length, 45);
-  assert.equal((html.match(/route-curve route-curve--/g) ?? []).length, 8);
+  assert.equal((html.match(/开始任务/g) ?? []).length, 65);
+  assert.equal((html.match(/route-curve route-curve--/g) ?? []).length, 12);
   assert.match(html, /五次探险计划/);
   assert.equal((html.match(/class="session-number"/g) ?? []).length, 5);
   assert.match(html, /岛屿印章册/);
-  assert.equal((html.match(/还差 5 课/g) ?? []).length, 9);
+  assert.equal((html.match(/还差 5 课/g) ?? []).length, 13);
   assert.match(html, /儿童隐私与安全说明/);
   assert.match(html, /情境题答案只在当前页面内/);
   assert.match(html, /aria-label="全部课程完成进度"/);
   assert.match(html, /href="#site-top"/);
   assert.match(html, /class="skip-link" href="#map-heading">跳到今天任务/);
   assert.match(html, /回到顶部与快捷航线/);
-  assert.match(html, /已完成.*0.*\/.*45.*课/);
+  assert.match(html, /已完成.*0.*\/.*65.*课/);
   assert.match(html, /aria-label="学习区域快捷航线"/);
   for (const target of ["learning-plan", "adventure-map", "knowledge-atlas", "computer-dictionary", "term-match", "review-station"]) {
     assert.match(html, new RegExp(`href="#${target}"`));
@@ -142,17 +146,17 @@ test("server-renders the complete curriculum map", async () => {
   assert.match(html, /不需要注册账号或填写姓名/);
   assert.match(html, /均为虚构模拟/);
   assert.match(html, /你的知识图鉴/);
-  assert.equal((html.match(/class="knowledge-chapter"/g) ?? []).length, 9);
-  assert.equal((html.match(/神秘知识卡/g) ?? []).length, 45);
+  assert.equal((html.match(/class="knowledge-chapter"/g) ?? []).length, 13);
+  assert.equal((html.match(/神秘知识卡/g) ?? []).length, 65);
   assert.match(html, /岛屿问答站/);
   assert.match(html, /先完成任意一座岛的第一课/);
   assert.equal((html.match(/review-progress/g) ?? []).length, 1);
 });
 
-test("supports alternating route curves for all nine islands", () => {
+test("supports alternating route curves for all thirteen islands", () => {
   const css = sourceFile("app/globals.css");
-  assert.match(css, /\.route-curve--2,\s*\.route-curve--4,\s*\.route-curve--6,\s*\.route-curve--8/);
-  assert.match(css, /\.route-curve--2 span,\s*\.route-curve--4 span,\s*\.route-curve--6 span,\s*\.route-curve--8 span/);
+  assert.match(css, /\.route-curve--10/);
+  assert.match(css, /\.route-curve--12/);
 });
 
 test("gives course search a visible recoverable empty state", () => {
@@ -182,6 +186,16 @@ test("stacks dense hardware and network labs on child-sized screens", () => {
   assert.match(css, /@media \(max-width: 38rem\)[\s\S]*?\.bit-switches[\s\S]*?grid-template-columns: repeat\(2, 1fr\)/);
   assert.match(css, /@media \(max-width: 38rem\)[\s\S]*?\.search-lab li[\s\S]*?flex-direction: column/);
   assert.match(css, /@media \(max-width: 38rem\)[\s\S]*?\.copy-map[\s\S]*?grid-template-columns: 1fr/);
+});
+
+test("styles advanced foundation labs for touch and small screens", () => {
+  const css = sourceFile("app/globals.css");
+  assert.match(css, /\.advanced-foundation-lesson/);
+  assert.match(css, /\.advanced-lab button[\s\S]*?min-height:\s*44px/);
+  assert.match(css, /\.memory-grid/);
+  assert.match(css, /\.instruction-phases/);
+  assert.match(css, /@media \(max-width: 38rem\)[\s\S]*?\.advanced-lab \[role="group"\][\s\S]*?grid-template-columns:\s*1fr/);
+  assert.match(css, /@media \(prefers-reduced-motion: reduce\)[\s\S]*?\.advanced-concept-demo/);
 });
 
 test("constrains the mobile hero to the viewport width", () => {
@@ -232,7 +246,7 @@ test("adds one unlocked concept-match question per completed course", () => {
   const source = sourceFile("components/TermMatchChallenge.tsx");
   assert.match(mapSource, /TermMatchChallenge/);
   assert.match(source, /概念配对舱/);
-  assert.match(source, /45 节课各有一道概念题/);
+  assert.match(source, /65 节课各有一道概念题/);
   assert.match(source, /answerTermMatch/);
   assert.match(source, /本次概念配对进度/);
   assert.match(source, /island\.icon.*island\.name/);

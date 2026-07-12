@@ -5,7 +5,7 @@ import "./globals.css";
 
 const SITE_NAME = "比特岛大冒险";
 const SITE_TITLE = "比特岛大冒险｜儿童计算机启蒙课";
-const SITE_DESCRIPTION = "面向小学二年级的九岛四十五课互动计算机课程，覆盖操作、文件、编程、安全、硬件、网络、创作与 AI 素养。";
+const SITE_DESCRIPTION = "面向小学二年级的十三岛六十五课互动计算机课程，覆盖电脑基础、编程、数据结构、算法、操作系统、计算机组成与网络知识。";
 const LOCAL_METADATA_BASE = new URL("http://localhost:3000");
 
 const geistSans = Geist({

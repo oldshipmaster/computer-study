@@ -4,7 +4,7 @@ import { filterCourses } from "../lib/course-filter.ts";
 import { COURSES } from "../lib/course-data.ts";
 
 test("returns all courses for an empty compass", () => {
-  assert.equal(filterCourses(COURSES, { islandId: "all", query: "" }).length, 45);
+  assert.equal(filterCourses(COURSES, { islandId: "all", query: "" }).length, 65);
 });
 
 test("filters by island without changing catalog order", () => {
@@ -44,5 +44,5 @@ test("filters completed and unfinished courses without changing order", () => {
   assert.deepEqual(filterCourses(COURSES, { islandId: "all", query: "", completion: "completed", completedCourseIds }).map((course) => course.id), completedCourseIds);
   const unfinished = filterCourses(COURSES, { islandId: "launch-harbor", query: "", completion: "unfinished", completedCourseIds });
   assert.deepEqual(unfinished.map((course) => course.id), ["mouse-precision", "bilingual-input", "desktop-adventure", "program-landing"]);
-  assert.equal(filterCourses(COURSES, { islandId: "all", query: "", completion: "unfinished", completedCourseIds }).length, 42);
+  assert.equal(filterCourses(COURSES, { islandId: "all", query: "", completion: "unfinished", completedCourseIds }).length, 62);
 });

@@ -881,7 +881,9 @@ input {
 .route-curve--2,
 .route-curve--4,
 .route-curve--6,
-.route-curve--8 {
+.route-curve--8,
+.route-curve--10,
+.route-curve--12 {
   margin-right: auto;
   margin-left: 9%;
   border-right: 0;
@@ -904,7 +906,9 @@ input {
 .route-curve--2 span,
 .route-curve--4 span,
 .route-curve--6 span,
-.route-curve--8 span {
+.route-curve--8 span,
+.route-curve--10 span,
+.route-curve--12 span {
   right: auto;
   left: -12px;
 }
@@ -2154,7 +2158,9 @@ input {
   .route-curve--2,
   .route-curve--4,
   .route-curve--6,
-  .route-curve--8 {
+  .route-curve--8,
+  .route-curve--10,
+  .route-curve--12 {
     width: 50%;
     height: 82px;
     margin-right: auto;
@@ -2168,7 +2174,9 @@ input {
   .route-curve--2 span,
   .route-curve--4 span,
   .route-curve--6 span,
-  .route-curve--8 span {
+  .route-curve--8 span,
+  .route-curve--10 span,
+  .route-curve--12 span {
     right: -12px;
     left: auto;
   }
@@ -3766,3 +3774,29 @@ html.bit-island-document--reduced-motion *::after,
 .coding-feedback--retry { background: #ffe2d7; color: #783c2d; }
 .coding-feedback--correct { background: #dff7e8; color: #176145; }
 @media (max-width: 38rem) { .coding-options { grid-template-columns: 1fr; } .coding-options button { min-height: 3.6rem; } }
+
+/* Advanced computer foundations: data structures, algorithms, OS, architecture and networks */
+.advanced-foundation-lesson { min-width: 0; padding: clamp(1rem, 3vw, 1.6rem); border-radius: 1.5rem; background: linear-gradient(145deg, #eef8ff, #fff7d9); color: #15384e; }
+.advanced-concept-demo { display: grid; min-height: 18rem; place-items: center; align-content: center; gap: 1.25rem; text-align: center; }
+.advanced-concept-demo > span { display: grid; width: 6rem; height: 6rem; place-items: center; border: 3px solid #15384e; border-radius: 35% 65% 48% 52%; background: white; box-shadow: 7px 8px 0 rgb(18 50 74 / 14%); font-size: 3rem; animation: advanced-float 2.8s ease-in-out infinite; }
+.advanced-concept-demo p { max-width: 38rem; margin: 0; font-size: clamp(1.1rem, 3vw, 1.5rem); font-weight: 800; }
+.advanced-lab { display: grid; min-width: 0; gap: 1rem; padding: clamp(.9rem, 3vw, 1.4rem); border: 3px solid #15384e; border-radius: 1.1rem; background: white; box-shadow: 8px 9px 0 rgb(18 50 74 / 12%); }
+.advanced-lab h2 { margin: 0; font-size: clamp(1.35rem, 3vw, 2rem); }
+.advanced-lab [role="group"], .advanced-lab .advanced-actions { display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: .7rem; }
+.advanced-lab button { min-height: 44px; padding: .7rem .9rem; border: 2px solid #15384e; border-radius: .75rem; background: #f7fcff; color: #15384e; cursor: pointer; font-weight: 800; }
+.advanced-lab button:hover:not(:disabled) { background: #ffe36e; }
+.advanced-lab button:disabled { cursor: not-allowed; opacity: .58; }
+.advanced-lab [role="status"] { min-height: 3.2rem; margin: 0; padding: .75rem; border-radius: .7rem; background: #e8f8ee; font-weight: 750; }
+.advanced-lab ol, .advanced-lab ul { display: grid; gap: .5rem; margin: 0; padding-left: 1.5rem; }
+.advanced-lab li { padding: .45rem .6rem; border-radius: .5rem; background: #f1f7fa; }
+.memory-grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: .35rem; }
+.memory-grid span { display: grid; min-height: 3rem; place-items: center; border: 2px solid #65469a; border-radius: .5rem; background: #f4edff; font-weight: 900; }
+.instruction-phases, .layer-stack, .transfer-chunks { display: grid; grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr)); gap: .55rem; }
+.instruction-phases span, .layer-stack span { display: grid; min-height: 3.5rem; place-items: center; padding: .5rem; border: 2px solid #197ba7; border-radius: .6rem; background: #e9f7ff; text-align: center; font-weight: 800; }
+.instruction-phases span.is-current { background: #ffe36e; box-shadow: 0 0 0 4px rgb(255 227 110 / 35%); }
+.schedule-tasks { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: .6rem; }
+.schedule-tasks p { display: grid; margin: 0; padding: .7rem; border: 2px solid #315c9a; border-radius: .7rem; background: #edf4ff; }
+.file-address, .route-path, .process-state { overflow-wrap: anywhere; padding: .75rem; border-radius: .65rem; background: #fff4cf; font-family: var(--font-geist-mono), monospace; }
+@keyframes advanced-float { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-8px) rotate(2deg); } }
+@media (max-width: 38rem) { .advanced-foundation-lesson { padding: .75rem; } .advanced-concept-demo { min-height: 15rem; } .advanced-lab { padding: .8rem; box-shadow: 4px 5px 0 rgb(18 50 74 / 12%); } .advanced-lab [role="group"] { grid-template-columns: 1fr; } .advanced-lab [role="group"] button { width: 100%; } .memory-grid { grid-template-columns: repeat(4, 1fr); } .instruction-phases, .layer-stack, .transfer-chunks { grid-template-columns: repeat(2, 1fr); } }
+@media (prefers-reduced-motion: reduce) { .advanced-concept-demo > span { animation: none; } }

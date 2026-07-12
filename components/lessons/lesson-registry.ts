@@ -195,7 +195,7 @@ export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
     badgeId: "island-lighter",
     badgeName: "比特岛点灯师",
     completionTitle: "前四座知识岛的综合信号恢复",
-    completionSummary: "你综合运用了电脑操作、文件管理、编程思维和数字安全知识，可以继续探索后五岛。",
+    completionSummary: "你综合运用了电脑操作、文件管理、编程思维和数字安全知识，可以继续探索后九岛。",
     Component: LightBitIslandLesson,
   },
   "input-process-output": {

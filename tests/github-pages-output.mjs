@@ -12,7 +12,7 @@ test("emits a GitHub Pages artifact under the repository base path", async () =>
   assert.match(html, /\/computer-study\/favicon\.svg/);
   assert.match(html, /rel="apple-touch-icon" sizes="192x192" href="\/computer-study\/icon-192\.png"/);
   assert.match(html, /rel="sitemap" type="application\/xml" href="\/computer-study\/sitemap\.xml"/);
-  assert.match(html, /九岛四十五课互动计算机课程/);
+  assert.match(html, /十三岛六十五课互动计算机课程/);
   assert.match(html, /rel="canonical" href="https:\/\/oldshipmaster\.github\.io\/computer-study\/"/);
   assert.match(html, /需要开启 JavaScript/);
   assert.match(html, /\/computer-study\/manifest\.webmanifest/);
