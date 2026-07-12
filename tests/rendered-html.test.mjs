@@ -157,7 +157,7 @@ test("gives course search a visible recoverable empty state", () => {
   const source = sourceFile("components/IslandMap.tsx");
   assert.match(source, /visibleCourseIds\.size === 0/);
   assert.match(source, /罗盘暂时没找到这门课/);
-  assert.match(source, /function clearCourseFilters/);
+  assert.match(source, /const clearCourseFilters = useCallback/);
   assert.match(source, /setCourseQuery\(""\)/);
   assert.match(source, /setSelectedIslandId\("all"\)/);
   assert.match(source, /setSelectedDifficulty\("all"\)/);
@@ -165,6 +165,10 @@ test("gives course search a visible recoverable empty state", () => {
   assert.match(source, /aria-label="按难度筛选"/);
   assert.match(source, /aria-label="按完成状态筛选"/);
   assert.match(source, /清除全部筛选/);
+  assert.match(source, /event\.key === "\/"/);
+  assert.match(source, /event\.key === "Escape"/);
+  assert.match(source, /searchInputRef\.current\?\.focus\(\)/);
+  assert.match(source, /target instanceof HTMLInputElement/);
   assert.match(source, /清除筛选，显示 \{CURRICULUM_FACTS\.courseCount\} 课/);
 });
 

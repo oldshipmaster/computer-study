@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type Ref } from "react";
+import { useCallback, useEffect, useRef, useState, type Ref } from "react";
 import { Bibi } from "@/components/Bibi";
 import { KnowledgeAtlas } from "@/components/KnowledgeAtlas";
 import { ReviewChallenge } from "@/components/ReviewChallenge";
@@ -92,18 +92,35 @@ export function IslandMap({
   const [selectedIslandId, setSelectedIslandId] = useState("all");
   const [selectedDifficulty, setSelectedDifficulty] = useState<Course["difficulty"] | "all">("all");
   const [selectedCompletion, setSelectedCompletion] = useState<"all" | "completed" | "unfinished">("all");
+  const searchInputRef = useRef<HTMLInputElement>(null);
   const mission = getMapMission(completedCourseIds, resume);
   const currentCourse = mission.course;
   const resuming = Boolean(resume && currentCourse?.id === resume.courseId);
   const visibleCourseIds = new Set(filterCourses(COURSES, { islandId: selectedIslandId, query: courseQuery, difficulty: selectedDifficulty, completion: selectedCompletion, completedCourseIds }).map((course) => course.id));
   const filtersActive = Boolean(courseQuery.trim()) || selectedIslandId !== "all" || selectedDifficulty !== "all" || selectedCompletion !== "all";
 
-  function clearCourseFilters() {
+  const clearCourseFilters = useCallback(() => {
     setCourseQuery("");
     setSelectedIslandId("all");
     setSelectedDifficulty("all");
     setSelectedCompletion("all");
-  }
+  }, []);
+
+  useEffect(() => {
+    function handleMapShortcut(event: KeyboardEvent) {
+      const target = event.target;
+      const typing = target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement || (target instanceof HTMLElement && target.isContentEditable);
+      if (event.key === "/" && !typing && !event.metaKey && !event.ctrlKey && !event.altKey) {
+        event.preventDefault();
+        searchInputRef.current?.focus();
+      } else if (event.key === "Escape" && filtersActive) {
+        clearCourseFilters();
+        searchInputRef.current?.focus();
+      }
+    }
+    window.addEventListener("keydown", handleMapShortcut);
+    return () => window.removeEventListener("keydown", handleMapShortcut);
+  }, [clearCourseFilters, filtersActive]);
 
   return (
     <main className="island-app-shell">
@@ -209,8 +226,8 @@ export function IslandMap({
             <h3 id="course-compass-heading">快速找到想练的本领</h3>
           </div>
           <label>
-            搜索课程
-            <input onChange={(event) => setCourseQuery(event.target.value)} placeholder="例如：文件、循环、AI" type="search" value={courseQuery} />
+            <span>搜索课程 <kbd>/</kbd></span>
+            <input onChange={(event) => setCourseQuery(event.target.value)} placeholder="例如：文件、循环、AI" ref={searchInputRef} type="search" value={courseQuery} />
           </label>
           <div className="course-compass-islands" aria-label="按岛屿筛选">
             <button aria-pressed={selectedIslandId === "all"} onClick={() => setSelectedIslandId("all")} type="button">全部</button>
