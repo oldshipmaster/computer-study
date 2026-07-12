@@ -13,8 +13,8 @@ export function ReviewChallenge() {
     <section className="review-challenge" aria-labelledby="review-heading">
       <div className="review-copy">
         <p className="section-kicker">岛屿问答站</p>
-        <h2 id="review-heading">用理由点亮十六颗思考星</h2>
-        <p>八座岛各有两道情境题。答错可以继续想，重要的是读懂解释。</p>
+        <h2 id="review-heading">用理由点亮十八颗思考星</h2>
+        <p>九座岛各有两道情境题。答错可以继续想，重要的是读懂解释。</p>
       </div>
       <div className="review-console">
         <div className="review-progress" aria-label={`已经点亮 ${state.score} 颗，共 ${REVIEW_QUESTIONS.length} 颗`}>

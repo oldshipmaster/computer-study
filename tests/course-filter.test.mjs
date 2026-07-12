@@ -4,7 +4,7 @@ import { filterCourses } from "../lib/course-filter.ts";
 import { COURSES } from "../lib/course-data.ts";
 
 test("returns all courses for an empty compass", () => {
-  assert.equal(filterCourses(COURSES, { islandId: "all", query: "" }).length, 40);
+  assert.equal(filterCourses(COURSES, { islandId: "all", query: "" }).length, 45);
 });
 
 test("filters by island without changing catalog order", () => {

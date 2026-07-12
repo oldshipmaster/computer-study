@@ -175,7 +175,7 @@ export function ParentPanel({
             </div>
 
             <div className="parent-badge-summary">
-              <h3>八岛进度</h3>
+              <h3>九岛进度</h3>
               <ul className="parent-island-progress">
                 {islandProgress.map((island) => (
                   <li key={island.id}>

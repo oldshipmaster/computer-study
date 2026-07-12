@@ -8,7 +8,7 @@ const sourceFile = (path) =>
 
 test("selects the next incomplete playable course in the interleaved route", () => {
   const completed = [];
-  const expectedFirstRound = ["keyboard-flight", "file-home", "instruction-order", "password-guardian", "input-process-output", "network-journey", "pixel-art", "email-message"];
+  const expectedFirstRound = ["keyboard-flight", "file-home", "instruction-order", "password-guardian", "input-process-output", "network-journey", "pixel-art", "email-message", "events-handlers"];
   for (const expectedId of expectedFirstRound) {
     assert.equal(getNextPlayableCourse(completed)?.id, expectedId);
     completed.push(expectedId);

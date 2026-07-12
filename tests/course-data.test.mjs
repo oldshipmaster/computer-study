@@ -51,21 +51,26 @@ const COURSE_TITLES = [
   "AI 助手使用入门",
   "AI 信息核验站",
   "数字项目总挑战",
+  "事件启动器",
+  "变量能量箱",
+  "函数工具箱",
+  "真假逻辑门",
+  "小游戏设计总装",
 ];
 
-test("publishes eight islands and forty ordered lessons", () => {
-  assert.equal(ISLANDS.length, 8);
-  assert.equal(COURSES.length, 40);
+test("publishes nine islands and forty-five ordered lessons", () => {
+  assert.equal(ISLANDS.length, 9);
+  assert.equal(COURSES.length, 45);
   assert.deepEqual(
     COURSES.map((course) => course.order),
-    Array.from({ length: 40 }, (_, index) => index + 1),
+    Array.from({ length: 45 }, (_, index) => index + 1),
   );
   assert.deepEqual(COURSES.map((course) => course.title), COURSE_TITLES);
   assert.ok(ISLANDS.every((island) => island.courseIds.length === 5));
 });
 
 test("publishes only lessons with complete interactive implementations", () => {
-  assert.equal(COURSES.filter((course) => course.playable).length, 40);
+  assert.equal(COURSES.filter((course) => course.playable).length, 45);
   assert.equal(getCourse("input-process-output")?.playable, true);
   assert.equal(getCourse("cpu-memory-storage")?.playable, true);
   assert.equal(getCourse("bits-and-data")?.playable, true);
@@ -86,6 +91,11 @@ test("publishes only lessons with complete interactive implementations", () => {
   assert.equal(getCourse("ai-helper")?.playable, true);
   assert.equal(getCourse("verify-ai")?.playable, true);
   assert.equal(getCourse("digital-project")?.playable, true);
+  assert.equal(getCourse("events-handlers")?.playable, true);
+  assert.equal(getCourse("variables-score")?.playable, true);
+  assert.equal(getCourse("functions-tools")?.playable, true);
+  assert.equal(getCourse("boolean-logic")?.playable, true);
+  assert.equal(getCourse("game-design")?.playable, true);
   assert.equal(getCourse("keyboard-flight")?.title, "键盘驾驶飞船");
 });
 
@@ -161,16 +171,16 @@ test("finds the next unfinished playable lesson without hiding replayable cards"
   assert.equal(getCourseCardState(getCourse("keyboard-flight"), ["keyboard-flight"]), "completed");
 });
 
-test("interleaves all eight domains in five learning rounds", () => {
-  assert.equal(RECOMMENDED_ROUTE_IDS.length, 40);
-  assert.equal(new Set(RECOMMENDED_ROUTE_IDS).size, 40);
-  assert.deepEqual(RECOMMENDED_ROUTE_IDS.slice(0, 8), [
+test("interleaves all nine domains in five learning rounds", () => {
+  assert.equal(RECOMMENDED_ROUTE_IDS.length, 45);
+  assert.equal(new Set(RECOMMENDED_ROUTE_IDS).size, 45);
+  assert.deepEqual(RECOMMENDED_ROUTE_IDS.slice(0, 9), [
     "keyboard-flight", "file-home", "instruction-order", "password-guardian",
-    "input-process-output", "network-journey", "pixel-art", "email-message",
+    "input-process-output", "network-journey", "pixel-art", "email-message", "events-handlers",
   ]);
-  assert.deepEqual(RECOMMENDED_ROUTE_IDS.slice(-8), [
+  assert.deepEqual(RECOMMENDED_ROUTE_IDS.slice(-9), [
     "program-landing", "learning-backpack", "bug-catcher", "light-bit-island",
-    "troubleshoot-machine", "network-troubleshooting", "data-table", "digital-project",
+    "troubleshoot-machine", "network-troubleshooting", "data-table", "digital-project", "game-design",
   ]);
   assert.deepEqual(new Set(RECOMMENDED_ROUTE_IDS), new Set(COURSES.map((course) => course.id)));
 });

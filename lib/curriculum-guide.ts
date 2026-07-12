@@ -44,6 +44,11 @@ export const CURRICULUM_GUIDE: Record<string, CourseGuide> = {
   "ai-helper": guide("理解 AI 生成而非真正理解", "用目标背景要求说清任务", "保护隐私并由人核对修改", "只用虚构内容练习提示，不上传孩子姓名、学校、照片或未获许可作品。"),
   "verify-ai": guide("识别可核对的具体主张", "优先权威和原始来源", "交叉核对并表达不确定", "选一个低风险虚构主张，让孩子说明需要什么证据才能相信。"),
   "digital-project": guide("从清楚问题开始", "拆分任务并选择工具", "测试改进后负责任分享", "请孩子用问题、计划、证据、改进四句话复盘项目，不要求公开发布。"),
+  "events-handlers": guide("理解程序等待事件", "把事件与处理器配对", "按发生顺序追踪响应", "请孩子用生活中的门铃比喻事件和处理器。"),
+  "variables-score": guide("理解变量保存状态", "读取并更新当前值", "从初始值逐步追踪", "请孩子用画盒子的方式记录每一步变量值。"),
+  "functions-tools": guide("区分定义与调用", "理解参数和返回结果", "用复用减少重复", "请孩子把一个重复的生活步骤命名成函数，并说出参数。"),
+  "boolean-logic": guide("认识真假结果", "理解并且或者不是", "用括号读组合条件", "请孩子用两张真假卡演示并且与或者的区别。"),
+  "game-design": guide("写清目标规则和结束", "用事件变量循环构建系统", "试玩取证并小步调整", "请孩子先讲规则再试玩，只记录游戏行为，不收集个人信息。"),
 };
 
 export function getNextCourseGuide(completedCourseIds: readonly string[]): { course: Course; guide: CourseGuide } | undefined {

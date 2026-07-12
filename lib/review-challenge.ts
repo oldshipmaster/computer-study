@@ -25,6 +25,8 @@ export const REVIEW_QUESTIONS: ReviewQuestion[] = [
   { id: "creative-2", islandId: "creative-workshop", islandName: "创作工坊", prompt: "表格里同一列的长度有厘米也有米，应该怎么做？", options: ["统一单位后再比较", "直接画图", "把标题删掉"], answer: "统一单位后再比较", explanation: "同一属性使用一致单位，比较和图表才有意义。" },
   { id: "future-1", islandId: "future-station", islandName: "未来协作站", prompt: "AI 给出一个很肯定的日期，应该怎么做？", options: ["查可靠来源并交叉核对", "因为语气肯定就相信", "直接转发"], answer: "查可靠来源并交叉核对", explanation: "AI 可能生成看似合理的错误，流畅和肯定都不是证据。" },
   { id: "future-2", islandId: "future-station", islandName: "未来协作站", prompt: "给只需查看作品的同学共享时，选什么权限？", options: ["查看权限", "管理所有账号", "公开编辑"], answer: "查看权限", explanation: "最小权限只提供完成任务所需的能力，降低误改和泄露风险。" },
+  { id: "spaceport-1", islandId: "code-spaceport", islandName: "代码星港", prompt: "分数从0开始，连续收到三次“碰到星星”事件，每次加1，最后是多少？", options: ["3", "1", "0"], answer: "3", explanation: "每次事件都运行处理器，变量基于当前值连续更新。" },
+  { id: "spaceport-2", islandId: "code-spaceport", islandName: "代码星港", prompt: "三处都要执行相同的画星步骤，怎样更容易维护？", options: ["定义画星函数并复用", "复制后分别乱改", "删除两处"], answer: "定义画星函数并复用", explanation: "函数把共同逻辑集中在一处，调用时可以重复使用。" },
 ];
 
 export interface ReviewState {

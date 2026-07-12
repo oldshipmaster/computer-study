@@ -13,6 +13,7 @@ test("summarizes completed courses for each island", () => {
     ["network-bay", 0, 5],
     ["creative-workshop", 0, 5],
     ["future-station", 0, 5],
+    ["code-spaceport", 0, 5],
   ]);
 });
 

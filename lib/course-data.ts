@@ -322,6 +322,11 @@ export const COURSES: Course[] = [
     id: "digital-project", islandId: "future-station", order: 40,
     title: "数字项目总挑战", summary: "问题、计划、创作、测试、分享与反思。", skill: "综合项目", minutes: 10, difficulty: 3, playable: true,
   },
+  { id: "events-handlers", islandId: "code-spaceport", order: 41, title: "事件启动器", summary: "按键、点击、计时与事件处理器。", skill: "事件编程", minutes: 9, difficulty: 2, playable: true },
+  { id: "variables-score", islandId: "code-spaceport", order: 42, title: "变量能量箱", summary: "读取、更新和追踪程序状态。", skill: "变量", minutes: 9, difficulty: 2, playable: true },
+  { id: "functions-tools", islandId: "code-spaceport", order: 43, title: "函数工具箱", summary: "定义、调用、参数、返回与复用。", skill: "函数", minutes: 9, difficulty: 3, playable: true },
+  { id: "boolean-logic", islandId: "code-spaceport", order: 44, title: "真假逻辑门", summary: "并且、或者、不是与组合条件。", skill: "布尔逻辑", minutes: 9, difficulty: 3, playable: true },
+  { id: "game-design", islandId: "code-spaceport", order: 45, title: "小游戏设计总装", summary: "目标、事件、变量、循环与试玩。", skill: "游戏设计", minutes: 10, difficulty: 3, playable: true },
 ];
 
 export const ISLANDS: Island[] = [
@@ -413,6 +418,7 @@ export const ISLANDS: Island[] = [
     icon: "🛰️",
     courseIds: ["email-message", "online-collaboration", "ai-helper", "verify-ai", "digital-project"],
   },
+  { id: "code-spaceport", name: "代码星港", subtitle: "用事件、变量和函数造游戏", accent: "yellow", icon: "🧩", courseIds: ["events-handlers", "variables-score", "functions-tools", "boolean-logic", "game-design"] },
 ];
 
 export const RECOMMENDED_ROUTE_IDS: string[] = Array.from(

@@ -30,6 +30,7 @@ import { DownloadsCloudLesson } from "@/components/lessons/DownloadsCloudLesson"
 import { NetworkTroubleshootingLesson } from "@/components/lessons/NetworkTroubleshootingLesson";
 import { DataTableLesson, DocumentDesignLesson, MediaCopyrightLesson, PixelArtLesson, SlideStoryLesson } from "@/components/lessons/CreativeLessons";
 import { AiHelperLesson, DigitalProjectLesson, EmailMessageLesson, OnlineCollaborationLesson, VerifyAiLesson } from "@/components/lessons/FutureLessons";
+import { BooleanLogicLesson, EventsHandlersLesson, FunctionsToolsLesson, GameDesignLesson, VariablesScoreLesson } from "@/components/lessons/CodingLessons";
 import type { LessonDefinition } from "@/components/lessons/types";
 
 export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
@@ -329,10 +330,15 @@ export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
   },
   "digital-project": {
     courseId: "digital-project", badgeId: "digital-project-leader", badgeName: "数字项目领队",
-    completionTitle: "四十段基础课程航线全部点亮",
-    completionSummary: "你综合运用了问题定义、任务分解、工具选择、测试改进和负责任分享。",
+    completionTitle: "未来协作站的数字项目通过验收",
+    completionSummary: "你综合运用了问题定义、任务分解、工具选择、测试改进和负责任分享，可以继续前往代码星港。",
     Component: DigitalProjectLesson,
   },
+  "events-handlers": { courseId: "events-handlers", badgeId: "event-controller", badgeName: "事件控制员", completionTitle: "四段事件程序全部响应", completionSummary: "你会分清事件和处理器，并按事件实际发生顺序追踪程序。", Component: EventsHandlersLesson },
+  "variables-score": { courseId: "variables-score", badgeId: "variable-keeper", badgeName: "变量保管员", completionTitle: "四个变量能量箱追踪完成", completionSummary: "你会设置初始值、读取当前值，并用旧值计算后存回新值。", Component: VariablesScoreLesson },
+  "functions-tools": { courseId: "functions-tools", badgeId: "function-builder", badgeName: "函数建造师", completionTitle: "函数工具箱组装完成", completionSummary: "你会区分定义和调用，理解参数与返回值，并用函数复用指令。", Component: FunctionsToolsLesson },
+  "boolean-logic": { courseId: "boolean-logic", badgeId: "logic-gate-keeper", badgeName: "逻辑门卫", completionTitle: "四座真假逻辑门全部打开", completionSummary: "你会追踪并且、或者、不是，并用括号理解组合条件。", Component: BooleanLogicLesson },
+  "game-design": { courseId: "game-design", badgeId: "game-designer", badgeName: "小游戏设计师", completionTitle: "代码星港小游戏完成总装", completionSummary: "你综合使用目标、事件、变量、条件、循环、测试和安全原则设计游戏。", Component: GameDesignLesson },
 };
 
 export function getLessonDefinition(courseId: string): LessonDefinition | undefined {

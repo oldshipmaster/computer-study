@@ -89,7 +89,7 @@ export function IslandMap({
           </span>
           <span>比特岛大冒险</span>
         </a>
-        <span className="island-count">八座知识岛等你探索</span>
+        <span className="island-count">九座知识岛等你探索</span>
       </header>
 
       <section className="map-hero" aria-labelledby="map-heading">
@@ -104,13 +104,13 @@ export function IslandMap({
             tabIndex={-1}
           >
             {mission.complete
-              ? "四十段航线全部完成，继续自由探索"
+              ? "四十五段航线全部完成，继续自由探索"
               : "跟比比一起，学会真正的电脑本领"}
           </h1>
           <p className="hero-summary">
             {mission.complete
               ? "你已经学会电脑操作、文件管理、编程思维和数字安全，可以随时重玩喜欢的课程。"
-              : "每次用 9 分钟完成一个小任务，八座岛轮换探索，让操作、编程、安全和创作穿插进行。"}
+              : "每次用 9 分钟完成一个小任务，九座岛轮换探索，让操作、编程、安全和创作穿插进行。"}
           </p>
 
           {currentCourse ? (
@@ -146,7 +146,7 @@ export function IslandMap({
             mood={mission.complete ? "celebrating" : "happy"}
             message={
               mission.complete
-                ? "太棒了！八座岛都亮起来了。选一课重玩，看看你还能发现什么。"
+                ? "太棒了！九座岛都亮起来了。选一课重玩，看看你还能发现什么。"
                 : "我是比比！今天先从启航港学会驾驶飞船。"
             }
           />
@@ -162,9 +162,9 @@ export function IslandMap({
         <div className="map-intro">
           <div>
             <p className="section-kicker">你的学习航线</p>
-            <h2 id="islands-heading">八座岛，四十次真本领练习</h2>
+            <h2 id="islands-heading">九座岛，四十五次真本领练习</h2>
           </div>
-          <p>推荐路线会在八座岛之间轮换；也可以从课程罗盘自由选择已开放的任意一课。</p>
+          <p>推荐路线会在九座岛之间轮换；也可以从课程罗盘自由选择已开放的任意一课。</p>
         </div>
 
         <div className="course-compass" aria-labelledby="course-compass-heading">

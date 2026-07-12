@@ -114,28 +114,29 @@ test("server-renders the complete curriculum map", async () => {
   assert.match(html, /网络海湾/);
   assert.match(html, /创作工坊/);
   assert.match(html, /未来协作站/);
-  assert.equal((html.match(/data-course-card=/g) ?? []).length, 40);
-  assert.equal((html.match(/course-card--available/g) ?? []).length, 40);
+  assert.match(html, /代码星港/);
+  assert.equal((html.match(/data-course-card=/g) ?? []).length, 45);
+  assert.equal((html.match(/course-card--available/g) ?? []).length, 45);
   assert.equal((html.match(/course-card--locked/g) ?? []).length, 0);
   assert.equal((html.match(/disabled=""/g) ?? []).length, 0);
   assert.match(html, /data-course-id="keyboard-flight"/);
   assert.doesNotMatch(html, /即将开放/);
-  assert.equal((html.match(/开始任务/g) ?? []).length, 40);
-  assert.equal((html.match(/route-curve route-curve--/g) ?? []).length, 7);
+  assert.equal((html.match(/开始任务/g) ?? []).length, 45);
+  assert.equal((html.match(/route-curve route-curve--/g) ?? []).length, 8);
   assert.match(html, /五次探险计划/);
   assert.equal((html.match(/class="session-number"/g) ?? []).length, 5);
   assert.match(html, /你的知识图鉴/);
-  assert.equal((html.match(/class="knowledge-chapter"/g) ?? []).length, 8);
-  assert.equal((html.match(/神秘知识卡/g) ?? []).length, 40);
+  assert.equal((html.match(/class="knowledge-chapter"/g) ?? []).length, 9);
+  assert.equal((html.match(/神秘知识卡/g) ?? []).length, 45);
   assert.match(html, /岛屿问答站/);
   assert.match(html, /画画程序里按下鼠标后/);
   assert.equal((html.match(/review-progress/g) ?? []).length, 1);
 });
 
-test("supports alternating route curves for all eight islands", () => {
+test("supports alternating route curves for all nine islands", () => {
   const css = sourceFile("app/globals.css");
-  assert.match(css, /\.route-curve--2,\s*\.route-curve--4,\s*\.route-curve--6/);
-  assert.match(css, /\.route-curve--2 span,\s*\.route-curve--4 span,\s*\.route-curve--6 span/);
+  assert.match(css, /\.route-curve--2,\s*\.route-curve--4,\s*\.route-curve--6,\s*\.route-curve--8/);
+  assert.match(css, /\.route-curve--2 span,\s*\.route-curve--4 span,\s*\.route-curve--6 span,\s*\.route-curve--8 span/);
 });
 
 test("stacks dense hardware and network labs on child-sized screens", () => {
@@ -185,8 +186,8 @@ test("keeps the guarded parent-area contract in source", () => {
     assert.match(combinedSource, new RegExp(label));
   }
 
-  assert.match(parentSource, /八岛进度/);
-  assert.doesNotMatch(parentSource, /四岛进度/);
+  assert.match(parentSource, /九岛进度/);
+  assert.doesNotMatch(parentSource, /四岛进度|八岛进度/);
 
   assert.match(appSource, /1_500/);
   assert.match(appSource, /onPointerDown/);
