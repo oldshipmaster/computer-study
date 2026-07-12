@@ -55,3 +55,13 @@ test("cache station visualizes distance, capacity, and wait across the hierarchy
   assert.match(lab, /等待.*单位/);
   assert.match(lab, /aria-current/);
 });
+
+test("network layers remain visible as nested envelopes during packing and opening", () => {
+  const lab = readFileSync(new URL("components/lessons/advanced/network/LayerEnvelopeLab.tsx", root), "utf8");
+  assert.match(lab, /nested-envelopes/);
+  assert.match(lab, /envelope--wrapped/);
+  assert.match(lab, /envelope--current/);
+  assert.match(lab, /envelope--opened/);
+  assert.match(lab, /消息核心/);
+  assert.match(lab, /发送端.*接收端/);
+});
