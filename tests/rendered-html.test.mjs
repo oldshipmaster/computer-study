@@ -194,6 +194,9 @@ test("styles advanced foundation labs for touch and small screens", () => {
   assert.match(css, /\.advanced-lab button[\s\S]*?min-height:\s*44px/);
   assert.match(css, /\.memory-grid/);
   assert.match(css, /\.instruction-phases/);
+  for (const selector of ["array-lockers", "linked-path", "stack-queue-columns", "tree-breadcrumb", "graph-node-map", "sort-values", "efficiency-bars"]) {
+    assert.match(css, new RegExp(`\\.${selector}`));
+  }
   assert.match(css, /@media \(max-width: 38rem\)[\s\S]*?\.advanced-lab \[role="group"\][\s\S]*?grid-template-columns:\s*1fr/);
   assert.match(css, /@media \(prefers-reduced-motion: reduce\)[\s\S]*?\.advanced-concept-demo/);
 });
