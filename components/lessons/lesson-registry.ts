@@ -4,7 +4,6 @@ import { BilingualInputLesson } from "@/components/lessons/BilingualInputLesson"
 import { DesktopAdventureLesson } from "@/components/lessons/DesktopAdventureLesson";
 import { ProgramLandingLesson } from "@/components/lessons/ProgramLandingLesson";
 import { PasswordGuardianLesson } from "@/components/lessons/PasswordGuardianLesson";
-import { PopupFogLesson } from "@/components/lessons/PopupFogLesson";
 import { LightBitIslandLesson } from "@/components/lessons/LightBitIslandLesson";
 import type { LessonDefinition } from "@/components/lessons/types";
 import { lazy } from "react";
@@ -32,6 +31,7 @@ const DownloadsCloudLesson = advancedLesson(() => import("@/components/lessons/D
 const NetworkTroubleshootingLesson = advancedLesson(() => import("@/components/lessons/NetworkTroubleshootingLesson"), "NetworkTroubleshootingLesson");
 const HealthyComputerHabitsLesson = advancedLesson(() => import("@/components/lessons/HealthyComputerHabitsLesson"), "HealthyComputerHabitsLesson");
 const PrivateInformationLesson = advancedLesson(() => import("@/components/lessons/PrivateInformationLesson"), "PrivateInformationLesson");
+const PopupFogLesson = advancedLesson(() => import("@/components/lessons/PopupFogLesson"), "PopupFogLesson");
 const loadCoding = () => import("@/components/lessons/CodingLessons");
 const EventsHandlersLesson = advancedLesson(loadCoding, "EventsHandlersLesson");
 const VariablesScoreLesson = advancedLesson(loadCoding, "VariablesScoreLesson");

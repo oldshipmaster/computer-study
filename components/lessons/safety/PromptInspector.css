@@ -1,0 +1,25 @@
+.popup-mission { padding: 1.4rem; border-radius: 1.5rem; background: #edf0ff; }
+.popup-checklist { display: grid; min-height: 13rem; place-items: center; }
+.popup-checklist p { padding: 1rem; border: 3px solid #5c549b; border-radius: 1rem; background: white; color: #15384e; font-weight: 850; }
+.prompt-inspector { display: grid; gap: 1rem; color: #15384e; }
+.fake-browser { overflow: hidden; border: 4px solid #15384e; border-radius: 1rem; background: white; }
+.fake-browser header { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem; padding: .7rem; background: #15384e; color: white; }
+.fake-browser section { padding: 1.3rem; }
+.fake-browser h2 { color: #842f3b; }
+.prompt-signal-scanner { display: grid; grid-template-columns: repeat(5, 1fr); gap: .45rem; }
+.prompt-signal-scanner button { display: grid; min-height: 6rem; place-items: center; gap: .15rem; padding: .5rem; border: 2px dashed #70689e; border-radius: .65rem; background: white; color: #15384e; }
+.prompt-signal-scanner button > span { font-size: 1.4rem; }
+.prompt-signal-scanner button small { font-size: .6rem; }
+.prompt-signal-scanner button.is-clear { border-style: solid; border-color: #24734a; background: #dff7e8; }
+.prompt-signal-scanner button.is-risk { border-style: solid; border-color: #9b3039; background: #ffe4e1; }
+.scanner-summary { margin: 0; padding: .6rem; border-radius: .6rem; background: #fff4cf; font-weight: 800; }
+.prompt-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: .7rem; }
+.prompt-actions button { min-height: 4rem; border: 3px solid #15384e; border-radius: .8rem; background: white; color: #15384e; font-weight: 850; }
+.prompt-finish { display: grid; justify-items: center; gap: .7rem; }
+.prompt-finish > span { font-size: 2.4rem; }
+.prompt-finish h2 { margin: 0; }
+.prompt-finish ul { display: grid; gap: .4rem; width: 100%; margin: 0; padding: 0; list-style: none; }
+.prompt-finish li { display: grid; gap: .15rem; padding: .55rem; border: 2px solid #5c549b; border-radius: .55rem; background: white; }
+.prompt-finish small { color: #526c7a; }
+@media (max-width: 42rem) { .prompt-signal-scanner { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 35rem) { .prompt-actions { grid-template-columns: 1fr; } }
