@@ -1,17 +1,18 @@
 "use client";
 
-import { useLayoutEffect, useRef, useState } from "react";
+import { lazy, Suspense, useLayoutEffect, useRef, useState } from "react";
 import { COURSES, CURRICULUM_FACTS } from "@/lib/course-data";
 import { LESSON_DEFINITIONS } from "@/components/lessons/lesson-registry";
 import { summarizeIslandProgress } from "@/lib/parent-progress-summary";
 import { getNextCourseGuide } from "@/lib/curriculum-guide";
-import { AdvancedParentCoach } from "@/components/AdvancedParentCoach";
 import { createProgressBackup, parseProgressBackup } from "@/lib/progress-backup";
 import { ParentCurriculumOutline } from "@/components/ParentCurriculumOutline";
 import { buildProgressStats } from "@/lib/progress-stats";
 import { ParentFamilyPlan } from "@/components/ParentFamilyPlan";
 import { buildConfidenceStats } from "@/lib/confidence-stats";
 import { buildEarnedBadges } from "@/lib/earned-badges";
+
+const AdvancedParentCoach = lazy(() => import("@/components/AdvancedParentCoach").then((module) => ({ default: module.AdvancedParentCoach })));
 
 export interface ParentProgress {
   version: 1;
@@ -327,7 +328,7 @@ export function ParentPanel({
         </div>
 
         <ParentCurriculumOutline completedCourseIds={progress.completedCourseIds} />
-        <AdvancedParentCoach />
+        <Suspense fallback={<section className="advanced-parent-coach" role="status">正在准备高级基础陪学卡…</section>}><AdvancedParentCoach /></Suspense>
         <ParentFamilyPlan completedCourseIds={progress.completedCourseIds} confidenceByCourse={progress.confidenceByCourse} resume={progress.resume} />
 
         <section className="parent-backup-card" aria-labelledby="backup-progress-title">
