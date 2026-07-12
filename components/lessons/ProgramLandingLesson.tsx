@@ -2,6 +2,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { LessonChrome } from "@/components/lessons/LessonChrome";
 import { DocumentSimulator } from "@/components/lessons/program-landing/DocumentSimulator";
+import "@/components/lessons/program-landing/DocumentSimulator.css";
 import type { LessonProps } from "@/components/lessons/types";
 import { INITIAL_DOCUMENT_STATE, updateDocument, type DocumentAction } from "@/lib/program-landing-lesson";
 
