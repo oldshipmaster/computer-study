@@ -3731,12 +3731,6 @@ html.bit-island-document--reduced-motion *::after,
 .system-pairing > .system-blueprint { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: center; gap: .5rem; padding: .8rem; border-radius: 1rem; background: #eef7ff; } .system-blueprint section { display: grid; min-height: 6rem; place-items: center; padding: .65rem; border: 2px solid #315c9a; border-radius: .7rem; background: white; text-align: center; } .system-blueprint > b { font-size: 1.5rem; } .system-blueprint small { font-size: .65rem; } .system-blueprint .system-output--ready { border-color: #176f59; background: #dcf8e8; box-shadow: 0 0 0 3px rgb(86 197 139 / 30%); }
 @media (max-width: 42rem) { .system-pairing > .system-blueprint { grid-template-columns: 1fr; } }
 
-/* Network packet journey lesson */
-.network-journey-mission { padding: 1.4rem; border-radius: 1.5rem; background: #e5f7ff; }
-.network-demo { display: grid; min-height: 13rem; place-items: center; } .network-demo p { padding: 1rem; border: 3px solid #197ba7; border-radius: 1rem; background: white; color: #15384e; font-weight: 850; }
-.packet-journey { display: grid; gap: 1rem; color: #15384e; } .network-route { display: grid; grid-template-columns: repeat(7, 1fr); gap: .35rem; } .network-route span { display: grid; min-height: 6rem; place-items: center; padding: .4rem; border: 2px solid #197ba7; border-radius: .6rem; background: white; text-align: center; font-size: .72rem; } .network-route span.is-visited { background: #dff7e8; } .network-route span.is-current { background: #ffe36e; box-shadow: 0 0 0 3px rgb(255 227 110 / 35%); } .packet-journey aside { padding: .8rem; border-radius: .7rem; background: white; }
-@media (max-width: 48rem) { .network-route { grid-template-columns: repeat(4, 1fr); } }
-
 /* Web address lesson */
 
 /* Search, links, and tabs lesson */

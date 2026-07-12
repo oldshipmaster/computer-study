@@ -1,0 +1,25 @@
+.network-journey-mission { padding: 1.4rem; border-radius: 1.5rem; background: #e5f7ff; }
+.network-demo { display: grid; min-height: 13rem; place-items: center; }
+.network-demo p { padding: 1rem; border: 3px solid #197ba7; border-radius: 1rem; background: white; color: #15384e; font-weight: 850; }
+.packet-journey { display: grid; gap: 1rem; color: #15384e; }
+.packet-journey header { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem 1rem; }
+.packet-journey header h2 { flex: 1 1 12rem; margin: 0; }
+.journey-direction { padding: .3rem .6rem; border-radius: 1rem; font-size: .72rem; font-weight: 900; }
+.journey-direction--request { background: #fff3bd; }
+.journey-direction--response { background: #dff7e8; }
+.network-route { display: grid; grid-template-columns: repeat(7, 1fr); gap: .35rem; }
+.network-route > span { position: relative; display: grid; min-height: 6rem; place-items: center; padding: .4rem; border: 2px solid #197ba7; border-radius: .6rem; background: white; text-align: center; font-size: .72rem; }
+.network-route > span.is-response { border-color: #24734a; }
+.network-route > span.is-visited { opacity: .7; }
+.network-route > span.is-current { background: #ffe36e; box-shadow: 0 0 0 3px rgb(255 227 110 / 35%); opacity: 1; }
+.network-route > span.is-current.is-response { background: #dff7e8; }
+.journey-packet { font-size: 1.25rem; }
+.station-explanation { display: grid; gap: .2rem; padding: .75rem; border: 2px solid #197ba7; border-radius: .7rem; background: white; }
+.station-explanation small { color: #526c7a; }
+.station-explanation p { margin: 0; }
+.journey-finish { display: grid; justify-items: center; gap: .6rem; padding: 1rem; border: 3px solid #197ba7; border-radius: .8rem; background: white; text-align: center; }
+.journey-finish > span { font-size: 2.3rem; }
+.journey-finish h2 { margin: 0; }
+.journey-finish ul { display: grid; gap: .3rem; margin: 0; padding: 0; list-style: none; text-align: left; }
+.packet-journey aside { padding: .8rem; border-radius: .7rem; background: white; }
+@media (max-width: 48rem) { .network-route { grid-template-columns: repeat(4, 1fr); } }

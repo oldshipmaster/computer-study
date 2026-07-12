@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { readFileSync } from "node:fs";
 import { createPacketJourney, advancePacket } from "../lib/network-journey-lesson.ts";
 
 test("routes a request to a server and a response back to the device", () => {
@@ -20,4 +21,14 @@ test("advancing past completion is safe and deterministic", () => {
 
 test("unknown requests do not create network traffic", () => {
   assert.equal(createPacketJourney("unknown").route.length, 0);
+});
+
+test("packet lab keeps request and response evidence visible", () => {
+  const source = readFileSync(new URL("../components/lessons/network/PacketJourneyLab.tsx", import.meta.url), "utf8");
+  assert.match(source, /journey-packet/);
+  assert.match(source, /station-explanation/);
+  assert.match(source, /请求去程/);
+  assert.match(source, /响应回程/);
+  assert.match(source, /确认收到，下一任务/);
+  assert.match(source, /完成网络往返实验/);
 });
