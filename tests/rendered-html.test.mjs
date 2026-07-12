@@ -292,6 +292,7 @@ test("keeps the guarded parent-area contract in source", () => {
   assert.match(parentSource, /event\.key === "Escape"/);
   assert.match(parentSource, /event\.key === "Tab"/);
   assert.match(parentSource, /resetActionButtonRef/);
+  assert.match(parentSource, /ref=\{backupInputRef\} tabIndex=\{-1\} type="file"/);
   assert.match(appSource, /matchMedia\("\(prefers-reduced-motion: reduce\)"\)/);
   assert.match(appSource, /document\.documentElement\.classList\.toggle/);
   assert.match(appSource, /inert=/);

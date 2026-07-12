@@ -320,7 +320,7 @@ export function ParentPanel({
             <div>
               <button className="parent-secondary-action" onClick={downloadBackup} type="button">导出 JSON 备份</button>
               <button className="parent-secondary-action" onClick={() => backupInputRef.current?.click()} type="button">恢复以前的备份</button>
-              <input accept="application/json,.json" className="visually-hidden" onChange={(event) => void restoreBackup(event.target.files?.[0])} ref={backupInputRef} type="file" />
+              <input accept="application/json,.json" className="visually-hidden" onChange={(event) => void restoreBackup(event.target.files?.[0])} ref={backupInputRef} tabIndex={-1} type="file" />
             </div>
             {backupStatus ? <p className="parent-backup-status" role="status">{backupStatus}</p> : null}
           </div>
