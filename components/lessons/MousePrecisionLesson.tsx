@@ -32,8 +32,10 @@ export function MousePrecisionLesson({
 }: LessonProps) {
   const initial = normalizeMouseResumeStage(initialStage);
   const [state, setState] = useState({ ...INITIAL_MOUSE_STATE, stage: initial });
+  const [doubleClickCount, setDoubleClickCount] = useState(0);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const awardedRef = useRef(false);
+  const doubleClickTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const stageIndex = MOUSE_STAGES.indexOf(state.stage);
 
   useLayoutEffect(() => headingRef.current?.focus(), [state.stage]);
@@ -47,6 +49,15 @@ export function MousePrecisionLesson({
 
   function act(action: MouseLessonAction) {
     setState((current) => advanceMouseSequence(current, action));
+  }
+  function noteDoubleClickAttempt() {
+    setDoubleClickCount((value) => Math.min(2, value + 1));
+    if (doubleClickTimerRef.current) clearTimeout(doubleClickTimerRef.current);
+    doubleClickTimerRef.current = setTimeout(() => setDoubleClickCount(0), 650);
+  }
+  function finishDoubleClick() {
+    if (doubleClickTimerRef.current) clearTimeout(doubleClickTimerRef.current);
+    act({ type: "doubleClickTarget", targetId: "blue-hatch" });
   }
 
   const [heading, message] = COPY[state.stage];
@@ -63,11 +74,11 @@ export function MousePrecisionLesson({
     >
       <div className="mouse-mission" data-stage={state.stage}>
         {state.stage === "intro" ? (
-          <button className="primary-action" onClick={() => act({ type: "continue" })} type="button">开始维修导航台</button>
+          <div className="mouse-intro"><div aria-label="鼠标结构：左键、滚轮和右键" className="mouse-anatomy" role="img"><span className="mouse-part mouse-part--left"><strong>左键</strong><small>选择、单击、双击、拖动</small></span><span className="mouse-part mouse-part--wheel"><strong>滚轮</strong><small>上下浏览页面</small></span><span className="mouse-part mouse-part--right"><strong>右键</strong><small>打开更多操作；不确定时先问大人</small></span><b aria-hidden="true">🖱️</b></div><button className="primary-action" onClick={() => act({ type: "continue" })} type="button">开始维修导航台</button></div>
         ) : null}
         {state.stage === "move" ? <MouseTargetField visited={state.movedTargets} onVisit={(targetId) => act({ type: "moveTarget", targetId })} /> : null}
         {state.stage === "click" ? <button className="mouse-beacon" onClick={() => act({ type: "clickTarget", targetId: "yellow-beacon" })} type="button">黄色信标 · 单击一次</button> : null}
-        {state.stage === "doubleClick" ? <div className="double-click-practice"><button className="mouse-hatch" onDoubleClick={() => act({ type: "doubleClickTarget", targetId: "blue-hatch" })} type="button">蓝色舱门 · 快速双击</button><button className="keyboard-alternative" onClick={() => act({ type: "doubleClickTarget", targetId: "blue-hatch" })} type="button">键盘操作：打开舱门</button></div> : null}
+        {state.stage === "doubleClick" ? <div className="double-click-practice"><button className="mouse-hatch" onClick={noteDoubleClickAttempt} onDoubleClick={finishDoubleClick} type="button">蓝色舱门 · 快速双击</button><div aria-live="polite" className="double-click-meter"><span className={doubleClickCount >= 1 ? "is-detected" : ""}>第 1 次</span><b aria-hidden="true">＋</b><span className={doubleClickCount >= 2 ? "is-detected" : ""}>第 2 次</span><strong>{doubleClickCount < 2 ? `已检测 ${doubleClickCount}/2，请在同一位置快速再点` : "检测到两次，正在打开"}</strong></div><button className="keyboard-alternative" onClick={finishDoubleClick} type="button">键盘操作：打开舱门</button></div> : null}
         {state.stage === "drag" ? <DragWorkshop delivered={state.draggedCrates} onDrop={(crateId, bayId) => act({ type: "dropCrate", crateId, bayId })} /> : null}
         {state.stage === "challenge" ? (
           <div className="mouse-challenge" aria-label="鼠标独立挑战" role="group">

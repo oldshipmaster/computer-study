@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 import {
   INITIAL_MOUSE_STATE,
@@ -52,4 +53,14 @@ test("classifies measurable progress and clamps resume before rewards", () => {
   assert.equal(isUsefulMouseAction(moved, { ...moved, wrongAttempts: 2 }), false);
   assert.equal(normalizeMouseResumeStage(0), "intro");
   assert.equal(normalizeMouseResumeStage(99), "challenge");
+});
+
+test("the lesson explains mouse parts and visualizes double-click progress", () => {
+  const source = readFileSync(new URL("../components/lessons/MousePrecisionLesson.tsx", import.meta.url), "utf8");
+  assert.match(source, /mouse-anatomy/);
+  assert.match(source, /左键/);
+  assert.match(source, /滚轮/);
+  assert.match(source, /右键/);
+  assert.match(source, /double-click-meter/);
+  assert.match(source, /doubleClickCount/);
 });
