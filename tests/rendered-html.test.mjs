@@ -601,11 +601,13 @@ test("registers a scoped offline shell and shows connection status", () => {
   const pagesSource = sourceFile("github-pages/main.tsx");
   const statusSource = sourceFile("components/OfflineStatus.tsx");
   assert.match(pagesSource, /navigator\.serviceWorker\.register/);
+  assert.match(pagesSource, /\.catch\(\(\) => window\.dispatchEvent/);
   assert.match(pagesSource, /import\.meta\.env\.BASE_URL/);
   assert.match(statusSource, /navigator\.onLine/);
   assert.match(statusSource, /serviceWorker\.ready/);
   assert.match(statusSource, /addEventListener\("offline"/);
   assert.match(statusSource, /当前离线：继续学习已打开过的课程/);
+  assert.match(statusSource, /离线功能未准备好 · 联网仍可学习/);
 });
 
 test("runs every test file after exactly one production build", () => {
