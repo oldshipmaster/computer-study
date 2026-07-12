@@ -3,9 +3,10 @@ import { CURRICULUM_FACTS } from "@/lib/course-data";
 
 interface KnowledgeAtlasProps {
   completedCourseIds: string[];
+  onStartCourse: (courseId: string) => void;
 }
 
-export function KnowledgeAtlas({ completedCourseIds }: KnowledgeAtlasProps) {
+export function KnowledgeAtlas({ completedCourseIds, onStartCourse }: KnowledgeAtlasProps) {
   const chapters = buildKnowledgeAtlas(completedCourseIds);
   const unlockedTotal = chapters.reduce((total, chapter) => total + chapter.unlockedCount, 0);
 
@@ -34,7 +35,7 @@ export function KnowledgeAtlas({ completedCourseIds }: KnowledgeAtlasProps) {
                   <div>
                     <strong>{entry.unlocked ? entry.title : "神秘知识卡"}</strong>
                     {entry.unlocked ? (
-                      <ul>{entry.concepts.map((concept) => <li key={concept}>{concept}</li>)}</ul>
+                      <><ul>{entry.concepts.map((concept) => <li key={concept}>{concept}</li>)}</ul><button onClick={() => onStartCourse(entry.courseId)} type="button">重玩巩固 →</button></>
                     ) : <p>完成第 {entry.order} 课后解锁</p>}
                   </div>
                 </li>

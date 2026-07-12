@@ -219,6 +219,13 @@ test("offers child-led review from structured confidence choices", () => {
   assert.match(queueSource, /还有 \{remaining\} 课在加练清单里/);
 });
 
+test("lets unlocked knowledge cards launch lesson replay", () => {
+  const source = sourceFile("components/KnowledgeAtlas.tsx");
+  assert.match(source, /onStartCourse: \(courseId: string\) => void/);
+  assert.match(source, /onStartCourse\(entry\.courseId\)/);
+  assert.match(source, /重玩巩固/);
+});
+
 test("reads dictionary explanations locally while respecting sound settings", () => {
   const source = sourceFile("components/ComputerDictionary.tsx");
   assert.match(source, /SpeechSynthesisUtterance/);

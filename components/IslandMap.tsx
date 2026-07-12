@@ -212,7 +212,7 @@ export function IslandMap({
       <IslandSealCollection completedCourseIds={completedCourseIds} />
       {mission.complete ? <CompletionCertificate /> : null}
 
-      <KnowledgeAtlas completedCourseIds={completedCourseIds} />
+      <KnowledgeAtlas completedCourseIds={completedCourseIds} onStartCourse={onStartCourse} />
       <ComputerDictionary onStartCourse={onStartCourse} soundEnabled={soundEnabled} />
       <ReviewChallenge completedCourseIds={completedCourseIds} key={completedCourseIds.join("|")} />
 
