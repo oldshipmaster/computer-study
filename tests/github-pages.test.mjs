@@ -38,6 +38,8 @@ test("deploys the static artifact with the official Pages actions", async () => 
 
   assert.match(workflow, /pages:\s*write/);
   assert.match(workflow, /id-token:\s*write/);
+  assert.match(workflow, /build:\s*\n\s+permissions:\s*\n\s+contents:\s*read/);
+  assert.match(workflow, /deploy:\s*\n\s+permissions:\s*\n\s+pages:\s*write\s*\n\s+id-token:\s*write/);
   assert.match(workflow, /actions\/checkout@v7/);
   assert.match(workflow, /actions\/setup-node@v6/);
   assert.match(workflow, /actions\/configure-pages@v6/);
