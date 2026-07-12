@@ -24,6 +24,7 @@ test("emits a GitHub Pages artifact under the repository base path", async () =>
   await access(new URL("favicon.svg", outputRoot));
   const serviceWorker = await readFile(new URL("sw.js", outputRoot), "utf8");
   assert.match(serviceWorker, /requestUrl\.origin !== scopeUrl\.origin/);
+  assert.match(serviceWorker, /!requestUrl\.pathname\.startsWith\(scopeUrl\.pathname\)/);
   assert.match(serviceWorker, /event\.request\.mode === "navigate"/);
   assert.match(serviceWorker, /mutableCoreFile/);
   assert.match(serviceWorker, /event\.request\.mode === "navigate" \? networkFirst\(event\.request, true\)/);
