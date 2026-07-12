@@ -51,6 +51,13 @@ test("correct answers advance once and complete after the final question", () =>
   assert.equal(state.index, 17);
 });
 
+test("labels a carried explanation as belonging to the previous question", () => {
+  const first = answerReviewQuestion(createReviewState(), 0, REVIEW_QUESTIONS);
+  assert.equal(first.index, 1);
+  assert.match(first.feedback.message, /^上一题答对了：/);
+  assert.match(first.feedback.message, /继续读下一题。$/);
+});
+
 test("answering after completion is safe and deterministic", () => {
   const state = { ...createReviewState(), index: 17, score: 18, completed: true };
   assert.deepEqual(answerReviewQuestion(state, 0), state);

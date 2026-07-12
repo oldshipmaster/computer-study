@@ -69,6 +69,6 @@ export function answerReviewQuestion(state: ReviewState, optionIndex: number, qu
     index: isLast ? state.index : state.index + 1,
     score: state.score + 1,
     completed: isLast,
-    feedback: { kind: "correct", message: isLast ? "所有思考星全部点亮！" : question.explanation },
+    feedback: { kind: "correct", message: isLast ? "所有思考星全部点亮！" : `上一题答对了：${question.explanation} 继续读下一题。` },
   };
 }
