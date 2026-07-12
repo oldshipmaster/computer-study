@@ -14,6 +14,6 @@ test("provides parent guidance for every course", () => {
 
 test("selects guidance for the next unfinished course", () => {
   assert.equal(getNextCourseGuide([])?.course.id, "keyboard-flight");
-  assert.equal(getNextCourseGuide(["keyboard-flight"])?.course.id, "mouse-precision");
+  assert.equal(getNextCourseGuide(["keyboard-flight"])?.course.id, "file-home");
   assert.equal(getNextCourseGuide(COURSES.map((course) => course.id)), undefined);
 });

@@ -6,31 +6,14 @@ import { COURSES, getNextPlayableCourse } from "../lib/course-data.ts";
 const sourceFile = (path) =>
   readFile(new URL(`../${path}`, import.meta.url), "utf8");
 
-test("selects the next incomplete playable course in catalog order", () => {
-  assert.equal(getNextPlayableCourse([])?.id, "keyboard-flight");
-  assert.equal(getNextPlayableCourse(["keyboard-flight"])?.id, "mouse-precision");
-  assert.equal(
-    getNextPlayableCourse(["keyboard-flight", "mouse-precision"])?.id,
-    "bilingual-input",
-  );
-  assert.equal(getNextPlayableCourse(["keyboard-flight", "mouse-precision", "bilingual-input"])?.id, "desktop-adventure");
-  assert.equal(getNextPlayableCourse(["keyboard-flight", "mouse-precision", "bilingual-input", "desktop-adventure"])?.id, "program-landing");
-  assert.equal(getNextPlayableCourse(["keyboard-flight", "mouse-precision", "bilingual-input", "desktop-adventure", "program-landing"])?.id, "file-home");
-  assert.equal(getNextPlayableCourse(["keyboard-flight", "mouse-precision", "bilingual-input", "desktop-adventure", "program-landing", "file-home"])?.id, "name-your-work");
-  assert.equal(getNextPlayableCourse(["keyboard-flight", "mouse-precision", "bilingual-input", "desktop-adventure", "program-landing", "file-home", "name-your-work"])?.id, "move-and-copy");
-  assert.equal(getNextPlayableCourse(["keyboard-flight", "mouse-precision", "bilingual-input", "desktop-adventure", "program-landing", "file-home", "name-your-work", "move-and-copy"])?.id, "file-types");
-  assert.equal(getNextPlayableCourse(["keyboard-flight", "mouse-precision", "bilingual-input", "desktop-adventure", "program-landing", "file-home", "name-your-work", "move-and-copy", "file-types"])?.id, "learning-backpack");
-  assert.equal(getNextPlayableCourse(["keyboard-flight", "mouse-precision", "bilingual-input", "desktop-adventure", "program-landing", "file-home", "name-your-work", "move-and-copy", "file-types", "learning-backpack"])?.id, "instruction-order");
-  assert.equal(getNextPlayableCourse(["keyboard-flight", "mouse-precision", "bilingual-input", "desktop-adventure", "program-landing", "file-home", "name-your-work", "move-and-copy", "file-types", "learning-backpack", "instruction-order"])?.id, "grid-city-navigation");
-  assert.equal(getNextPlayableCourse(["keyboard-flight", "mouse-precision", "bilingual-input", "desktop-adventure", "program-landing", "file-home", "name-your-work", "move-and-copy", "file-types", "learning-backpack", "instruction-order", "grid-city-navigation"])?.id, "repeat-power");
-  assert.equal(getNextPlayableCourse(["keyboard-flight", "mouse-precision", "bilingual-input", "desktop-adventure", "program-landing", "file-home", "name-your-work", "move-and-copy", "file-types", "learning-backpack", "instruction-order", "grid-city-navigation", "repeat-power"])?.id, "rainy-condition");
-  assert.equal(getNextPlayableCourse(["keyboard-flight", "mouse-precision", "bilingual-input", "desktop-adventure", "program-landing", "file-home", "name-your-work", "move-and-copy", "file-types", "learning-backpack", "instruction-order", "grid-city-navigation", "repeat-power", "rainy-condition"])?.id, "bug-catcher");
-  assert.equal(getNextPlayableCourse(["keyboard-flight", "mouse-precision", "bilingual-input", "desktop-adventure", "program-landing", "file-home", "name-your-work", "move-and-copy", "file-types", "learning-backpack", "instruction-order", "grid-city-navigation", "repeat-power", "rainy-condition", "bug-catcher"])?.id, "password-guardian");
-  assert.equal(getNextPlayableCourse(["keyboard-flight", "mouse-precision", "bilingual-input", "desktop-adventure", "program-landing", "file-home", "name-your-work", "move-and-copy", "file-types", "learning-backpack", "instruction-order", "grid-city-navigation", "repeat-power", "rainy-condition", "bug-catcher", "password-guardian"])?.id, "private-information");
-  assert.equal(getNextPlayableCourse(["keyboard-flight", "mouse-precision", "bilingual-input", "desktop-adventure", "program-landing", "file-home", "name-your-work", "move-and-copy", "file-types", "learning-backpack", "instruction-order", "grid-city-navigation", "repeat-power", "rainy-condition", "bug-catcher", "password-guardian", "private-information"])?.id, "popup-fog");
-  assert.equal(getNextPlayableCourse(["keyboard-flight", "mouse-precision", "bilingual-input", "desktop-adventure", "program-landing", "file-home", "name-your-work", "move-and-copy", "file-types", "learning-backpack", "instruction-order", "grid-city-navigation", "repeat-power", "rainy-condition", "bug-catcher", "password-guardian", "private-information", "popup-fog"])?.id, "healthy-computer-habits");
-  assert.equal(getNextPlayableCourse(["keyboard-flight", "mouse-precision", "bilingual-input", "desktop-adventure", "program-landing", "file-home", "name-your-work", "move-and-copy", "file-types", "learning-backpack", "instruction-order", "grid-city-navigation", "repeat-power", "rainy-condition", "bug-catcher", "password-guardian", "private-information", "popup-fog", "healthy-computer-habits"])?.id, "light-bit-island");
-  assert.equal(getNextPlayableCourse(COURSES.slice(0, 20).map((course) => course.id))?.id, "input-process-output");
+test("selects the next incomplete playable course in the interleaved route", () => {
+  const completed = [];
+  const expectedFirstRound = ["keyboard-flight", "file-home", "instruction-order", "password-guardian", "input-process-output", "network-journey", "pixel-art", "email-message"];
+  for (const expectedId of expectedFirstRound) {
+    assert.equal(getNextPlayableCourse(completed)?.id, expectedId);
+    completed.push(expectedId);
+  }
+  assert.equal(getNextPlayableCourse(completed)?.id, "mouse-precision");
   assert.equal(getNextPlayableCourse(COURSES.map((course) => course.id)), undefined);
 });
 

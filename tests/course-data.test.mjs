@@ -7,6 +7,7 @@ import {
   getCourseCardState,
   getMapMission,
   getNextPlayableCourse,
+  RECOMMENDED_ROUTE_IDS,
 } from "../lib/course-data.ts";
 
 const COURSE_TITLES = [
@@ -155,8 +156,23 @@ test("distinguishes completed, available, and upcoming lesson cards", () => {
 
 test("finds the next unfinished playable lesson without hiding replayable cards", () => {
   assert.equal(getNextPlayableCourse([])?.id, "keyboard-flight");
-  assert.equal(getNextPlayableCourse(["keyboard-flight"])?.id, "mouse-precision");
+  assert.equal(getNextPlayableCourse(["keyboard-flight"])?.id, "file-home");
+  assert.equal(getNextPlayableCourse(["keyboard-flight", "file-home"])?.id, "instruction-order");
   assert.equal(getCourseCardState(getCourse("keyboard-flight"), ["keyboard-flight"]), "completed");
+});
+
+test("interleaves all eight domains in five learning rounds", () => {
+  assert.equal(RECOMMENDED_ROUTE_IDS.length, 40);
+  assert.equal(new Set(RECOMMENDED_ROUTE_IDS).size, 40);
+  assert.deepEqual(RECOMMENDED_ROUTE_IDS.slice(0, 8), [
+    "keyboard-flight", "file-home", "instruction-order", "password-guardian",
+    "input-process-output", "network-journey", "pixel-art", "email-message",
+  ]);
+  assert.deepEqual(RECOMMENDED_ROUTE_IDS.slice(-8), [
+    "program-landing", "learning-backpack", "bug-catcher", "light-bit-island",
+    "troubleshoot-machine", "network-troubleshooting", "data-table", "digital-project",
+  ]);
+  assert.deepEqual(new Set(RECOMMENDED_ROUTE_IDS), new Set(COURSES.map((course) => course.id)));
 });
 
 test("turns the map mission into a celebration after all lessons are complete", () => {

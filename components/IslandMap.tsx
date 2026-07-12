@@ -109,7 +109,7 @@ export function IslandMap({
           <p className="hero-summary">
             {mission.complete
               ? "你已经学会电脑操作、文件管理、编程思维和数字安全，可以随时重玩喜欢的课程。"
-              : "每次用 9 分钟完成一个小任务，从键盘驾驶一直探索到网络海湾。"}
+              : "每次用 9 分钟完成一个小任务，八座岛轮换探索，让操作、编程、安全和创作穿插进行。"}
           </p>
 
           {currentCourse ? (
@@ -161,7 +161,7 @@ export function IslandMap({
             <p className="section-kicker">你的学习航线</p>
             <h2 id="islands-heading">八座岛，四十次真本领练习</h2>
           </div>
-          <p>从第一座岛出发。学会一项本领，航线就会向前亮起一段。</p>
+          <p>推荐路线会在八座岛之间轮换；也可以从课程罗盘自由选择已开放的任意一课。</p>
         </div>
 
         <div className="course-compass" aria-labelledby="course-compass-heading">

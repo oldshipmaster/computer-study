@@ -415,6 +415,11 @@ export const ISLANDS: Island[] = [
   },
 ];
 
+export const RECOMMENDED_ROUTE_IDS: string[] = Array.from(
+  { length: Math.max(...ISLANDS.map((island) => island.courseIds.length)) },
+  (_, round) => ISLANDS.flatMap((island) => island.courseIds[round] ?? []),
+).flat();
+
 export function getCourse(id: string): Course | undefined {
   return COURSES.find((course) => course.id === id);
 }
@@ -422,9 +427,10 @@ export function getCourse(id: string): Course | undefined {
 export function getNextPlayableCourse(
   completedCourseIds: readonly string[],
 ): Course | undefined {
-  return COURSES.find(
-    (course) => course.playable && !completedCourseIds.includes(course.id),
-  );
+  const completed = new Set(completedCourseIds);
+  return RECOMMENDED_ROUTE_IDS
+    .map((courseId) => getCourse(courseId))
+    .find((course) => course?.playable && !completed.has(course.id));
 }
 
 export function getMapMission(completedCourseIds: readonly string[]): {
