@@ -128,6 +128,7 @@ test("server-renders the complete curriculum map", async () => {
   assert.match(html, /岛屿印章册/);
   assert.equal((html.match(/还差 5 课/g) ?? []).length, 9);
   assert.match(html, /儿童隐私与安全说明/);
+  assert.match(html, /情境题答案只在当前页面内/);
   assert.match(html, /aria-label="全部课程完成进度"/);
   assert.match(html, /href="#site-top"/);
   assert.match(html, /class="skip-link" href="#map-heading">跳到今天任务/);
