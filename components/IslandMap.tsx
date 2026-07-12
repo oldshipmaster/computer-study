@@ -4,6 +4,7 @@ import { useState, type Ref } from "react";
 import { Bibi } from "@/components/Bibi";
 import { KnowledgeAtlas } from "@/components/KnowledgeAtlas";
 import { ReviewChallenge } from "@/components/ReviewChallenge";
+import { LearningPlan } from "@/components/LearningPlan";
 import {
   ISLANDS,
   COURSES,
@@ -151,6 +152,8 @@ export function IslandMap({
           />
         </div>
       </section>
+
+      <LearningPlan completedCourseIds={completedCourseIds} onStartCourse={onStartCourse} />
 
       <KnowledgeAtlas completedCourseIds={completedCourseIds} />
       <ReviewChallenge />
