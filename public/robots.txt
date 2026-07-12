@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://oldshipmaster.github.io/computer-study/sitemap.xml

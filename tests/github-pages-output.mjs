@@ -11,6 +11,7 @@ test("emits a GitHub Pages artifact under the repository base path", async () =>
   assert.match(html, /\/computer-study\/assets\//);
   assert.match(html, /\/computer-study\/favicon\.svg/);
   assert.match(html, /rel="apple-touch-icon" sizes="192x192" href="\/computer-study\/icon-192\.png"/);
+  assert.match(html, /rel="sitemap" type="application\/xml" href="\/computer-study\/sitemap\.xml"/);
   assert.match(html, /九岛四十五课互动计算机课程/);
   assert.match(html, /rel="canonical" href="https:\/\/oldshipmaster\.github\.io\/computer-study\/"/);
   assert.match(html, /需要开启 JavaScript/);
@@ -43,6 +44,13 @@ test("emits a GitHub Pages artifact under the repository base path", async () =>
     assert.equal(png.readUInt32BE(16), expectedSize);
     assert.equal(png.readUInt32BE(20), expectedSize);
   }
+  const [robots, sitemap] = await Promise.all([
+    readFile(new URL("robots.txt", outputRoot), "utf8"),
+    readFile(new URL("sitemap.xml", outputRoot), "utf8"),
+  ]);
+  assert.match(robots, /Sitemap: https:\/\/oldshipmaster\.github\.io\/computer-study\/sitemap\.xml/);
+  assert.match(sitemap, /<loc>https:\/\/oldshipmaster\.github\.io\/computer-study\/<\/loc>/);
+  assert.equal((sitemap.match(/<url>/g) ?? []).length, 1);
 });
 
 test("keeps the complete curriculum inside a child-device performance budget", async () => {
