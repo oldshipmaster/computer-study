@@ -125,6 +125,8 @@ test("server-renders the complete curriculum map", async () => {
   assert.equal((html.match(/route-curve route-curve--/g) ?? []).length, 8);
   assert.match(html, /五次探险计划/);
   assert.equal((html.match(/class="session-number"/g) ?? []).length, 5);
+  assert.match(html, /岛屿印章册/);
+  assert.equal((html.match(/还差 5 课/g) ?? []).length, 9);
   assert.match(html, /你的知识图鉴/);
   assert.equal((html.match(/class="knowledge-chapter"/g) ?? []).length, 9);
   assert.equal((html.match(/神秘知识卡/g) ?? []).length, 45);
