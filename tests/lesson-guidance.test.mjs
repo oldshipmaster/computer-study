@@ -94,7 +94,7 @@ test("stops keyboard lesson speech when muted, hidden, or closed", () => {
   );
 
   assert.match(source, /document\.visibilityState !== "visible"/);
-  assert.match(source, /if \(!sound\) window\.speechSynthesis\.cancel\(\)/);
+  assert.match(source, /if \(!sound\) safelyRunSpeech\(\(\) => window\.speechSynthesis\.cancel\(\)\)/);
   assert.match(source, /document\.addEventListener\("visibilitychange"/);
   assert.match(source, /document\.removeEventListener\("visibilitychange"/);
   assert.match(source, /return \(\) => \{[\s\S]{0,240}window\.speechSynthesis\.cancel\(\)/);
