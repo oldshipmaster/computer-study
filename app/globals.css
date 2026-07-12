@@ -3776,6 +3776,27 @@ html.bit-island-document--reduced-motion *::after,
 @media (max-width: 38rem) { .coding-options { grid-template-columns: 1fr; } .coding-options button { min-height: 3.6rem; } }
 
 /* Advanced computer foundations: data structures, algorithms, OS, architecture and networks */
+.foundation-roadmap { width: min(100% - 48px, 1320px); margin: 54px auto; padding: clamp(1.2rem, 4vw, 2.5rem); border: 3px solid #15384e; border-radius: 2rem; background: #102f45; color: white; box-shadow: 12px 14px 0 rgb(18 50 74 / 14%); }
+.foundation-roadmap > header { max-width: 55rem; }
+.foundation-roadmap > header h2 { margin: 0; font-size: clamp(1.8rem, 4vw, 3rem); line-height: 1.12; }
+.foundation-roadmap > header > p:last-child { color: #d8edf4; }
+.foundation-roadmap-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+.foundation-roadmap article { min-width: 0; padding: 1rem; border: 2px solid rgb(255 255 255 / 35%); border-radius: 1.2rem; background: #183f58; }
+.foundation-roadmap-title { display: flex; align-items: flex-start; gap: .8rem; }
+.foundation-roadmap-title > span { font-size: 2.2rem; }
+.foundation-roadmap-title h3, .foundation-roadmap-title p { margin: 0; }
+.foundation-roadmap-title p { color: #d8edf4; font-size: .78rem; }
+.foundation-roadmap-title strong { display: block; color: #ffe36e; }
+.foundation-roadmap ol { display: grid; gap: .55rem; margin: 1rem 0 0; padding: 0; list-style: none; }
+.foundation-roadmap li { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: .65rem; min-width: 0; padding: .6rem; border-radius: .75rem; background: #f7fcff; color: #15384e; }
+.foundation-roadmap li > span { display: grid; width: 2rem; height: 2rem; place-items: center; border-radius: 50%; background: #dbe9ef; font-weight: 900; }
+.foundation-roadmap li > div { display: grid; min-width: 0; }
+.foundation-roadmap li small { color: #456377; line-height: 1.3; }
+.foundation-roadmap li button { min-height: 44px; max-width: 12rem; overflow: hidden; padding: .45rem .65rem; border: 2px solid #15384e; border-radius: .6rem; background: #ffe36e; color: #15384e; cursor: pointer; font-size: .72rem; font-weight: 850; text-overflow: ellipsis; white-space: nowrap; }
+.foundation-roadmap-step--complete { background: #e3f8ed !important; }
+.foundation-roadmap-step--complete > span { background: #176f59 !important; color: white; }
+@media (max-width: 52rem) { .foundation-roadmap-grid { grid-template-columns: 1fr; } }
+@media (max-width: 38rem) { .foundation-roadmap { width: min(100% - 32px, 1320px); } .foundation-roadmap li { grid-template-columns: auto minmax(0, 1fr); } .foundation-roadmap li button { grid-column: 1 / -1; width: 100%; max-width: none; } }
 .advanced-foundation-lesson { min-width: 0; padding: clamp(1rem, 3vw, 1.6rem); border-radius: 1.5rem; background: linear-gradient(145deg, #eef8ff, #fff7d9); color: #15384e; }
 .advanced-concept-demo { display: grid; min-height: 18rem; place-items: center; align-content: center; gap: 1.25rem; text-align: center; }
 .concept-journey { display: grid; width: min(100%, 44rem); justify-items: center; gap: 1.2rem; }
