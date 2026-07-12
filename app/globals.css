@@ -3798,6 +3798,8 @@ html.bit-island-document--reduced-motion *::after,
 .foundation-roadmap-title h3, .foundation-roadmap-title p { margin: 0; }
 .foundation-roadmap-title p { color: #d8edf4; font-size: .78rem; }
 .foundation-roadmap-title strong { display: block; color: #ffe36e; }
+.foundation-roadmap-meter { display: flex; align-items: center; gap: .55rem; margin-top: .55rem; color: #d8edf4; font-size: .68rem; font-weight: 800; }
+.foundation-roadmap-meter progress { width: min(9rem, 55%); height: .6rem; accent-color: #ffe36e; }
 .foundation-roadmap ol { display: grid; gap: .55rem; margin: 1rem 0 0; padding: 0; list-style: none; }
 .foundation-roadmap li { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: .65rem; min-width: 0; padding: .6rem; border-radius: .75rem; background: #f7fcff; color: #15384e; }
 .foundation-roadmap li > span { display: grid; width: 2rem; height: 2rem; place-items: center; border-radius: 50%; background: #dbe9ef; font-weight: 900; }

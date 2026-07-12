@@ -24,5 +24,8 @@ test("renders roadmap progress with replayable course controls", async () => {
   assert.match(component, /foundation-roadmap-step--complete/);
   assert.match(component, /onStartCourse\(step\.courseId\)/);
   assert.match(component, /为什么要学这条线/);
+  assert.match(component, /threadCompleted/);
+  assert.match(component, /aria-label=\{`\$\{thread\.title\}完成进度`\}/);
+  assert.match(component, /max=\{thread\.steps\.length\}/);
   assert.match(map, /<FoundationRoadmap/);
 });
