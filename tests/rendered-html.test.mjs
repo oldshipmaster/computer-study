@@ -585,6 +585,19 @@ test("keeps final lesson controls inside a child-sized mobile viewport", () => {
   }
 });
 
+test("keeps lesson experiment headings directly below the stage heading", () => {
+  for (const file of [
+    "components/lessons/files/BackpackOrganizer.tsx",
+    "components/lessons/safety/HabitPlanner.tsx",
+    "components/lessons/hardware/MemoryLab.tsx",
+    "components/lessons/network/TransferLab.tsx",
+  ]) {
+    const source = sourceFile(file);
+    assert.match(source, /<h2>/, `${file} should expose second-level experiment headings`);
+    assert.doesNotMatch(source, /<h3>/, `${file} should not skip from h1 to h3`);
+  }
+});
+
 test("keeps the lesson caption at least 16px at every responsive size", () => {
   const captionBlocks = cssBlocks(".bibi--lesson .bibi-message p");
 
