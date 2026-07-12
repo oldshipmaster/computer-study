@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { ISLANDS } from "@/lib/course-data";
 import { searchDictionary } from "@/lib/computer-dictionary";
+import { safelyRunSpeech } from "@/lib/lesson-audio";
 
 export function ComputerDictionary({ soundEnabled, onStartCourse }: { soundEnabled: boolean; onStartCourse: (courseId: string) => void }) {
   const [query, setQuery] = useState("");
@@ -16,7 +17,7 @@ export function ComputerDictionary({ soundEnabled, onStartCourse }: { soundEnabl
     });
     return () => {
       cancelled = true;
-      if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+      if ("speechSynthesis" in window) safelyRunSpeech(() => window.speechSynthesis.cancel());
     };
   }, []);
 
@@ -24,10 +25,10 @@ export function ComputerDictionary({ soundEnabled, onStartCourse }: { soundEnabl
     if (!canSpeak) return;
 
     const stopWhenHidden = () => {
-      if (document.visibilityState !== "visible") window.speechSynthesis.cancel();
+      if (document.visibilityState !== "visible") safelyRunSpeech(() => window.speechSynthesis.cancel());
     };
 
-    if (!soundEnabled) window.speechSynthesis.cancel();
+    if (!soundEnabled) safelyRunSpeech(() => window.speechSynthesis.cancel());
     document.addEventListener("visibilitychange", stopWhenHidden);
     return () => document.removeEventListener("visibilitychange", stopWhenHidden);
   }, [canSpeak, soundEnabled]);
@@ -37,8 +38,10 @@ export function ComputerDictionary({ soundEnabled, onStartCourse }: { soundEnabl
     const utterance = new window.SpeechSynthesisUtterance(`${term}。${explanation}。举个例子：${example}`);
     utterance.lang = "zh-CN";
     utterance.rate = 0.9;
-    window.speechSynthesis.cancel();
-    window.speechSynthesis.speak(utterance);
+    safelyRunSpeech(() => {
+      window.speechSynthesis.cancel();
+      window.speechSynthesis.speak(utterance);
+    });
   }
 
   return (

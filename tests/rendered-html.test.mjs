@@ -259,7 +259,7 @@ test("reads dictionary explanations locally while respecting sound settings", ()
   assert.match(source, /SpeechSynthesisUtterance/);
   assert.match(source, /document\.visibilityState !== "visible"/);
   assert.match(source, /soundEnabled/);
-  assert.match(source, /if \(!soundEnabled\) window\.speechSynthesis\.cancel\(\)/);
+  assert.match(source, /if \(!soundEnabled\) safelyRunSpeech\(\(\) => window\.speechSynthesis\.cancel\(\)\)/);
   assert.match(source, /document\.addEventListener\("visibilitychange"/);
   assert.match(source, /document\.removeEventListener\("visibilitychange"/);
   assert.match(source, /window\.speechSynthesis\.cancel/);

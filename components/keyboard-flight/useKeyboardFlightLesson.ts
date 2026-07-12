@@ -12,6 +12,7 @@ import {
 } from "@/components/keyboard-flight/lesson-model";
 import { useFlightProgram } from "@/components/keyboard-flight/useFlightProgram";
 import { useKeyboardPractice } from "@/components/keyboard-flight/useKeyboardPractice";
+import { safelyRunSpeech } from "@/lib/lesson-audio";
 
 interface UseKeyboardFlightLessonOptions {
   initialStage: number;
@@ -57,15 +58,13 @@ export function useKeyboardFlightLesson({
         return;
       }
 
-      try {
+      safelyRunSpeech(() => {
         const utterance = new window.SpeechSynthesisUtterance(caption);
         utterance.lang = "zh-CN";
         utterance.rate = 0.92;
         window.speechSynthesis.cancel();
         window.speechSynthesis.speak(utterance);
-      } catch {
-        // Speech is optional; visible captions always carry the instruction.
-      }
+      });
     },
     [sound],
   );
@@ -74,14 +73,14 @@ export function useKeyboardFlightLesson({
     if (!("speechSynthesis" in window)) return;
 
     const stopWhenHidden = () => {
-      if (document.visibilityState !== "visible") window.speechSynthesis.cancel();
+      if (document.visibilityState !== "visible") safelyRunSpeech(() => window.speechSynthesis.cancel());
     };
 
-    if (!sound) window.speechSynthesis.cancel();
+    if (!sound) safelyRunSpeech(() => window.speechSynthesis.cancel());
     document.addEventListener("visibilitychange", stopWhenHidden);
     return () => {
       document.removeEventListener("visibilitychange", stopWhenHidden);
-      window.speechSynthesis.cancel();
+      safelyRunSpeech(() => window.speechSynthesis.cancel());
     };
   }, [sound]);
 
