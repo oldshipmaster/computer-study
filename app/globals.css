@@ -1557,6 +1557,11 @@ input {
   font-size: 1rem;
 }
 
+.parent-stat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 18px; }
+.parent-stat-grid > div { display: grid; gap: 2px; padding: 10px; border-radius: 12px; background: var(--paper); }
+.parent-stat-grid strong { color: var(--deep-sea); font-size: 1.15rem; }
+.parent-stat-grid span { color: var(--deep-sea-soft); font-size: .7rem; font-weight: 750; }
+
 .parent-badge-summary {
   display: grid;
   gap: 11px;

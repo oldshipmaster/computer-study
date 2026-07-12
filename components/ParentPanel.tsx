@@ -7,6 +7,7 @@ import { summarizeIslandProgress } from "@/lib/parent-progress-summary";
 import { getNextCourseGuide } from "@/lib/curriculum-guide";
 import { createProgressBackup, parseProgressBackup } from "@/lib/progress-backup";
 import { ParentCurriculumOutline } from "@/components/ParentCurriculumOutline";
+import { buildProgressStats } from "@/lib/progress-stats";
 
 export interface ParentProgress {
   completedCourseIds: string[];
@@ -50,6 +51,7 @@ export function ParentPanel({
   const backupInputRef = useRef<HTMLInputElement>(null);
   const islandProgress = summarizeIslandProgress(progress.completedCourseIds);
   const nextCourseGuide = getNextCourseGuide(progress.completedCourseIds);
+  const progressStats = buildProgressStats(progress.completedCourseIds);
 
   useLayoutEffect(() => {
     closeButtonRef.current?.focus();
@@ -198,6 +200,13 @@ export function ParentPanel({
               <span className="parent-course-count">
                 <strong>{progress.completedCourseIds.length}</strong> / {COURSES.length} 课
               </span>
+            </div>
+
+            <div className="parent-stat-grid">
+              <div><strong>{progressStats.percent}%</strong><span>总体完成</span></div>
+              <div><strong>{progressStats.completedMinutes}</strong><span>已探索分钟</span></div>
+              <div><strong>{progressStats.completedIslands} / 9</strong><span>岛屿印章</span></div>
+              <div><strong>{progressStats.remainingRounds}</strong><span>约剩周数 · 每周5次</span></div>
             </div>
 
             <div className="parent-badge-summary">
