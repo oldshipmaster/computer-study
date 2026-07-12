@@ -633,6 +633,33 @@ input {
   margin: 0 auto;
 }
 
+.course-compass {
+  display: grid;
+  max-width: 1280px;
+  gap: 18px;
+  margin: 0 auto 38px;
+  padding: 24px;
+  border: 3px solid var(--deep-sea);
+  border-radius: 24px;
+  background: var(--paper);
+  color: var(--deep-sea);
+}
+
+.course-compass h3 { margin: 5px 0 0; font-size: clamp(1.5rem, 3vw, 2.2rem); }
+.course-compass label { display: grid; gap: 7px; font-weight: 850; }
+.course-compass input { min-height: 52px; padding: 10px 14px; border: 3px solid var(--deep-sea); border-radius: 12px; background: white; color: var(--deep-sea); font-size: 1.05rem; }
+.course-compass-islands { display: flex; flex-wrap: wrap; gap: 8px; }
+.course-compass-islands button { min-height: 44px; padding: 8px 12px; border: 2px solid var(--deep-sea); border-radius: 999px; background: white; color: var(--deep-sea); font-weight: 800; }
+.course-compass-islands button[aria-pressed="true"] { background: var(--sun); box-shadow: 0 0 0 3px rgb(255 216 90 / 35%); }
+.course-compass-islands span { margin-right: 5px; }
+.course-compass > p { margin: 0; font-weight: 750; }
+
+@media (max-width: 680px) {
+  .course-compass { padding: 18px; }
+  .course-compass-islands { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .course-compass-islands button { border-radius: 12px; }
+}
+
 .knowledge-atlas {
   max-width: 1280px;
   margin: 0 auto;

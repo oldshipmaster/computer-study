@@ -1,15 +1,19 @@
-import type { Ref } from "react";
+"use client";
+
+import { useState, type Ref } from "react";
 import { Bibi } from "@/components/Bibi";
 import { KnowledgeAtlas } from "@/components/KnowledgeAtlas";
 import { ReviewChallenge } from "@/components/ReviewChallenge";
 import {
   ISLANDS,
+  COURSES,
   getCourse,
   getCourseCardState,
   getMapMission,
   type Course,
   type CourseCardState,
 } from "@/lib/course-data";
+import { filterCourses } from "@/lib/course-filter";
 
 interface IslandMapProps {
   completedCourseIds: string[];
@@ -69,8 +73,11 @@ export function IslandMap({
   headingRef,
   onStartCourse,
 }: IslandMapProps) {
+  const [courseQuery, setCourseQuery] = useState("");
+  const [selectedIslandId, setSelectedIslandId] = useState("all");
   const mission = getMapMission(completedCourseIds);
   const currentCourse = mission.course;
+  const visibleCourseIds = new Set(filterCourses(COURSES, { islandId: selectedIslandId, query: courseQuery }).map((course) => course.id));
 
   return (
     <main className="island-app-shell">
@@ -157,6 +164,22 @@ export function IslandMap({
           <p>从第一座岛出发。学会一项本领，航线就会向前亮起一段。</p>
         </div>
 
+        <div className="course-compass" aria-labelledby="course-compass-heading">
+          <div>
+            <p className="section-kicker">课程罗盘</p>
+            <h3 id="course-compass-heading">快速找到想练的本领</h3>
+          </div>
+          <label>
+            搜索课程
+            <input onChange={(event) => setCourseQuery(event.target.value)} placeholder="例如：文件、循环、AI" type="search" value={courseQuery} />
+          </label>
+          <div className="course-compass-islands" aria-label="按岛屿筛选">
+            <button aria-pressed={selectedIslandId === "all"} onClick={() => setSelectedIslandId("all")} type="button">全部</button>
+            {ISLANDS.map((island) => <button aria-pressed={selectedIslandId === island.id} key={island.id} onClick={() => setSelectedIslandId(island.id)} type="button"><span aria-hidden="true">{island.icon}</span>{island.name}</button>)}
+          </div>
+          <p role="status">找到 {visibleCourseIds.size} 节课程{courseQuery || selectedIslandId !== "all" ? "，下面只显示匹配结果" : "，按完整航线排列"}。</p>
+        </div>
+
         <div className="map-route">
           {ISLANDS.map((island, islandIndex) => {
             const islandCourses = island.courseIds
@@ -165,6 +188,9 @@ export function IslandMap({
             const completedCount = island.courseIds.filter((courseId) =>
               completedCourseIds.includes(courseId),
             ).length;
+            const visibleIslandCourses = islandCourses.filter((course) => visibleCourseIds.has(course.id));
+
+            if (visibleIslandCourses.length === 0) return null;
 
             return (
               <div className="map-leg" key={island.id}>
@@ -195,7 +221,7 @@ export function IslandMap({
                   </div>
 
                   <ol className="course-grid">
-                    {islandCourses.map((course) => (
+                    {visibleIslandCourses.map((course) => (
                       <CourseCard
                         course={course}
                         key={course.id}
