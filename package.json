@@ -14,11 +14,9 @@
     "test:pages": "npm run build:pages && node --test tests/github-pages-output.mjs",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next --ignore-pattern out-pages",
     "typecheck": "tsc --noEmit",
-    "audit:prod": "npm audit --omit=dev --audit-level=moderate",
-    "db:generate": "drizzle-kit generate"
+    "audit:prod": "npm audit --omit=dev --audit-level=moderate"
   },
   "dependencies": {
-    "drizzle-orm": "0.45.2",
     "next": "16.2.10",
     "react": "19.2.7",
     "react-dom": "19.2.7"
@@ -33,7 +31,6 @@
     "@types/react-dom": "19.2.3",
     "@vitejs/plugin-react": "6.0.3",
     "@vitejs/plugin-rsc": "0.5.27",
-    "drizzle-kit": "0.31.10",
     "eslint": "9.39.4",
     "eslint-config-next": "16.2.10",
     "react-server-dom-webpack": "19.2.7",
