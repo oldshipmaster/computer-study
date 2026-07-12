@@ -87,6 +87,19 @@ test("normalizes resume values to playable non-reward stages", () => {
   assert.equal(lessonModel.normalizeInitialLessonStage(99), 3);
 });
 
+test("stops keyboard lesson speech when muted, hidden, or closed", () => {
+  const source = readFileSync(
+    new URL("../components/keyboard-flight/useKeyboardFlightLesson.ts", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(source, /document\.visibilityState !== "visible"/);
+  assert.match(source, /if \(!sound\) window\.speechSynthesis\.cancel\(\)/);
+  assert.match(source, /document\.addEventListener\("visibilitychange"/);
+  assert.match(source, /document\.removeEventListener\("visibilitychange"/);
+  assert.match(source, /return \(\) => \{[\s\S]{0,240}window\.speechSynthesis\.cancel\(\)/);
+});
+
 test("preserves queue item identities while reordering", () => {
   assert.equal(typeof lessonModel.moveProgramQueueItem, "function");
 

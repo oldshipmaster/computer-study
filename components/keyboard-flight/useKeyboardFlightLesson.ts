@@ -51,7 +51,8 @@ export function useKeyboardFlightLesson({
         !userGestureRef.current ||
         typeof window === "undefined" ||
         !("speechSynthesis" in window) ||
-        typeof window.SpeechSynthesisUtterance !== "function"
+        typeof window.SpeechSynthesisUtterance !== "function" ||
+        document.visibilityState !== "visible"
       ) {
         return;
       }
@@ -68,6 +69,21 @@ export function useKeyboardFlightLesson({
     },
     [sound],
   );
+
+  useEffect(() => {
+    if (!("speechSynthesis" in window)) return;
+
+    const stopWhenHidden = () => {
+      if (document.visibilityState !== "visible") window.speechSynthesis.cancel();
+    };
+
+    if (!sound) window.speechSynthesis.cancel();
+    document.addEventListener("visibilitychange", stopWhenHidden);
+    return () => {
+      document.removeEventListener("visibilitychange", stopWhenHidden);
+      window.speechSynthesis.cancel();
+    };
+  }, [sound]);
 
   const announce = useCallback(
     (caption: string, withSpeech = true) => {
