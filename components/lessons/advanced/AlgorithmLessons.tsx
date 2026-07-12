@@ -7,6 +7,7 @@ import { EfficiencyRaceLab } from "@/components/lessons/advanced/algorithms/Effi
 import { SearchLab } from "@/components/lessons/advanced/algorithms/SearchLab";
 import { SortLab } from "@/components/lessons/advanced/algorithms/SortLab";
 import { TaskDecompositionLab } from "@/components/lessons/advanced/algorithms/TaskDecompositionLab";
+import { ConceptJourney } from "@/components/lessons/advanced/ConceptJourney";
 
 interface Config {
   courseId: string;
@@ -25,7 +26,7 @@ function AlgorithmLesson({ config, initialStage, onAward, onComplete, onExit, on
   useLayoutEffect(() => headingRef.current?.focus(), [stage]);
   useEffect(() => onStageChange(stage), [onStageChange, stage]);
   function finish() { if (awardedRef.current) return; awardedRef.current = true; onAward(config.courseId, config.badgeId); onComplete(); }
-  return <LessonChrome courseName={config.courseName} currentStage={stage} heading={config.stages[stage]} headingRef={headingRef} message={config.messages[stage]} onExit={onExit} stageNames={config.stages}><div className="advanced-foundation-lesson">{stage < 5 ? <div className="advanced-concept-demo"><span aria-hidden="true">{["🔍", "🧠", "⚙️", "📏", "🏁"][stage]}</span><p role="status">第 {stage + 1} 步：{config.messages[stage]}</p><button className="primary-action" onClick={() => setStage(stage + 1)} type="button">继续研究算法</button></div> : <Lab onComplete={finish} />}</div></LessonChrome>;
+  return <LessonChrome courseName={config.courseName} currentStage={stage} heading={config.stages[stage]} headingRef={headingRef} message={config.messages[stage]} onExit={onExit} stageNames={config.stages}><div className="advanced-foundation-lesson">{stage < 5 ? <div className="advanced-concept-demo"><ConceptJourney icon={["🔍", "🧠", "⚙️", "📏", "🏁"][stage]} label={`${config.courseName}：${config.stages[stage]}`} labels={config.stages.slice(0, 5)} stage={stage} /><p role="status">第 {stage + 1} 步：{config.messages[stage]}</p><button className="primary-action" onClick={() => setStage(stage + 1)} type="button">继续研究算法</button></div> : <Lab onComplete={finish} />}</div></LessonChrome>;
 }
 
 const CONFIGS = {

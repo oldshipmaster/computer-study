@@ -8,6 +8,7 @@ import { ReliableTransferLab } from "@/components/lessons/advanced/network/Relia
 import { RoutingMazeLab } from "@/components/lessons/advanced/network/RoutingMazeLab";
 import { CacheStationLab } from "@/components/lessons/advanced/systems/CacheStationLab";
 import { InstructionCycleLab } from "@/components/lessons/advanced/systems/InstructionCycleLab";
+import { ConceptJourney } from "@/components/lessons/advanced/ConceptJourney";
 
 interface Config { courseId: string; badgeId: string; courseName: string; stages: readonly [string, string, string, string, string, string]; messages: readonly [string, string, string, string, string, string]; Lab: ComponentType<{ onComplete: () => void }>; }
 
@@ -19,7 +20,7 @@ function SystemsNetworkLesson({ config, initialStage, onAward, onComplete, onExi
   useLayoutEffect(() => headingRef.current?.focus(), [stage]);
   useEffect(() => onStageChange(stage), [onStageChange, stage]);
   function finish() { if (awardedRef.current) return; awardedRef.current = true; onAward(config.courseId, config.badgeId); onComplete(); }
-  return <LessonChrome courseName={config.courseName} currentStage={stage} heading={config.stages[stage]} headingRef={headingRef} message={config.messages[stage]} onExit={onExit} stageNames={config.stages}><div className="advanced-foundation-lesson">{stage < 5 ? <div className="advanced-concept-demo"><span aria-hidden="true">{["⚙️", "📦", "🌐", "🧭", "📨"][stage]}</span><p role="status">第 {stage + 1} 步：{config.messages[stage]}</p><button className="primary-action" onClick={() => setStage(stage + 1)} type="button">继续深入系统</button></div> : <Lab onComplete={finish} />}</div></LessonChrome>;
+  return <LessonChrome courseName={config.courseName} currentStage={stage} heading={config.stages[stage]} headingRef={headingRef} message={config.messages[stage]} onExit={onExit} stageNames={config.stages}><div className="advanced-foundation-lesson">{stage < 5 ? <div className="advanced-concept-demo"><ConceptJourney icon={["⚙️", "📦", "🌐", "🧭", "📨"][stage]} label={`${config.courseName}：${config.stages[stage]}`} labels={config.stages.slice(0, 5)} stage={stage} /><p role="status">第 {stage + 1} 步：{config.messages[stage]}</p><button className="primary-action" onClick={() => setStage(stage + 1)} type="button">继续深入系统</button></div> : <Lab onComplete={finish} />}</div></LessonChrome>;
 }
 
 const CONFIGS = {

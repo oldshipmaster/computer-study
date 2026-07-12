@@ -8,6 +8,7 @@ import { GraphRoutesLab } from "@/components/lessons/advanced/data-structures/Gr
 import { LinkedTreasureLab } from "@/components/lessons/advanced/data-structures/LinkedTreasureLab";
 import { StackQueueLab } from "@/components/lessons/advanced/data-structures/StackQueueLab";
 import { TreeLibraryLab } from "@/components/lessons/advanced/data-structures/TreeLibraryLab";
+import { ConceptJourney } from "@/components/lessons/advanced/ConceptJourney";
 
 interface DataStructureLessonConfig {
   courseId: string;
@@ -37,7 +38,7 @@ function DataStructureLesson({ config, initialStage, onAward, onComplete, onExit
   return (
     <LessonChrome courseName={config.courseName} currentStage={stage} heading={config.stages[stage]} headingRef={headingRef} message={config.messages[stage]} onExit={onExit} stageNames={config.stages}>
       <div className="advanced-foundation-lesson">
-        {stage < 5 ? <div className="advanced-concept-demo"><span aria-hidden="true">{["🧭", "🔎", "🧩", "💡", "🛠️"][stage]}</span><p role="status">第 {stage + 1} 步：{config.messages[stage]}</p><button className="primary-action" onClick={() => setStage(stage + 1)} type="button">继续探索这个结构</button></div> : <Lab onComplete={finish} />}
+        {stage < 5 ? <div className="advanced-concept-demo"><ConceptJourney icon={["🧭", "🔎", "🧩", "💡", "🛠️"][stage]} label={`${config.courseName}：${config.stages[stage]}`} labels={config.stages.slice(0, 5)} stage={stage} /><p role="status">第 {stage + 1} 步：{config.messages[stage]}</p><button className="primary-action" onClick={() => setStage(stage + 1)} type="button">继续探索这个结构</button></div> : <Lab onComplete={finish} />}
       </div>
     </LessonChrome>
   );
