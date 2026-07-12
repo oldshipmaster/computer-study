@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 import { INITIAL_MACHINE_STATE, updateMachine } from "../lib/cpu-memory-storage-lesson.ts";
 
@@ -20,4 +21,13 @@ test("restart clears working memory but preserves saved storage", () => {
   const state = updateMachine({ ...INITIAL_MACHINE_STATE, memory: "未保存修改", storage: "已保存作品" }, { type: "restart" });
   assert.equal(state.memory, null);
   assert.equal(state.storage, "已保存作品");
+});
+
+test("the lesson visualizes data flow and explains volatile memory", () => {
+  const source = readFileSync(new URL("../components/lessons/hardware/MemoryLab.tsx", import.meta.url), "utf8");
+  assert.match(source, /machine-data-flow/);
+  assert.match(source, /data-flow--active/);
+  assert.match(source, /lastAction/);
+  assert.match(source, /RAM 会清空/);
+  assert.match(source, /存储会保留/);
 });
