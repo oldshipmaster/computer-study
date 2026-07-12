@@ -1,6 +1,6 @@
 const CACHE_NAME = "bit-island-shell-v1";
 const scopeUrl = new URL(self.registration.scope);
-const CORE_FILES = ["manifest.webmanifest", "favicon.svg"].map(
+const CORE_FILES = ["manifest.webmanifest", "favicon.svg", "icon-192.png", "icon-512.png"].map(
   (path) => new URL(path, scopeUrl).href,
 );
 

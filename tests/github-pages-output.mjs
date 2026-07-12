@@ -32,6 +32,16 @@ test("emits a GitHub Pages artifact under the repository base path", async () =>
   assert.equal(manifest.start_url, ".");
   assert.equal(manifest.display, "standalone");
   assert.equal(manifest.theme_color, "#12324a");
+  assert.deepEqual(manifest.icons.slice(0, 2).map((icon) => [icon.src, icon.sizes, icon.type]), [
+    ["icon-192.png", "192x192", "image/png"],
+    ["icon-512.png", "512x512", "image/png"],
+  ]);
+  for (const [name, expectedSize] of [["icon-192.png", 192], ["icon-512.png", 512]]) {
+    const png = await readFile(new URL(name, outputRoot));
+    assert.equal(png.toString("ascii", 1, 4), "PNG");
+    assert.equal(png.readUInt32BE(16), expectedSize);
+    assert.equal(png.readUInt32BE(20), expectedSize);
+  }
 });
 
 test("keeps the complete curriculum inside a child-device performance budget", async () => {
