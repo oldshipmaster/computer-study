@@ -14,6 +14,16 @@ const deferredLessons = [
   "BitsAndDataLesson",
   "HardwareSoftwareLesson",
   "TroubleshootMachineLesson",
+  "FileHomeLesson",
+  "NameYourWorkLesson",
+  "MoveAndCopyLesson",
+  "FileTypesLesson",
+  "LearningBackpackLesson",
+  "NetworkJourneyLesson",
+  "WebAddressLesson",
+  "SearchAndLinksLesson",
+  "DownloadsCloudLesson",
+  "NetworkTroubleshootingLesson",
 ];
 
 test("defers rich programming and hardware labs until a child opens them", () => {
