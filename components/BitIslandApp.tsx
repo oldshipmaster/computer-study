@@ -347,6 +347,7 @@ export function BitIslandApp() {
         onStartCourse={startCourse}
         resume={progress.resume}
         soundEnabled={progress.settings.sound}
+        storageUnavailable={storageUnavailable}
       />
     );
   }

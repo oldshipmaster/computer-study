@@ -83,6 +83,11 @@ input {
 }
 .skip-link { position: fixed; z-index: 200; top: 10px; left: 10px; padding: 10px 14px; border: 3px solid var(--deep-sea); border-radius: 10px; background: white; color: var(--deep-sea); font-weight: 900; text-decoration: none; transform: translateY(-180%); }
 .skip-link:focus { transform: translateY(0); }
+.map-storage-notice { display: flex; width: min(100% - 48px, 900px); margin: 10px auto; align-items: center; gap: 12px; padding: 12px 15px; border: 3px solid #8a3f2d; border-radius: 14px; background: #fff0e8; color: #6c2e20; }
+.map-storage-notice > span { display: grid; flex: 0 0 34px; width: 34px; height: 34px; place-items: center; border-radius: 50%; background: #8a3f2d; color: white; font-weight: 900; }
+.map-storage-notice p { display: grid; gap: 2px; margin: 0; }
+.map-storage-notice p span { font-size: .84rem; }
+@media (max-width: 680px) { .map-storage-notice { width: min(100% - 32px, 900px); } }
 
 .site-header {
   position: relative;

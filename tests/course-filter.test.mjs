@@ -21,6 +21,7 @@ test("matches title summary and skill with normalized whitespace and case", () =
 test("finds courses through linked child dictionary terms", () => {
   assert.deepEqual(filterCourses(COURSES, { islandId: "all", query: "光标" }).map((course) => course.id), ["mouse-precision"]);
   assert.deepEqual(filterCourses(COURSES, { islandId: "all", query: "input method" }).map((course) => course.id), ["bilingual-input"]);
+  assert.deepEqual(filterCourses(COURSES, { islandId: "all", query: " input   method " }).map((course) => course.id), ["bilingual-input"]);
   assert.deepEqual(filterCourses(COURSES, { islandId: "all", query: "坐标" }).map((course) => course.id), ["grid-city-navigation"]);
   assert.deepEqual(filterCourses(COURSES, { islandId: "all", query: "AI" }).map((course) => course.id), ["ai-helper", "verify-ai"]);
 });

@@ -15,7 +15,7 @@ function matchesCourseQuery(course: Course, query: string): boolean {
 
 export interface CourseFilter { islandId: string; query: string; difficulty?: "all" | Course["difficulty"]; completion?: "all" | "completed" | "unfinished"; completedCourseIds?: readonly string[]; }
 export function filterCourses(courses: readonly Course[], filter: CourseFilter): Course[] {
-  const query = filter.query.trim().toLocaleLowerCase("zh-CN");
+  const query = filter.query.trim().toLocaleLowerCase("zh-CN").replace(/\s+/g, " ");
   const completed = new Set(filter.completedCourseIds ?? []);
   return courses.filter((course) => {
     if (filter.islandId !== "all" && course.islandId !== filter.islandId) return false;

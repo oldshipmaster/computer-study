@@ -309,7 +309,15 @@ test("keeps the guarded parent-area contract in source", () => {
   assert.match(appSource, /document\.documentElement\.classList\.toggle/);
   assert.match(appSource, /inert=/);
   assert.match(appSource, /screen !== "lesson"/);
+  assert.match(appSource, /storageUnavailable=\{storageUnavailable\}/);
   assert.match(appSource, /\.focus\(\)/);
+});
+
+test("warns the learner when this browser cannot save progress", () => {
+  const source = sourceFile("components/IslandMap.tsx");
+  assert.match(source, /storageUnavailable/);
+  assert.match(source, /本次学习进度暂时不能保存/);
+  assert.match(source, /请告诉大人检查浏览器存储设置/);
 });
 
 test("keeps the full parent curriculum outline aligned with catalog data", () => {

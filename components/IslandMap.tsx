@@ -31,6 +31,7 @@ interface IslandMapProps {
   resume: { courseId: string; stage: number } | null;
   confidenceByCourse: Record<string, CourseConfidence>;
   soundEnabled: boolean;
+  storageUnavailable: boolean;
 }
 
 const DIFFICULTY_LABELS: Record<Course["difficulty"], string> = {
@@ -91,6 +92,7 @@ export function IslandMap({
   resume,
   confidenceByCourse,
   soundEnabled,
+  storageUnavailable,
 }: IslandMapProps) {
   const [courseQuery, setCourseQuery] = useState("");
   const [selectedIslandId, setSelectedIslandId] = useState("all");
@@ -146,6 +148,8 @@ export function IslandMap({
         </nav>
         <div className="header-progress"><span>{CURRICULUM_FACTS.islandCount} 岛 · 已完成 {completedCourseIds.length} / {CURRICULUM_FACTS.courseCount} 课</span><progress aria-label="全部课程完成进度" max={CURRICULUM_FACTS.courseCount} value={completedCourseIds.length} /></div>
       </header>
+
+      {storageUnavailable ? <div className="map-storage-notice" role="status"><span aria-hidden="true">!</span><p><strong>本次学习进度暂时不能保存</strong><span>课程仍能继续，请告诉大人检查浏览器存储设置。</span></p></div> : null}
 
       <section className="map-hero" aria-labelledby="map-heading">
         <div className="hero-copy">
