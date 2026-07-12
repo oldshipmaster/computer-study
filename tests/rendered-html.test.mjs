@@ -704,3 +704,16 @@ test("keeps normal deep-palette text at WCAG AA contrast", () => {
     ).toFixed(2)}:1`,
   );
 });
+
+test("uses supported map landmarks and readable review contrast", () => {
+  const mapSource = sourceFile("components/IslandMap.tsx");
+  const atlasSource = sourceFile("components/KnowledgeAtlas.tsx");
+  const css = sourceFile("app/globals.css");
+
+  assert.doesNotMatch(mapSource, /<header[^>]*aria-label=/);
+  assert.match(mapSource, /className="course-compass" aria-labelledby="course-compass-heading" role="region"/);
+  assert.doesNotMatch(atlasSource, /<strong aria-label=/);
+  assert.match(atlasSource, /已经解锁/);
+  assert.match(atlasSource, /个知识卡/);
+  assert.match(css, /\.review-copy > \.section-kicker \{ color: var\(--yellow\); \}/);
+});

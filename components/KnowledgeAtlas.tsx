@@ -17,7 +17,7 @@ export function KnowledgeAtlas({ completedCourseIds, onStartCourse }: KnowledgeA
           <p className="section-kicker">你的知识图鉴</p>
           <h2 id="knowledge-atlas-heading">把学会的电脑知识收进口袋</h2>
         </div>
-        <strong aria-label={`已经解锁 ${unlockedTotal} 个知识卡`}>{unlockedTotal} / {CURRICULUM_FACTS.courseCount}</strong>
+        <strong><span className="visually-hidden">已经解锁 </span>{unlockedTotal} / {CURRICULUM_FACTS.courseCount}<span className="visually-hidden"> 个知识卡</span></strong>
       </div>
       <p className="knowledge-atlas-intro">完成一课会解锁一张复习卡。打开岛屿章节，试着不看答案先讲给家长听。</p>
       <div className="knowledge-chapters">

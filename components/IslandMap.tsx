@@ -133,7 +133,7 @@ export function IslandMap({
   return (
     <main className="island-app-shell">
       <a className="skip-link" href="#map-heading">跳到今天任务</a>
-      <header className="site-header" id="site-top" aria-label="比特岛导航">
+      <header className="site-header" id="site-top">
         <a className="brand-mark" href="#adventure-map" aria-label="比特岛大冒险课程地图">
           <span className="brand-orbit" aria-hidden="true">
             B
@@ -233,7 +233,7 @@ export function IslandMap({
           <p>推荐路线会在 {CURRICULUM_FACTS.islandCount} 座岛之间轮换；也可以从课程罗盘自由选择已开放的任意一课。</p>
         </div>
 
-        <div className="course-compass" aria-labelledby="course-compass-heading">
+        <div className="course-compass" aria-labelledby="course-compass-heading" role="region">
           <div>
             <p className="section-kicker">课程罗盘</p>
             <h3 id="course-compass-heading">快速找到想练的本领</h3>
