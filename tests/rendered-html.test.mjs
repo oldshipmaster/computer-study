@@ -220,6 +220,16 @@ test("offers child-led review from structured confidence choices", () => {
   assert.match(queueSource, /还有 \{remaining\} 课在加练清单里/);
 });
 
+test("adds one unlocked concept-match question per completed course", () => {
+  const mapSource = sourceFile("components/IslandMap.tsx");
+  const source = sourceFile("components/TermMatchChallenge.tsx");
+  assert.match(mapSource, /TermMatchChallenge/);
+  assert.match(source, /概念配对舱/);
+  assert.match(source, /45 节课各有一道概念题/);
+  assert.match(source, /answerTermMatch/);
+  assert.match(source, /本次概念配对进度/);
+});
+
 test("lets unlocked knowledge cards launch lesson replay", () => {
   const source = sourceFile("components/KnowledgeAtlas.tsx");
   assert.match(source, /onStartCourse: \(courseId: string\) => void/);

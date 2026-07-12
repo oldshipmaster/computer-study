@@ -11,6 +11,7 @@ import { PrivacyPromise } from "@/components/PrivacyPromise";
 import { OfflineStatus } from "@/components/OfflineStatus";
 import { ComputerDictionary } from "@/components/ComputerDictionary";
 import { ChildReviewQueue } from "@/components/ChildReviewQueue";
+import { TermMatchChallenge } from "@/components/TermMatchChallenge";
 import type { CourseConfidence } from "@/lib/review-queue";
 import {
   ISLANDS,
@@ -219,6 +220,7 @@ export function IslandMap({
 
       <KnowledgeAtlas completedCourseIds={completedCourseIds} onStartCourse={onStartCourse} />
       <ComputerDictionary onStartCourse={onStartCourse} soundEnabled={soundEnabled} />
+      <TermMatchChallenge completedCourseIds={completedCourseIds} key={`terms-${completedCourseIds.join("|")}`} />
       <ReviewChallenge completedCourseIds={completedCourseIds} key={completedCourseIds.join("|")} />
 
       <section className="adventure-map" id="adventure-map" aria-labelledby="islands-heading">

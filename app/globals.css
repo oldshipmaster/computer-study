@@ -1282,6 +1282,22 @@ input {
   .print-family-plan .family-plan > ol { grid-template-columns: repeat(5, minmax(0, 1fr)); }
 }
 @media (max-width: 760px) { .dictionary-heading { align-items: stretch; flex-direction: column; } .dictionary-groups dl { grid-template-columns: 1fr; } }
+.term-match { display: grid; grid-template-columns: minmax(240px, .8fr) minmax(0, 1.2fr); gap: 28px; padding: 56px max(20px, calc((100vw - 1120px) / 2)); background: #eef9ff; color: var(--ink); }
+.term-match h2 { margin: 6px 0 12px; font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 3rem); line-height: 1.05; }
+.term-match > div:first-child > p:last-child { line-height: 1.65; }
+.term-match-console { padding: 20px; border: 3px solid var(--deep-sea); border-radius: 20px; background: white; box-shadow: 7px 8px 0 rgb(18 50 74 / 12%); }
+.term-match-progress { display: grid; gap: 6px; margin-bottom: 18px; }
+.term-match-progress progress { width: 100%; height: 12px; accent-color: #197b6a; }
+.term-match-progress span { color: #526875; font-size: .78rem; font-weight: 800; }
+.term-match-question > span { color: #526875; font-size: .8rem; font-weight: 850; }
+.term-match-question h3 { margin: 9px 0 16px; font-size: 1.3rem; line-height: 1.45; }
+.term-match-question > div { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; }
+.term-match-question button, .term-match-finish button { min-height: 48px; padding: 8px 12px; border: 2px solid var(--deep-sea); border-radius: 11px; background: #fff8d9; color: inherit; font: inherit; font-weight: 850; }
+.term-match-question > p { min-height: 1.5em; margin: 14px 0 0; color: #365c50; font-weight: 750; }
+.term-match-locked, .term-match-finish { display: grid; justify-items: center; gap: 9px; padding: 22px; text-align: center; }
+.term-match-locked span, .term-match-finish span { font-size: 2rem; }
+.term-match-locked p, .term-match-finish p, .term-match-finish h3 { margin: 0; }
+@media (max-width: 760px) { .term-match { grid-template-columns: 1fr; } .term-match-question > div { grid-template-columns: 1fr; } }
 .privacy-promise summary { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px; min-height: 62px; padding: 12px 16px; cursor: pointer; list-style: none; }
 .privacy-promise summary::-webkit-details-marker { display: none; }
 .privacy-promise summary > span:first-child { font-size: 1.7rem; }
