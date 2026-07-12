@@ -41,7 +41,10 @@ test("emits a GitHub Pages artifact under the repository base path", async () =>
   assert.match(serviceWorker, /html\.matchAll/);
   assert.match(serviceWorker, /url\.pathname\.startsWith\(scopeUrl\.pathname\)/);
   assert.match(serviceWorker, /url\.hash === ""/);
-  assert.match(serviceWorker, /new Set\(\[\.\.\.CORE_FILES, \.\.\.resourceUrls\]\)/);
+  assert.match(serviceWorker, /new Set\(\[\.\.\.CORE_FILES, \.\.\.resourceUrls, \.\.\.builtAssetUrls\]\)/);
+  assert.match(serviceWorker, /discoverBuiltAssets/);
+  assert.match(serviceWorker, /asset-manifest\.json/);
+  assert.match(serviceWorker, /\.\.\.builtAssetUrls/);
   assert.match(serviceWorker, /cache\.addAll\(currentResources\)/);
   assert.ok(
     serviceWorker.indexOf("cache.addAll(currentResources)") < serviceWorker.indexOf("cache.put(new URL"),
@@ -77,6 +80,10 @@ test("emits a GitHub Pages artifact under the repository base path", async () =>
   assert.match(robots, /Sitemap: https:\/\/oldshipmaster\.github\.io\/computer-study\/sitemap\.xml/);
   assert.match(sitemap, /<loc>https:\/\/oldshipmaster\.github\.io\/computer-study\/<\/loc>/);
   assert.equal((sitemap.match(/<url>/g) ?? []).length, 1);
+  const assetManifest = JSON.parse(await readFile(new URL("asset-manifest.json", outputRoot), "utf8"));
+  const manifestFiles = JSON.stringify(assetManifest);
+  const builtAssets = await readdir(new URL("assets/", outputRoot));
+  assert.ok(builtAssets.filter((name) => name.endsWith(".js")).every((name) => manifestFiles.includes(name)), "every lazy lesson chunk must be discoverable for offline caching");
 });
 
 test("keeps the complete curriculum inside a child-device performance budget", async () => {

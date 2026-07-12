@@ -18,7 +18,8 @@ async function storeShell(cache, shellResponse, shellUrl) {
     .map((match) => new URL(match[1], shellUrl))
     .filter((url) => url.origin === scopeUrl.origin && url.pathname.startsWith(scopeUrl.pathname) && url.hash === "")
     .map((url) => url.href);
-  const currentResources = [...new Set([...CORE_FILES, ...resourceUrls])];
+  const builtAssetUrls = await discoverBuiltAssets(shellUrl);
+  const currentResources = [...new Set([...CORE_FILES, ...resourceUrls, ...builtAssetUrls])];
   await cache.addAll(currentResources);
   await cache.put(new URL("./", scopeUrl).href, shellResponse);
   const currentResourceSet = new Set(currentResources);
@@ -28,6 +29,24 @@ async function storeShell(cache, shellResponse, shellUrl) {
     const oldBuildAsset = cachedUrl.pathname.includes("/assets/") && !currentResourceSet.has(cachedUrl.href);
     return oldBuildAsset ? cache.delete(cachedRequest) : false;
   }));
+}
+
+async function discoverBuiltAssets(shellUrl) {
+  const manifestUrl = new URL("asset-manifest.json", scopeUrl);
+  try {
+    const response = await fetch(manifestUrl, { cache: "reload" });
+    if (!response.ok) return [];
+    const manifest = await response.json();
+    const paths = Object.values(manifest).flatMap((entry) => [entry.file, ...(entry.css ?? []), ...(entry.assets ?? [])]);
+    const assetUrls = paths
+      .filter((path) => typeof path === "string")
+      .map((path) => new URL(path, shellUrl))
+      .filter((url) => url.origin === scopeUrl.origin && url.pathname.startsWith(scopeUrl.pathname))
+      .map((url) => url.href);
+    return [manifestUrl.href, ...assetUrls];
+  } catch {
+    return [];
+  }
 }
 
 self.addEventListener("install", (event) => {

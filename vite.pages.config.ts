@@ -18,5 +18,6 @@ export default defineConfig({
   build: {
     outDir: "../out-pages",
     emptyOutDir: true,
+    manifest: "asset-manifest.json",
   },
 });
