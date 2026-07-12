@@ -2,11 +2,16 @@ import type { LessonDefinition } from "@/components/lessons/types";
 import { lazy } from "react";
 
 const advancedLesson = <T extends Record<string, unknown>>(loader: () => Promise<T>, name: keyof T) => lazy(async () => ({ default: (await loader())[name] as LessonDefinition["Component"] }));
-const KeyboardFlightLesson = advancedLesson(() => import("@/components/KeyboardFlightLesson"), "KeyboardFlightLesson");
-const MousePrecisionLesson = advancedLesson(() => import("@/components/lessons/MousePrecisionLesson"), "MousePrecisionLesson");
-const BilingualInputLesson = advancedLesson(() => import("@/components/lessons/BilingualInputLesson"), "BilingualInputLesson");
-const DesktopAdventureLesson = advancedLesson(() => import("@/components/lessons/DesktopAdventureLesson"), "DesktopAdventureLesson");
-const ProgramLandingLesson = advancedLesson(() => import("@/components/lessons/ProgramLandingLesson"), "ProgramLandingLesson");
+const loadKeyboardFlight = () => import("@/components/KeyboardFlightLesson");
+const loadMousePrecision = () => import("@/components/lessons/MousePrecisionLesson");
+const loadBilingualInput = () => import("@/components/lessons/BilingualInputLesson");
+const loadDesktopAdventure = () => import("@/components/lessons/DesktopAdventureLesson");
+const loadProgramLanding = () => import("@/components/lessons/ProgramLandingLesson");
+const KeyboardFlightLesson = advancedLesson(loadKeyboardFlight, "KeyboardFlightLesson");
+const MousePrecisionLesson = advancedLesson(loadMousePrecision, "MousePrecisionLesson");
+const BilingualInputLesson = advancedLesson(loadBilingualInput, "BilingualInputLesson");
+const DesktopAdventureLesson = advancedLesson(loadDesktopAdventure, "DesktopAdventureLesson");
+const ProgramLandingLesson = advancedLesson(loadProgramLanding, "ProgramLandingLesson");
 const LightBitIslandLesson = advancedLesson(() => import("@/components/lessons/LightBitIslandLesson"), "LightBitIslandLesson");
 const InstructionOrderLesson = advancedLesson(() => import("@/components/lessons/InstructionOrderLesson"), "InstructionOrderLesson");
 const GridCityNavigationLesson = advancedLesson(() => import("@/components/lessons/GridCityNavigationLesson"), "GridCityNavigationLesson");
@@ -74,6 +79,18 @@ const CacheStationLesson = advancedLesson(loadSystemsNetwork, "CacheStationLesso
 const NetworkLayersLesson = advancedLesson(loadSystemsNetwork, "NetworkLayersLesson");
 const RoutingMazeLesson = advancedLesson(loadSystemsNetwork, "RoutingMazeLesson");
 const ReliableTransferLesson = advancedLesson(loadSystemsNetwork, "ReliableTransferLesson");
+
+const EARLY_LESSON_LOADERS: Record<string, () => Promise<Record<string, unknown>>> = {
+  "keyboard-flight": loadKeyboardFlight,
+  "mouse-precision": loadMousePrecision,
+  "bilingual-input": loadBilingualInput,
+  "desktop-adventure": loadDesktopAdventure,
+  "program-landing": loadProgramLanding,
+};
+
+export function preloadLesson(courseId: string) {
+  void EARLY_LESSON_LOADERS[courseId]?.();
+}
 
 export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
   "keyboard-flight": {

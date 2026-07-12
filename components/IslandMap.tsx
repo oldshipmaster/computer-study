@@ -24,6 +24,7 @@ import {
   type CourseCardState,
 } from "@/lib/course-data";
 import { filterCourses } from "@/lib/course-filter";
+import { preloadLesson } from "@/components/lessons/lesson-registry";
 
 const FoundationPractice = lazy(() => import("@/components/FoundationPractice").then((module) => ({ default: module.FoundationPractice })));
 const FoundationRoadmap = lazy(() => import("@/components/FoundationRoadmap").then((module) => ({ default: module.FoundationRoadmap })));
@@ -69,6 +70,8 @@ function CourseCard({ course, state, onStartCourse, confidence }: CourseCardProp
         data-course-id={course.id}
         disabled={!available}
         onClick={available ? () => onStartCourse(course.id) : undefined}
+        onFocus={available ? () => preloadLesson(course.id) : undefined}
+        onPointerEnter={available ? () => preloadLesson(course.id) : undefined}
         type="button"
       >
         <span className="course-card-topline">
