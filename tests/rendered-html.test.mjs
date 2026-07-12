@@ -573,6 +573,8 @@ test("keeps final lesson controls inside a child-sized mobile viewport", () => {
   assert.match(css, /\.typing-console input \{[^}]*width: 100%;[^}]*min-width: 0;/s);
   assert.match(css, /\.file-command-bar button \{[^}]*min-width: 44px;/s);
   assert.match(css, /\.organizer-actions fieldset button \{[^}]*min-width: 44px;/s);
+  assert.match(css, /\.back-action \{[^}]*font-size: 0\.875rem;/s);
+  assert.match(css, /\.movable-file \{[^}]*font-size: \.875rem;/s);
   for (const selector of [
     ".file-command-bar button",
     ".folder-board section header button",

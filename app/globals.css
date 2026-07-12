@@ -1345,7 +1345,7 @@ input {
   padding: 10px 16px;
   background: var(--paper);
   box-shadow: 4px 4px 0 var(--deep-sea);
-  font-size: 0.84rem;
+  font-size: 0.875rem;
 }
 
 .lesson-preview-card {
@@ -3549,7 +3549,7 @@ html.bit-island-document--reduced-motion *::after,
 .folder-board { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .8rem; padding: .8rem; }
 .folder-board section { min-height: 13rem; border: 2px solid #7da4b8; border-radius: .8rem; } .folder-board section header { display: grid; gap: .4rem; padding: .6rem; background: #eef8fc; color: #15384e; font-weight: 850; } .folder-board section header button { min-height: 44px; }
 .folder-board section > div { display: grid; gap: .5rem; padding: .6rem; }
-.movable-file { display: grid; min-height: 4rem; place-items: center; border: 2px solid transparent; border-radius: .5rem; background: white; color: #15384e; font-size: .78rem; } .movable-file[aria-pressed="true"] { border-color: #197ba7; background: #e6f7ff; } .movable-file span { font-size: 1.6rem; }
+.movable-file { display: grid; min-height: 4rem; place-items: center; border: 2px solid transparent; border-radius: .5rem; background: white; color: #15384e; font-size: .875rem; } .movable-file[aria-pressed="true"] { border-color: #197ba7; background: #e6f7ff; } .movable-file span { font-size: 1.6rem; }
 @media (max-width: 46rem) { .folder-board { grid-template-columns: 1fr; } }
 
 /* File type classification lesson */
