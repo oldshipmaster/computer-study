@@ -3878,8 +3878,10 @@ html.bit-island-document--reduced-motion *::after,
 .stack-queue-columns h3 { margin: 0; }
 .stack-queue-columns [role="group"] { display: grid; grid-template-columns: repeat(2, 1fr); gap: .5rem; }
 .tree-breadcrumb { overflow-wrap: anywhere; padding: .8rem; border: 3px solid #176f59; border-radius: .8rem; background: #e3f8ed; font-size: 1.05rem; font-weight: 850; }
+.tree-structure { display: grid; justify-items: center; gap: 1rem; padding: 1rem; border-radius: 1rem; background: #f1fbf5; } .tree-structure [role="group"] { display: flex; justify-content: center; gap: .75rem; width: 100%; } .tree-structure [role="treeitem"] { position: relative; display: grid; min-width: 6.5rem; place-items: center; padding: .55rem; border: 2px solid #176f59; border-radius: .7rem; background: white; text-align: center; font-weight: 800; } .tree-structure small { font-size: .62rem; font-weight: 650; } .tree-structure .tree-node--current { background: #ffe36e; box-shadow: 0 0 0 4px rgb(255 227 110 / 35%); }
 .graph-node-map { display: grid !important; grid-template-columns: repeat(3, 1fr) !important; padding: 1rem; border-radius: 1rem; background: radial-gradient(circle, #cfe4ed 2px, transparent 3px) 0 0 / 18px 18px, #f7fcff; }
-.graph-node-map button { border-radius: 50%; aspect-ratio: 1.6; }
+.graph-edge-map { display: flex; flex-wrap: wrap; justify-content: center; gap: .35rem; } .graph-edge-map span { padding: .3rem .5rem; border-radius: 999px; background: #dff3ff; font-size: .7rem; font-weight: 750; }
+.graph-node-map button { display: grid; place-items: center; border-radius: 50%; aspect-ratio: 1.6; } .graph-node-map button small { font-size: .6rem; } .graph-node-map .graph-node--current { outline: 4px solid #f3bd28; } .graph-node-map .graph-node--reachable { border-style: dashed; background: #dff7e8; }
 .graph-node-map button[aria-pressed="true"] { background: #ffe36e; }
 .sort-values { display: flex; justify-content: center; gap: .6rem; padding: .8rem; }
 .sort-values span { display: grid; width: 4rem; height: 4rem; place-items: center; border: 3px solid #15384e; border-radius: .7rem; background: #ffe36e; font-size: 1.4rem; font-weight: 900; }

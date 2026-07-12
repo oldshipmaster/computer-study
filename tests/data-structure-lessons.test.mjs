@@ -43,3 +43,16 @@ test("each data-structure lab exposes a visible keyboard-operable challenge", ()
     assert.doesNotMatch(source, /draggable|onDrag|onDrop/);
   }
 });
+
+test("tree and graph labs keep their complete structures visible while exploring", () => {
+  const tree = readFileSync(new URL("components/lessons/advanced/data-structures/TreeLibraryLab.tsx", root), "utf8");
+  const graph = readFileSync(new URL("components/lessons/advanced/data-structures/GraphRoutesLab.tsx", root), "utf8");
+  assert.match(tree, /tree-structure/);
+  assert.match(tree, /tree-node--current/);
+  assert.match(tree, /根节点/);
+  assert.match(tree, /叶节点/);
+  assert.match(graph, /graph-edge-map/);
+  assert.match(graph, /graph-node--current/);
+  assert.match(graph, /graph-node--reachable/);
+  assert.match(graph, /港口—森林/);
+});
