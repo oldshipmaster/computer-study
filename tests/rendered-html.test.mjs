@@ -185,7 +185,8 @@ test("stacks dense hardware and network labs on child-sized screens", () => {
 
   assert.match(css, /@media \(max-width: 38rem\)[\s\S]*?\.pipeline-roles[\s\S]*?grid-template-columns: 1fr/);
   assert.match(css, /@media \(max-width: 38rem\)[\s\S]*?\.bit-switches[\s\S]*?grid-template-columns: repeat\(2, 1fr\)/);
-  assert.match(css, /@media \(max-width: 38rem\)[\s\S]*?\.search-lab li[\s\S]*?flex-direction: column/);
+  assert.match(css, /@media \(max-width: 38rem\)[\s\S]*?\.search-results li[\s\S]*?grid-template-columns: auto 1fr/);
+  assert.match(css, /@media \(max-width: 38rem\)[\s\S]*?\.search-results li button[\s\S]*?grid-column: 1 \/ 3/);
   assert.match(css, /@media \(max-width: 38rem\)[\s\S]*?\.copy-map[\s\S]*?grid-template-columns: 1fr/);
 });
 
