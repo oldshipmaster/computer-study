@@ -184,6 +184,12 @@ test("stacks dense hardware and network labs on child-sized screens", () => {
   assert.match(css, /@media \(max-width: 38rem\)[\s\S]*?\.copy-map[\s\S]*?grid-template-columns: 1fr/);
 });
 
+test("constrains the mobile hero to the viewport width", () => {
+  const css = sourceFile("app/globals.css");
+  assert.match(css, /@media \(max-width: 680px\)[\s\S]*?\.hero-copy,\s*\.current-mission\s*\{[\s\S]*?min-width: 0;[\s\S]*?max-width: 100%/);
+  assert.match(css, /\.hero-copy h1\s*\{[\s\S]*?overflow-wrap: anywhere/);
+});
+
 test("offers a privacy-preserving printable certificate after full completion", () => {
   const mapSource = sourceFile("components/IslandMap.tsx");
   const certificateSource = sourceFile("components/CompletionCertificate.tsx");

@@ -2067,6 +2067,14 @@ input {
     max-width: 12ch;
     font-size: clamp(2.65rem, 13vw, 4rem);
     line-height: 1.08;
+    overflow-wrap: anywhere;
+  }
+
+  .hero-copy,
+  .current-mission {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
   }
 
   .hero-summary {
