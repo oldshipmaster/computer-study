@@ -34,6 +34,7 @@ import { BooleanLogicLesson, EventsHandlersLesson, FunctionsToolsLesson, GameDes
 import { ArrayLockersLesson, GraphRoutesLesson, LinkedTreasureLesson, StackQueueDockLesson, TreeLibraryLesson } from "@/components/lessons/advanced/DataStructureLessons";
 import { AlgorithmEfficiencyLesson, BinarySearchLesson, BubbleSortLesson, LinearSearchLesson, TaskDecompositionLesson } from "@/components/lessons/advanced/AlgorithmLessons";
 import { CpuSchedulingLesson, DeviceCoordinationLesson, FileSystemTreeLesson, MemoryAllocationLesson, ProgramProcessLesson } from "@/components/lessons/advanced/OperatingSystemLessons";
+import { CacheStationLesson, InstructionCycleLesson, NetworkLayersLesson, ReliableTransferLesson, RoutingMazeLesson } from "@/components/lessons/advanced/SystemsNetworkLessons";
 import type { LessonDefinition } from "@/components/lessons/types";
 
 export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
@@ -357,6 +358,11 @@ export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
   "memory-allocation": { courseId: "memory-allocation", badgeId: "memory-room-manager", badgeName: "内存房间管理员", completionTitle: "有限内存完成分配与回收", completionSummary: "你会检查容量、拒绝超额申请，并在进程结束后释放空间。", Component: MemoryAllocationLesson },
   "file-system-tree": { courseId: "file-system-tree", badgeId: "file-system-guide", badgeName: "文件系统向导", completionTitle: "虚拟目录树中的目标文件找到", completionSummary: "你会从根目录沿路径找到文件，也理解层级和只读权限。", Component: FileSystemTreeLesson },
   "device-coordination": { courseId: "device-coordination", badgeId: "device-coordinator", badgeName: "设备协调员", completionTitle: "三个虚拟设备请求依次完成", completionSummary: "你会解释程序、操作系统、驱动和设备怎样合作处理请求。", Component: DeviceCoordinationLesson },
+  "instruction-cycle": { courseId: "instruction-cycle", badgeId: "instruction-engineer", badgeName: "指令周期工程师", completionTitle: "两轮 CPU 指令周期追踪完成", completionSummary: "你会解释取指、译码、执行和写回怎样随时钟不断重复。", Component: InstructionCycleLesson },
+  "cache-station": { courseId: "cache-station", badgeId: "cache-courier", badgeName: "缓存快递员", completionTitle: "三级数据快递命中判断完成", completionSummary: "你会比较缓存、内存和存储的距离、容量与等待成本。", Component: CacheStationLesson },
+  "network-layers": { courseId: "network-layers", badgeId: "layer-packer", badgeName: "分层封装员", completionTitle: "四层网络信封完成封装与拆封", completionSummary: "你会说明应用、传输、网络和链路层分别添加和处理什么信息。", Component: NetworkLayersLesson },
+  "routing-maze": { courseId: "routing-maze", badgeId: "route-planner", badgeName: "路由规划员", completionTitle: "最低代价路线和中断改道均完成", completionSummary: "你会根据可达性与路线代价选择下一跳，并在中断后重新路由。", Component: RoutingMazeLesson },
+  "reliable-transfer": { courseId: "reliable-transfer", badgeId: "reliable-rescuer", badgeName: "可靠传输救援员", completionTitle: "丢失数据块完成确认与重传", completionSummary: "你会用编号、确认、超时、重传和排序恢复完整消息。", Component: ReliableTransferLesson },
 };
 
 export function getLessonDefinition(courseId: string): LessonDefinition | undefined {
