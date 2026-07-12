@@ -40,21 +40,26 @@ const COURSE_TITLES = [
   "搜索与链接导航",
   "下载、上传与云端",
   "网络信号侦察",
+  "像素画小工坊",
+  "文档排版设计",
+  "幻灯片故事航线",
+  "媒体与版权侦探",
+  "数据表格实验",
 ];
 
-test("publishes six islands and thirty ordered lessons", () => {
-  assert.equal(ISLANDS.length, 6);
-  assert.equal(COURSES.length, 30);
+test("publishes seven islands and thirty-five ordered lessons", () => {
+  assert.equal(ISLANDS.length, 7);
+  assert.equal(COURSES.length, 35);
   assert.deepEqual(
     COURSES.map((course) => course.order),
-    Array.from({ length: 30 }, (_, index) => index + 1),
+    Array.from({ length: 35 }, (_, index) => index + 1),
   );
   assert.deepEqual(COURSES.map((course) => course.title), COURSE_TITLES);
   assert.ok(ISLANDS.every((island) => island.courseIds.length === 5));
 });
 
 test("publishes only lessons with complete interactive implementations", () => {
-  assert.equal(COURSES.filter((course) => course.playable).length, 30);
+  assert.equal(COURSES.filter((course) => course.playable).length, 35);
   assert.equal(getCourse("input-process-output")?.playable, true);
   assert.equal(getCourse("cpu-memory-storage")?.playable, true);
   assert.equal(getCourse("bits-and-data")?.playable, true);
@@ -65,6 +70,11 @@ test("publishes only lessons with complete interactive implementations", () => {
   assert.equal(getCourse("search-and-links")?.playable, true);
   assert.equal(getCourse("downloads-and-cloud")?.playable, true);
   assert.equal(getCourse("network-troubleshooting")?.playable, true);
+  assert.equal(getCourse("pixel-art")?.playable, true);
+  assert.equal(getCourse("document-design")?.playable, true);
+  assert.equal(getCourse("slide-story")?.playable, true);
+  assert.equal(getCourse("media-copyright")?.playable, true);
+  assert.equal(getCourse("data-table")?.playable, true);
   assert.equal(getCourse("keyboard-flight")?.title, "键盘驾驶飞船");
 });
 

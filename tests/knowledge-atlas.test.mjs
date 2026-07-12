@@ -5,10 +5,10 @@ import { buildKnowledgeAtlas } from "../lib/knowledge-atlas.ts";
 test("builds one ordered knowledge chapter for each island", () => {
   const atlas = buildKnowledgeAtlas([]);
 
-  assert.equal(atlas.length, 6);
-  assert.deepEqual(atlas.map((chapter) => chapter.courseCount), [5, 5, 5, 5, 5, 5]);
+  assert.equal(atlas.length, 7);
+  assert.deepEqual(atlas.map((chapter) => chapter.courseCount), [5, 5, 5, 5, 5, 5, 5]);
   assert.equal(atlas[0].entries[0].order, 1);
-  assert.equal(atlas.at(-1).entries.at(-1).order, 30);
+  assert.equal(atlas.at(-1).entries.at(-1).order, 35);
 });
 
 test("reveals objectives only after the matching course is complete", () => {

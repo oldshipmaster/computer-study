@@ -21,6 +21,8 @@ export const REVIEW_QUESTIONS: ReviewQuestion[] = [
   { id: "hardware-2", islandId: "hardware-lab", islandName: "硬件实验岛", prompt: "电脑发出焦味并很烫，孩子应该怎么做？", options: ["停止使用并告诉大人", "自己拆开", "继续玩"], answer: "停止使用并告诉大人", explanation: "涉及异常发热、电源或设备内部时要停止并由大人处理。" },
   { id: "network-1", islandId: "network-bay", islandName: "网络海湾", prompt: "浏览器地址里，判断网站身份最重要的是哪一段？", options: ["网站主机名", "页面颜色", "最后一个图标"], answer: "网站主机名", explanation: "要完整核对主机名，熟悉的词出现在其他位置不能证明网站身份。" },
   { id: "network-2", islandId: "network-bay", islandName: "网络海湾", prompt: "全家设备都无法联网，安全的第一项检查是什么？", options: ["看看设备是否连上家庭网络", "拆开路由器", "下载陌生修复工具"], answer: "看看设备是否连上家庭网络", explanation: "先做简单、可逆的观察；更改设备或电源设置要请大人帮助。" },
+  { id: "creative-1", islandId: "creative-workshop", islandName: "创作工坊", prompt: "网上找到的图片要放进班级展示，第一步是什么？", options: ["查看作者与使用许可", "擦掉来源", "说成自己画的"], answer: "查看作者与使用许可", explanation: "能看到作品不等于可以随意使用，要尊重创作者和许可规则。" },
+  { id: "creative-2", islandId: "creative-workshop", islandName: "创作工坊", prompt: "表格里同一列的长度有厘米也有米，应该怎么做？", options: ["统一单位后再比较", "直接画图", "把标题删掉"], answer: "统一单位后再比较", explanation: "同一属性使用一致单位，比较和图表才有意义。" },
 ];
 
 export interface ReviewState {
@@ -46,6 +48,6 @@ export function answerReviewQuestion(state: ReviewState, optionIndex: number): R
     index: isLast ? state.index : state.index + 1,
     score: state.score + 1,
     completed: isLast,
-    feedback: { kind: "correct", message: isLast ? "十二颗思考星全部点亮！" : question.explanation },
+    feedback: { kind: "correct", message: isLast ? "所有思考星全部点亮！" : question.explanation },
   };
 }

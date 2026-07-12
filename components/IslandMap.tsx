@@ -81,7 +81,7 @@ export function IslandMap({
           </span>
           <span>比特岛大冒险</span>
         </a>
-        <span className="island-count">六座知识岛等你探索</span>
+        <span className="island-count">七座知识岛等你探索</span>
       </header>
 
       <section className="map-hero" aria-labelledby="map-heading">
@@ -96,7 +96,7 @@ export function IslandMap({
             tabIndex={-1}
           >
             {mission.complete
-              ? "三十段航线全部完成，继续自由探索"
+              ? "三十五段航线全部完成，继续自由探索"
               : "跟比比一起，学会真正的电脑本领"}
           </h1>
           <p className="hero-summary">
@@ -138,7 +138,7 @@ export function IslandMap({
             mood={mission.complete ? "celebrating" : "happy"}
             message={
               mission.complete
-                ? "太棒了！六座岛都亮起来了。选一课重玩，看看你还能发现什么。"
+                ? "太棒了！七座岛都亮起来了。选一课重玩，看看你还能发现什么。"
                 : "我是比比！今天先从启航港学会驾驶飞船。"
             }
           />
@@ -152,7 +152,7 @@ export function IslandMap({
         <div className="map-intro">
           <div>
             <p className="section-kicker">你的学习航线</p>
-            <h2 id="islands-heading">六座岛，三十次真本领练习</h2>
+            <h2 id="islands-heading">七座岛，三十五次真本领练习</h2>
           </div>
           <p>从第一座岛出发。学会一项本领，航线就会向前亮起一段。</p>
         </div>

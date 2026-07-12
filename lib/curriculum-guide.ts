@@ -34,6 +34,11 @@ export const CURRICULUM_GUIDE: Record<string, CourseGuide> = {
   "search-and-links": guide("提炼搜索关键词", "比较结果与来源线索", "使用链接和标签页导航", "请孩子解释为什么第一个结果不一定最可靠。"),
   "downloads-and-cloud": guide("区分本机与云端副本", "理解下载上传和同步", "理解共享是访问权限", "请孩子画出作品在本机和云端各有一份的示意图。"),
   "network-troubleshooting": guide("描述网络故障范围", "区分连接服务器和地址问题", "选择安全检查并求助", "请孩子比较所有服务失败和单个服务失败有什么不同。"),
+  "pixel-art": guide("理解像素和分辨率", "认识颜色编码与图片格式", "保留原件并安全修改", "请孩子放大一张虚构像素图，解释看到方格的原因。"),
+  "document-design": guide("建立标题和正文层级", "用段落留白帮助阅读", "保留源文件并规范导出", "请孩子指出一页文档中最先被看到的信息，并说明为什么。"),
+  "slide-story": guide("确定一句核心信息", "按顺序组织开场发展结尾", "用页面支持口头表达", "请孩子只看标题复述整段演示的故事顺序。"),
+  "media-copyright": guide("知道数字作品有创作者", "查看使用许可与范围", "尊重署名并优先自己创作", "一起检查一份素材的作者与许可，不上传真实作品。"),
+  "data-table": guide("用行列组织记录", "保持单位与格式一致", "用筛选和图表回答问题", "请孩子说明排序和筛选有什么不同，并举一个低风险数据例子。"),
 };
 
 export function getNextCourseGuide(completedCourseIds: readonly string[]): { course: Course; guide: CourseGuide } | undefined {

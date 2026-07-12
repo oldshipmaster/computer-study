@@ -13,11 +13,11 @@ export function ReviewChallenge() {
     <section className="review-challenge" aria-labelledby="review-heading">
       <div className="review-copy">
         <p className="section-kicker">岛屿问答站</p>
-        <h2 id="review-heading">用理由点亮十二颗思考星</h2>
-        <p>六座岛各有两道情境题。答错可以继续想，重要的是读懂解释。</p>
+        <h2 id="review-heading">用理由点亮十四颗思考星</h2>
+        <p>七座岛各有两道情境题。答错可以继续想，重要的是读懂解释。</p>
       </div>
       <div className="review-console">
-        <div className="review-progress" aria-label={`已经点亮 ${state.score} 颗，共 12 颗`}>
+        <div className="review-progress" aria-label={`已经点亮 ${state.score} 颗，共 ${REVIEW_QUESTIONS.length} 颗`}>
           {REVIEW_QUESTIONS.map((item, index) => <span className={index < state.score ? "is-lit" : ""} key={item.id} aria-hidden="true">★</span>)}
         </div>
         {state.completed ? (
@@ -29,7 +29,7 @@ export function ReviewChallenge() {
           </div>
         ) : (
           <div className="review-question">
-            <span>{question.islandName} · 第 {state.index + 1} / 12 题</span>
+            <span>{question.islandName} · 第 {state.index + 1} / {REVIEW_QUESTIONS.length} 题</span>
             <h3>{question.prompt}</h3>
             <div>{question.options.map((option, optionIndex) => <button key={option} onClick={() => setState((current) => answerReviewQuestion(current, optionIndex))} type="button">{option}</button>)}</div>
             <p className={`review-feedback review-feedback--${state.feedback.kind}`} role="status">{state.feedback.message}</p>

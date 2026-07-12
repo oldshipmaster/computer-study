@@ -28,6 +28,7 @@ import { WebAddressLesson } from "@/components/lessons/WebAddressLesson";
 import { SearchAndLinksLesson } from "@/components/lessons/SearchAndLinksLesson";
 import { DownloadsCloudLesson } from "@/components/lessons/DownloadsCloudLesson";
 import { NetworkTroubleshootingLesson } from "@/components/lessons/NetworkTroubleshootingLesson";
+import { DataTableLesson, DocumentDesignLesson, MediaCopyrightLesson, PixelArtLesson, SlideStoryLesson } from "@/components/lessons/CreativeLessons";
 import type { LessonDefinition } from "@/components/lessons/types";
 
 export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
@@ -270,6 +271,36 @@ export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
     completionTitle: "网络海湾四类信号全部辨认",
     completionSummary: "你会比较现象，区分离线、弱信号、服务器与地址问题，并安全求助。",
     Component: NetworkTroubleshootingLesson,
+  },
+  "pixel-art": {
+    courseId: "pixel-art", badgeId: "pixel-artist", badgeName: "像素艺术家",
+    completionTitle: "像素画小工坊的色格全部点亮",
+    completionSummary: "你会解释像素与分辨率，选择图片格式，并用保留原件的方法安全创作。",
+    Component: PixelArtLesson,
+  },
+  "document-design": {
+    courseId: "document-design", badgeId: "document-designer", badgeName: "文档设计师",
+    completionTitle: "混乱文档恢复了清楚层级",
+    completionSummary: "你会用标题、段落、留白和图片说明帮助读者，并保留可编辑版本。",
+    Component: DocumentDesignLesson,
+  },
+  "slide-story": {
+    courseId: "slide-story", badgeId: "slide-storyteller", badgeName: "幻灯片故事家",
+    completionTitle: "演示故事航线顺利抵达终点",
+    completionSummary: "你会确定核心信息、安排故事顺序、一页表达一个重点并用图像辅助说明。",
+    Component: SlideStoryLesson,
+  },
+  "media-copyright": {
+    courseId: "media-copyright", badgeId: "copyright-scout", badgeName: "版权侦察员",
+    completionTitle: "四种媒体使用情境判断完成",
+    completionSummary: "你知道网络作品也有创作者，会检查许可、遵守要求并正确署名。",
+    Component: MediaCopyrightLesson,
+  },
+  "data-table": {
+    courseId: "data-table", badgeId: "data-organizer", badgeName: "数据整理员",
+    completionTitle: "四张数据表全部整理清楚",
+    completionSummary: "你会用行列组织记录，保持格式与单位一致，并用筛选和图表回答问题。",
+    Component: DataTableLesson,
   },
 };
 

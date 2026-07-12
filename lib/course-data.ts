@@ -282,6 +282,26 @@ export const COURSES: Course[] = [
     id: "network-troubleshooting", islandId: "network-bay", order: 30,
     title: "网络信号侦察", summary: "离线、弱信号、服务器和地址问题。", skill: "网络排障", minutes: 9, difficulty: 3, playable: true,
   },
+  {
+    id: "pixel-art", islandId: "creative-workshop", order: 31,
+    title: "像素画小工坊", summary: "像素、分辨率、颜色与图片格式。", skill: "数字图像", minutes: 9, difficulty: 1, playable: true,
+  },
+  {
+    id: "document-design", islandId: "creative-workshop", order: 32,
+    title: "文档排版设计", summary: "标题层级、段落、图片说明与导出。", skill: "文档创作", minutes: 9, difficulty: 2, playable: true,
+  },
+  {
+    id: "slide-story", islandId: "creative-workshop", order: 33,
+    title: "幻灯片故事航线", summary: "顺序、重点、图像与口头表达。", skill: "演示表达", minutes: 9, difficulty: 2, playable: true,
+  },
+  {
+    id: "media-copyright", islandId: "creative-workshop", order: 34,
+    title: "媒体与版权侦探", summary: "创作者、许可、引用与署名。", skill: "数字版权", minutes: 9, difficulty: 2, playable: true,
+  },
+  {
+    id: "data-table", islandId: "creative-workshop", order: 35,
+    title: "数据表格实验", summary: "行列、统一格式、筛选与图表。", skill: "数据素养", minutes: 9, difficulty: 3, playable: true,
+  },
 ];
 
 export const ISLANDS: Island[] = [
@@ -356,6 +376,14 @@ export const ISLANDS: Island[] = [
     accent: "sky",
     icon: "🌐",
     courseIds: ["network-journey", "web-address", "search-and-links", "downloads-and-cloud", "network-troubleshooting"],
+  },
+  {
+    id: "creative-workshop",
+    name: "创作工坊",
+    subtitle: "用电脑清楚地创作与表达",
+    accent: "coral",
+    icon: "🎨",
+    courseIds: ["pixel-art", "document-design", "slide-story", "media-copyright", "data-table"],
   },
 ];
 
