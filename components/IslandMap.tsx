@@ -146,6 +146,8 @@ export function IslandMap({
         <nav className="section-jump-nav" aria-label="学习区域快捷航线">
           <a href="#learning-plan">今日计划</a>
           <a href="#adventure-map">课程地图</a>
+          <a href="#foundation-roadmap">深度路线</a>
+          <a href="#foundation-practice">脑力加练</a>
           <a href="#knowledge-atlas">知识图鉴</a>
           <a href="#computer-dictionary">电脑词典</a>
           <a href="#term-match">概念配对</a>
@@ -222,8 +224,8 @@ export function IslandMap({
       <IslandSealCollection completedCourseIds={completedCourseIds} />
       {mission.complete ? <CompletionCertificate /> : null}
 
-      <Suspense fallback={<section className="foundation-roadmap" role="status">正在绘制深度知识连接图…</section>}><FoundationRoadmap completedCourseIds={completedCourseIds} onStartCourse={onStartCourse} /></Suspense>
-      <Suspense fallback={<section className="foundation-practice-loading" role="status">正在准备底层脑力加练…</section>}><FoundationPractice onStartCourse={onStartCourse} /></Suspense>
+      <Suspense fallback={<section className="foundation-roadmap" id="foundation-roadmap" role="status">正在绘制深度知识连接图…</section>}><FoundationRoadmap completedCourseIds={completedCourseIds} onStartCourse={onStartCourse} /></Suspense>
+      <Suspense fallback={<section className="foundation-practice-loading" id="foundation-practice" role="status">正在准备底层脑力加练…</section>}><FoundationPractice onStartCourse={onStartCourse} /></Suspense>
       <KnowledgeAtlas completedCourseIds={completedCourseIds} onStartCourse={onStartCourse} />
       <ComputerDictionary onStartCourse={onStartCourse} soundEnabled={soundEnabled} />
       <TermMatchChallenge completedCourseIds={completedCourseIds} key={`terms-${completedCourseIds.join("|")}`} />

@@ -22,7 +22,7 @@ export function FoundationPractice({ onStartCourse }: { onStartCourse: (courseId
   function next() { setIndex((value) => value + 1); setChoice(null); }
   function restart() { setRound((value) => value + 1); setIndex(0); setChoice(null); setScore(0); }
 
-  return <section className="foundation-practice" aria-labelledby="foundation-practice-heading">
+  return <section className="foundation-practice" id="foundation-practice" aria-labelledby="foundation-practice-heading">
     <header><p className="section-kicker">今日底层脑力加练</p><h2 id="foundation-practice-heading">四道题，把四条知识线连起来</h2><p>答错不会扣分。先看证据，再回到课程重新实验。</p></header>
     <div className="foundation-practice-console">
       <div className="foundation-practice-progress"><span>{question.domain} · 第 {index + 1}/{questions.length} 题</span><progress aria-label="本轮加练进度" max={questions.length} value={index + (correct ? 1 : 0)} /></div>

@@ -8,7 +8,7 @@ interface FoundationRoadmapProps {
 
 export function FoundationRoadmap({ completedCourseIds, onStartCourse }: FoundationRoadmapProps) {
   const completed = new Set(completedCourseIds);
-  return <section className="foundation-roadmap" aria-labelledby="foundation-roadmap-heading">
+  return <section className="foundation-roadmap" id="foundation-roadmap" aria-labelledby="foundation-roadmap-heading">
     <header><p className="section-kicker">深度知识连接图</p><h2 id="foundation-roadmap-heading">从信息结构，一路潜到计算机和网络底层</h2><p>这不是背名词路线。每一课都回答上一步留下的新问题，也为下一步准备工具。</p></header>
     <div className="foundation-roadmap-grid">
       {FOUNDATION_ROADMAP.map((thread) => <article key={thread.islandId}>
