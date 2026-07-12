@@ -36,6 +36,9 @@ jobs:
       - name: Run tests
         run: npm test
 
+      - name: Check TypeScript
+        run: npm run typecheck
+
       - name: Build static site
         run: npm run build:pages
         env:

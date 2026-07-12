@@ -31,12 +31,14 @@ npm install
 npm run dev
 npm test
 npm run lint
+npm run typecheck
 npm run test:pages
 ```
 
 - `npm run dev`：启动本地开发服务器。
 - `npm test`：执行生产构建并验证渲染结果。
 - `npm run lint`：检查代码质量与格式规则。
+- `npm run typecheck`：严格检查课程、进度与发布代码的 TypeScript 类型。
 - `npm run test:pages`：构建并验证部署在 `/computer-study/` 下的 GitHub Pages 静态版本。
 
 ## 在线版本

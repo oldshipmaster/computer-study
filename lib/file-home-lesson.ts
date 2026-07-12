@@ -19,7 +19,12 @@ const TREE: Record<string, VirtualEntry[]> = {
 };
 
 export interface FileHomeState { path: string[]; address: string; selectedName: string | null; openedFile: string | null; }
-export type FileHomeAction = { type: "select"; name: string } | { type: "openFolder" | "openFile"; name: string } | { type: "goBack" | "goRoot" };
+export type FileHomeAction =
+  | { type: "select"; name: string }
+  | { type: "openFolder"; name: string }
+  | { type: "openFile"; name: string }
+  | { type: "goBack" }
+  | { type: "goRoot" };
 export const INITIAL_FILE_HOME_STATE: FileHomeState = { path: [], address: "比特岛", selectedName: null, openedFile: null };
 
 export function getVisibleEntries(path: readonly string[]): VirtualEntry[] { return TREE[path.join("/")] ?? []; }

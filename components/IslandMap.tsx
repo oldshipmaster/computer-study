@@ -188,7 +188,7 @@ export function IslandMap({
                 onClick={() => onStartCourse(currentCourse.id)}
                 type="button"
               >
-                {mission.complete ? "重玩第一课" : resuming ? `继续第 ${resume.stage + 1} 段` : "继续冒险"}
+                {mission.complete ? "重玩第一课" : resuming ? `继续第 ${(resume?.stage ?? 0) + 1} 段` : "继续冒险"}
                 <span aria-hidden="true">→</span>
               </button>
             </div>
