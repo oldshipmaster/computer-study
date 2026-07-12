@@ -14,6 +14,10 @@ test("emits a GitHub Pages artifact under the repository base path", async () =>
   assert.match(html, /rel="canonical" href="https:\/\/oldshipmaster\.github\.io\/computer-study\/"/);
   assert.match(html, /需要开启 JavaScript/);
   assert.match(html, /\/computer-study\/manifest\.webmanifest/);
+  assert.match(html, /http-equiv="Content-Security-Policy"/);
+  assert.match(html, /connect-src 'none'/);
+  assert.match(html, /form-action 'none'/);
+  assert.match(html, /name="referrer" content="no-referrer"/);
   assert.doesNotMatch(html, /(?:src|href)="\/assets\//);
   await access(new URL("favicon.svg", outputRoot));
   const serviceWorker = await readFile(new URL("sw.js", outputRoot), "utf8");
