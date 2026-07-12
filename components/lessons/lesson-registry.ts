@@ -3,7 +3,6 @@ import { MousePrecisionLesson } from "@/components/lessons/MousePrecisionLesson"
 import { BilingualInputLesson } from "@/components/lessons/BilingualInputLesson";
 import { DesktopAdventureLesson } from "@/components/lessons/DesktopAdventureLesson";
 import { ProgramLandingLesson } from "@/components/lessons/ProgramLandingLesson";
-import { PasswordGuardianLesson } from "@/components/lessons/PasswordGuardianLesson";
 import { LightBitIslandLesson } from "@/components/lessons/LightBitIslandLesson";
 import type { LessonDefinition } from "@/components/lessons/types";
 import { lazy } from "react";
@@ -32,6 +31,7 @@ const NetworkTroubleshootingLesson = advancedLesson(() => import("@/components/l
 const HealthyComputerHabitsLesson = advancedLesson(() => import("@/components/lessons/HealthyComputerHabitsLesson"), "HealthyComputerHabitsLesson");
 const PrivateInformationLesson = advancedLesson(() => import("@/components/lessons/PrivateInformationLesson"), "PrivateInformationLesson");
 const PopupFogLesson = advancedLesson(() => import("@/components/lessons/PopupFogLesson"), "PopupFogLesson");
+const PasswordGuardianLesson = advancedLesson(() => import("@/components/lessons/PasswordGuardianLesson"), "PasswordGuardianLesson");
 const loadCoding = () => import("@/components/lessons/CodingLessons");
 const EventsHandlersLesson = advancedLesson(loadCoding, "EventsHandlersLesson");
 const VariablesScoreLesson = advancedLesson(loadCoding, "VariablesScoreLesson");

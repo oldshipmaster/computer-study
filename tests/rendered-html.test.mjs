@@ -592,7 +592,7 @@ test("keeps the mobile map header navigation child-sized", () => {
 });
 
 test("keeps final lesson controls inside a child-sized mobile viewport", () => {
-  const css = `${sourceFile("app/globals.css")}\n${sourceFile("components/lessons/safety/HabitPlanner.css")}`;
+  const css = `${sourceFile("app/globals.css")}\n${sourceFile("components/lessons/safety/HabitPlanner.css")}\n${sourceFile("components/lessons/safety/PassphraseBuilder.css")}`;
 
   assert.match(css, /\.typing-console input \{[^}]*width: 100%;[^}]*min-width: 0;/s);
   assert.match(css, /\.file-command-bar button \{[^}]*min-width: 44px;/s);

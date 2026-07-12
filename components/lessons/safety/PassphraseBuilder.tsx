@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { evaluatePassphrase } from "@/lib/password-guardian-lesson";
+import "./PassphraseBuilder.css";
 
 const TOKENS = ["blue", "river", "robot", "planet", "47", "cloud", "panda"];
 interface Props { onSuccess: () => void; }
