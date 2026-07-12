@@ -46,7 +46,7 @@ test("deploys the static artifact with the official Pages actions", async () => 
   assert.match(workflow, /actions\/upload-pages-artifact@v5/);
   assert.match(workflow, /actions\/deploy-pages@v5/);
   assert.match(workflow, /npm run typecheck/);
-  assert.match(workflow, /npm run audit:prod/);
+  assert.match(workflow, /npm audit --audit-level=moderate/);
   assert.match(workflow, /npm run lint/);
   assert.match(workflow, /npm run test:pages/);
   assert.match(workflow, /GITHUB_PAGES_BASE_PATH:\s*\/computer-study\//);
