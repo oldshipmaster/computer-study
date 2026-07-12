@@ -1164,6 +1164,9 @@ input {
 }
 
 .privacy-promise { width: min(100%, 980px); margin: 18px auto 0; overflow: clip; border: 2px solid rgb(255 255 255 / 70%); border-radius: 18px; text-align: left; }
+.offline-status { display: inline-flex; align-items: center; gap: 8px; margin: 8px auto 0; padding: 7px 12px; border: 1px solid rgb(255 255 255 / 65%); border-radius: 999px; background: rgb(255 255 255 / 12%); font-size: .88rem; }
+.offline-status span { display: grid; width: 20px; height: 20px; place-items: center; border-radius: 50%; background: rgb(255 255 255 / 18%); font-weight: 800; }
+.offline-status.is-offline { background: rgb(255 221 113 / 20%); }
 .privacy-promise summary { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px; min-height: 62px; padding: 12px 16px; cursor: pointer; list-style: none; }
 .privacy-promise summary::-webkit-details-marker { display: none; }
 .privacy-promise summary > span:first-child { font-size: 1.7rem; }

@@ -454,6 +454,17 @@ test("ships a Bit Island favicon instead of the Sites starter identity", () => {
   assert.match(layoutSource, /shortcut:\s*["']\/favicon\.svg["']/);
 });
 
+test("registers a scoped offline shell and shows connection status", () => {
+  const pagesSource = sourceFile("github-pages/main.tsx");
+  const statusSource = sourceFile("components/OfflineStatus.tsx");
+  assert.match(pagesSource, /navigator\.serviceWorker\.register/);
+  assert.match(pagesSource, /import\.meta\.env\.BASE_URL/);
+  assert.match(statusSource, /navigator\.onLine/);
+  assert.match(statusSource, /serviceWorker\.ready/);
+  assert.match(statusSource, /addEventListener\("offline"/);
+  assert.match(statusSource, /当前离线：继续学习已打开过的课程/);
+});
+
 test("runs every test file after exactly one production build", () => {
   const packageJson = JSON.parse(sourceFile("package.json"));
   const testCommand = packageJson.scripts?.test ?? "";

@@ -16,6 +16,10 @@ test("emits a GitHub Pages artifact under the repository base path", async () =>
   assert.match(html, /\/computer-study\/manifest\.webmanifest/);
   assert.doesNotMatch(html, /(?:src|href)="\/assets\//);
   await access(new URL("favicon.svg", outputRoot));
+  const serviceWorker = await readFile(new URL("sw.js", outputRoot), "utf8");
+  assert.match(serviceWorker, /requestUrl\.origin !== scopeUrl\.origin/);
+  assert.match(serviceWorker, /event\.request\.mode === "navigate"/);
+  assert.doesNotMatch(serviceWorker, /https?:\/\//);
   const manifest = JSON.parse(await readFile(new URL("manifest.webmanifest", outputRoot), "utf8"));
   assert.equal(manifest.name, "比特岛大冒险｜儿童计算机启蒙课");
   assert.equal(manifest.start_url, ".");

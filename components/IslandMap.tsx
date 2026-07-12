@@ -8,6 +8,7 @@ import { LearningPlan } from "@/components/LearningPlan";
 import { CompletionCertificate } from "@/components/CompletionCertificate";
 import { IslandSealCollection } from "@/components/IslandSealCollection";
 import { PrivacyPromise } from "@/components/PrivacyPromise";
+import { OfflineStatus } from "@/components/OfflineStatus";
 import {
   ISLANDS,
   COURSES,
@@ -259,6 +260,7 @@ export function IslandMap({
       <footer className="map-footer">
         <span aria-hidden="true">★</span>
         <p>完成一课后记得离开屏幕，看看远处，让眼睛休息一会儿。</p>
+        <OfflineStatus />
         <PrivacyPromise />
       </footer>
     </main>
