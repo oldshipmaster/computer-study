@@ -560,6 +560,23 @@ test("keeps course compass touch targets child-sized", () => {
   assert.equal(cssProperty(".child-review-queue button", "min-height"), "44px");
 });
 
+test("keeps final lesson controls inside a child-sized mobile viewport", () => {
+  const css = sourceFile("app/globals.css");
+
+  assert.match(css, /\.typing-console input \{[^}]*width: 100%;[^}]*min-width: 0;/s);
+  assert.match(css, /\.file-command-bar button \{[^}]*min-width: 44px;/s);
+  for (const selector of [
+    ".file-command-bar button",
+    ".folder-board section header button",
+    ".organizer-tools > button",
+    ".passphrase-actions button",
+    ".routine-actions button",
+  ]) {
+    const escapedSelector = selector.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    assert.match(css, new RegExp(`${escapedSelector}[^{}]*\\{[^}]*min-height: 44px`, "s"));
+  }
+});
+
 test("keeps the lesson caption at least 16px at every responsive size", () => {
   const captionBlocks = cssBlocks(".bibi--lesson .bibi-message p");
 
