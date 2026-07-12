@@ -27,6 +27,12 @@ test("search, instruction-cycle, routing, and network layers require prediction"
   assert.match(routing, /选择总代价最低的可达路线/);
   assert.match(routing, /route-choice--selected/);
   assert.match(routing, /这条路线现在不可达/);
+  assert.match(routing, /network-route-diagram/);
+  assert.match(routing, /链路成本 1/);
+  assert.match(routing, /链路成本 2/);
+  assert.match(routing, /链路成本 3/);
+  assert.match(routing, /数据包正在走这条路/);
+  assert.match(routing, /重新计算可达路线/);
   assert.match(layers, /选择下一层/);
   assert.match(layers, /顺序不对/);
   assert.match(layers, /envelope--opened/);

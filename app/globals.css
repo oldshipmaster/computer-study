@@ -4003,15 +4003,36 @@ html.bit-island-document--reduced-motion *::after,
 .routing-choice-map span { display: grid; min-height: 4rem; place-items: center; padding: .5rem; border: 2px solid #197ba7; border-radius: .65rem; background: #e9f7ff; text-align: center; font-weight: 800; }
 .routing-choice-map span.is-broken { border-color: #9b3039; background: #ffe2d7; color: #783c2d; text-decoration: line-through; }
 .routing-maze-lab .route-choice--selected { background: #ffe36e; box-shadow: 0 0 0 4px rgb(255 227 110 / 35%); }
+.network-route-diagram { display: grid; grid-template-columns: minmax(4.5rem, .7fr) 3fr minmax(4.5rem, .7fr); grid-template-rows: repeat(2, minmax(4.4rem, auto)); gap: .55rem; align-items: center; padding: .8rem; border-radius: 1rem; background: #eef8ff; }
+.network-route-diagram > .route-node--device, .network-route-diagram > .route-node--server { grid-row: 1 / 3; }
+.route-node { display: grid; place-items: center; gap: .2rem; min-height: 3.8rem; padding: .4rem; border: 2px solid #197ba7; border-radius: .75rem; background: #fff; text-align: center; }
+.route-lane { position: relative; display: grid; grid-template-columns: 1fr minmax(5.4rem, .85fr) 1fr; align-items: center; min-height: 4.4rem; border-radius: .8rem; transition: background-color .2s ease; }
+.route-edge { height: .35rem; border-radius: 1rem; background: #60aaca; text-align: center; }
+.route-edge small { position: relative; top: -1.35rem; padding: .12rem .3rem; border-radius: .3rem; background: #eef8ff; color: #18506c; font-size: .7rem; font-weight: 800; white-space: nowrap; }
+.route-lane.is-selected { background: #fff3b8; }
+.route-lane.is-selected .route-edge { background: #d8662b; }
+.route-lane.is-broken { background: #ffe2d7; opacity: .75; }
+.route-lane.is-broken .route-edge { background: repeating-linear-gradient(90deg, #9b3039 0 10px, transparent 10px 16px); }
+.route-lane.is-broken .route-node { text-decoration: line-through; }
+.route-packet { position: absolute; left: 8%; z-index: 2; filter: drop-shadow(0 2px 2px rgb(0 0 0 / 20%)); animation: route-packet-travel 1.5s ease-in-out infinite alternate; }
+@keyframes route-packet-travel { to { left: 86%; } }
+.route-cost-summary { display: grid; grid-template-columns: repeat(2, 1fr); gap: .5rem; }
+.route-cost-summary span { padding: .55rem; border: 2px solid #77abc1; border-radius: .6rem; background: #fff; text-align: center; }
+.route-cost-summary .is-broken { border-color: #9b3039; background: #ffe2d7; text-decoration: line-through; }
 @keyframes advanced-float { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-8px) rotate(2deg); } }
 @media (max-width: 38rem) { .advanced-foundation-lesson { padding: .75rem; } .advanced-concept-demo { min-height: 15rem; } .concept-journey-track { grid-template-columns: repeat(5, minmax(3.2rem, 1fr)); overflow-x: auto; padding: .35rem .25rem .75rem; } .concept-journey-track::before { right: 2rem; left: 2rem; } .concept-journey-node small { font-size: .58rem; } .advanced-lab { padding: .8rem; box-shadow: 4px 5px 0 rgb(18 50 74 / 12%); } .advanced-lab [role="group"], .concept-reflection [role="group"] { grid-template-columns: 1fr; } .advanced-lab [role="group"] button, .concept-reflection [role="group"] button { width: 100%; } .advanced-lab .array-lockers, .advanced-lab .search-items, .advanced-lab .graph-node-map { grid-template-columns: repeat(2, 1fr) !important; } .stack-queue-columns { grid-template-columns: 1fr; } .stack-queue-columns [role="group"] { grid-template-columns: repeat(2, 1fr); } .concept-reflection [role="group"] button { min-height: 3.8rem; } .memory-grid { grid-template-columns: repeat(4, 1fr); } .process-state-machine { grid-template-columns: repeat(2, 1fr); } .toy-cpu-board { grid-template-columns: 1fr; } .routing-choice-map { grid-template-columns: repeat(2, 1fr); } .instruction-phases, .layer-stack, .transfer-chunks { grid-template-columns: repeat(2, 1fr); } }
-@media (prefers-reduced-motion: reduce) { .advanced-concept-demo .concept-journey-icon { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .advanced-concept-demo .concept-journey-icon, .route-packet { animation: none; } }
 @media (max-width: 38rem) {
   .dependency-map { grid-template-columns: 1fr; }
   .dependency-map li:not(:last-child)::after { top: auto; right: auto; bottom: -1.05rem; left: 50%; transform: translateX(-50%) rotate(90deg); }
   .layer-direction { grid-template-columns: 1fr; }
   .layer-direction span { border-right: 2px dashed #197ba7; border-bottom: 0; }
   .tree-structure [role="group"] { flex-wrap: wrap; }
+  .network-route-diagram { grid-template-columns: 3.4rem minmax(10.5rem, 1fr) 3.4rem; gap: .3rem; padding: .55rem .35rem; }
+  .route-node { min-height: 3.5rem; padding: .25rem; font-size: .7rem; }
+  .route-lane { grid-template-columns: 1fr minmax(4.2rem, .85fr) 1fr; }
+  .route-edge small { font-size: .6rem; }
+  .route-cost-summary { grid-template-columns: 1fr; }
 }
 @media (forced-colors: active) {
   .concept-journey-node--active b,
