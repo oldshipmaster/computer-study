@@ -24,5 +24,7 @@ test("capstone reports preparation, evidence, and a replayable finish", async ()
   assert.match(component, /建议先完成/);
   assert.match(component, /mission\.explanation/);
   assert.match(component, /重新挑战/);
+  assert.match(component, /questionHeadingRef\.current\?\.focus/);
+  assert.match(component, /finishHeadingRef\.current\?\.focus/);
   assert.match(map, /<FoundationCapstone/);
 });

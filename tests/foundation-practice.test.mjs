@@ -22,5 +22,7 @@ test("practice console gives evidence and links back to its lesson", async () =>
   assert.match(component, /question\.explanation/);
   assert.match(component, /onStartCourse\(question\.courseId\)/);
   assert.match(component, /再来一组/);
+  assert.match(component, /questionHeadingRef\.current\?\.focus/);
+  assert.match(component, /tabIndex=\{-1\}/);
   assert.match(map, /<FoundationPractice/);
 });
