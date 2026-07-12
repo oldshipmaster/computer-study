@@ -3986,6 +3986,11 @@ html.bit-island-document--reduced-motion *::after,
 .transfer-assembly { padding: .8rem; border-radius: .8rem; background: #dcf8e8; text-align: center; } .transfer-assembly strong { letter-spacing: .3em; font-size: 1.45rem; }
 .path-breadcrumbs { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem; padding: .55rem; border-radius: .75rem; background: #eef7ff; }
 .path-breadcrumbs span { display: flex; align-items: center; gap: .35rem; } .path-breadcrumbs button { min-height: 2.5rem; padding: .35rem .6rem; border: 0; border-radius: .5rem; background: white; color: #15384e; font-weight: 750; } .path-breadcrumbs button[aria-current="page"] { background: #ffe36e; }
+.path-anatomy { display: flex; flex-wrap: wrap; gap: .4rem; align-items: stretch; }
+.path-anatomy span { display: grid; min-width: 4rem; padding: .35rem .55rem; border: 2px solid #315c9a; border-radius: .55rem; background: #e9f7ff; font-weight: 800; }
+.path-anatomy span.is-file { border-color: #8b5b14; background: #fff0a8; }
+.path-anatomy small { color: #526c7a; font-size: .6rem; }
+.path-anatomy em { align-self: center; color: #526c7a; font-size: .75rem; font-style: normal; }
 .file-explorer { display: grid; grid-template-columns: minmax(11rem, .8fr) 1.4fr; gap: .8rem; } .file-explorer > * { padding: .85rem; border: 2px solid #315c9a; border-radius: .8rem; background: white; }
 .file-tree { display: grid; align-content: start; gap: .45rem; font-size: .8rem; } .file-tree span { padding: .25rem; border-radius: .3rem; } .file-tree .is-current { background: #fff0a8; font-weight: 800; } .file-tree .is-locked { color: #8b5151; }
 .file-preview { min-height: 5rem; padding: 1rem; border: 2px dashed #79a5bd; border-radius: .6rem; background: #fffdf4; }

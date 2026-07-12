@@ -66,6 +66,10 @@ test("file system lab shows a persistent directory tree and path breadcrumbs", (
   assert.match(lab, /path-breadcrumbs/);
   assert.match(lab, /aria-current/);
   assert.match(lab, /根目录/);
+  assert.match(lab, /同名文件/);
+  assert.match(lab, /\/照片\/星空\.txt/);
+  assert.match(lab, /path-anatomy/);
+  assert.match(lab, /根\/文件夹\/子文件夹\/文件名/);
 });
 
 test("device lab shows requests crossing the OS and driver boundary", () => {
