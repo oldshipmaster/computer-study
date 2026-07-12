@@ -9,12 +9,16 @@ export function ReviewChallenge({ completedCourseIds }: { completedCourseIds: st
   const question = availableQuestions[state.index];
   const questionHeadingRef = useRef<HTMLHeadingElement>(null);
   const finishHeadingRef = useRef<HTMLHeadingElement>(null);
+  const restartingRef = useRef(false);
   useLayoutEffect(() => {
     if (state.completed) finishHeadingRef.current?.focus();
-    else if (state.index > 0) questionHeadingRef.current?.focus();
+    else if (state.index > 0 || restartingRef.current) {
+      restartingRef.current = false;
+      questionHeadingRef.current?.focus();
+    }
   }, [state.completed, state.index]);
 
-  function restart() { setState(createReviewState()); }
+  function restart() { restartingRef.current = true; setState(createReviewState()); }
 
   return (
     <section className="review-challenge" id="review-station" aria-labelledby="review-heading">

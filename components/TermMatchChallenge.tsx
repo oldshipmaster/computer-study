@@ -9,11 +9,15 @@ export function TermMatchChallenge({ completedCourseIds }: { completedCourseIds:
   const question = questions[state.index];
   const questionHeadingRef = useRef<HTMLHeadingElement>(null);
   const finishHeadingRef = useRef<HTMLHeadingElement>(null);
+  const restartingRef = useRef(false);
   useLayoutEffect(() => {
     if (state.completed) finishHeadingRef.current?.focus();
-    else if (state.index > 0) questionHeadingRef.current?.focus();
+    else if (state.index > 0 || restartingRef.current) {
+      restartingRef.current = false;
+      questionHeadingRef.current?.focus();
+    }
   }, [state.completed, state.index]);
-  const restart = () => setState(createTermMatchState());
+  const restart = () => { restartingRef.current = true; setState(createTermMatchState()); };
   return <section className="term-match" id="term-match" aria-labelledby="term-match-heading">
     <div><p className="section-kicker">概念配对舱</p><h2 id="term-match-heading">每完成一课，解锁一个核心词</h2><p>读懂解释再选词，不用背英文。45 节课各有一道概念题。</p></div>
     <div className="term-match-console">
