@@ -31,7 +31,7 @@ export const DICTIONARY_ENTRIES: readonly DictionaryEntry[] = [
   { id: "digital-citizenship", islandId: "safety-lighthouse", courseId: "light-bit-island", term: "数字公民", english: "Digital citizenship", explanation: "安全、尊重、负责地使用数字工具并照顾自己和他人。", example: "不分享隐私，尊重作品来源，不确定时先停下求助。" },
   { id: "input-output", islandId: "hardware-lab", courseId: "input-process-output", term: "输入与输出", english: "Input and output", explanation: "输入把信息送进电脑，输出把结果呈现给人。", example: "麦克风输入声音，扬声器输出声音。" },
   { id: "cpu-memory-storage", islandId: "hardware-lab", courseId: "cpu-memory-storage", term: "处理器、内存与存储", english: "CPU, memory and storage", explanation: "处理器执行指令，内存放正在使用的内容，存储长期保存文件。", example: "关机后未保存的内存内容会消失，已保存文件还在。" },
-  { id: "bit", islandId: "hardware-lab", courseId: "bits-and-data", term: "比特", english: "Bit", explanation: "只能处于 0 或 1 两种状态的最小数据单位。", example: "四个比特按位值组合，可以表示多个不同数字。" },
+  { id: "bit", islandId: "hardware-lab", courseId: "bits-and-data", term: "比特", english: "Bit / Byte", explanation: "比特只有 0 或 1；连续 8 个比特组成一个字节。", example: "一个字节有 256 种不同的 0 和 1 组合。" },
   { id: "hardware-software", islandId: "hardware-lab", courseId: "hardware-software", term: "硬件与软件", english: "Hardware and software", explanation: "硬件是能触摸的部件，软件是让硬件工作的指令。", example: "画画需要鼠标和屏幕，也需要画图程序。" },
   { id: "troubleshooting", islandId: "hardware-lab", courseId: "troubleshoot-machine", term: "故障排查", english: "Troubleshooting", explanation: "从简单安全的现象开始，一次检查一个原因并观察结果。", example: "先看音量是否关闭，不自己拆开设备。" },
   { id: "network", islandId: "network-bay", courseId: "network-troubleshooting", term: "网络故障范围", english: "Network scope", explanation: "比较一台还是多台设备、一个还是所有网站失败，以缩小原因范围。", example: "只有一个网站打不开和全家都断网可能是不同问题。" },

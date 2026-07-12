@@ -274,7 +274,7 @@ export const LESSON_DEFINITIONS: Record<string, LessonDefinition> = {
     badgeId: "bit-builder",
     badgeName: "比特积木师",
     completionTitle: "数字与颜色的比特灯全部点亮",
-    completionSummary: "你会用 0 和 1 组合小数字与颜色，也理解数据需要编码规则。",
+    completionSummary: "你会组合小数字与颜色，用 8 比特组成一个字节，也理解数据需要编码规则。",
     Component: BitsAndDataLesson,
   },
   "hardware-software": {
