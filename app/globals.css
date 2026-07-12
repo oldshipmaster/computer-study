@@ -1186,11 +1186,11 @@ input {
 .section-jump-nav a:hover, .section-jump-nav a:focus-visible { background: rgb(255 255 255 / 70%); }
 .course-compass-difficulty, .course-compass-completion { display: flex; align-items: center; flex-wrap: wrap; gap: 7px; }
 .course-compass-difficulty > span, .course-compass-completion > span { margin-right: 3px; font-size: .82rem; font-weight: 850; }
-.course-compass-difficulty button, .course-compass-completion button { min-height: 40px; padding: 0 12px; border: 2px solid var(--deep-sea); border-radius: 999px; background: white; color: inherit; font: inherit; font-size: .8rem; font-weight: 850; }
+.course-compass-difficulty button, .course-compass-completion button { min-height: 44px; padding: 0 12px; border: 2px solid var(--deep-sea); border-radius: 999px; background: white; color: inherit; font: inherit; font-size: .8rem; font-weight: 850; }
 .course-compass-difficulty button[aria-pressed="true"], .course-compass-completion button[aria-pressed="true"] { background: var(--deep-sea); color: white; }
 .course-compass-status { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
 .course-compass-status p { margin: 0; }
-.course-compass-status button { min-height: 40px; padding: 0 12px; border: 0; border-radius: 999px; background: var(--yellow-soft); color: inherit; font: inherit; font-size: .8rem; font-weight: 850; }
+.course-compass-status button { min-height: 44px; padding: 0 12px; border: 0; border-radius: 999px; background: var(--yellow-soft); color: inherit; font: inherit; font-size: .8rem; font-weight: 850; }
 .course-compass label > span { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 .course-compass kbd { min-width: 26px; padding: 2px 6px; border: 1px solid #8fa7b3; border-bottom-width: 3px; border-radius: 6px; background: white; font: inherit; font-size: .72rem; text-align: center; }
 @media (max-width: 900px) { .site-header { flex-wrap: wrap; } .section-jump-nav { order: 3; width: 100%; overflow-x: auto; justify-content: flex-start; padding-bottom: 3px; scrollbar-width: thin; } }

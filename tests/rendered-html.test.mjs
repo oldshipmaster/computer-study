@@ -487,6 +487,11 @@ test("keeps essential lesson-card copy readable for young learners", () => {
   }
 });
 
+test("keeps course compass touch targets child-sized", () => {
+  assert.equal(cssProperty(".course-compass-difficulty button, .course-compass-completion button", "min-height"), "44px");
+  assert.equal(cssProperty(".course-compass-status button", "min-height"), "44px");
+});
+
 test("keeps the lesson caption at least 16px at every responsive size", () => {
   const captionBlocks = cssBlocks(".bibi--lesson .bibi-message p");
 
