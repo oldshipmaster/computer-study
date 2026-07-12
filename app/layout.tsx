@@ -5,7 +5,7 @@ import "./globals.css";
 
 const SITE_NAME = "比特岛大冒险";
 const SITE_TITLE = "比特岛大冒险｜儿童计算机启蒙课";
-const SITE_DESCRIPTION = "适合小学二年级孩子的电脑基础与编程思维互动课程。";
+const SITE_DESCRIPTION = "面向小学二年级的九岛四十五课互动计算机课程，覆盖操作、文件、编程、安全、硬件、网络、创作与 AI 素养。";
 const LOCAL_METADATA_BASE = new URL("http://localhost:3000");
 
 const geistSans = Geist({
@@ -62,6 +62,10 @@ export async function generateMetadata(): Promise<Metadata> {
     metadataBase,
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
+    applicationName: SITE_NAME,
+    category: "education",
+    keywords: ["儿童计算机", "编程启蒙", "电脑基础", "数字安全", "AI 素养"],
+    themeColor: "#12324a",
     icons: {
       icon: "/favicon.svg",
       shortcut: "/favicon.svg",
