@@ -57,5 +57,6 @@ async function cacheFirst(request) {
 self.addEventListener("fetch", (event) => {
   const requestUrl = new URL(event.request.url);
   if (event.request.method !== "GET" || requestUrl.origin !== scopeUrl.origin) return;
-  event.respondWith(event.request.mode === "navigate" ? networkFirst(event.request) : cacheFirst(event.request));
+  const mutableCoreFile = ["manifest.webmanifest", "favicon.svg", "icon-192.png", "icon-512.png"].some((name) => requestUrl.pathname.endsWith(`/${name}`));
+  event.respondWith(event.request.mode === "navigate" || mutableCoreFile ? networkFirst(event.request) : cacheFirst(event.request));
 });
