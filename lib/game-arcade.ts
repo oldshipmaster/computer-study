@@ -30,6 +30,7 @@ export const GAME_ARCADE_DEFINITIONS: GameArcadeDefinition[] = [
   { id: "robot", targetId: "robot-code-expedition", title: "机器人代码远征", icon: "🤖", mechanic: "编排指令并逐步调试地图", duration: "8–10 分钟", gate: { type: "exact", courseIds: ["instruction-order", "grid-city-navigation", "repeat-power", "rainy-condition"] } },
   { id: "packet", targetId: "packet-escort", title: "网络数据包护航", icon: "📦", mechanic: "打包、选路、重传、排序、拆层", duration: "8–10 分钟", gate: { type: "exact", courseIds: ["network-layers", "routing-maze", "reliable-transfer"] } },
   { id: "cpu", targetId: "cpu-scheduler-game", title: "CPU 时间片调度台", icon: "⚙️", mechanic: "装入内存并轮转执行进程", duration: "8–10 分钟", gate: { type: "exact", courseIds: ["program-process", "cpu-scheduling", "memory-allocation"] } },
+  { id: "algorithm", targetId: "algorithm-arena-game", title: "算法竞技场", icon: "🏁", mechanic: "搜索、排序、依赖与效率六关接力", duration: "8–10 分钟", gate: { type: "exact", courseIds: ["linear-search", "binary-search", "bubble-sort", "task-decomposition", "algorithm-efficiency"] } },
 ];
 
 export function buildGameArcadeEntries(completedCourseIds: readonly string[]): GameArcadeEntry[] {
