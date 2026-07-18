@@ -4,18 +4,42 @@ import { createProgressBackup, parseProgressBackup } from "../lib/progress-backu
 import { DEFAULT_PROGRESS } from "../lib/progress.mjs";
 
 test("exports a versioned backup without personal fields", () => {
-  const text = createProgressBackup({ ...DEFAULT_PROGRESS, completedCourseIds: ["keyboard-flight"], badgeIds: ["keyboard-pilot"], resume: { courseId: "data-table", stage: 4 }, name: "不应导出", email: "child@example.test", answers: ["不应导出"] }, "2026-07-12T00:00:00.000Z");
+  const text = createProgressBackup({ ...DEFAULT_PROGRESS, completedCourseIds: ["keyboard-flight"], badgeIds: ["keyboard-pilot"], coursePlayCounts: { "keyboard-flight": 2 }, resume: { courseId: "data-table", stage: 4 }, name: "不应导出", email: "child@example.test", answers: ["不应导出"] }, "2026-07-12T00:00:00.000Z");
   const data = JSON.parse(text);
   assert.equal(data.kind, "bit-island-progress-backup");
   assert.equal(data.exportedAt, "2026-07-12T00:00:00.000Z");
   assert.equal(data.progress.completedCourseIds[0], "keyboard-flight");
   assert.deepEqual(data.progress.resume, { courseId: "data-table", stage: 4 });
   assert.deepEqual(data.progress.confidenceByCourse, {});
+  assert.deepEqual(data.progress.coursePlayCounts, { "keyboard-flight": 2 });
   assert.equal("name" in data, false);
   assert.equal("name" in data.progress, false);
   assert.equal("email" in data.progress, false);
   assert.equal("answers" in data.progress, false);
   assert.equal(text.includes("不应导出"), false);
+});
+
+test("restores play counts only for completed known courses", () => {
+  const result = parseProgressBackup(JSON.stringify({
+    kind: "bit-island-progress-backup",
+    version: 1,
+    progress: {
+      ...DEFAULT_PROGRESS,
+      completedCourseIds: ["keyboard-flight", "file-home", "unknown"],
+      coursePlayCounts: {
+        "keyboard-flight": 3,
+        "file-home": 4,
+        "instruction-order": 2,
+        unknown: 2,
+      },
+    },
+  }));
+
+  assert.equal(result.ok, true);
+  assert.deepEqual(result.progress.coursePlayCounts, {
+    "keyboard-flight": 3,
+    "file-home": 1,
+  });
 });
 
 test("restores confidence only for completed known courses and allowed choices", () => {

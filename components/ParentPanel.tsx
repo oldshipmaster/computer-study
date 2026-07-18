@@ -18,6 +18,7 @@ export interface ParentProgress {
   version: 1;
   completedCourseIds: string[];
   badgeIds: string[];
+  coursePlayCounts: Record<string, number>;
   confidenceByCourse: Record<string, "confident" | "practice" | "help">;
   resume: { courseId: string; stage: number } | null;
   settings: {

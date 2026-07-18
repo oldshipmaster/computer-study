@@ -33,3 +33,22 @@ test("keeps confidence only for completed catalog courses", () => {
   const sanitized = sanitizeCatalogProgress(progress);
   assert.deepEqual(sanitized.confidenceByCourse, { "keyboard-flight": "confident" });
 });
+
+test("keeps bounded play counts only for completed catalog courses", () => {
+  const progress = {
+    ...DEFAULT_PROGRESS,
+    completedCourseIds: ["keyboard-flight", "file-home", "unknown"],
+    coursePlayCounts: {
+      "keyboard-flight": 3,
+      "file-home": 4,
+      "instruction-order": 2,
+      unknown: 2,
+    },
+  };
+
+  const sanitized = sanitizeCatalogProgress(progress);
+  assert.deepEqual(sanitized.coursePlayCounts, {
+    "keyboard-flight": 3,
+    "file-home": 1,
+  });
+});
