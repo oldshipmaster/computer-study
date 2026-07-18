@@ -29,6 +29,11 @@ test("offers complete truth-table challenge and free sandbox flows", () => {
   assert.match(component, /evaluateLogicGate/);
   assert.match(component, /重玩六块电路板/);
   assert.match(component, /headingRef\.current\?\.focus/);
+  assert.match(component, /logicCircuitShortcutSelection/);
+  assert.match(component, /onKeyDown=\{handleChallengeKeyDown\}/);
+  assert.match(component, /aria-keyshortcuts=\{String\(shortcutNumber\)\}/);
+  assert.match(component, /按数字键/);
+  assert.match(component, /按 <kbd>Enter<\/kbd>/);
 });
 
 test("lazy-loads the lab between boss arena and learning plan", () => {
@@ -47,5 +52,6 @@ test("ships the lab styles as a separate accessible resource", () => {
   assert.match(css, /\.circuit-gate-choice[^{]*\{[^}]*min-height:\s*44px/);
   assert.match(css, /@media \(max-width: 680px\)[\s\S]*?\.circuit-workbench[\s\S]*?grid-template-columns:\s*1fr/);
   assert.match(css, /\.bit-island-app--reduced-motion[\s\S]*?\.circuit-output-light[\s\S]*?animation:\s*none/);
+  assert.match(css, /\.circuit-keyboard-hint/);
   assert.match(css, /@media \(forced-colors: active\)[\s\S]*?\.circuit-row--fail[\s\S]*?\.circuit-gate-choice\[aria-pressed="true"\]/);
 });

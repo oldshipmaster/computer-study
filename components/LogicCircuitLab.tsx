@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useMemo, useRef, useState, type MouseEvent } from "react";
+import { useLayoutEffect, useMemo, useRef, useState, type KeyboardEvent, type MouseEvent } from "react";
 import { getCourse } from "@/lib/course-data";
 import {
   LOGIC_CIRCUIT_PUZZLES,
@@ -8,6 +8,7 @@ import {
   buildLogicPuzzleDeck,
   createLogicLabState,
   evaluateLogicGate,
+  logicCircuitShortcutSelection,
   runLogicCircuit,
   selectCircuitGate,
   testLogicCircuit,
@@ -128,18 +129,42 @@ export function LogicCircuitLab({ completedCourseIds, onStartCourse }: LogicCirc
     setGame((current) => advanceLogicPuzzle(current, event.detail));
   }
 
+  function handleChallengeKeyDown(event: KeyboardEvent<HTMLElement>) {
+    if (event.nativeEvent.isComposing || event.repeat || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+    const shortcut = logicCircuitShortcutSelection(puzzle, event.key);
+    if (shortcut && game.phase !== "solved") {
+      event.preventDefault();
+      setGame((current) => selectCircuitGate(current, puzzle, shortcut.slotId, shortcut.gate));
+      return;
+    }
+    if (event.key !== "Enter" || event.target instanceof HTMLButtonElement) return;
+    if (game.phase === "solved") {
+      shouldFocusRef.current = true;
+      setGame((current) => advanceLogicPuzzle(current, 0));
+    } else if (ready) setGame((current) => testLogicCircuit(current, puzzle, 0));
+    else return;
+    event.preventDefault();
+  }
+
   return (
-    <section className="logic-circuit-shell logic-circuit-game" id="logic-circuit-lab" aria-labelledby="circuit-board-heading">
+    <section className="logic-circuit-shell logic-circuit-game" id="logic-circuit-lab" aria-labelledby="circuit-board-heading" onKeyDown={handleChallengeKeyDown}>
       <button className="circuit-back" onClick={() => enterMode("menu")} type="button">← 返回电路台</button>
       <header className="circuit-game-heading"><p>电路板 {game.index + 1} / {game.puzzleCount}</p><h2 id="circuit-board-heading" ref={headingRef} tabIndex={-1}>{puzzle.title}</h2><span>{puzzle.story}</span><progress aria-label="逻辑电路挑战进度" max={game.puzzleCount} value={game.solved} /></header>
       <div className="circuit-workbench">
         <div className="circuit-builder">
           <div className="circuit-input-line" aria-label="电路输入端" role="group">{puzzle.inputs.map((input) => <span key={input}><b>{input}</b><small>输入</small></span>)}</div>
-          {puzzle.slots.map((slot) => <section className="circuit-slot" key={slot.id}><header><span>{slot.left}{slot.right ? ` + ${slot.right}` : ""} →</span><strong>{slot.id} 门槽</strong></header><div role="group" aria-label={`${slot.id} 选择逻辑门`}>{slot.allowedGates.map((gate) => <button aria-pressed={game.selections[slot.id] === gate} className="circuit-gate-choice" disabled={game.phase === "solved"} key={gate} onClick={() => setGame((current) => selectCircuitGate(current, puzzle, slot.id, gate))} type="button"><b>{GATE_COPY[gate].symbol}</b><span>{gate}</span></button>)}</div></section>)}
+          {puzzle.slots.map((slot, slotIndex) => {
+            const shortcutOffset = puzzle.slots.slice(0, slotIndex).reduce((sum, item) => sum + item.allowedGates.length, 0);
+            return <section className="circuit-slot" key={slot.id}><header><span>{slot.left}{slot.right ? ` + ${slot.right}` : ""} →</span><strong>{slot.id} 门槽</strong></header><div role="group" aria-label={`${slot.id} 选择逻辑门`}>{slot.allowedGates.map((gate, gateIndex) => {
+              const shortcutNumber = shortcutOffset + gateIndex + 1;
+              return <button aria-keyshortcuts={String(shortcutNumber)} aria-pressed={game.selections[slot.id] === gate} className="circuit-gate-choice" disabled={game.phase === "solved"} key={gate} onClick={() => setGame((current) => selectCircuitGate(current, puzzle, slot.id, gate))} type="button"><kbd>{shortcutNumber}</kbd><b>{GATE_COPY[gate].symbol}</b><span>{gate}</span></button>;
+            })}</div></section>;
+          })}
           <div className={`circuit-output-light ${game.phase === "solved" ? "is-on" : ""}`}><span aria-hidden="true" /><strong>输出测试灯</strong><small>{game.phase === "solved" ? "全部输入通过" : "等待完整测试"}</small></div>
         </div>
         <div className="circuit-table-panel"><h3>目标真值表</h3><div className="circuit-table-scroll"><table><thead><tr>{puzzle.inputs.map((input) => <th key={input} scope="col">{input}</th>)}<th scope="col">目标</th><th scope="col">实际</th><th scope="col">结果</th></tr></thead><tbody>{displayRows.map((row, rowIndex) => <tr className={game.rows.length > 0 && !row.matches ? "circuit-row--fail" : game.rows.length > 0 ? "circuit-row--pass" : ""} key={rowIndex}>{puzzle.inputs.map((input) => <td key={input}>{row.inputs[input] ? "1" : "0"}</td>)}<td>{row.expected ? "1" : "0"}</td><td>{game.rows.length === 0 ? "—" : row.actual === null ? "无法运行" : row.actual ? "1" : "0"}</td><td>{game.rows.length === 0 ? "待测试" : row.matches ? "通过" : "需调整"}</td></tr>)}</tbody></table></div></div>
       </div>
+      <p className="circuit-keyboard-hint">{game.phase === "solved" ? <>按 <kbd>Enter</kbd> 接入下一块电路板</> : <>按数字键 <kbd>1</kbd>–<kbd>{puzzle.slots.reduce((sum, slot) => sum + slot.allowedGates.length, 0)}</kbd> 选择门；填满后按 <kbd>Enter</kbd> 运行全部输入</>}</p>
       <p className={`circuit-feedback circuit-feedback--${game.phase}`} role="status">{game.feedback}</p>
       {game.phase === "solved" ? <button className="circuit-run" onClick={nextBoard} type="button">{game.index === game.puzzleCount - 1 ? "查看通关报告" : "接入下一块电路板"} →</button> : <button className="circuit-run" disabled={!ready} onClick={runTests} type="button">运行全部输入</button>}
     </section>

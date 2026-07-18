@@ -72,6 +72,13 @@ export const LOGIC_CIRCUIT_PUZZLES: LogicCircuitPuzzle[] = [
   },
 ];
 
+export function logicCircuitShortcutSelection(puzzle: LogicCircuitPuzzle, key: string): { slotId: string; gate: LogicGate } | null {
+  if (!/^[1-8]$/.test(key)) return null;
+  const index = Number(key) - 1;
+  const selections = puzzle.slots.flatMap((slot) => slot.allowedGates.map((gate) => ({ slotId: slot.id, gate })));
+  return selections[index] ?? null;
+}
+
 export function evaluateLogicGate(gate: LogicGate, left: boolean, right?: boolean): boolean | null {
   if (gate === "NOT") return !left;
   if (typeof right !== "boolean") return null;

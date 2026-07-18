@@ -7,10 +7,23 @@ import {
   buildTruthInputs,
   createLogicLabState,
   evaluateLogicGate,
+  logicCircuitShortcutSelection,
   runLogicCircuit,
   selectCircuitGate,
   testLogicCircuit,
 } from "../lib/logic-circuit-lab.ts";
+
+test("maps one-to-eight shortcuts across visible circuit slots in reading order", () => {
+  const single = LOGIC_CIRCUIT_PUZZLES[0];
+  assert.deepEqual(logicCircuitShortcutSelection(single, "1"), { slotId: "G1", gate: "AND" });
+  assert.deepEqual(logicCircuitShortcutSelection(single, "4"), { slotId: "G1", gate: "NOT" });
+  assert.equal(logicCircuitShortcutSelection(single, "5"), null);
+  const layered = LOGIC_CIRCUIT_PUZZLES[4];
+  assert.deepEqual(logicCircuitShortcutSelection(layered, "5"), { slotId: "G2", gate: "AND" });
+  assert.deepEqual(logicCircuitShortcutSelection(layered, "8"), { slotId: "G2", gate: "NOT" });
+  assert.equal(logicCircuitShortcutSelection(layered, "0"), null);
+  assert.equal(logicCircuitShortcutSelection(layered, "9"), null);
+});
 
 test("evaluates the four child-facing logic gates", () => {
   assert.equal(evaluateLogicGate("AND", false, false), false);
