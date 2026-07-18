@@ -27,6 +27,11 @@ test("renders clues, safe actions, feedback, and a detective evidence board", ()
   assert.match(component, /role="status"/);
   assert.match(component, /aria-current/);
   assert.match(component, /<progress/);
+  assert.match(component, /numberShortcutIndex/);
+  assert.match(component, /onKeyDown=\{handleDetectiveKeyDown\}/);
+  assert.match(component, /aria-keyshortcuts=\{String\(index \+ 1\)\}/);
+  assert.match(component, /按键盘数字/);
+  assert.match(component, /按 <kbd>Enter<\/kbd>/);
 });
 
 test("supports six cases, replay rotation, and focus handoff", () => {
@@ -50,5 +55,6 @@ test("lazy-loads after data structure harbor with responsive accessible styles",
   assert.match(css, /\.safety-action[^{]*\{[^}]*min-height:\s*44px/);
   assert.match(css, /@media \(max-width: 760px\)[\s\S]*?\.safety-detective-layout[\s\S]*?grid-template-columns:\s*1fr/);
   assert.match(css, /\.bit-island-app--reduced-motion[\s\S]*?animation:\s*none/);
+  assert.match(css, /\.safety-keyboard-hint/);
   assert.match(css, /@media \(forced-colors: active\)[\s\S]*?aria-current/);
 });

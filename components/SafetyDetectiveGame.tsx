@@ -1,7 +1,8 @@
 "use client";
 
-import { useLayoutEffect, useMemo, useRef, useState, type MouseEvent } from "react";
+import { useLayoutEffect, useMemo, useRef, useState, type KeyboardEvent, type MouseEvent } from "react";
 import { getCourse } from "@/lib/course-data";
+import { numberShortcutIndex } from "@/lib/keyboard-shortcuts";
 import {
   SAFETY_DETECTIVE_CASES,
   advanceSafetyCase,
@@ -83,8 +84,23 @@ export function SafetyDetectiveGame({ completedCourseIds, onStartCourse }: Safet
   function nextStep(event: MouseEvent<HTMLButtonElement>) { focusNext(); setGame((current) => advanceSafetyStep(current, caseFile, event.detail)); }
   function nextCase(event: MouseEvent<HTMLButtonElement>) { focusNext(); setGame((current) => advanceSafetyCase(current, event.detail)); }
 
+  function handleDetectiveKeyDown(event: KeyboardEvent<HTMLElement>) {
+    if (event.nativeEvent.isComposing || event.repeat || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+    const optionIndex = numberShortcutIndex(event.key, step.options.length);
+    if (optionIndex !== null && game.phase === "investigating") {
+      event.preventDefault();
+      setGame((current) => chooseSafetyAction(current, caseFile, step.options[optionIndex].id, 0));
+      return;
+    }
+    if (event.key !== "Enter" || event.target instanceof HTMLButtonElement) return;
+    if (game.phase === "step-solved") { focusNext(); setGame((current) => advanceSafetyStep(current, caseFile, 0)); }
+    else if (game.phase === "case-solved") { focusNext(); setGame((current) => advanceSafetyCase(current, 0)); }
+    else return;
+    event.preventDefault();
+  }
+
   return (
-    <section className={`safety-detective-shell safety-detective-case case-${caseFile.mode}`} id="safety-detective-game" aria-labelledby="safety-case-heading">
+    <section className={`safety-detective-shell safety-detective-case case-${caseFile.mode}`} id="safety-detective-game" aria-labelledby="safety-case-heading" onKeyDown={handleDetectiveKeyDown}>
       <button className="safety-detective-back" onClick={() => { focusNext(); setMode("menu"); }} type="button">← 返回侦探局入口</button>
       <header className="safety-detective-heading">
         <span aria-hidden="true">{MODE_ICONS[caseFile.mode]}</span>
@@ -98,7 +114,8 @@ export function SafetyDetectiveGame({ completedCourseIds, onStartCourse }: Safet
           <div className="safety-clue-grid" aria-label="当前案件线索" role="list">
             {step.clues.map((clue) => <span aria-current={clue.level === "risk" ? "true" : undefined} className={`safety-clue is-${clue.level}`} key={clue.id} role="listitem"><b>{clue.label}</b><small>{clue.detail}</small><i>{clue.level === "risk" ? "风险线索" : clue.level === "warning" ? "要留意" : "可用线索"}</i></span>)}
           </div>
-          <div className="safety-actions" aria-label="选择安全行动" role="group">{step.options.map((candidate) => <button aria-pressed={game.phase !== "investigating" && candidate.id === step.answerId} className="safety-action" disabled={game.phase !== "investigating"} key={candidate.id} onClick={(event) => choose(event, candidate.id)} type="button">{candidate.label}</button>)}</div>
+          <div className="safety-actions" aria-label="选择安全行动" role="group">{step.options.map((candidate, index) => <button aria-keyshortcuts={String(index + 1)} aria-pressed={game.phase !== "investigating" && candidate.id === step.answerId} className="safety-action" disabled={game.phase !== "investigating"} key={candidate.id} onClick={(event) => choose(event, candidate.id)} type="button"><kbd>{index + 1}</kbd><span>{candidate.label}</span></button>)}</div>
+          <p className="safety-keyboard-hint">{game.phase === "investigating" ? <>也可以按键盘数字 <kbd>1</kbd>、<kbd>2</kbd>、<kbd>3</kbd> 选择安全行动</> : <>按 <kbd>Enter</kbd> {game.phase === "step-solved" ? "收好证据并继续" : "打开下一件案件"}</>}</p>
           <p className={`safety-feedback phase-${game.phase}`} role="status">{game.feedback}</p>
           {game.phase === "step-solved" ? <button className="safety-action safety-next" onClick={nextStep} type="button">收好证据，继续调查 →</button> : null}
           {game.phase === "case-solved" ? <button className="safety-action safety-next" onClick={nextCase} type="button">{game.index === deck.length - 1 ? "查看安全侦探报告" : "打开下一件案件"} →</button> : null}

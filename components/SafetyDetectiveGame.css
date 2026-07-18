@@ -38,7 +38,10 @@
 .safety-clue.is-risk i { background: #ffd8d3; color: #7b2525; }
 .safety-actions { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 9px; }
 .safety-actions .safety-action { background: #ebe6ff; box-shadow: 2px 2px 0 #332b55; }
+.safety-actions .safety-action kbd { display: inline-grid; min-width: 25px; min-height: 25px; place-items: center; border: 1px solid #80769d; border-radius: 6px; background: white; color: #332b55; font: 900 .66rem/1 inherit; box-shadow: 0 2px 0 #aaa2c0; }
 .safety-actions .safety-action[aria-pressed="true"] { background: #ccefdc; }
+.safety-keyboard-hint { color: #5c5276; font-size: .74rem; font-weight: 800; text-align: center; }
+.safety-keyboard-hint kbd { display: inline-grid; min-width: 26px; min-height: 25px; place-items: center; margin-inline: 2px; border: 1px solid #80769d; border-radius: 6px; background: white; color: #332b55; font: 900 .68rem/1 inherit; box-shadow: 0 2px 0 #aaa2c0; }
 .safety-feedback { min-height: 48px; padding: 10px 12px; border-left: 5px solid #766c96; border-radius: 9px; background: #f0edf7; color: #4a4167; }
 .safety-feedback.phase-step-solved, .safety-feedback.phase-case-solved { border-color: #2e7159; background: #e2f6ea; color: #245b47; }
 .safety-next { justify-self: end; }
