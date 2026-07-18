@@ -44,6 +44,7 @@ export const GAME_ARCADE_DEFINITIONS: GameArcadeDefinition[] = [
   { id: "pilot", targetId: "computer-pilot-relay", title: "电脑驾驶执照", icon: "🧑‍✈️", mechanic: "键盘、鼠标、输入、窗口与程序综合操作", duration: "8–10 分钟", category: "life", gate: { type: "exact", courseIds: ["keyboard-flight", "mouse-precision", "bilingual-input", "desktop-adventure", "program-landing"] } },
   { id: "voyage", targetId: "network-voyage-relay", title: "网络航海训练营", icon: "⛵", mechanic: "地址、搜索、云端传送与逐步排障", duration: "8–10 分钟", category: "systems", gate: { type: "exact", courseIds: ["network-journey", "web-address", "search-and-links", "downloads-and-cloud", "network-troubleshooting"] } },
   { id: "os-command", targetId: "os-command-relay", title: "操作系统任务指挥部", icon: "🛰", mechanic: "进程、CPU、内存、文件与设备协同", duration: "8–10 分钟", category: "systems", gate: { type: "exact", courseIds: ["program-process", "cpu-scheduling", "memory-allocation", "file-system-tree", "device-coordination"] } },
+  { id: "systems-depth", targetId: "systems-depth-relay", title: "系统深海总控台", icon: "🔱", mechanic: "指令、缓存、分层、路由与可靠传输", duration: "8–10 分钟", category: "systems", gate: { type: "exact", courseIds: ["instruction-cycle", "cache-station", "network-layers", "routing-maze", "reliable-transfer"] } },
 ];
 
 export function buildGameArcadeEntries(completedCourseIds: readonly string[]): GameArcadeEntry[] {
