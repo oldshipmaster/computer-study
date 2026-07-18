@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { getCourse } from "@/lib/course-data";
-import { buildGameArcadeEntries, buildGameArcadeRecommendations, type GameArcadeCategory, type GameArcadeLevel } from "@/lib/game-arcade";
+import { buildGameArcadeEntries, buildGameArcadeRecommendations, filterGameArcadeEntries, type GameArcadeCategory, type GameArcadeLevel } from "@/lib/game-arcade";
 import "./GameArcade.css";
 
 interface GameArcadeProps {
@@ -33,12 +33,13 @@ export function GameArcade({ completedCourseIds, onStartCourse }: GameArcadeProp
   const [recommendationRotation, setRecommendationRotation] = useState(0);
   const [category, setCategory] = useState<DiscoveryCategory>("all");
   const [level, setLevel] = useState<DiscoveryLevel>("all");
+  const [query, setQuery] = useState("");
   const [unlockedOnly, setUnlockedOnly] = useState(false);
   const recommendations = useMemo(() => buildGameArcadeRecommendations(entries, recommendationRotation), [entries, recommendationRotation]);
-  const visibleEntries = entries.filter((entry) => (category === "all" || entry.category === category) && (level === "all" || entry.level === level) && (!unlockedOnly || entry.unlocked));
-  const filtersActive = category !== "all" || level !== "all" || unlockedOnly;
+  const visibleEntries = filterGameArcadeEntries(entries, { query, category, level, unlockedOnly });
+  const filtersActive = Boolean(query.trim()) || category !== "all" || level !== "all" || unlockedOnly;
 
-  function clearFilters() { setCategory("all"); setLevel("all"); setUnlockedOnly(false); }
+  function clearFilters() { setQuery(""); setCategory("all"); setLevel("all"); setUnlockedOnly(false); }
 
   return (
     <section className="game-arcade" id="game-arcade" aria-labelledby="game-arcade-heading">
@@ -53,6 +54,7 @@ export function GameArcade({ completedCourseIds, onStartCourse }: GameArcadeProp
         {recommendations.length === 1 ? <p>先从这一局开始；学完更多课程后，推荐路线会一起长大。</p> : <p>推荐只从已经解锁的玩法中轮换，不会记录你的选择。</p>}
       </section>
 
+      <div className="game-arcade-search"><label htmlFor="game-arcade-search">找一局想玩的</label><div><input aria-label="搜索游戏" id="game-arcade-search" onChange={(event) => setQuery(event.target.value)} placeholder="搜索游戏名称或玩法" type="search" value={query} />{query ? <button onClick={() => setQuery("")} type="button">清空搜索</button> : null}</div><small>只在当前页面匹配标题和玩法说明，不保存搜索词。</small></div>
       <div className="game-arcade-discovery">
         <div className="game-arcade-filter-stack"><div className="game-arcade-filters" aria-label="按主题筛选游戏" role="group">{CATEGORY_OPTIONS.map((option) => <button aria-pressed={category === option.id} className="game-arcade-filter" key={option.id} onClick={() => setCategory(option.id)} type="button">{option.label}</button>)}</div><div className="game-arcade-filters" aria-label="按学习阶段筛选游戏" role="group">{LEVEL_OPTIONS.map((option) => <button aria-pressed={level === option.id} className="game-arcade-filter game-arcade-filter--level" key={option.id} onClick={() => setLevel(option.id)} type="button">{option.label}</button>)}</div></div>
         <button aria-pressed={unlockedOnly} className="game-arcade-filter game-arcade-filter--unlocked" onClick={() => setUnlockedOnly((current) => !current)} type="button">✓ 只看已解锁</button>

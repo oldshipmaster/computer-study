@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { GAME_ARCADE_DEFINITIONS, buildGameArcadeEntries, buildGameArcadeRecommendations } from "../lib/game-arcade.ts";
+import { GAME_ARCADE_DEFINITIONS, buildGameArcadeEntries, buildGameArcadeRecommendations, filterGameArcadeEntries } from "../lib/game-arcade.ts";
 
 test("assigns every game to one child-readable discovery category", () => {
   const expected = new Set(["quest", "code", "systems", "life"]);
@@ -45,4 +45,12 @@ test("bounds recommendation limits", () => {
   const entries = buildGameArcadeEntries(GAME_ARCADE_DEFINITIONS.flatMap((game) => game.gate.type === "exact" ? game.gate.courseIds : []));
   assert.equal(buildGameArcadeRecommendations(entries, 0, 0).length, 0);
   assert.equal(buildGameArcadeRecommendations(entries, 0, 99).length, entries.filter((entry) => entry.unlocked).length);
+});
+
+test("searches game titles and mechanics with combinable local filters", () => {
+  const entries = buildGameArcadeEntries(GAME_ARCADE_DEFINITIONS.flatMap((game) => game.gate.type === "exact" ? game.gate.courseIds : []));
+  assert.ok(filterGameArcadeEntries(entries, { query: "路由" }).some((game) => game.id === "systems-depth"));
+  assert.deepEqual(filterGameArcadeEntries(entries, { query: "  cpu  " }).map((game) => game.id), ["cpu", "factory", "os-command"]);
+  assert.ok(filterGameArcadeEntries(entries, { category: "systems", level: "starter", unlockedOnly: true }).every((game) => game.category === "systems" && game.level === "starter" && game.unlocked));
+  assert.equal(filterGameArcadeEntries(entries, { query: "不存在的玩法词" }).length, 0);
 });
