@@ -9,6 +9,12 @@ test("assigns every game to one child-readable discovery category", () => {
   for (const category of expected) assert.ok(GAME_ARCADE_DEFINITIONS.some((game) => game.category === category), category);
 });
 
+test("assigns every game to a progressive play level", () => {
+  const expected = new Set(["starter", "adventure", "mastery"]);
+  for (const game of GAME_ARCADE_DEFINITIONS) assert.ok(expected.has(game.level), `${game.id}: ${game.level}`);
+  for (const level of expected) assert.ok(GAME_ARCADE_DEFINITIONS.some((game) => game.level === level), level);
+});
+
 test("recommends only unlocked unique games and never pads a short list", () => {
   const newLearner = buildGameArcadeEntries([]);
   assert.deepEqual(buildGameArcadeRecommendations(newLearner, 0).map((game) => game.id), ["missions"]);

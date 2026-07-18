@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { getCourse } from "@/lib/course-data";
-import { buildGameArcadeEntries, buildGameArcadeRecommendations, type GameArcadeCategory } from "@/lib/game-arcade";
+import { buildGameArcadeEntries, buildGameArcadeRecommendations, type GameArcadeCategory, type GameArcadeLevel } from "@/lib/game-arcade";
 import "./GameArcade.css";
 
 interface GameArcadeProps {
@@ -11,6 +11,7 @@ interface GameArcadeProps {
 }
 
 type DiscoveryCategory = "all" | GameArcadeCategory;
+type DiscoveryLevel = "all" | GameArcadeLevel;
 const CATEGORY_OPTIONS: Array<{ id: DiscoveryCategory; label: string }> = [
   { id: "all", label: "全部玩法" },
   { id: "quest", label: "综合挑战" },
@@ -18,18 +19,26 @@ const CATEGORY_OPTIONS: Array<{ id: DiscoveryCategory; label: string }> = [
   { id: "systems", label: "电脑与网络" },
   { id: "life", label: "安全与文件" },
 ];
+const LEVEL_OPTIONS: Array<{ id: DiscoveryLevel; label: string }> = [
+  { id: "all", label: "全部阶段" },
+  { id: "starter", label: "入门探险" },
+  { id: "adventure", label: "进阶挑战" },
+  { id: "mastery", label: "大师联赛" },
+];
+const LEVEL_LABELS: Record<GameArcadeLevel, string> = { starter: "入门", adventure: "进阶", mastery: "大师" };
 
 export function GameArcade({ completedCourseIds, onStartCourse }: GameArcadeProps) {
   const entries = useMemo(() => buildGameArcadeEntries(completedCourseIds), [completedCourseIds]);
   const unlockedCount = entries.filter((entry) => entry.unlocked).length;
   const [recommendationRotation, setRecommendationRotation] = useState(0);
   const [category, setCategory] = useState<DiscoveryCategory>("all");
+  const [level, setLevel] = useState<DiscoveryLevel>("all");
   const [unlockedOnly, setUnlockedOnly] = useState(false);
   const recommendations = useMemo(() => buildGameArcadeRecommendations(entries, recommendationRotation), [entries, recommendationRotation]);
-  const visibleEntries = entries.filter((entry) => (category === "all" || entry.category === category) && (!unlockedOnly || entry.unlocked));
-  const filtersActive = category !== "all" || unlockedOnly;
+  const visibleEntries = entries.filter((entry) => (category === "all" || entry.category === category) && (level === "all" || entry.level === level) && (!unlockedOnly || entry.unlocked));
+  const filtersActive = category !== "all" || level !== "all" || unlockedOnly;
 
-  function clearFilters() { setCategory("all"); setUnlockedOnly(false); }
+  function clearFilters() { setCategory("all"); setLevel("all"); setUnlockedOnly(false); }
 
   return (
     <section className="game-arcade" id="game-arcade" aria-labelledby="game-arcade-heading">
@@ -45,7 +54,7 @@ export function GameArcade({ completedCourseIds, onStartCourse }: GameArcadeProp
       </section>
 
       <div className="game-arcade-discovery">
-        <div className="game-arcade-filters" aria-label="按主题筛选游戏" role="group">{CATEGORY_OPTIONS.map((option) => <button aria-pressed={category === option.id} className="game-arcade-filter" key={option.id} onClick={() => setCategory(option.id)} type="button">{option.label}</button>)}</div>
+        <div className="game-arcade-filter-stack"><div className="game-arcade-filters" aria-label="按主题筛选游戏" role="group">{CATEGORY_OPTIONS.map((option) => <button aria-pressed={category === option.id} className="game-arcade-filter" key={option.id} onClick={() => setCategory(option.id)} type="button">{option.label}</button>)}</div><div className="game-arcade-filters" aria-label="按学习阶段筛选游戏" role="group">{LEVEL_OPTIONS.map((option) => <button aria-pressed={level === option.id} className="game-arcade-filter game-arcade-filter--level" key={option.id} onClick={() => setLevel(option.id)} type="button">{option.label}</button>)}</div></div>
         <button aria-pressed={unlockedOnly} className="game-arcade-filter game-arcade-filter--unlocked" onClick={() => setUnlockedOnly((current) => !current)} type="button">✓ 只看已解锁</button>
       </div>
       <p className="game-arcade-results" role="status">现在显示 {visibleEntries.length} 种玩法{filtersActive ? " · 已应用筛选" : ""}</p>
@@ -56,7 +65,7 @@ export function GameArcade({ completedCourseIds, onStartCourse }: GameArcadeProp
           return (
             <article className={`game-arcade-card ${entry.unlocked ? "is-unlocked" : "is-locked"}`} key={entry.id}>
               <span className="game-arcade-icon" aria-hidden="true">{entry.icon}</span>
-              <div className="game-arcade-card-copy"><span className="game-arcade-state">{entry.unlocked ? "已解锁" : "学习中"}</span><h3>{entry.title}</h3><p>{entry.mechanic}</p><small>{entry.duration}</small></div>
+              <div className="game-arcade-card-copy"><div className="game-arcade-card-tags"><span className="game-arcade-state">{entry.unlocked ? "已解锁" : "学习中"}</span><span className={`game-arcade-level game-arcade-level--${entry.level}`}>{LEVEL_LABELS[entry.level]}</span></div><h3>{entry.title}</h3><p>{entry.mechanic}</p><small>{entry.duration}</small></div>
               <div className="game-arcade-progress"><span>解锁进度 {entry.progress.value} / {entry.progress.maximum}</span><progress aria-label={`${entry.title}解锁进度`} max={entry.progress.maximum} value={entry.progress.value} /></div>
               {entry.unlocked ? <a aria-label={`前往${entry.title}`} className="game-arcade-action" href={`#${entry.targetId}`}>去玩这个 <span aria-hidden="true">→</span></a> : entry.nextCourseId ? <button className="game-arcade-action" onClick={() => onStartCourse(entry.nextCourseId!)} type="button">下一课：{nextCourse?.title ?? "继续学习"}</button> : null}
             </article>
