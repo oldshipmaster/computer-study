@@ -1,7 +1,8 @@
 "use client";
 
-import { useLayoutEffect, useMemo, useRef, useState, type MouseEvent } from "react";
+import { useLayoutEffect, useMemo, useRef, useState, type KeyboardEvent, type MouseEvent } from "react";
 import { getCourse } from "@/lib/course-data";
+import { numberShortcutIndex } from "@/lib/keyboard-shortcuts";
 import {
   DATA_STRUCTURE_HARBOR_MISSIONS,
   advanceHarborMission,
@@ -83,8 +84,23 @@ export function DataStructureHarbor({ completedCourseIds, onStartCourse }: DataS
   function nextStep(event: MouseEvent<HTMLButtonElement>) { focusNext(); setGame((current) => advanceHarborStep(current, mission, event.detail)); }
   function nextMission(event: MouseEvent<HTMLButtonElement>) { focusNext(); setGame((current) => advanceHarborMission(current, event.detail)); }
 
+  function handleHarborKeyDown(event: KeyboardEvent<HTMLElement>) {
+    if (event.nativeEvent.isComposing || event.repeat || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+    const optionIndex = numberShortcutIndex(event.key, step.options.length);
+    if (optionIndex !== null && game.phase === "playing") {
+      event.preventDefault();
+      setGame((current) => chooseHarborAction(current, mission, step.options[optionIndex].id, 0));
+      return;
+    }
+    if (event.key !== "Enter" || event.target instanceof HTMLButtonElement) return;
+    if (game.phase === "step-solved") { focusNext(); setGame((current) => advanceHarborStep(current, mission, 0)); }
+    else if (game.phase === "mission-solved") { focusNext(); setGame((current) => advanceHarborMission(current, 0)); }
+    else return;
+    event.preventDefault();
+  }
+
   return (
-    <section className={`data-harbor-shell data-harbor-game dock-${mission.mode}`} id="data-structure-harbor" aria-labelledby="data-harbor-round-heading">
+    <section className={`data-harbor-shell data-harbor-game dock-${mission.mode}`} id="data-structure-harbor" aria-labelledby="data-harbor-round-heading" onKeyDown={handleHarborKeyDown}>
       <button className="data-harbor-back" onClick={() => { focusNext(); setMode("menu"); }} type="button">← 返回港口入口</button>
       <header className="data-harbor-heading">
         <span aria-hidden="true">{MODE_ICONS[mission.mode]}</span>
@@ -99,7 +115,8 @@ export function DataStructureHarbor({ completedCourseIds, onStartCourse }: DataS
             {step.visual.items.map((visualItem) => <span aria-current={visualItem.state === "active" ? "step" : undefined} className={`data-harbor-item is-${visualItem.state ?? "normal"}`} key={visualItem.id} role="listitem"><b>{visualItem.label}</b><small>{visualItem.meta}</small></span>)}
           </div>
           <p className="data-harbor-note">{step.visual.note}</p>
-          <div className="data-harbor-options" aria-label="选择数据结构操作" role="group">{step.options.map((candidate) => <button aria-pressed={game.phase !== "playing" && candidate.id === step.answerId} className="harbor-action" disabled={game.phase !== "playing"} key={candidate.id} onClick={(event) => choose(event, candidate.id)} type="button">{candidate.label}</button>)}</div>
+          <div className="data-harbor-options" aria-label="选择数据结构操作" role="group">{step.options.map((candidate, index) => <button aria-keyshortcuts={String(index + 1)} aria-pressed={game.phase !== "playing" && candidate.id === step.answerId} className="harbor-action" disabled={game.phase !== "playing"} key={candidate.id} onClick={(event) => choose(event, candidate.id)} type="button"><kbd>{index + 1}</kbd><span>{candidate.label}</span></button>)}</div>
+          <p className="data-harbor-keyboard-hint">{game.phase === "playing" ? <>也可以按键盘数字 <kbd>1</kbd>、<kbd>2</kbd>、<kbd>3</kbd> 选择结构操作</> : <>按 <kbd>Enter</kbd> {game.phase === "step-solved" ? "装好证据并继续" : "驶向下一座码头"}</>}</p>
           <p className={`data-harbor-feedback phase-${game.phase}`} role="status">{game.feedback}</p>
           {game.phase === "step-solved" ? <button className="harbor-action data-harbor-next" onClick={nextStep} type="button">装好证据，继续操作 →</button> : null}
           {game.phase === "mission-solved" ? <button className="harbor-action data-harbor-next" onClick={nextMission} type="button">{game.index === deck.length - 1 ? "查看港口通关单" : "驶向下一座码头"} →</button> : null}

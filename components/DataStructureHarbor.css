@@ -40,7 +40,10 @@
 .data-harbor-note { color: #4c6c70; font-size: .72rem; font-weight: 750; text-align: center; }
 .data-harbor-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 9px; }
 .data-harbor-options .harbor-action { background: #ddf2ee; box-shadow: 2px 2px 0 #193e49; }
+.data-harbor-options .harbor-action kbd { display: inline-grid; min-width: 25px; min-height: 25px; place-items: center; border: 1px solid #668888; border-radius: 6px; background: white; color: #193e49; font: 900 .66rem/1 inherit; box-shadow: 0 2px 0 #91aaa8; }
 .data-harbor-options .harbor-action[aria-pressed="true"] { background: #c9eddc; }
+.data-harbor-keyboard-hint { color: #456b68; font-size: .74rem; font-weight: 800; text-align: center; }
+.data-harbor-keyboard-hint kbd { display: inline-grid; min-width: 26px; min-height: 25px; place-items: center; margin-inline: 2px; border: 1px solid #668888; border-radius: 6px; background: white; color: #193e49; font: 900 .68rem/1 inherit; box-shadow: 0 2px 0 #91aaa8; }
 .data-harbor-feedback { min-height: 48px; padding: 10px 12px; border-left: 5px solid #527b7b; border-radius: 9px; background: #edf4f2; color: #285654; }
 .data-harbor-feedback.phase-step-solved, .data-harbor-feedback.phase-mission-solved { border-color: #20705a; background: #e1f6ea; color: #1f5e49; }
 .data-harbor-next { justify-self: end; }
