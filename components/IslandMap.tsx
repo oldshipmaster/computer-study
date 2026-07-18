@@ -14,6 +14,7 @@ import { ChildReviewQueue } from "@/components/ChildReviewQueue";
 import { TermMatchChallenge } from "@/components/TermMatchChallenge";
 import { AdventureMissionBoard } from "@/components/AdventureMissionBoard";
 import { KnowledgeSprint } from "@/components/KnowledgeSprint";
+import { IslandBossArena } from "@/components/IslandBossArena";
 import type { CourseConfidence } from "@/lib/review-queue";
 import {
   ISLANDS,
@@ -36,9 +37,11 @@ interface IslandMapProps {
   completedCourseIds: string[];
   coursePlayCounts: Record<string, number>;
   knowledgeSprint: { bestScore: number; runsPlayed: number };
+  completedBossIds: string[];
   headingRef: Ref<HTMLHeadingElement>;
   onStartCourse: (courseId: string) => void;
   onRecordSprint: (score: number) => void;
+  onCompleteBoss: (bossId: string) => void;
   resume: { courseId: string; stage: number } | null;
   confidenceByCourse: Record<string, CourseConfidence>;
   soundEnabled: boolean;
@@ -102,9 +105,11 @@ export function IslandMap({
   completedCourseIds,
   coursePlayCounts,
   knowledgeSprint,
+  completedBossIds,
   headingRef,
   onStartCourse,
   onRecordSprint,
+  onCompleteBoss,
   resume,
   confidenceByCourse,
   soundEnabled,
@@ -158,6 +163,7 @@ export function IslandMap({
         <nav className="section-jump-nav" aria-label="学习区域快捷航线">
           <a href="#adventure-missions">任务牌</a>
           <a href="#knowledge-sprint">闪击赛</a>
+          <a href="#island-boss-arena">Boss 战</a>
           <a href="#learning-plan">今日计划</a>
           <a href="#adventure-map">课程地图</a>
           <a href="#foundation-roadmap">深度路线</a>
@@ -236,6 +242,7 @@ export function IslandMap({
 
       <AdventureMissionBoard completedCourseIds={completedCourseIds} confidenceByCourse={confidenceByCourse} coursePlayCounts={coursePlayCounts} onStartCourse={onStartCourse} />
       <KnowledgeSprint bestScore={knowledgeSprint.bestScore} completedCourseIds={completedCourseIds} key={`sprint-${completedCourseIds.join("|")}`} onRecordSprint={onRecordSprint} onStartCourse={onStartCourse} runsPlayed={knowledgeSprint.runsPlayed} />
+      <IslandBossArena completedBossIds={completedBossIds} completedCourseIds={completedCourseIds} onCompleteBoss={onCompleteBoss} onStartCourse={onStartCourse} />
       <LearningPlan completedCourseIds={completedCourseIds} onStartCourse={onStartCourse} resume={resume} />
       <ChildReviewQueue confidenceByCourse={confidenceByCourse} onStartCourse={onStartCourse} />
       <IslandSealCollection completedCourseIds={completedCourseIds} />

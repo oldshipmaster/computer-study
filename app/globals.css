@@ -3902,6 +3902,94 @@ html.bit-island-document--reduced-motion *::after,
   .sprint-answer--selected { border: 4px solid Highlight; forced-color-adjust: auto; }
   .sprint-shield, .sprint-shield--active { border: 1px solid CanvasText; color: CanvasText; }
 }
+
+/* Island Boss Arena: three-mechanic synthesis missions unlocked per island. */
+.island-boss-arena { width: min(100% - 48px, 1180px); margin: 52px auto; scroll-margin-top: 20px; }
+.boss-arena-intro { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(260px, 1fr) auto; align-items: end; gap: 24px; margin-bottom: 22px; }
+.boss-arena-intro h2, .boss-arena-intro p { margin: 0; }
+.boss-arena-intro h2 { font-size: clamp(1.8rem, 4vw, 3rem); line-height: 1.1; }
+.boss-arena-intro > p { color: var(--deep-sea-soft); }
+.boss-arena-intro > strong { padding: 9px 13px; border: 2px solid var(--deep-sea); border-radius: 999px; background: var(--yellow-soft); white-space: nowrap; }
+.boss-radar { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.boss-card { display: grid; min-width: 0; grid-template-columns: auto 1fr; align-items: start; gap: 10px 13px; padding: 17px; border: 3px solid var(--deep-sea); border-radius: 19px; background: var(--paper); box-shadow: 5px 6px 0 rgb(18 50 74 / 11%); }
+.boss-card-icon { display: grid; width: 45px; height: 45px; place-items: center; border: 2px solid var(--deep-sea); border-radius: 14px; background: var(--sky-soft); font-size: 1.3rem; }
+.boss-card h3, .boss-card p { margin: 0; }
+.boss-card h3 { overflow-wrap: anywhere; font-size: .98rem; line-height: 1.2; }
+.boss-card small { color: var(--deep-sea-soft); font-weight: 800; }
+.boss-card div > span { display: inline-flex; margin-top: 5px; padding: 2px 7px; border-radius: 999px; background: #e7eef2; font-size: .65rem; font-weight: 900; }
+.boss-card p { grid-column: 1 / -1; color: var(--deep-sea-soft); font-size: .72rem; }
+.boss-card button { min-height: 44px; grid-column: 1 / -1; padding: 8px 11px; border: 2px solid var(--deep-sea); border-radius: 11px; background: white; cursor: pointer; font-weight: 850; }
+.boss-card--locked { border-color: #8da2ad; background: #f1f4f5; color: #456070; }
+.boss-card--ready { background: #fff8d9; }
+.boss-card--ready div > span { background: var(--yellow); }
+.boss-card--ready button { background: var(--yellow); }
+.boss-card--complete { border-color: var(--mint-deep); background: var(--mint-soft); }
+.boss-card--complete div > span, .boss-card--complete button { background: var(--mint); }
+.boss-battle { padding: clamp(20px, 4vw, 38px); border: 4px solid var(--deep-sea); border-radius: 28px; background: #102d43; box-shadow: 10px 12px 0 rgb(18 50 74 / 16%); color: var(--paper); }
+.boss-back { min-height: 44px; margin-bottom: 17px; padding: 7px 11px; border: 1px solid #8fb1c1; border-radius: 9px; background: transparent; color: #dff3ff; cursor: pointer; font-weight: 800; }
+.boss-battle-header { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 18px; }
+.boss-battle-header .boss-core-icon { display: grid; width: 82px; height: 82px; place-items: center; border: 3px solid #ffd85a; border-radius: 25px; background: #244b63; font-size: 2.25rem; animation: boss-core-float 2.2s ease-in-out infinite; }
+.boss-battle-header h2, .boss-battle-header p { margin: 0; }
+.boss-battle-header p { color: #ffd85a; font-size: .72rem; font-weight: 900; }
+.boss-battle-header h2 { font-size: clamp(1.6rem, 3.5vw, 2.6rem); line-height: 1.14; }
+.boss-battle-header div > span { color: #c8dce5; }
+.boss-stage-track { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; margin: 24px 0; padding: 0; list-style: none; }
+.boss-stage { display: flex; min-height: 50px; align-items: center; gap: 8px; padding: 8px 10px; border: 2px solid #577487; border-radius: 12px; color: #a9bfca; font-size: .78rem; font-weight: 850; }
+.boss-stage > span { display: grid; width: 26px; height: 26px; place-items: center; border: 1px solid currentcolor; border-radius: 50%; }
+.boss-stage--current { border-color: #ffd85a; background: rgb(255 216 90 / 12%); color: #ffd85a; }
+.boss-stage--complete { border-color: #79d9b5; background: rgb(121 217 181 / 12%); color: #8ce4c3; }
+.boss-console { display: grid; gap: 16px; padding: clamp(16px, 3vw, 28px); border: 2px solid #54758a; border-radius: 20px; background: #f7fcff; color: var(--deep-sea); }
+.boss-console-heading span { color: var(--coral-deep); font-size: .68rem; font-weight: 900; }
+.boss-console-heading h3 { margin: 0; font-size: 1.45rem; }
+.boss-stage-work { display: grid; gap: 13px; }
+.boss-stage-work > p { margin: 0; color: var(--deep-sea-soft); }
+.boss-choice-grid, .boss-action-bank { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+.boss-evidence { display: grid; min-height: 44px; grid-template-columns: auto 1fr; align-items: center; gap: 9px; padding: 10px 12px; border: 2px solid #7b9aaa; border-radius: 12px; background: white; cursor: pointer; font-weight: 750; text-align: left; }
+.boss-action { min-height: 44px; padding: 10px 12px; border: 2px solid #7b9aaa; border-radius: 12px; background: white; cursor: pointer; font-weight: 750; text-align: left; }
+.boss-explanation { min-height: 44px; padding: 11px 13px; border: 2px solid #7b9aaa; border-radius: 12px; background: white; cursor: pointer; font-weight: 750; text-align: left; }
+.boss-evidence[aria-pressed="true"], .boss-explanation[aria-pressed="true"] { border-color: #bd8100; background: #fff1ae; box-shadow: inset 4px 0 0 #f3bd28; }
+.boss-action:disabled, .boss-evidence:disabled, .boss-explanation:disabled { cursor: default; opacity: .55; }
+.boss-action-queue { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; margin: 0; padding: 0; list-style: none; }
+.boss-action-queue li { display: grid; min-height: 90px; grid-template-columns: auto 1fr; align-content: center; gap: 5px 8px; padding: 10px; border: 2px dashed #91aab6; border-radius: 12px; background: #edf2f4; }
+.boss-action-queue li > span { display: grid; width: 25px; height: 25px; place-items: center; border-radius: 50%; background: var(--deep-sea); color: white; font-size: .68rem; }
+.boss-action-queue li.is-filled { border-style: solid; border-color: var(--sky-deep); background: var(--sky-soft); }
+.boss-action-queue em { color: #718590; font-style: normal; }
+.boss-action-queue button { min-height: 36px; grid-column: 2; justify-self: start; padding: 4px 9px; border: 1px solid var(--deep-sea); border-radius: 8px; background: white; cursor: pointer; font-size: .7rem; font-weight: 800; }
+.boss-explanation-list { display: grid; gap: 9px; }
+.boss-feedback { min-height: 55px; margin: 0; padding: 10px 12px; border-left: 5px solid var(--sky-deep); border-radius: 8px; background: #e9f5fb; font-weight: 750; }
+.boss-feedback--retry { border-left-color: var(--coral-deep); background: var(--coral-soft); }
+.boss-feedback--success { border-left-color: var(--mint-deep); background: var(--mint-soft); }
+.boss-primary, .boss-secondary { min-height: 44px; padding: 10px 16px; border: 2px solid var(--deep-sea); border-radius: 12px; cursor: pointer; font-weight: 900; }
+.boss-console > .boss-primary { justify-self: end; background: var(--yellow); box-shadow: 4px 4px 0 var(--deep-sea); }
+.boss-primary:disabled { cursor: not-allowed; opacity: .45; }
+.boss-victory { display: grid; justify-items: center; gap: 12px; padding: clamp(25px, 5vw, 52px); border: 2px solid #79d9b5; border-radius: 22px; background: rgb(121 217 181 / 11%); text-align: center; }
+.boss-victory .boss-core-icon { display: grid; width: 90px; height: 90px; place-items: center; border: 3px solid #ffd85a; border-radius: 50%; background: var(--mint); color: var(--deep-sea); font-size: 2.5rem; animation: boss-core-float 1.8s ease-in-out infinite; }
+.boss-victory h3, .boss-victory p { margin: 0; }
+.boss-victory > div { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.boss-victory .boss-primary { background: var(--yellow); }
+.boss-victory .boss-secondary { background: white; }
+@keyframes boss-core-float { 50% { transform: translateY(-6px) rotate(3deg); } }
+
+@media (max-width: 680px) {
+  .island-boss-arena { width: min(100% - 32px, 1180px); }
+  .boss-arena-intro { grid-template-columns: 1fr; align-items: start; }
+  .boss-arena-intro > strong { justify-self: start; }
+  .boss-radar { grid-template-columns: 1fr; }
+  .boss-battle { padding: 18px 14px; }
+  .boss-battle-header { grid-template-columns: 1fr; }
+  .boss-battle-header .boss-core-icon { width: 64px; height: 64px; }
+  .boss-stage-track { gap: 5px; }
+  .boss-stage { display: grid; justify-items: center; padding: 6px 3px; text-align: center; }
+  .boss-choice-grid, .boss-action-bank, .boss-action-queue { grid-template-columns: 1fr; }
+  .boss-console > .boss-primary { width: 100%; justify-self: stretch; }
+}
+
+.bit-island-app--reduced-motion .boss-core-icon { animation: none; }
+@media (prefers-reduced-motion: reduce) { .boss-core-icon { animation: none; } }
+@media (forced-colors: active) {
+  .boss-evidence[aria-pressed="true"], .boss-explanation[aria-pressed="true"] { border: 4px solid Highlight; forced-color-adjust: auto; }
+  .boss-stage--complete, .boss-stage--current { border: 4px solid Highlight; color: CanvasText; }
+}
 /* Mouse navigation lesson */
 .interactive-lesson { min-height: 100vh; padding-bottom: 4rem; background: #f7fbff; }
 .lesson-visible-caption { margin: 0 auto 1rem; max-width: 62rem; padding: .85rem 1rem; border: 2px solid #12354a; border-radius: 1rem; background: #fff8d8; color: #12354a; font-size: 1rem; font-weight: 700; }

@@ -22,6 +22,7 @@ import type { ParentProgress } from "@/components/ParentPanel";
 import { getCourse } from "@/lib/course-data";
 import {
   completeCourse,
+  completeIslandBoss,
   DEFAULT_PROGRESS,
   parseProgress,
   recordKnowledgeSprint,
@@ -238,6 +239,10 @@ export function BitIslandApp() {
     setProgress((currentProgress) => recordKnowledgeSprint(currentProgress, score));
   }, []);
 
+  const recordBossVictory = useCallback((bossId: string) => {
+    setProgress((currentProgress) => completeIslandBoss(currentProgress, bossId));
+  }, []);
+
   const returnToMap = useCallback(() => {
     pendingMapFocusIdRef.current = activeCourseId;
     setScreen("map");
@@ -366,11 +371,13 @@ export function BitIslandApp() {
     productScreen = (
       <IslandMap
         confidenceByCourse={progress.confidenceByCourse}
+        completedBossIds={progress.completedBossIds}
         completedCourseIds={progress.completedCourseIds}
         coursePlayCounts={progress.coursePlayCounts}
         knowledgeSprint={progress.knowledgeSprint}
         headingRef={mapHeadingRef}
         onStartCourse={startCourse}
+        onCompleteBoss={recordBossVictory}
         onRecordSprint={recordSprintScore}
         resume={progress.resume}
         soundEnabled={progress.settings.sound}

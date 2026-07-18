@@ -142,7 +142,7 @@ test("server-renders the complete curriculum map", async () => {
   assert.match(html, /回到顶部与快捷航线/);
   assert.match(html, /已完成.*0.*\/.*65.*课/);
   assert.match(html, /aria-label="学习区域快捷航线"/);
-  for (const target of ["adventure-missions", "knowledge-sprint", "learning-plan", "adventure-map", "foundation-roadmap", "foundation-practice", "foundation-capstone", "knowledge-atlas", "computer-dictionary", "term-match", "review-station"]) {
+  for (const target of ["adventure-missions", "knowledge-sprint", "island-boss-arena", "learning-plan", "adventure-map", "foundation-roadmap", "foundation-practice", "foundation-capstone", "knowledge-atlas", "computer-dictionary", "term-match", "review-station"]) {
     assert.match(html, new RegExp(`href="#${target}"`));
     assert.match(html, new RegExp(`id="${target}"`));
   }
@@ -154,6 +154,9 @@ test("server-renders the complete curriculum map", async () => {
   assert.match(html, /岛屿问答站/);
   assert.match(html, /比特知识闪击赛/);
   assert.match(html, /再完成课程来解锁/);
+  assert.match(html, /十三岛 Boss 战/);
+  assert.match(html, /完成一整座岛的 5 节课后解锁/);
+  assert.equal((html.match(/class="boss-card boss-card--locked"/g) ?? []).length, 13);
   assert.match(html, /先完成任意一座岛的第一课/);
   assert.equal((html.match(/review-progress/g) ?? []).length, 1);
 });
