@@ -6,6 +6,8 @@ type GameGate =
   | { type: "island-complete" }
   | { type: "exact"; courseIds: string[] };
 
+export type GameArcadeCategory = "quest" | "code" | "systems" | "life";
+
 export interface GameArcadeDefinition {
   id: string;
   targetId: string;
@@ -13,6 +15,7 @@ export interface GameArcadeDefinition {
   icon: string;
   mechanic: string;
   duration: string;
+  category: GameArcadeCategory;
   gate: GameGate;
 }
 
@@ -23,18 +26,18 @@ export interface GameArcadeEntry extends GameArcadeDefinition {
 }
 
 export const GAME_ARCADE_DEFINITIONS: GameArcadeDefinition[] = [
-  { id: "missions", targetId: "adventure-missions", title: "探险任务牌", icon: "🧭", mechanic: "选新课、重玩或修复薄弱点", duration: "随时选择", gate: { type: "always" } },
-  { id: "sprint", targetId: "knowledge-sprint", title: "比特知识闪击赛", icon: "⚡", mechanic: "五题连击、护盾与错题回课", duration: "2–4 分钟", gate: { type: "course-count", count: 3 } },
-  { id: "boss", targetId: "island-boss-arena", title: "十三岛 Boss 战", icon: "🐙", mechanic: "找证据、排行动、讲清原理", duration: "6–8 分钟", gate: { type: "island-complete" } },
-  { id: "circuit", targetId: "logic-circuit-lab", title: "逻辑电路实验台", icon: "💡", mechanic: "搭逻辑门并跑完整真值表", duration: "8–10 分钟", gate: { type: "exact", courseIds: ["bits-and-data", "boolean-logic"] } },
-  { id: "robot", targetId: "robot-code-expedition", title: "机器人代码远征", icon: "🤖", mechanic: "编排指令并逐步调试地图", duration: "8–10 分钟", gate: { type: "exact", courseIds: ["instruction-order", "grid-city-navigation", "repeat-power", "rainy-condition"] } },
-  { id: "packet", targetId: "packet-escort", title: "网络数据包护航", icon: "📦", mechanic: "打包、选路、重传、排序、拆层", duration: "8–10 分钟", gate: { type: "exact", courseIds: ["network-layers", "routing-maze", "reliable-transfer"] } },
-  { id: "cpu", targetId: "cpu-scheduler-game", title: "CPU 时间片调度台", icon: "⚙️", mechanic: "装入内存并轮转执行进程", duration: "8–10 分钟", gate: { type: "exact", courseIds: ["program-process", "cpu-scheduling", "memory-allocation"] } },
-  { id: "algorithm", targetId: "algorithm-arena-game", title: "算法竞技场", icon: "🏁", mechanic: "搜索、排序、依赖与效率六关接力", duration: "8–10 分钟", gate: { type: "exact", courseIds: ["linear-search", "binary-search", "bubble-sort", "task-decomposition", "algorithm-efficiency"] } },
-  { id: "structures", targetId: "data-structure-harbor", title: "数据结构装卸港", icon: "⚓", mechanic: "数组、链表、栈队列、树与图调度", duration: "8–10 分钟", gate: { type: "exact", courseIds: ["array-lockers", "linked-treasure", "stack-queue-dock", "tree-library", "graph-routes"] } },
-  { id: "safety", targetId: "safety-detective-game", title: "数字安全侦探局", icon: "🔎", mechanic: "看虚构线索，保护信息并安全求助", duration: "8–10 分钟", gate: { type: "exact", courseIds: ["password-guardian", "private-information", "popup-fog", "healthy-computer-habits", "light-bit-island"] } },
-  { id: "factory", targetId: "virtual-computer-factory", title: "虚拟电脑装配厂", icon: "🦾", mechanic: "连接输入、CPU、内存、存储与输出", duration: "8–10 分钟", gate: { type: "exact", courseIds: ["input-process-output", "cpu-memory-storage", "bits-and-data", "hardware-software", "troubleshoot-machine"] } },
-  { id: "files", targetId: "file-forest-rescue", title: "文件森林救援队", icon: "📁", mechanic: "路径、命名、移动、复制、分类与恢复", duration: "8–10 分钟", gate: { type: "exact", courseIds: ["file-home", "name-your-work", "move-and-copy", "file-types", "learning-backpack"] } },
+  { id: "missions", targetId: "adventure-missions", title: "探险任务牌", icon: "🧭", mechanic: "选新课、重玩或修复薄弱点", duration: "随时选择", category: "quest", gate: { type: "always" } },
+  { id: "sprint", targetId: "knowledge-sprint", title: "比特知识闪击赛", icon: "⚡", mechanic: "五题连击、护盾与错题回课", duration: "2–4 分钟", category: "quest", gate: { type: "course-count", count: 3 } },
+  { id: "boss", targetId: "island-boss-arena", title: "十三岛 Boss 战", icon: "🐙", mechanic: "找证据、排行动、讲清原理", duration: "6–8 分钟", category: "quest", gate: { type: "island-complete" } },
+  { id: "circuit", targetId: "logic-circuit-lab", title: "逻辑电路实验台", icon: "💡", mechanic: "搭逻辑门并跑完整真值表", duration: "8–10 分钟", category: "code", gate: { type: "exact", courseIds: ["bits-and-data", "boolean-logic"] } },
+  { id: "robot", targetId: "robot-code-expedition", title: "机器人代码远征", icon: "🤖", mechanic: "编排指令并逐步调试地图", duration: "8–10 分钟", category: "code", gate: { type: "exact", courseIds: ["instruction-order", "grid-city-navigation", "repeat-power", "rainy-condition"] } },
+  { id: "packet", targetId: "packet-escort", title: "网络数据包护航", icon: "📦", mechanic: "打包、选路、重传、排序、拆层", duration: "8–10 分钟", category: "systems", gate: { type: "exact", courseIds: ["network-layers", "routing-maze", "reliable-transfer"] } },
+  { id: "cpu", targetId: "cpu-scheduler-game", title: "CPU 时间片调度台", icon: "⚙️", mechanic: "装入内存并轮转执行进程", duration: "8–10 分钟", category: "systems", gate: { type: "exact", courseIds: ["program-process", "cpu-scheduling", "memory-allocation"] } },
+  { id: "algorithm", targetId: "algorithm-arena-game", title: "算法竞技场", icon: "🏁", mechanic: "搜索、排序、依赖与效率六关接力", duration: "8–10 分钟", category: "code", gate: { type: "exact", courseIds: ["linear-search", "binary-search", "bubble-sort", "task-decomposition", "algorithm-efficiency"] } },
+  { id: "structures", targetId: "data-structure-harbor", title: "数据结构装卸港", icon: "⚓", mechanic: "数组、链表、栈队列、树与图调度", duration: "8–10 分钟", category: "systems", gate: { type: "exact", courseIds: ["array-lockers", "linked-treasure", "stack-queue-dock", "tree-library", "graph-routes"] } },
+  { id: "safety", targetId: "safety-detective-game", title: "数字安全侦探局", icon: "🔎", mechanic: "看虚构线索，保护信息并安全求助", duration: "8–10 分钟", category: "life", gate: { type: "exact", courseIds: ["password-guardian", "private-information", "popup-fog", "healthy-computer-habits", "light-bit-island"] } },
+  { id: "factory", targetId: "virtual-computer-factory", title: "虚拟电脑装配厂", icon: "🦾", mechanic: "连接输入、CPU、内存、存储与输出", duration: "8–10 分钟", category: "systems", gate: { type: "exact", courseIds: ["input-process-output", "cpu-memory-storage", "bits-and-data", "hardware-software", "troubleshoot-machine"] } },
+  { id: "files", targetId: "file-forest-rescue", title: "文件森林救援队", icon: "📁", mechanic: "路径、命名、移动、复制、分类与恢复", duration: "8–10 分钟", category: "life", gate: { type: "exact", courseIds: ["file-home", "name-your-work", "move-and-copy", "file-types", "learning-backpack"] } },
 ];
 
 export function buildGameArcadeEntries(completedCourseIds: readonly string[]): GameArcadeEntry[] {
@@ -63,4 +66,34 @@ export function buildGameArcadeEntries(completedCourseIds: readonly string[]): G
     const nextCourseId = unlocked ? null : (definition.gate.courseIds.find((id) => !completed.has(id)) ?? null);
     return { ...definition, unlocked, progress: { value, maximum }, nextCourseId };
   });
+}
+
+const DISCOVERY_CATEGORY_ORDER: GameArcadeCategory[] = ["quest", "code", "systems", "life"];
+
+export function buildGameArcadeRecommendations(entries: readonly GameArcadeEntry[], rotation: number, limit = 3): GameArcadeEntry[] {
+  const safeRotation = Number.isFinite(rotation) ? Math.max(0, Math.floor(rotation)) : 0;
+  const safeLimit = Number.isFinite(limit) ? Math.max(0, Math.floor(limit)) : 0;
+  const unlocked = entries.filter((entry) => entry.unlocked);
+  const target = Math.min(safeLimit, unlocked.length);
+  if (target === 0) return [];
+  const categoryOffset = safeRotation % DISCOVERY_CATEGORY_ORDER.length;
+  const categoryOrder = [...DISCOVERY_CATEGORY_ORDER.slice(categoryOffset), ...DISCOVERY_CATEGORY_ORDER.slice(0, categoryOffset)];
+  const buckets = new Map(categoryOrder.map((category) => {
+    const games = unlocked.filter((entry) => entry.category === category);
+    const offset = games.length ? safeRotation % games.length : 0;
+    return [category, [...games.slice(offset), ...games.slice(0, offset)]] as const;
+  }));
+  const recommendations: GameArcadeEntry[] = [];
+  for (let round = 0; recommendations.length < target; round += 1) {
+    let added = false;
+    for (const category of categoryOrder) {
+      const candidate = buckets.get(category)?.[round];
+      if (!candidate) continue;
+      recommendations.push(candidate);
+      added = true;
+      if (recommendations.length === target) break;
+    }
+    if (!added) break;
+  }
+  return recommendations;
 }
