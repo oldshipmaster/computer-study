@@ -34,6 +34,7 @@ const FoundationRoadmap = lazy(() => import("@/components/FoundationRoadmap").th
 const FoundationCapstone = lazy(() => import("@/components/FoundationCapstone").then((module) => ({ default: module.FoundationCapstone })));
 const LogicCircuitLab = lazy(() => import("@/components/LogicCircuitLab").then((module) => ({ default: module.LogicCircuitLab })));
 const RobotCodeExpedition = lazy(() => import("@/components/RobotCodeExpedition").then((module) => ({ default: module.RobotCodeExpedition })));
+const PacketEscort = lazy(() => import("@/components/PacketEscort").then((module) => ({ default: module.PacketEscort })));
 
 interface IslandMapProps {
   completedCourseIds: string[];
@@ -168,6 +169,7 @@ export function IslandMap({
           <a href="#island-boss-arena">Boss 战</a>
           <a href="#logic-circuit-lab">电路台</a>
           <a href="#robot-code-expedition">代码远征</a>
+          <a href="#packet-escort">包裹护航</a>
           <a href="#learning-plan">今日计划</a>
           <a href="#adventure-map">课程地图</a>
           <a href="#foundation-roadmap">深度路线</a>
@@ -249,6 +251,7 @@ export function IslandMap({
       <IslandBossArena completedBossIds={completedBossIds} completedCourseIds={completedCourseIds} onCompleteBoss={onCompleteBoss} onStartCourse={onStartCourse} />
       <Suspense fallback={<section className="logic-circuit-shell logic-circuit-loading" id="logic-circuit-lab" role="status"><h2>逻辑电路实验台</h2><p>正在接通逻辑电路实验台…</p></section>}><LogicCircuitLab completedCourseIds={completedCourseIds} onStartCourse={onStartCourse} /></Suspense>
       <Suspense fallback={<section className="robot-expedition-shell robot-expedition-loading" id="robot-code-expedition" role="status"><h2>机器人代码远征</h2><p>正在装载机器人代码远征…</p></section>}><RobotCodeExpedition completedCourseIds={completedCourseIds} onStartCourse={onStartCourse} /></Suspense>
+      <Suspense fallback={<section className="packet-escort-shell packet-escort-loading" id="packet-escort" role="status"><h2>网络数据包护航</h2><p>正在连接网络数据包护航…</p></section>}><PacketEscort completedCourseIds={completedCourseIds} onStartCourse={onStartCourse} /></Suspense>
       <LearningPlan completedCourseIds={completedCourseIds} onStartCourse={onStartCourse} resume={resume} />
       <ChildReviewQueue confidenceByCourse={confidenceByCourse} onStartCourse={onStartCourse} />
       <IslandSealCollection completedCourseIds={completedCourseIds} />
