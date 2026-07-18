@@ -52,3 +52,16 @@ test("keeps mission cards touch-sized, responsive, and calm in reduced motion", 
   assert.match(css, /\.bit-island-app--reduced-motion[\s\S]*?\.adventure-mission-card[^}]*transition:\s*none;/s);
   assert.match(css, /\.bit-island-app--reduced-motion[\s\S]*?\.explorer-equipment[^}]*animation:\s*none;/s);
 });
+
+test("celebrates the exact earned energy without calling every replay a new badge", () => {
+  const appSource = sourceFile("components/BitIslandApp.tsx");
+  const completionSource = sourceFile("components/lessons/LessonCompletion.tsx");
+
+  assert.match(appSource, /getCourseCompletionReward/);
+  assert.match(appSource, /setLastAdventureReward/);
+  assert.match(appSource, /adventureReward=\{lastAdventureReward/);
+  assert.match(completionSource, /adventureReward\.points/);
+  assert.match(completionSource, /探险能量/);
+  assert.match(completionSource, /本课能量已收集满/);
+  assert.match(completionSource, /重玩完成/);
+});

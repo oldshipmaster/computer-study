@@ -35,6 +35,12 @@ export interface RankProgress {
   remaining: number;
 }
 
+export interface CourseCompletionReward {
+  points: number;
+  playNumber: number;
+  rewarded: boolean;
+}
+
 export const EXPLORER_RANKS: readonly ExplorerRank[] = [
   { threshold: 0, name: "启航护目镜", icon: "◉", message: "看清每一条新航线" },
   { threshold: 60, name: "星图天线", icon: "⌁", message: "发现知识之间的信号" },
@@ -166,6 +172,18 @@ export function getAdventureEnergy(coursePlayCounts: Readonly<Record<string, num
     const count = safePlayCount(rawCount);
     return total + (count >= 1 ? 10 + Math.min(2, count - 1) * 3 : 0);
   }, 0);
+}
+
+export function getCourseCompletionReward(previousPlayCount: number): CourseCompletionReward {
+  const safePreviousCount = Number.isInteger(previousPlayCount) && previousPlayCount >= 0
+    ? previousPlayCount
+    : 0;
+  const points = safePreviousCount === 0 ? 10 : safePreviousCount < 3 ? 3 : 0;
+  return {
+    points,
+    playNumber: safePreviousCount + 1,
+    rewarded: points > 0,
+  };
 }
 
 export function getExplorerRank(energy: number): ExplorerRank {

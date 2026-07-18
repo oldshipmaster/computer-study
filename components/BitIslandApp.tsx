@@ -29,6 +29,7 @@ import {
   storeProgress,
 } from "@/lib/progress.mjs";
 import { sanitizeCatalogProgress } from "@/lib/catalog-progress";
+import { getCourseCompletionReward, type CourseCompletionReward } from "@/lib/adventure-missions";
 
 const ParentPanel = lazy(() => import("@/components/ParentPanel").then((module) => ({ default: module.ParentPanel })));
 
@@ -47,6 +48,7 @@ export function BitIslandApp() {
   const [parentGateHolding, setParentGateHolding] = useState(false);
   const [keyboardConfirmationVisible, setKeyboardConfirmationVisible] = useState(false);
   const [systemPrefersReducedMotion, setSystemPrefersReducedMotion] = useState(false);
+  const [lastAdventureReward, setLastAdventureReward] = useState<(CourseCompletionReward & { courseId: string }) | null>(null);
   const parentGateButtonRef = useRef<HTMLButtonElement>(null);
   const keyboardConfirmationCancelButtonRef = useRef<HTMLButtonElement>(null);
   const mapHeadingRef = useRef<HTMLHeadingElement>(null);
@@ -196,6 +198,7 @@ export function BitIslandApp() {
       cancelParentHold();
       setKeyboardConfirmationVisible(false);
       setParentPanelOpen(false);
+      setLastAdventureReward(null);
       setActiveCourseId(course.id);
       setScreen("lesson");
     }
@@ -216,8 +219,10 @@ export function BitIslandApp() {
   }, [activeCourseId]);
 
   const awardCourse = useCallback((courseId: string, badgeId: string) => {
+    const reward = getCourseCompletionReward(progress.coursePlayCounts[courseId] ?? 0);
+    setLastAdventureReward({ ...reward, courseId });
     setProgress((currentProgress) => completeCourse(currentProgress, courseId, badgeId));
-  }, []);
+  }, [progress.coursePlayCounts]);
 
   const finishCourse = useCallback(() => {
     setScreen("complete");
@@ -344,6 +349,7 @@ export function BitIslandApp() {
   } else if (screen === "complete" && lessonDefinition) {
     productScreen = (
       <LessonCompletion
+        adventureReward={lastAdventureReward?.courseId === lessonDefinition.courseId ? lastAdventureReward : undefined}
         confidence={progress.confidenceByCourse[lessonDefinition.courseId]}
         definition={lessonDefinition}
         headingRef={completeHeadingRef}

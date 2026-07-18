@@ -4,6 +4,7 @@ import { COURSES } from "../lib/course-data.ts";
 import {
   buildAdventureMissions,
   getAdventureEnergy,
+  getCourseCompletionReward,
   getExplorerRank,
   getRankProgress,
 } from "../lib/adventure-missions.ts";
@@ -83,6 +84,14 @@ test("awards ten energy once and three energy for two capped replays", () => {
   assert.equal(getAdventureEnergy({ a: 1, b: 2, c: 3 }), 39);
   assert.equal(getAdventureEnergy({ a: 4, b: -1, c: 1.5 }), 16);
   assert.equal(getAdventureEnergy({}), 0);
+});
+
+test("explains the immediate reward for first completion, replays, and free practice", () => {
+  assert.deepEqual(getCourseCompletionReward(0), { points: 10, playNumber: 1, rewarded: true });
+  assert.deepEqual(getCourseCompletionReward(1), { points: 3, playNumber: 2, rewarded: true });
+  assert.deepEqual(getCourseCompletionReward(2), { points: 3, playNumber: 3, rewarded: true });
+  assert.deepEqual(getCourseCompletionReward(3), { points: 0, playNumber: 4, rewarded: false });
+  assert.deepEqual(getCourseCompletionReward(99), { points: 0, playNumber: 100, rewarded: false });
 });
 
 test("switches explorer equipment exactly at every energy threshold", () => {

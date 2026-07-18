@@ -939,6 +939,23 @@ input {
 .explorer-rank-track strong { overflow-wrap: anywhere; font-size: .61rem; line-height: 1.25; }
 .explorer-rank-track small { font-size: .56rem; }
 
+.completion-energy-reward {
+  display: flex;
+  max-width: 36rem;
+  align-items: center;
+  gap: 14px;
+  margin: 20px 0;
+  padding: 14px 16px;
+  border: 3px solid var(--deep-sea);
+  border-radius: 18px;
+  background: var(--mint-soft);
+}
+
+.completion-energy-reward.is-full { background: var(--sky-soft); }
+.completion-energy-reward > span { display: grid; flex: 0 0 48px; width: 48px; height: 48px; place-items: center; border-radius: 50%; background: var(--yellow); font-size: 1.15rem; font-weight: 900; }
+.completion-energy-reward > div { display: grid; gap: 2px; }
+.completion-energy-reward p { margin: 0; color: var(--deep-sea-soft); font-size: .74rem; font-weight: 650; }
+
 @keyframes equipment-signal {
   50% { translate: 0 -3px; }
 }
