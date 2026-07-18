@@ -52,6 +52,7 @@
 .game-arcade-search input { min-width: 0; min-height: 44px; flex: 1; padding: 8px 11px; border: 2px solid #758d9b; border-radius: 10px; background: white; color: #17384d; font: inherit; }
 .game-arcade-search button { min-height: 44px; padding: 7px 11px; border: 2px solid #17384d; border-radius: 10px; background: white; color: #17384d; cursor: pointer; font: inherit; font-size: .68rem; font-weight: 900; }
 .game-arcade-search small { color: #48677a; font-size: .6rem; }
+.game-arcade-search-shortcuts { display:flex; flex-wrap:wrap; align-items:center; gap:6px 10px; } .game-arcade-search-shortcuts span { color:#315c9a; font-weight:850; } .game-arcade-search-shortcuts i { font-style:normal; } .game-arcade-search-shortcuts kbd { display:inline-grid; min-width:24px; min-height:22px; place-items:center; border:1px solid #758d9b; border-radius:5px; background:white; color:#17384d; font:900 .6rem/1 inherit; box-shadow:0 2px 0 #b9c7ce; }
 .game-arcade-discovery { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 6px; }
 .game-arcade-filter-stack { display: grid; gap: 7px; }
 .game-arcade-filters { display: flex; flex-wrap: wrap; gap: 7px; }

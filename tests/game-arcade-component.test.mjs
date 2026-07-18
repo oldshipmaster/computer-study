@@ -124,6 +124,19 @@ test("keeps recommendation and filter controls touch-sized and responsive", () =
   assert.match(css, /@media \(forced-colors: active\)[\s\S]*?aria-pressed="true"/);
 });
 
+test("offers visible keyboard shortcuts for finding and clearing games", () => {
+  const component = source("components/GameArcade.tsx");
+  const css = source("components/GameArcade.css");
+  assert.match(component, /useEffect/);
+  assert.match(component, /searchInputRef/);
+  assert.match(component, /event\.key === "\/"/);
+  assert.match(component, /event\.key === "Escape"/);
+  assert.match(component, /aria-keyshortcuts="\/"/);
+  assert.match(component, /按 <kbd>\/<\/kbd> 快速搜索/);
+  assert.match(component, /按 <kbd>Esc<\/kbd> 清空/);
+  assert.match(css, /\.game-arcade-search-shortcuts/);
+});
+
 test("shows a short nearest-unlock learning route", () => {
   const component = source("components/GameArcade.tsx");
   const css = source("components/GameArcade.css");

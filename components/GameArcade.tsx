@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { getCourse } from "@/lib/course-data";
 import { buildClosestGameUnlocks, buildGameArcadeEntries, buildGameArcadeFacetCounts, buildGameArcadeFilterSummary, buildGameArcadeRecommendations, filterGameArcadeEntries, gameArcadePlaylistBreaks, gameArcadePlaylistLimit, gameArcadeSessionRemaining, recordGameArcadeVisit, type GameArcadeCategory, type GameArcadeLevel } from "@/lib/game-arcade";
 import "./GameArcade.css";
@@ -35,6 +35,7 @@ export function GameArcade({ completedCourseIds, onStartCourse }: GameArcadeProp
   const [category, setCategory] = useState<DiscoveryCategory>("all");
   const [level, setLevel] = useState<DiscoveryLevel>("all");
   const [query, setQuery] = useState("");
+  const searchInputRef = useRef<HTMLInputElement>(null);
   const [unlockedOnly, setUnlockedOnly] = useState(false);
   const [favoriteIds, setFavoriteIds] = useState<string[]>([]);
   const [favoritesOnly, setFavoritesOnly] = useState(false);
@@ -53,6 +54,23 @@ export function GameArcade({ completedCourseIds, onStartCourse }: GameArcadeProp
   const visibleEntries = filterGameArcadeEntries(entries, { query, category, level, unlockedOnly, favoritesOnly, favoriteIds, unvisitedOnly, visitedIds: visitedGameIds });
   const filterCounts = useMemo(() => buildGameArcadeFacetCounts(entries, { query, category, level, unlockedOnly, favoritesOnly, favoriteIds, unvisitedOnly, visitedIds: visitedGameIds }), [category, entries, favoriteIds, favoritesOnly, level, query, unlockedOnly, unvisitedOnly, visitedGameIds]);
   const filtersActive = Boolean(query.trim()) || category !== "all" || level !== "all" || unlockedOnly || favoritesOnly || unvisitedOnly;
+
+  useEffect(() => {
+    function handleSearchShortcut(event: globalThis.KeyboardEvent) {
+      if (event.repeat || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey || event.isComposing) return;
+      const target = event.target;
+      const isEditing = target instanceof HTMLElement && (target.isContentEditable || target.matches("input, textarea, select"));
+      if (event.key === "/" && !isEditing) {
+        event.preventDefault();
+        searchInputRef.current?.focus();
+      } else if (event.key === "Escape" && document.activeElement === searchInputRef.current) {
+        event.preventDefault();
+        setQuery("");
+      }
+    }
+    window.addEventListener("keydown", handleSearchShortcut);
+    return () => window.removeEventListener("keydown", handleSearchShortcut);
+  }, []);
 
   function clearFilters() { setQuery(""); setCategory("all"); setLevel("all"); setUnlockedOnly(false); setFavoritesOnly(false); setUnvisitedOnly(false); }
   function clearFavorites() { setFavoriteIds([]); setFavoritesOnly(false); }
@@ -88,7 +106,7 @@ export function GameArcade({ completedCourseIds, onStartCourse }: GameArcadeProp
         })}</div>
       </section> : null}
 
-      <div className="game-arcade-search"><label htmlFor="game-arcade-search">找一局想玩的</label><div><input aria-label="搜索游戏" id="game-arcade-search" onChange={(event) => setQuery(event.target.value)} placeholder="搜索游戏名称或玩法" type="search" value={query} />{query ? <button onClick={() => setQuery("")} type="button">清空搜索</button> : null}</div><small>只在当前页面匹配标题和玩法说明，不保存搜索词。</small></div>
+      <div className="game-arcade-search"><label htmlFor="game-arcade-search">找一局想玩的</label><div><input aria-keyshortcuts="/" aria-label="搜索游戏" id="game-arcade-search" onChange={(event) => setQuery(event.target.value)} placeholder="搜索游戏名称或玩法" ref={searchInputRef} type="search" value={query} />{query ? <button onClick={() => setQuery("")} type="button">清空搜索</button> : null}</div><small className="game-arcade-search-shortcuts"><span>按 <kbd>/</kbd> 快速搜索</span>{query ? <span>按 <kbd>Esc</kbd> 清空</span> : null}<i>只在当前页面匹配标题和玩法说明，不保存搜索词。</i></small></div>
       <div className="game-arcade-discovery">
         <div className="game-arcade-filter-stack"><div className="game-arcade-filters" aria-label="按主题筛选游戏" role="group">{CATEGORY_OPTIONS.map((option) => <button aria-label={`${option.label}，${filterCounts.categories[option.id]}种玩法`} aria-pressed={category === option.id} className="game-arcade-filter" key={option.id} onClick={() => setCategory(option.id)} type="button"><span>{option.label}</span><small aria-hidden="true" className="game-arcade-filter-count">{filterCounts.categories[option.id]}</small></button>)}</div><div className="game-arcade-filters" aria-label="按学习阶段筛选游戏" role="group">{LEVEL_OPTIONS.map((option) => <button aria-label={`${option.label}，${filterCounts.levels[option.id]}种玩法`} aria-pressed={level === option.id} className="game-arcade-filter game-arcade-filter--level" key={option.id} onClick={() => setLevel(option.id)} type="button"><span>{option.label}</span><small aria-hidden="true" className="game-arcade-filter-count">{filterCounts.levels[option.id]}</small></button>)}</div></div>
         <div className="game-arcade-personal-filters"><button aria-pressed={unlockedOnly} className="game-arcade-filter game-arcade-filter--unlocked" onClick={() => setUnlockedOnly((current) => !current)} type="button">✓ 只看已解锁</button><button aria-pressed={favoritesOnly} className="game-arcade-filter game-arcade-filter--favorites" onClick={() => setFavoritesOnly((current) => !current)} type="button">★ 只看收藏</button><button aria-pressed={unvisitedOnly} className="game-arcade-filter game-arcade-filter--unvisited" onClick={() => setUnvisitedOnly((current) => !current)} type="button">○ 只看没打开</button></div>
