@@ -27,6 +27,11 @@ test("shows virtual parts, actions, feedback, and a machine inspection sheet", (
   assert.match(component, /role="status"/);
   assert.match(component, /aria-current/);
   assert.match(component, /<progress/);
+  assert.match(component, /numberShortcutIndex/);
+  assert.match(component, /onKeyDown=\{handleFactoryKeyDown\}/);
+  assert.match(component, /aria-keyshortcuts=\{String\(index \+ 1\)\}/);
+  assert.match(component, /按键盘数字/);
+  assert.match(component, /按 <kbd>Enter<\/kbd>/);
 });
 
 test("supports six stations, replay rotation, and focus handoff", () => {
@@ -49,5 +54,6 @@ test("lazy-loads after safety detective with responsive accessible styles", () =
   assert.match(css, /\.factory-action[^{]*\{[^}]*min-height:\s*44px/);
   assert.match(css, /@media \(max-width: 760px\)[\s\S]*?\.computer-factory-layout[\s\S]*?grid-template-columns:\s*1fr/);
   assert.match(css, /\.bit-island-app--reduced-motion[\s\S]*?animation:\s*none/);
+  assert.match(css, /\.factory-keyboard-hint/);
   assert.match(css, /@media \(forced-colors: active\)[\s\S]*?aria-current/);
 });

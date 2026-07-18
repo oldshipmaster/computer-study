@@ -1,7 +1,8 @@
 "use client";
 
-import { useLayoutEffect, useMemo, useRef, useState, type MouseEvent } from "react";
+import { useLayoutEffect, useMemo, useRef, useState, type KeyboardEvent, type MouseEvent } from "react";
 import { getCourse } from "@/lib/course-data";
+import { numberShortcutIndex } from "@/lib/keyboard-shortcuts";
 import {
   VIRTUAL_FACTORY_STATIONS,
   advanceFactoryStation,
@@ -83,8 +84,23 @@ export function VirtualComputerFactory({ completedCourseIds, onStartCourse }: Vi
   function nextStep(event: MouseEvent<HTMLButtonElement>) { focusNext(); setGame((current) => advanceFactoryStep(current, station, event.detail)); }
   function nextStation(event: MouseEvent<HTMLButtonElement>) { focusNext(); setGame((current) => advanceFactoryStation(current, event.detail)); }
 
+  function handleFactoryKeyDown(event: KeyboardEvent<HTMLElement>) {
+    if (event.nativeEvent.isComposing || event.repeat || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+    const optionIndex = numberShortcutIndex(event.key, step.options.length);
+    if (optionIndex !== null && game.phase === "building") {
+      event.preventDefault();
+      setGame((current) => chooseFactoryAction(current, station, step.options[optionIndex].id, 0));
+      return;
+    }
+    if (event.key !== "Enter" || event.target instanceof HTMLButtonElement) return;
+    if (game.phase === "step-solved") { focusNext(); setGame((current) => advanceFactoryStep(current, station, 0)); }
+    else if (game.phase === "station-solved") { focusNext(); setGame((current) => advanceFactoryStation(current, 0)); }
+    else return;
+    event.preventDefault();
+  }
+
   return (
-    <section className={`computer-factory-shell computer-factory-game station-${station.mode}`} id="virtual-computer-factory" aria-labelledby="factory-station-heading">
+    <section className={`computer-factory-shell computer-factory-game station-${station.mode}`} id="virtual-computer-factory" aria-labelledby="factory-station-heading" onKeyDown={handleFactoryKeyDown}>
       <button className="computer-factory-back" onClick={() => { focusNext(); setMode("menu"); }} type="button">← 返回装配厂入口</button>
       <header className="computer-factory-heading">
         <span aria-hidden="true">{MODE_ICONS[station.mode]}</span>
@@ -98,7 +114,8 @@ export function VirtualComputerFactory({ completedCourseIds, onStartCourse }: Vi
           <div className={`factory-parts parts-${station.mode}`} aria-label="当前虚拟部件与数据状态" role="list">
             {step.parts.map((machinePart) => <span aria-current={machinePart.state === "active" ? "step" : undefined} className={`factory-part is-${machinePart.state ?? "normal"}`} key={machinePart.id} role="listitem"><b>{machinePart.label}</b><small>{machinePart.role}</small></span>)}
           </div>
-          <div className="factory-actions" aria-label="选择虚拟装配动作" role="group">{step.options.map((candidate) => <button aria-pressed={game.phase !== "building" && candidate.id === step.answerId} className="factory-action" disabled={game.phase !== "building"} key={candidate.id} onClick={(event) => choose(event, candidate.id)} type="button">{candidate.label}</button>)}</div>
+          <div className="factory-actions" aria-label="选择虚拟装配动作" role="group">{step.options.map((candidate, index) => <button aria-keyshortcuts={String(index + 1)} aria-pressed={game.phase !== "building" && candidate.id === step.answerId} className="factory-action" disabled={game.phase !== "building"} key={candidate.id} onClick={(event) => choose(event, candidate.id)} type="button"><kbd>{index + 1}</kbd><span>{candidate.label}</span></button>)}</div>
+          <p className="factory-keyboard-hint">{game.phase === "building" ? <>也可以按键盘数字 <kbd>1</kbd>、<kbd>2</kbd>、<kbd>3</kbd> 选择装配动作</> : <>按 <kbd>Enter</kbd> {game.phase === "step-solved" ? "记录检测并继续" : "启动下一工位"}</>}</p>
           <p className={`factory-feedback phase-${game.phase}`} role="status">{game.feedback}</p>
           {game.phase === "step-solved" ? <button className="factory-action factory-next" onClick={nextStep} type="button">记录检测，继续装配 →</button> : null}
           {game.phase === "station-solved" ? <button className="factory-action factory-next" onClick={nextStation} type="button">{game.index === deck.length - 1 ? "查看整机报告" : "启动下一工位"} →</button> : null}
