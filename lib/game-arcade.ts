@@ -149,6 +149,35 @@ export function filterGameArcadeEntries(entries: readonly GameArcadeEntry[], fil
   });
 }
 
+type GameArcadeFilters = Parameters<typeof filterGameArcadeEntries>[1];
+
+export function buildGameArcadeFacetCounts(entries: readonly GameArcadeEntry[], filters: GameArcadeFilters): {
+  categories: Record<GameArcadeCategory | "all", number>;
+  levels: Record<GameArcadeLevel | "all", number>;
+} {
+  const sharedFilters: GameArcadeFilters = {
+    query: filters.query,
+    unlockedOnly: filters.unlockedOnly,
+    favoritesOnly: filters.favoritesOnly,
+    favoriteIds: filters.favoriteIds,
+    unvisitedOnly: filters.unvisitedOnly,
+    visitedIds: filters.visitedIds,
+  };
+  const categories = Object.fromEntries(
+    (["all", "quest", "code", "systems", "life"] as const).map((candidate) => [
+      candidate,
+      filterGameArcadeEntries(entries, { ...sharedFilters, level: filters.level, category: candidate }).length,
+    ]),
+  ) as Record<GameArcadeCategory | "all", number>;
+  const levels = Object.fromEntries(
+    (["all", "starter", "adventure", "mastery"] as const).map((candidate) => [
+      candidate,
+      filterGameArcadeEntries(entries, { ...sharedFilters, category: filters.category, level: candidate }).length,
+    ]),
+  ) as Record<GameArcadeLevel | "all", number>;
+  return { categories, levels };
+}
+
 export function buildClosestGameUnlocks(entries: readonly GameArcadeEntry[], limit = 3): GameArcadeEntry[] {
   const safeLimit = Number.isFinite(limit) ? Math.max(0, Math.floor(limit)) : 0;
   return entries

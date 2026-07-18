@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { COURSES } from "../lib/course-data.ts";
-import { GAME_ARCADE_DEFINITIONS, buildClosestGameUnlocks, buildGameArcadeEntries, buildGameArcadeFilterSummary, buildGameArcadeRecommendations, filterGameArcadeEntries, gameArcadePlaylistBreaks, gameArcadePlaylistLimit, gameArcadeSessionRemaining, recordGameArcadeVisit } from "../lib/game-arcade.ts";
+import { GAME_ARCADE_DEFINITIONS, buildClosestGameUnlocks, buildGameArcadeEntries, buildGameArcadeFacetCounts, buildGameArcadeFilterSummary, buildGameArcadeRecommendations, filterGameArcadeEntries, gameArcadePlaylistBreaks, gameArcadePlaylistLimit, gameArcadeSessionRemaining, recordGameArcadeVisit } from "../lib/game-arcade.ts";
 
 test("assigns every game to one child-readable discovery category", () => {
   const expected = new Set(["quest", "code", "systems", "life"]);
@@ -54,6 +54,36 @@ test("searches game titles and mechanics with combinable local filters", () => {
   assert.deepEqual(filterGameArcadeEntries(entries, { query: "  cpu  " }).map((game) => game.id), ["cpu", "factory", "os-command"]);
   assert.ok(filterGameArcadeEntries(entries, { category: "systems", level: "starter", unlockedOnly: true }).every((game) => game.category === "systems" && game.level === "starter" && game.unlocked));
   assert.equal(filterGameArcadeEntries(entries, { query: "不存在的玩法词" }).length, 0);
+});
+
+test("previews live category and level result counts without trapping a child in an empty facet", () => {
+  const entries = buildGameArcadeEntries(COURSES.map((course) => course.id));
+  const all = buildGameArcadeFacetCounts(entries, {});
+  assert.equal(all.categories.all, 20);
+  assert.equal(Object.values(all.categories).slice(1).reduce((sum, count) => sum + count, 0), 20);
+  assert.equal(all.levels.all, 20);
+  assert.equal(Object.values(all.levels).slice(1).reduce((sum, count) => sum + count, 0), 20);
+
+  const faceted = buildGameArcadeFacetCounts(entries, { category: "systems", level: "starter", query: "网络" });
+  assert.equal(faceted.categories.systems, filterGameArcadeEntries(entries, { category: "systems", level: "starter", query: "网络" }).length);
+  assert.equal(faceted.categories.all, filterGameArcadeEntries(entries, { level: "starter", query: "网络" }).length);
+  assert.equal(faceted.levels.mastery, filterGameArcadeEntries(entries, { category: "systems", level: "mastery", query: "网络" }).length);
+  assert.equal(faceted.levels.all, filterGameArcadeEntries(entries, { category: "systems", query: "网络" }).length);
+});
+
+test("facet counts honor unlock, favorites, and this-session visit filters", () => {
+  const entries = buildGameArcadeEntries([]);
+  const counts = buildGameArcadeFacetCounts(entries, {
+    unlockedOnly: true,
+    favoritesOnly: true,
+    favoriteIds: ["missions", "circuit"],
+    unvisitedOnly: true,
+    visitedIds: ["circuit"],
+  });
+  assert.equal(counts.categories.all, 1);
+  assert.equal(counts.categories.quest, 1);
+  assert.equal(counts.categories.code, 0);
+  assert.equal(counts.levels.starter, 1);
 });
 
 test("turns available time into one to three complete game sessions",()=>{assert.equal(gameArcadePlaylistLimit(10),1);assert.equal(gameArcadePlaylistLimit(20),2);assert.equal(gameArcadePlaylistLimit(30),3);assert.equal(gameArcadePlaylistLimit(Number.NaN),1);assert.equal(gameArcadePlaylistLimit(-5),1);assert.equal(gameArcadePlaylistLimit(99),3);});

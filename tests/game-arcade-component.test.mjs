@@ -94,6 +94,11 @@ test("offers rotating recommendations and reversible discovery filters", () => {
   assert.match(component, /placeholder="搜索游戏名称或玩法"/);
   assert.match(component, /aria-label="搜索游戏"/);
   assert.match(component, /filterGameArcadeEntries/);
+  assert.match(component, /buildGameArcadeFacetCounts/);
+  assert.match(component, /filterCounts\.categories\[option\.id\]/);
+  assert.match(component, /filterCounts\.levels\[option\.id\]/);
+  assert.match(component, /种玩法/);
+  assert.match(css, /\.game-arcade-filter-count/);
   assert.match(component, /favoriteIds, \{ category, level, query, favoritesOnly, visitedIds: visitedGameIds \}/);
   assert.match(component, /今日推荐会跟随主题、阶段、搜索和收藏筛选/);
   assert.match(component, /buildGameArcadeFilterSummary/);
