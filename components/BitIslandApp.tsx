@@ -24,6 +24,7 @@ import {
   completeCourse,
   DEFAULT_PROGRESS,
   parseProgress,
+  recordKnowledgeSprint,
   resetProgress,
   setCourseConfidence,
   storeProgress,
@@ -233,6 +234,10 @@ export function BitIslandApp() {
     setProgress((currentProgress) => setCourseConfidence(currentProgress, activeCourseId, confidence));
   }, [activeCourseId]);
 
+  const recordSprintScore = useCallback((score: number) => {
+    setProgress((currentProgress) => recordKnowledgeSprint(currentProgress, score));
+  }, []);
+
   const returnToMap = useCallback(() => {
     pendingMapFocusIdRef.current = activeCourseId;
     setScreen("map");
@@ -363,8 +368,10 @@ export function BitIslandApp() {
         confidenceByCourse={progress.confidenceByCourse}
         completedCourseIds={progress.completedCourseIds}
         coursePlayCounts={progress.coursePlayCounts}
+        knowledgeSprint={progress.knowledgeSprint}
         headingRef={mapHeadingRef}
         onStartCourse={startCourse}
+        onRecordSprint={recordSprintScore}
         resume={progress.resume}
         soundEnabled={progress.settings.sound}
         storageUnavailable={storageUnavailable}
