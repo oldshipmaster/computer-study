@@ -47,6 +47,7 @@ test("keeps one sticky return route available throughout the complete game galle
   assert.match(gallery, /<AdventureMissionBoard[\s\S]*?<IslandChampionshipRelay/);
   assert.match(css, /\.game-return-dock[^{]*\{[^}]*position:\s*sticky/);
   assert.match(css, /\.game-return-dock a[^{]*\{[^}]*min-height:\s*44px/);
+  assert.match(css, /\.game-playground\s*>\s*\[id\][^{]*\{[^}]*scroll-margin-top:\s*84px/);
 });
 
 test("ships game cards in a separate responsive accessible stylesheet", () => {

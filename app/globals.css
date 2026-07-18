@@ -1492,6 +1492,7 @@ input {
 .back-to-top { display: inline-flex; min-height: 44px; margin: 16px auto 0; padding: 0 15px; align-items: center; justify-content: center; border: 2px solid rgb(255 255 255 / 72%); border-radius: 999px; color: inherit; font-size: .86rem; font-weight: 850; text-decoration: none; }
 .back-to-top:hover, .back-to-top:focus-visible { background: rgb(255 255 255 / 15%); }
 .game-playground { position:relative; }
+.game-playground > [id] { scroll-margin-top:84px; }
 .game-return-dock { position:sticky; z-index:12; top:10px; display:flex; width:fit-content; max-width:calc(100% - 32px); margin:0 auto 10px; align-items:center; gap:10px; padding:5px 7px; border:2px solid var(--deep-sea); border-radius:999px; background:rgb(255 253 244 / 94%); box-shadow:4px 5px 0 rgb(20 56 77 / 14%); color:var(--deep-sea); backdrop-filter:blur(8px); }
 .game-return-dock a { display:inline-flex; min-height:44px; align-items:center; gap:6px; padding:0 12px; border-radius:999px; background:var(--deep-sea); color:white; font-size:.74rem; font-weight:900; text-decoration:none; }
 .game-return-dock > span { padding-right:8px; color:#48677a; font-size:.64rem; font-weight:800; }
