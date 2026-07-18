@@ -74,6 +74,10 @@ test("offers rotating recommendations and reversible discovery filters", () => {
   assert.match(component, /我有 \{minutes\} 分钟/);
   assert.match(component, /gameArcadePlaylistBreaks/);
   assert.match(component, /gameArcadeSessionRemaining/);
+  assert.match(component, /gameArcadePlaylistLimit/);
+  assert.match(component, /本轮已打开/);
+  assert.match(component, /aria-label="本轮游戏进度"/);
+  assert.match(css, /\.game-arcade-session-progress/);
   assert.match(component, /本轮推荐已走完/);
   assert.match(component, /开始新一轮/);
   assert.match(component, /完成当前一局后离开屏幕休息/);

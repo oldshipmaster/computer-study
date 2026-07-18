@@ -20,6 +20,7 @@
 .game-arcade-time-options { display:flex; flex-wrap:wrap; gap:7px; }
 .game-arcade-time-options button { min-height:44px; padding:7px 11px; border:2px solid #758d9b; border-radius:999px; background:white; color:#17384d; cursor:pointer; font:inherit; font-size:.68rem; font-weight:900; }
 .game-arcade-time-options button[aria-pressed="true"] { border-color:#17384d; background:#17384d; color:white; }
+.game-arcade-session-progress { display:grid; grid-template-columns:auto minmax(90px,220px); align-items:center; gap:8px; width:fit-content; color:#48677a; font-size:.64rem; font-weight:800; } .game-arcade-session-progress b { color:#17384d; } .game-arcade-session-progress progress { width:100%; accent-color:#39755f; }
 .game-arcade-break-plan { width:fit-content; padding:6px 9px; border-radius:9px; background:#e4f4e7; color:#285f47 !important; font-weight:800; }
 .game-arcade-picks-filter-note { font-weight:800; }
 .game-arcade-pick-context { display:flex; flex-wrap:wrap; align-items:center; gap:6px; color:#48677a; font-size:.62rem; } .game-arcade-pick-context b { color:#17384d; } .game-arcade-pick-context span { padding:4px 7px; border:1px solid #4e7489; border-radius:999px; background:rgb(255 255 255 / 72%); color:#315c9a; font-weight:850; }
@@ -102,6 +103,7 @@
   .game-arcade-recommendations, .game-arcade-unlock-list { grid-template-columns: 1fr; }
   .game-arcade-session-complete { grid-template-columns:auto minmax(0,1fr); } .game-arcade-session-complete button { grid-column:1 / -1; }
   .game-arcade-search > div { align-items: stretch; flex-direction: column; }
+  .game-arcade-session-progress { grid-template-columns:1fr; width:100%; } .game-arcade-session-progress progress { width:100%; }
   .game-arcade-personal-filters, .game-arcade-filter--unlocked, .game-arcade-filter--favorites { align-self: stretch; }
   .game-arcade-personal-filters > button { flex:1; }
   .game-arcade-results { align-items:flex-start; flex-direction:column; }
