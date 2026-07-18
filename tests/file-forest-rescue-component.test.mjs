@@ -20,6 +20,11 @@ test("shows virtual files, actions, feedback, and rescue records", () => {
   assert.match(component, /role="status"/);
   assert.match(component, /aria-current/);
   assert.match(component, /<progress/);
+  assert.match(component, /numberShortcutIndex/);
+  assert.match(component, /onKeyDown=\{handleRescueKeyDown\}/);
+  assert.match(component, /aria-keyshortcuts=\{String\(index \+ 1\)\}/);
+  assert.match(component, /按键盘数字/);
+  assert.match(component, /按 <kbd>Enter<\/kbd>/);
 });
 
 test("supports six rescues, replay rotation, and focus", () => {
@@ -41,5 +46,6 @@ test("lazy-loads after factory with accessible responsive styles", () => {
   assert.match(css, /\.file-rescue-action[^{]*\{[^}]*min-height:\s*44px/);
   assert.match(css, /@media \(max-width: 760px\)[\s\S]*?\.file-rescue-layout[\s\S]*?grid-template-columns:\s*1fr/);
   assert.match(css, /\.bit-island-app--reduced-motion[\s\S]*?animation:\s*none/);
+  assert.match(css, /\.file-rescue-keyboard-hint/);
   assert.match(css, /@media \(forced-colors: active\)[\s\S]*?aria-current/);
 });

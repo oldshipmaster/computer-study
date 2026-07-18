@@ -1,7 +1,8 @@
 "use client";
 
-import { useLayoutEffect, useMemo, useRef, useState, type MouseEvent } from "react";
+import { useLayoutEffect, useMemo, useRef, useState, type KeyboardEvent, type MouseEvent } from "react";
 import { getCourse } from "@/lib/course-data";
+import { numberShortcutIndex } from "@/lib/keyboard-shortcuts";
 import {
   FILE_RESCUE_MISSIONS,
   advanceFileMission,
@@ -83,8 +84,23 @@ export function FileForestRescue({ completedCourseIds, onStartCourse }: FileFore
   function nextStep(event: MouseEvent<HTMLButtonElement>) { focusNext(); setGame((current) => advanceFileStep(current, mission, event.detail)); }
   function nextMission(event: MouseEvent<HTMLButtonElement>) { focusNext(); setGame((current) => advanceFileMission(current, event.detail)); }
 
+  function handleRescueKeyDown(event: KeyboardEvent<HTMLElement>) {
+    if (event.nativeEvent.isComposing || event.repeat || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+    const optionIndex = numberShortcutIndex(event.key, step.options.length);
+    if (optionIndex !== null && game.phase === "rescuing") {
+      event.preventDefault();
+      setGame((current) => chooseFileAction(current, mission, step.options[optionIndex].id, 0));
+      return;
+    }
+    if (event.key !== "Enter" || event.target instanceof HTMLButtonElement) return;
+    if (game.phase === "step-solved") { focusNext(); setGame((current) => advanceFileStep(current, mission, 0)); }
+    else if (game.phase === "mission-solved") { focusNext(); setGame((current) => advanceFileMission(current, 0)); }
+    else return;
+    event.preventDefault();
+  }
+
   return (
-    <section className={`file-rescue-shell file-rescue-game rescue-${mission.mode}`} id="file-forest-rescue" aria-labelledby="file-rescue-mission-heading">
+    <section className={`file-rescue-shell file-rescue-game rescue-${mission.mode}`} id="file-forest-rescue" aria-labelledby="file-rescue-mission-heading" onKeyDown={handleRescueKeyDown}>
       <button className="file-rescue-back" onClick={() => { focusNext(); setMode("menu"); }} type="button">← 返回救援队营地</button>
       <header className="file-rescue-heading">
         <span aria-hidden="true">{MODE_ICONS[mission.mode]}</span>
@@ -98,7 +114,8 @@ export function FileForestRescue({ completedCourseIds, onStartCourse }: FileFore
           <div className="file-rescue-files" aria-label="当前虚拟文件和文件夹" role="list">
             {step.files.map((virtualFile) => <article aria-current={virtualFile.state === "active" ? "step" : undefined} className={`file-rescue-file is-${virtualFile.state ?? "normal"}`} key={virtualFile.id} role="listitem"><span aria-hidden="true">{virtualFile.kind === "folder" ? "📁" : "📄"}</span><b>{virtualFile.name}</b><small>{virtualFile.location}</small></article>)}
           </div>
-          <div className="file-rescue-actions" aria-label="选择虚拟文件操作" role="group">{step.options.map((candidate) => <button aria-pressed={game.phase !== "rescuing" && candidate.id === step.answerId} className="file-rescue-action" disabled={game.phase !== "rescuing"} key={candidate.id} onClick={(event) => choose(event, candidate.id)} type="button">{candidate.label}</button>)}</div>
+          <div className="file-rescue-actions" aria-label="选择虚拟文件操作" role="group">{step.options.map((candidate, index) => <button aria-keyshortcuts={String(index + 1)} aria-pressed={game.phase !== "rescuing" && candidate.id === step.answerId} className="file-rescue-action" disabled={game.phase !== "rescuing"} key={candidate.id} onClick={(event) => choose(event, candidate.id)} type="button"><kbd>{index + 1}</kbd><span>{candidate.label}</span></button>)}</div>
+          <p className="file-rescue-keyboard-hint">{game.phase === "rescuing" ? <>也可以按键盘数字 <kbd>1</kbd>、<kbd>2</kbd>、<kbd>3</kbd> 选择文件操作</> : <>按 <kbd>Enter</kbd> {game.phase === "step-solved" ? "保存记录并继续" : "接收下一次救援"}</>}</p>
           <p className={`file-rescue-feedback phase-${game.phase}`} role="status">{game.feedback}</p>
           {game.phase === "step-solved" ? <button className="file-rescue-action file-rescue-next" onClick={nextStep} type="button">保存记录，继续检查 →</button> : null}
           {game.phase === "mission-solved" ? <button className="file-rescue-action file-rescue-next" onClick={nextMission} type="button">{game.index === deck.length - 1 ? "查看救援总结" : "接收下一次救援"} <span aria-hidden="true">→</span></button> : null}

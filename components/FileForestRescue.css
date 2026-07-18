@@ -37,7 +37,10 @@
 .file-rescue-file.is-trashed { border-style: dashed; background: #ebe8e1; filter: grayscale(.35); }
 .file-rescue-actions { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 9px; }
 .file-rescue-actions .file-rescue-action { background: #e4f0df; box-shadow: 2px 2px 0 #274936; }
+.file-rescue-actions .file-rescue-action kbd { display: inline-grid; min-width: 25px; min-height: 25px; place-items: center; border: 1px solid #78936f; border-radius: 6px; background: white; color: #274936; font: 900 .66rem/1 inherit; box-shadow: 0 2px 0 #9caf94; }
 .file-rescue-actions .file-rescue-action[aria-pressed="true"] { background: #caedcf; }
+.file-rescue-keyboard-hint { color: #526c58; font-size: .74rem; font-weight: 800; text-align: center; }
+.file-rescue-keyboard-hint kbd { display: inline-grid; min-width: 26px; min-height: 25px; place-items: center; margin-inline: 2px; border: 1px solid #78936f; border-radius: 6px; background: white; color: #274936; font: 900 .68rem/1 inherit; box-shadow: 0 2px 0 #9caf94; }
 .file-rescue-feedback { min-height: 48px; padding: 10px 12px; border-left: 5px solid #78936f; border-radius: 9px; background: #edf2e8; color: #3e6047; }
 .file-rescue-feedback.phase-step-solved, .file-rescue-feedback.phase-mission-solved { border-color: #438253; background: #e0f6e5; color: #2e653b; }
 .file-rescue-next { justify-self: end; }
