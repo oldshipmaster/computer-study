@@ -32,6 +32,7 @@ import { preloadLesson } from "@/components/lessons/lesson-registry";
 const FoundationPractice = lazy(() => import("@/components/FoundationPractice").then((module) => ({ default: module.FoundationPractice })));
 const FoundationRoadmap = lazy(() => import("@/components/FoundationRoadmap").then((module) => ({ default: module.FoundationRoadmap })));
 const FoundationCapstone = lazy(() => import("@/components/FoundationCapstone").then((module) => ({ default: module.FoundationCapstone })));
+const LogicCircuitLab = lazy(() => import("@/components/LogicCircuitLab").then((module) => ({ default: module.LogicCircuitLab })));
 
 interface IslandMapProps {
   completedCourseIds: string[];
@@ -164,6 +165,7 @@ export function IslandMap({
           <a href="#adventure-missions">任务牌</a>
           <a href="#knowledge-sprint">闪击赛</a>
           <a href="#island-boss-arena">Boss 战</a>
+          <a href="#logic-circuit-lab">电路台</a>
           <a href="#learning-plan">今日计划</a>
           <a href="#adventure-map">课程地图</a>
           <a href="#foundation-roadmap">深度路线</a>
@@ -243,6 +245,7 @@ export function IslandMap({
       <AdventureMissionBoard completedCourseIds={completedCourseIds} confidenceByCourse={confidenceByCourse} coursePlayCounts={coursePlayCounts} onStartCourse={onStartCourse} />
       <KnowledgeSprint bestScore={knowledgeSprint.bestScore} completedCourseIds={completedCourseIds} key={`sprint-${completedCourseIds.join("|")}`} onRecordSprint={onRecordSprint} onStartCourse={onStartCourse} runsPlayed={knowledgeSprint.runsPlayed} />
       <IslandBossArena completedBossIds={completedBossIds} completedCourseIds={completedCourseIds} onCompleteBoss={onCompleteBoss} onStartCourse={onStartCourse} />
+      <Suspense fallback={<section className="logic-circuit-shell logic-circuit-loading" id="logic-circuit-lab" role="status"><h2>逻辑电路实验台</h2><p>正在接通逻辑电路实验台…</p></section>}><LogicCircuitLab completedCourseIds={completedCourseIds} onStartCourse={onStartCourse} /></Suspense>
       <LearningPlan completedCourseIds={completedCourseIds} onStartCourse={onStartCourse} resume={resume} />
       <ChildReviewQueue confidenceByCourse={confidenceByCourse} onStartCourse={onStartCourse} />
       <IslandSealCollection completedCourseIds={completedCourseIds} />
