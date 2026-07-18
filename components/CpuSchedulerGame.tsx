@@ -1,12 +1,13 @@
 "use client";
 
-import { useLayoutEffect, useMemo, useRef, useState, type MouseEvent } from "react";
+import { useLayoutEffect, useMemo, useRef, useState, type KeyboardEvent, type MouseEvent } from "react";
 import { getCourse } from "@/lib/course-data";
 import {
   CPU_SCHEDULER_MISSIONS,
   advanceCpuSchedulerMission,
   buildCpuSchedulerDeck,
   createCpuSchedulerState,
+  cpuTaskShortcutIndex,
   getUsedMemory,
   loadCpuTask,
   runCpuTimeSlice,
@@ -97,18 +98,36 @@ export function CpuSchedulerGame({ completedCourseIds, onStartCourse }: CpuSched
     setGame((current) => advanceCpuSchedulerMission(current, deck[nextMissionIndex], event.detail));
   }
 
+  function handleSchedulerKeyDown(event: KeyboardEvent<HTMLElement>) {
+    if (event.nativeEvent.isComposing || event.repeat || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+    const taskIndex = cpuTaskShortcutIndex(event.key, mission.tasks.length);
+    if (taskIndex !== null && game.phase === "playing") {
+      event.preventDefault();
+      setGame((current) => loadCpuTask(current, mission, mission.tasks[taskIndex].id, 0));
+      return;
+    }
+    if (event.key !== "Enter" || event.target instanceof HTMLButtonElement) return;
+    if (game.phase === "playing") setGame((current) => runCpuTimeSlice(current, mission, 0));
+    else if (game.phase === "solved") {
+      focusHeading();
+      const nextMissionIndex = Math.min(game.missionIndex + 1, deck.length - 1);
+      setGame((current) => advanceCpuSchedulerMission(current, deck[nextMissionIndex], 0));
+    } else return;
+    event.preventDefault();
+  }
+
   return (
-    <section className="cpu-scheduler-shell cpu-scheduler-game" id="cpu-scheduler-game" aria-labelledby="cpu-scheduler-game-heading">
+    <section className="cpu-scheduler-shell cpu-scheduler-game" id="cpu-scheduler-game" aria-labelledby="cpu-scheduler-game-heading" onKeyDown={handleSchedulerKeyDown}>
       <header className="cpu-scheduler-heading"><p>调度班次 {game.missionIndex + 1} / {game.missionCount}</p><h2 id="cpu-scheduler-game-heading" ref={headingRef} tabIndex={-1}>{mission.title}</h2><span>{mission.story}</span><progress aria-label="CPU 调度班次进度" max={game.missionCount} value={game.solved} /></header>
 
       <div className="cpu-scheduler-layout">
         <section className="cpu-waiting-panel" aria-labelledby="cpu-waiting-heading">
           <header><h3 id="cpu-waiting-heading">任务等待区</h3><span>{game.waitingTaskIds.length} 个等待</span></header>
-          <div className="cpu-task-grid">{mission.tasks.map((task) => {
+          <div className="cpu-task-grid">{mission.tasks.map((task, taskIndex) => {
             const waiting = game.waitingTaskIds.includes(task.id);
             const completed = game.completedTaskIds.includes(task.id);
             const process = game.ready.find((item) => item.taskId === task.id);
-            return <article className={`cpu-task-card ${completed ? "is-complete" : process ? "is-ready" : ""}`} key={task.id}><span aria-hidden="true">{task.icon}</span><div><strong>{task.name}</strong><small>{task.memory} 格内存 · {task.work} 个时间片</small>{process ? <b>剩余 {process.remainingWork} 片</b> : completed ? <b>已完成 · 内存已释放</b> : <b>等待装入</b>}</div>{waiting ? <button className="cpu-scheduler-action" onClick={(event) => setGame((current) => loadCpuTask(current, mission, task.id, event.detail))} type="button">装入内存</button> : null}</article>;
+            return <article className={`cpu-task-card ${completed ? "is-complete" : process ? "is-ready" : ""}`} key={task.id}><span aria-hidden="true">{task.icon}</span><div><strong>{task.name}</strong><small>{task.memory} 格内存 · {task.work} 个时间片</small>{process ? <b>剩余 {process.remainingWork} 片</b> : completed ? <b>已完成 · 内存已释放</b> : <b>等待装入</b>}</div>{waiting ? <button aria-keyshortcuts={String(taskIndex + 1)} className="cpu-scheduler-action" onClick={(event) => setGame((current) => loadCpuTask(current, mission, task.id, event.detail))} type="button"><kbd>{taskIndex + 1}</kbd>装入内存</button> : null}</article>;
           })}</div>
         </section>
 
@@ -130,13 +149,14 @@ export function CpuSchedulerGame({ completedCourseIds, onStartCourse }: CpuSched
         <section className="cpu-core-panel" aria-labelledby="cpu-core-heading">
           <header><h3 id="cpu-core-heading">CPU 核心</h3><span>一次只执行一个时间片</span></header>
           <div className={`cpu-core ${lastTask ? "has-run" : ""}`} role="status"><span aria-hidden="true">{lastTask?.icon ?? "CPU"}</span><strong>{lastTask ? `刚运行：${lastTask.name}` : "等待第一个时间片"}</strong></div>
-          <button className="cpu-scheduler-action cpu-run-slice" disabled={game.phase !== "playing"} onClick={(event) => setGame((current) => runCpuTimeSlice(current, mission, event.detail))} type="button">运行一个时间片</button>
+          <button aria-keyshortcuts="Enter" className="cpu-scheduler-action cpu-run-slice" disabled={game.phase !== "playing"} onClick={(event) => setGame((current) => runCpuTimeSlice(current, mission, event.detail))} type="button">运行一个时间片</button>
         </section>
       </div>
 
       <section className="cpu-history-panel" aria-labelledby="cpu-history-heading"><header><h3 id="cpu-history-heading">时间片历史</h3><span>共执行 {game.timeSlices} 片</span></header>{game.history.length === 0 ? <p>还没有执行记录。</p> : <ol>{game.history.map((entry) => { const task = mission.tasks.find((item) => item.id === entry.taskId)!; return <li key={entry.slice}><b>第 {entry.slice} 片</b><span>{task.name}</span><strong>{entry.event === "completed" ? "完成并释放内存" : `剩 ${entry.remainingWork} 片，转到队尾`}</strong></li>; })}</ol>}</section>
+      <p className="cpu-keyboard-hint">{game.phase === "solved" ? <>按 <kbd>Enter</kbd> 接入下一班任务</> : <>按数字键 <kbd>1</kbd>–<kbd>{mission.tasks.length}</kbd> 装入等待任务；按 <kbd>Enter</kbd> 运行一个时间片</>}</p>
       <p className={`cpu-scheduler-feedback is-${game.phase}`} role="status">{game.feedback}</p>
-      {game.phase === "solved" ? <button className="cpu-scheduler-action cpu-next-shift" onClick={nextMission} type="button">{game.missionIndex === game.missionCount - 1 ? "查看调度报告" : "接入下一班任务"} →</button> : null}
+      {game.phase === "solved" ? <button aria-keyshortcuts="Enter" className="cpu-scheduler-action cpu-next-shift" onClick={nextMission} type="button">{game.missionIndex === game.missionCount - 1 ? "查看调度报告" : "接入下一班任务"} →</button> : null}
     </section>
   );
 }

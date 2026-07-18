@@ -23,6 +23,11 @@ test("shows waiting tasks, bounded memory, ready queue, CPU, and time history", 
   assert.match(component, /loadCpuTask/);
   assert.match(component, /runCpuTimeSlice/);
   assert.match(component, /role="status"/);
+  assert.match(component, /cpuTaskShortcutIndex/);
+  assert.match(component, /onKeyDown=\{handleSchedulerKeyDown\}/);
+  assert.match(component, /按数字键/);
+  assert.match(component, /按 <kbd>Enter<\/kbd>/);
+  assert.match(component, /aria-keyshortcuts/);
 });
 
 test("labels queue front, tail, work, and released memory without color dependence", () => {
@@ -56,5 +61,6 @@ test("lazy-loads scheduler after packet escort with responsive accessible styles
   assert.match(css, /\.cpu-scheduler-action[^{]*\{[^}]*min-height:\s*44px/);
   assert.match(css, /@media \(max-width: 760px\)[\s\S]*?\.cpu-scheduler-layout[\s\S]*?grid-template-columns:\s*1fr/);
   assert.match(css, /\.bit-island-app--reduced-motion[\s\S]*?animation:\s*none/);
+  assert.match(css, /\.cpu-keyboard-hint/);
   assert.match(css, /@media \(forced-colors: active\)[\s\S]*?aria-current/);
 });

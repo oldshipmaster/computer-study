@@ -7,8 +7,16 @@ import {
   createCpuSchedulerState,
   getUsedMemory,
   loadCpuTask,
+  cpuTaskShortcutIndex,
   runCpuTimeSlice,
 } from "../lib/cpu-scheduler-game.ts";
+
+test("maps visible task shortcuts without accepting hidden positions", () => {
+  assert.equal(cpuTaskShortcutIndex("1", 3), 0);
+  assert.equal(cpuTaskShortcutIndex("3", 3), 2);
+  assert.equal(cpuTaskShortcutIndex("4", 3), null);
+  assert.equal(cpuTaskShortcutIndex("0", 4), null);
+});
 
 test("defines six bounded scheduler shifts with unique fictional tasks", () => {
   assert.equal(CPU_SCHEDULER_MISSIONS.length, 6);

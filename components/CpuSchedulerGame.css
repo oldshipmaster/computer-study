@@ -25,7 +25,8 @@
 .cpu-task-card b { color: #5c4fa1; font-size: .65rem; }
 .cpu-task-card.is-ready { border-color: #7363c8; background: #f4f1ff; }
 .cpu-task-card.is-complete { border-color: #49806d; background: #e5f8ef; }
-.cpu-scheduler-action { min-height: 44px; padding: 7px 10px; border: 2px solid #5d5685; border-radius: 9px; background: #eeeaff; color: #332f52; cursor: pointer; font-weight: 850; }
+.cpu-scheduler-action { position: relative; min-height: 44px; padding: 7px 10px; border: 2px solid #5d5685; border-radius: 9px; background: #eeeaff; color: #332f52; cursor: pointer; font-weight: 850; }
+.cpu-scheduler-action > kbd { display: inline-grid; min-width: 22px; min-height: 22px; place-items: center; margin-right: 6px; border: 1px solid #8c84b3; border-radius: 5px; background: white; color: #332f52; font: 900 .63rem/1 inherit; box-shadow: 0 2px 0 #aaa4c7; }
 .cpu-scheduler-action:disabled { cursor: default; opacity: .42; }
 .cpu-memory-slots { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
 .cpu-memory-slots > span { display: grid; min-height: 58px; place-items: center; gap: 2px; padding: 4px; border: 2px dashed #aaa4c7; border-radius: 8px; background: white; text-align: center; }
@@ -52,6 +53,8 @@
 .cpu-history-panel li b { color: #5c4fa1; font-size: .62rem; }
 .cpu-history-panel li strong { color: #645e83; font-size: .62rem; }
 .cpu-scheduler-feedback { min-height: 55px; margin-top: 12px !important; padding: 10px 12px; border-left: 5px solid #b9a8ff; border-radius: 8px; background: rgb(255 255 255 / 9%); }
+.cpu-keyboard-hint { margin-top: 12px !important; color: #ded9f7; font-size: .75rem; font-weight: 800; text-align: center; }
+.cpu-keyboard-hint kbd { display: inline-grid; min-width: 26px; min-height: 25px; place-items: center; margin-inline: 2px; border: 1px solid #a39acb; border-radius: 6px; background: #f8f7ff; color: #332f52; font: 900 .68rem/1 inherit; box-shadow: 0 2px 0 #7363c8; }
 .cpu-scheduler-feedback.is-solved { border-left-color: #ffe36e; background: rgb(255 227 110 / 14%); }
 .cpu-next-shift { display: block; margin: 12px 0 0 auto; background: #ffe36e; box-shadow: 3px 3px 0 #151329; }
 .cpu-scheduler-complete > span { font-size: 3.4rem; }

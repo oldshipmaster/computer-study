@@ -40,6 +40,12 @@ export interface CpuSchedulerState {
   feedback: string;
 }
 
+export function cpuTaskShortcutIndex(key: string, taskCount: number): number | null {
+  if (!/^[1-5]$/.test(key)) return null;
+  const index = Number(key) - 1;
+  return index < Math.max(0, Math.floor(taskCount)) ? index : null;
+}
+
 export const CPU_SCHEDULER_MISSIONS: CpuSchedulerMission[] = [
   {
     id: "two-task-warmup", title: "双任务热身班", story: "把绘图和音乐任务装进 4 格内存，观察 CPU 轮流工作。", capacity: 4,
