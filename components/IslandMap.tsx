@@ -37,6 +37,7 @@ const RobotCodeExpedition = lazy(() => import("@/components/RobotCodeExpedition"
 const PacketEscort = lazy(() => import("@/components/PacketEscort").then((module) => ({ default: module.PacketEscort })));
 const CpuSchedulerGame = lazy(() => import("@/components/CpuSchedulerGame").then((module) => ({ default: module.CpuSchedulerGame })));
 const AlgorithmArenaGame = lazy(() => import("@/components/AlgorithmArenaGame").then((module) => ({ default: module.AlgorithmArenaGame })));
+const DataStructureHarbor = lazy(() => import("@/components/DataStructureHarbor").then((module) => ({ default: module.DataStructureHarbor })));
 const GameArcade = lazy(() => import("@/components/GameArcade").then((module) => ({ default: module.GameArcade })));
 
 interface IslandMapProps {
@@ -253,6 +254,7 @@ export function IslandMap({
       <Suspense fallback={<section className="packet-escort-shell packet-escort-loading" id="packet-escort" role="status"><h2>网络数据包护航</h2><p>正在连接网络数据包护航…</p></section>}><PacketEscort completedCourseIds={completedCourseIds} onStartCourse={onStartCourse} /></Suspense>
       <Suspense fallback={<section className="cpu-scheduler-shell cpu-scheduler-loading" id="cpu-scheduler-game" role="status"><h2>CPU 时间片调度台</h2><p>正在启动 CPU 时间片调度台…</p></section>}><CpuSchedulerGame completedCourseIds={completedCourseIds} onStartCourse={onStartCourse} /></Suspense>
       <Suspense fallback={<section className="algorithm-arena-shell algorithm-arena-loading" id="algorithm-arena-game" role="status"><h2>算法竞技场</h2><p>正在开启算法竞技场…</p></section>}><AlgorithmArenaGame completedCourseIds={completedCourseIds} onStartCourse={onStartCourse} /></Suspense>
+      <Suspense fallback={<section className="data-harbor-shell data-harbor-loading" id="data-structure-harbor" role="status"><h2>数据结构装卸港</h2><p>正在开放数据结构装卸港…</p></section>}><DataStructureHarbor completedCourseIds={completedCourseIds} onStartCourse={onStartCourse} /></Suspense>
       <LearningPlan completedCourseIds={completedCourseIds} onStartCourse={onStartCourse} resume={resume} />
       <ChildReviewQueue confidenceByCourse={confidenceByCourse} onStartCourse={onStartCourse} />
       <IslandSealCollection completedCourseIds={completedCourseIds} />
