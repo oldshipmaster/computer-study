@@ -19,6 +19,7 @@ export interface KnowledgeSprintState {
   phase: KnowledgeSprintPhase;
   questionCount: number;
   score: number;
+  lastAward: number;
   correct: number;
   streak: number;
   bestStreak: number;
@@ -107,6 +108,7 @@ export function createKnowledgeSprintState(questionCount: number): KnowledgeSpri
     phase: safeQuestionCount > 0 ? "answering" : "complete",
     questionCount: safeQuestionCount,
     score: 0,
+    lastAward: 0,
     correct: 0,
     streak: 0,
     bestStreak: 0,
@@ -129,10 +131,12 @@ export function answerKnowledgeSprint(
 
   if (selected === question.answer) {
     const nextStreak = state.streak + 1;
+    const award = 100 + state.streak * 25;
     return {
       ...state,
       phase: "feedback",
-      score: state.score + 100 + state.streak * 25,
+      score: state.score + award,
+      lastAward: award,
       correct: state.correct + 1,
       streak: nextStreak,
       bestStreak: Math.max(state.bestStreak, nextStreak),
@@ -144,6 +148,7 @@ export function answerKnowledgeSprint(
     ...state,
     phase: "feedback",
     streak: 0,
+    lastAward: 0,
     shields: Math.max(0, state.shields - 1),
     feedback: { kind: "miss", message: `这一题没有答对。${question.explanation}` },
     missedCourseIds: state.missedCourseIds.includes(question.courseId)
@@ -163,6 +168,7 @@ export function advanceKnowledgeSprint(
     ...state,
     index: state.index + 1,
     phase: "answering",
+    lastAward: 0,
     feedback: { kind: "idle", message: "选出最有道理的答案。" },
   };
 }

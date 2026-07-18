@@ -181,7 +181,7 @@ export function KnowledgeSprint({
     <section className="knowledge-sprint knowledge-sprint--playing" id="knowledge-sprint" aria-labelledby="sprint-question-heading" onKeyDown={handleSprintKeyboard}>
       <aside className="sprint-console" aria-label="闪击赛状态">
         <p className="sprint-kicker">知识闪击进行中</p>
-        <div className="sprint-score"><span>分数</span><strong>{state.score}</strong></div>
+        <div className="sprint-score"><span>分数</span><strong>{state.score}</strong>{state.lastAward > 0 ? <i className="sprint-points-pop" aria-label={`本题获得 ${state.lastAward} 分`}>+{state.lastAward}</i> : null}</div>
         <div className="sprint-combo" aria-label={`当前连击 ${state.streak}`} role="group"><span aria-hidden="true">⚡</span><strong>{state.streak} 连击</strong></div>
         <div className="sprint-shields" aria-label={`护盾剩余 ${state.shields} 个`} role="group">
           <span>护盾</span>

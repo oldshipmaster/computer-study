@@ -35,6 +35,8 @@ test("offers a bounded child-friendly sprint flow", () => {
   assert.match(component, /sprint-answer--miss/);
   assert.match(component, /正确答案/);
   assert.match(component, /你的选择/);
+  assert.match(component, /sprint-points-pop/);
+  assert.match(component, /\+\{state\.lastAward\}/);
 });
 
 test("integrates the sprint between missions and the learning plan", () => {
@@ -61,4 +63,6 @@ test("keeps sprint controls touch-sized and accessible in alternate modes", () =
   assert.match(css, /\.sprint-answer--correct/);
   assert.match(css, /\.sprint-answer--miss/);
   assert.match(css, /@media \(forced-colors: active\)[\s\S]*?\.sprint-answer--correct/);
+  assert.match(css, /\.sprint-points-pop/);
+  assert.match(css, /\.bit-island-app--reduced-motion[\s\S]*?\.sprint-points-pop[\s\S]*?animation:\s*none/);
 });

@@ -75,6 +75,7 @@ test("scores a growing combo and reaches the 750 point perfect maximum", () => {
     const question = deck[index];
     state = answerKnowledgeSprint(state, question.options.indexOf(question.answer), deck);
     assert.equal(state.phase, "feedback");
+    assert.equal(state.lastAward, 100 + index * 25);
     if (index < deck.length - 1) state = advanceKnowledgeSprint(state, deck);
   }
   state = advanceKnowledgeSprint(state, deck);
@@ -97,6 +98,7 @@ test("uses a shield, resets combo, and records the missed course without elimina
   assert.equal(state.score, 100);
   assert.equal(state.streak, 0);
   assert.equal(state.shields, 2);
+  assert.equal(state.lastAward, 0);
   assert.deepEqual(state.missedCourseIds, [deck[1].courseId]);
   assert.match(state.feedback.message, /这一题没有答对/);
   state = advanceKnowledgeSprint(state, deck);

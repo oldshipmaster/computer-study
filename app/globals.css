@@ -3837,9 +3837,10 @@ html.bit-island-document--reduced-motion *::after,
 .sprint-lock-icon { display: grid; width: 68px; height: 68px; place-items: center; border: 3px solid #ffd85a; border-radius: 50%; background: #12324a; font-size: 1.8rem; }
 .knowledge-sprint--playing { grid-template-columns: minmax(180px, .6fr) minmax(0, 1.7fr); align-items: stretch; }
 .sprint-console { display: grid; align-content: start; gap: 17px; padding: 20px; border: 2px solid rgb(255 255 255 / 18%); border-radius: 22px; background: rgb(4 23 36 / 55%); }
-.sprint-score { display: grid; }
+.sprint-score { position: relative; display: grid; }
 .sprint-score span, .sprint-shields > span:first-child { color: #bcd3de; font-size: .7rem; font-weight: 800; }
 .sprint-score strong { color: #ffd85a; font-size: 2.5rem; line-height: 1; }
+.sprint-points-pop { position: absolute; right: 0; bottom: 4px; color: #79d9b5; font-size: .82rem; font-style: normal; font-weight: 950; animation: sprint-points-pop 500ms ease-out both; }
 .sprint-combo { display: flex; align-items: center; gap: 8px; color: #ff9a7d; animation: sprint-pulse 1.5s ease-in-out infinite; }
 .sprint-shields { display: grid; gap: 5px; }
 .sprint-shields > span:last-child { display: flex; gap: 7px; }
@@ -3889,6 +3890,7 @@ html.bit-island-document--reduced-motion *::after,
 .sprint-result-actions { display: grid; grid-column: 2 / -1; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 .sprint-course-link { border-color: #79d9b5; background: #e5faef; }
 @keyframes sprint-pulse { 50% { transform: scale(1.04); } }
+@keyframes sprint-points-pop { from { opacity: 0; transform: translateY(8px) scale(.8); } to { opacity: 1; transform: translateY(0) scale(1); } }
 
 @media (max-width: 680px) {
   .knowledge-sprint { width: min(100% - 32px, 1180px); grid-template-columns: 1fr; padding: 22px 18px; border-radius: 22px; }
@@ -3905,10 +3907,11 @@ html.bit-island-document--reduced-motion *::after,
 }
 
 .bit-island-app--reduced-motion .sprint-combo,
-.bit-island-app--reduced-motion .sprint-shields { animation: none; }
+.bit-island-app--reduced-motion .sprint-shields,
+.bit-island-app--reduced-motion .sprint-points-pop { animation: none; }
 
 @media (prefers-reduced-motion: reduce) {
-  .sprint-combo, .sprint-shields { animation: none; }
+  .sprint-combo, .sprint-shields, .sprint-points-pop { animation: none; }
   .sprint-next:hover, .sprint-course-link:hover { transform: none; }
 }
 
