@@ -3,10 +3,10 @@ import assert from "node:assert/strict";
 import { COURSES, ISLANDS } from "../lib/course-data.ts";
 import { GAME_ARCADE_DEFINITIONS, buildGameArcadeEntries } from "../lib/game-arcade.ts";
 
-test("defines fifteen unique game destinations with child-readable metadata", () => {
-  assert.equal(GAME_ARCADE_DEFINITIONS.length, 15);
-  assert.equal(new Set(GAME_ARCADE_DEFINITIONS.map((game) => game.id)).size, 15);
-  assert.equal(new Set(GAME_ARCADE_DEFINITIONS.map((game) => game.targetId)).size, 15);
+test("defines sixteen unique game destinations with child-readable metadata", () => {
+  assert.equal(GAME_ARCADE_DEFINITIONS.length, 16);
+  assert.equal(new Set(GAME_ARCADE_DEFINITIONS.map((game) => game.id)).size, 16);
+  assert.equal(new Set(GAME_ARCADE_DEFINITIONS.map((game) => game.targetId)).size, 16);
   for (const game of GAME_ARCADE_DEFINITIONS) {
     assert.ok(game.title.length >= 4);
     assert.ok(game.mechanic.length >= 4);
@@ -38,8 +38,9 @@ test("unlocks exact-course games only after every required course", () => {
     "pixel-art", "document-design", "slide-story", "media-copyright", "data-table",
     "email-message", "online-collaboration", "ai-helper", "verify-ai", "digital-project",
     "events-handlers", "variables-score", "functions-tools", "game-design",
+    "keyboard-flight", "mouse-precision", "bilingual-input", "desktop-adventure", "program-landing",
   ]);
-  for (const id of ["circuit", "robot", "packet", "cpu", "algorithm", "structures", "safety", "factory", "files", "creative", "ai-lab", "game-maker"]) assert.equal(complete.find((entry) => entry.id === id).unlocked, true, id);
+  for (const id of ["circuit", "robot", "packet", "cpu", "algorithm", "structures", "safety", "factory", "files", "creative", "ai-lab", "game-maker", "pilot"]) assert.equal(complete.find((entry) => entry.id === id).unlocked, true, id);
 });
 
 test("unlocks sprint from three known unique courses", () => {
