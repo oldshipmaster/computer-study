@@ -72,8 +72,12 @@ test("offers rotating recommendations and reversible discovery filters", () => {
   assert.match(component, /今天想玩这几局/);
   assert.match(component, /\(\[10, 20, 30\] as const\)/);
   assert.match(component, /我有 \{minutes\} 分钟/);
-  assert.match(component, /gameArcadePlaylistLimit/);
   assert.match(component, /gameArcadePlaylistBreaks/);
+  assert.match(component, /gameArcadeSessionRemaining/);
+  assert.match(component, /本轮推荐已走完/);
+  assert.match(component, /开始新一轮/);
+  assert.match(component, /完成当前一局后离开屏幕休息/);
+  assert.match(css, /\.game-arcade-session-complete/);
   assert.match(component, /中间安排 \{playlistBreaks\} 次离屏休息/);
   assert.match(component, /aria-pressed=\{category === option\.id\}/);
   assert.match(component, /aria-pressed=\{unlockedOnly\}/);
@@ -124,7 +128,7 @@ test("lets a child collect and filter favorite games for the current visit", () 
   assert.match(component, /★ 只看收藏/);
   assert.match(component, /本次打开页面内保留/);
   assert.match(component, /收藏玩法会优先进入今日推荐/);
-  assert.match(component, /gameArcadePlaylistLimit\(sessionMinutes\), favoriteIds/);
+  assert.match(component, /remainingSessionGames, favoriteIds/);
   assert.match(css, /\.game-arcade-favorite/);
   assert.match(component, /clearFavorites/);
   assert.match(component, /清空全部收藏/);

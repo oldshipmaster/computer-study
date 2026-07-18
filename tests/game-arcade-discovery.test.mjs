@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { COURSES } from "../lib/course-data.ts";
-import { GAME_ARCADE_DEFINITIONS, buildClosestGameUnlocks, buildGameArcadeEntries, buildGameArcadeFilterSummary, buildGameArcadeRecommendations, filterGameArcadeEntries, gameArcadePlaylistBreaks, gameArcadePlaylistLimit, recordGameArcadeVisit } from "../lib/game-arcade.ts";
+import { GAME_ARCADE_DEFINITIONS, buildClosestGameUnlocks, buildGameArcadeEntries, buildGameArcadeFilterSummary, buildGameArcadeRecommendations, filterGameArcadeEntries, gameArcadePlaylistBreaks, gameArcadePlaylistLimit, gameArcadeSessionRemaining, recordGameArcadeVisit } from "../lib/game-arcade.ts";
 
 test("assigns every game to one child-readable discovery category", () => {
   const expected = new Set(["quest", "code", "systems", "life"]);
@@ -63,6 +63,16 @@ test("places one off-screen break between each pair of planned games", () => {
   assert.equal(gameArcadePlaylistBreaks(20), 1);
   assert.equal(gameArcadePlaylistBreaks(30), 2);
   assert.equal(gameArcadePlaylistBreaks(Number.NaN), 0);
+});
+
+test("turns opened games into a finite session budget", () => {
+  assert.equal(gameArcadeSessionRemaining(10, 0), 1);
+  assert.equal(gameArcadeSessionRemaining(10, 1), 0);
+  assert.equal(gameArcadeSessionRemaining(20, 1), 1);
+  assert.equal(gameArcadeSessionRemaining(30, 1), 2);
+  assert.equal(gameArcadeSessionRemaining(30, 99), 0);
+  assert.equal(gameArcadeSessionRemaining(30, Number.NaN), 3);
+  assert.equal(gameArcadeSessionRemaining(30, -2), 3);
 });
 
 test("ranks the nearest locked games by remaining lessons without mutating entries", () => {

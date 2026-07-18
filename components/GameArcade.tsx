@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { getCourse } from "@/lib/course-data";
-import { buildClosestGameUnlocks, buildGameArcadeEntries, buildGameArcadeFilterSummary, buildGameArcadeRecommendations, filterGameArcadeEntries, gameArcadePlaylistBreaks, gameArcadePlaylistLimit, recordGameArcadeVisit, type GameArcadeCategory, type GameArcadeLevel } from "@/lib/game-arcade";
+import { buildClosestGameUnlocks, buildGameArcadeEntries, buildGameArcadeFilterSummary, buildGameArcadeRecommendations, filterGameArcadeEntries, gameArcadePlaylistBreaks, gameArcadeSessionRemaining, recordGameArcadeVisit, type GameArcadeCategory, type GameArcadeLevel } from "@/lib/game-arcade";
 import "./GameArcade.css";
 
 interface GameArcadeProps {
@@ -40,7 +40,9 @@ export function GameArcade({ completedCourseIds, onStartCourse }: GameArcadeProp
   const [favoritesOnly, setFavoritesOnly] = useState(false);
   const [lastGameId, setLastGameId] = useState<string | null>(null);
   const [visitedGameIds, setVisitedGameIds] = useState<string[]>([]);
-  const recommendations = useMemo(() => buildGameArcadeRecommendations(entries, recommendationRotation, gameArcadePlaylistLimit(sessionMinutes), favoriteIds, { category, level, query, favoritesOnly, visitedIds: visitedGameIds }), [category, entries, favoriteIds, favoritesOnly, level, query, recommendationRotation, sessionMinutes, visitedGameIds]);
+  const remainingSessionGames = gameArcadeSessionRemaining(sessionMinutes, visitedGameIds.length);
+  const sessionComplete = remainingSessionGames === 0;
+  const recommendations = useMemo(() => buildGameArcadeRecommendations(entries, recommendationRotation, remainingSessionGames, favoriteIds, { category, level, query, favoritesOnly, visitedIds: visitedGameIds }), [category, entries, favoriteIds, favoritesOnly, level, query, recommendationRotation, remainingSessionGames, visitedGameIds]);
   const recommendationContext = buildGameArcadeFilterSummary({ category, level, query, favoritesOnly });
   const playlistBreaks = gameArcadePlaylistBreaks(sessionMinutes);
   const closestUnlocks = useMemo(() => buildClosestGameUnlocks(entries), [entries]);
@@ -52,6 +54,7 @@ export function GameArcade({ completedCourseIds, onStartCourse }: GameArcadeProp
   function clearFavorites() { setFavoriteIds([]); setFavoritesOnly(false); }
   function toggleFavorite(gameId: string) { setFavoriteIds((current) => current.includes(gameId) ? current.filter((id) => id !== gameId) : [...current, gameId]); }
   function openGame(gameId: string) { setLastGameId(gameId); setVisitedGameIds((current) => recordGameArcadeVisit(current, gameId)); }
+  function restartGameSession() { setVisitedGameIds([]); setLastGameId(null); setRecommendationRotation((current) => current + 1); }
 
   return (
     <section className="game-arcade" id="game-arcade" aria-labelledby="game-arcade-heading">
@@ -64,10 +67,10 @@ export function GameArcade({ completedCourseIds, onStartCourse }: GameArcadeProp
         <div className="game-arcade-picks-heading"><div><span aria-hidden="true">✦</span><h3 id="game-arcade-picks-heading">今天想玩这几局</h3></div><div className="game-arcade-pick-actions">{recommendations.length > 1 ? <button onClick={() => setRecommendationRotation((current) => current + 1)} type="button">换一组推荐 ↻</button> : null}{recommendations[0] ? <a className="game-arcade-quick-start" href={`#${recommendations[0].targetId}`} onClick={() => openGame(recommendations[0].id)}>替我选一局，马上开始 <span aria-hidden="true">→</span></a> : null}</div></div>
         {lastGame ? <a className="game-arcade-resume" href={`#${lastGame.targetId}`}><span aria-hidden="true">↪</span><div><small>继续刚才玩的</small><b>{lastGame.icon} {lastGame.title}</b><i>只在本次打开页面内记住</i></div><strong aria-hidden="true">→</strong></a> : null}
         <div className="game-arcade-time-options" aria-label="选择今天游戏时间" role="group">{([10, 20, 30] as const).map((minutes) => <button aria-pressed={sessionMinutes === minutes} key={minutes} onClick={() => setSessionMinutes(minutes)} type="button">我有 {minutes} 分钟</button>)}</div>
-        <p className="game-arcade-break-plan"><span aria-hidden="true">🌿</span>{playlistBreaks ? <>中间安排 {playlistBreaks} 次离屏休息，每局后看看远处、动动身体。</> : <>完成这一局就离开屏幕休息一下。</>}</p>
+        <p className="game-arcade-break-plan"><span aria-hidden="true">🌿</span>{sessionComplete ? <>本轮推荐已走完；完成当前一局后离开屏幕休息。</> : playlistBreaks ? <>中间安排 {playlistBreaks} 次离屏休息，每局后看看远处、动动身体。</> : <>完成这一局就离开屏幕休息一下。</>}</p>
         <p className="game-arcade-picks-filter-note">今日推荐会跟随主题、阶段、搜索和收藏筛选；还没打开过的玩法会优先。</p>
         <div className="game-arcade-pick-context" aria-label="当前推荐范围" role="group"><b>当前推荐范围</b>{recommendationContext.map((item) => <span key={item}>{item}</span>)}</div>
-        {recommendations.length ? <div className="game-arcade-recommendations" role="list">{recommendations.map((entry, index) => <a aria-label={`推荐第${index + 1}局：前往${entry.title}${visitedGameIds.includes(entry.id) ? "，本次已打开" : ""}`} className="game-arcade-recommendation" href={`#${entry.targetId}`} key={entry.id} onClick={() => openGame(entry.id)} role="listitem"><span>{index + 1}</span><b>{entry.icon} {entry.title}</b><small>{entry.duration}</small>{visitedGameIds.includes(entry.id) ? <em>本次已打开</em> : null}<i aria-hidden="true">→</i></a>)}</div> : <div className="game-arcade-picks-empty"><span aria-hidden="true">🧭</span><p>当前主题和阶段还没有已解锁玩法。</p><button onClick={clearFilters} type="button">看全部推荐</button></div>}
+        {sessionComplete ? <div className="game-arcade-session-complete" role="status"><span aria-hidden="true">🌙</span><div><b>本轮推荐已走完</b><p>你已经打开本轮安排的游戏；还没完成可用上方继续入口，完成后记得休息。</p></div><button onClick={restartGameSession} type="button">开始新一轮</button></div> : recommendations.length ? <div className="game-arcade-recommendations" role="list">{recommendations.map((entry, index) => <a aria-label={`推荐第${index + 1}局：前往${entry.title}${visitedGameIds.includes(entry.id) ? "，本次已打开" : ""}`} className="game-arcade-recommendation" href={`#${entry.targetId}`} key={entry.id} onClick={() => openGame(entry.id)} role="listitem"><span>{index + 1}</span><b>{entry.icon} {entry.title}</b><small>{entry.duration}</small>{visitedGameIds.includes(entry.id) ? <em>本次已打开</em> : null}<i aria-hidden="true">→</i></a>)}</div> : <div className="game-arcade-picks-empty"><span aria-hidden="true">🧭</span><p>当前主题和阶段还没有已解锁玩法。</p><button onClick={clearFilters} type="button">看全部推荐</button></div>}
         {favoriteIds.length ? <p>收藏玩法会优先进入今日推荐；未解锁的收藏会等学完再加入。</p> : recommendations.length === 1 ? <p>一局就是一节完整小课；学完更多课程后，可选路线会一起长大。</p> : recommendations.length > 1 ? <p>按每局约 8–10 分钟安排，只从已解锁玩法中轮换，不会记录选择。</p> : null}
       </section>
 
