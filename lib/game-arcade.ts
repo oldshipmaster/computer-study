@@ -39,6 +39,7 @@ export const GAME_ARCADE_DEFINITIONS: GameArcadeDefinition[] = [
   { id: "factory", targetId: "virtual-computer-factory", title: "虚拟电脑装配厂", icon: "🦾", mechanic: "连接输入、CPU、内存、存储与输出", duration: "8–10 分钟", category: "systems", gate: { type: "exact", courseIds: ["input-process-output", "cpu-memory-storage", "bits-and-data", "hardware-software", "troubleshoot-machine"] } },
   { id: "files", targetId: "file-forest-rescue", title: "文件森林救援队", icon: "📁", mechanic: "路径、命名、移动、复制、分类与恢复", duration: "8–10 分钟", category: "life", gate: { type: "exact", courseIds: ["file-home", "name-your-work", "move-and-copy", "file-types", "learning-backpack"] } },
   { id: "creative", targetId: "creative-studio-challenge", title: "创作工坊项目赛", icon: "🎨", mechanic: "像素画、文档、幻灯片、版权与表格", duration: "8–10 分钟", category: "life", gate: { type: "exact", courseIds: ["pixel-art", "document-design", "slide-story", "media-copyright", "data-table"] } },
+  { id: "ai-lab", targetId: "ai-verification-lab", title: "AI 核验研究站", icon: "🔬", mechanic: "邮件、协作、AI 提问、核验与项目交付", duration: "8–10 分钟", category: "life", gate: { type: "exact", courseIds: ["email-message", "online-collaboration", "ai-helper", "verify-ai", "digital-project"] } },
 ];
 
 export function buildGameArcadeEntries(completedCourseIds: readonly string[]): GameArcadeEntry[] {
