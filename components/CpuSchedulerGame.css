@@ -1,0 +1,76 @@
+.cpu-scheduler-shell { width: min(100% - 48px, 1180px); margin: 48px auto; scroll-margin-top: 20px; }
+.cpu-scheduler-shell h2, .cpu-scheduler-shell p { margin: 0; }
+.cpu-scheduler-locked, .cpu-scheduler-menu, .cpu-scheduler-complete { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 22px; padding: clamp(20px, 4vw, 34px); border: 3px solid #332f52; border-radius: 25px; background: #f1efff; box-shadow: 8px 9px 0 rgb(46 40 80 / 13%); }
+.cpu-scheduler-locked > div, .cpu-scheduler-menu > div, .cpu-scheduler-complete > div { display: grid; gap: 7px; }
+.cpu-scheduler-locked > div > p:not(.section-kicker), .cpu-scheduler-menu > div > p:not(.section-kicker) { color: #5d587b; }
+.cpu-scheduler-locked strong { color: #5c4fa1; }
+.cpu-scheduler-badge { display: grid; width: 72px; height: 68px; place-items: center; border: 3px solid #332f52; border-radius: 18px; background: #ffe36e; font-family: monospace; font-size: 1.3rem; font-weight: 950; }
+.cpu-scheduler-locked > button, .cpu-scheduler-menu > button, .cpu-scheduler-complete > button { min-height: 44px; padding: 10px 15px; border: 2px solid #332f52; border-radius: 12px; background: #ffe36e; box-shadow: 4px 4px 0 #332f52; cursor: pointer; font-weight: 900; }
+.cpu-scheduler-game { padding: clamp(18px, 4vw, 36px); border: 4px solid #332f52; border-radius: 28px; background: #292644; box-shadow: 9px 11px 0 rgb(46 40 80 / 14%); color: #fcfbff; }
+.cpu-scheduler-heading { display: grid; gap: 5px; margin-bottom: 18px; }
+.cpu-scheduler-heading p { color: #ffe36e; font-size: .72rem; font-weight: 900; }
+.cpu-scheduler-heading h2 { font-size: clamp(1.55rem, 3.6vw, 2.55rem); line-height: 1.12; }
+.cpu-scheduler-heading > span { color: #d7d2ef; }
+.cpu-scheduler-heading progress { width: 100%; height: 10px; margin-top: 8px; accent-color: #b9a8ff; }
+.cpu-scheduler-layout { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px; color: #332f52; }
+.cpu-waiting-panel, .cpu-memory-panel, .cpu-ready-panel, .cpu-core-panel, .cpu-history-panel { display: grid; align-content: start; gap: 10px; padding: 15px; border: 2px solid #8982b1; border-radius: 16px; background: #fbfaff; }
+.cpu-scheduler-layout section > header, .cpu-history-panel > header { display: flex; align-items: center; justify-content: space-between; gap: 9px; }
+.cpu-scheduler-layout h3, .cpu-history-panel h3 { margin: 0; }
+.cpu-scheduler-layout header span, .cpu-history-panel header span { color: #645e83; font-size: .7rem; font-weight: 800; }
+.cpu-task-grid { display: grid; gap: 7px; }
+.cpu-task-card { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 9px; padding: 8px; border: 2px solid #aaa4c7; border-radius: 10px; background: white; }
+.cpu-task-card > span { display: grid; width: 38px; height: 38px; place-items: center; border-radius: 9px; background: #ece9ff; font-weight: 900; }
+.cpu-task-card > div { display: grid; gap: 2px; }
+.cpu-task-card small { color: #645e83; font-size: .62rem; }
+.cpu-task-card b { color: #5c4fa1; font-size: .65rem; }
+.cpu-task-card.is-ready { border-color: #7363c8; background: #f4f1ff; }
+.cpu-task-card.is-complete { border-color: #49806d; background: #e5f8ef; }
+.cpu-scheduler-action { min-height: 44px; padding: 7px 10px; border: 2px solid #5d5685; border-radius: 9px; background: #eeeaff; color: #332f52; cursor: pointer; font-weight: 850; }
+.cpu-scheduler-action:disabled { cursor: default; opacity: .42; }
+.cpu-memory-slots { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.cpu-memory-slots > span { display: grid; min-height: 58px; place-items: center; gap: 2px; padding: 4px; border: 2px dashed #aaa4c7; border-radius: 8px; background: white; text-align: center; }
+.cpu-memory-slots > span.is-used { border: 2px solid #7363c8; background: #e9e4ff; }
+.cpu-memory-slots b { font-size: 1.05rem; }
+.cpu-memory-slots small { font-size: .55rem; }
+.cpu-memory-panel > p { color: #645e83; font-size: .68rem; }
+.cpu-ready-panel ol { display: flex; gap: 7px; margin: 0; padding: 5px 2px 8px; overflow-x: auto; list-style: none; }
+.cpu-ready-panel li { position: relative; display: grid; flex: 0 0 125px; min-height: 92px; align-content: center; justify-items: center; gap: 3px; padding: 8px; border: 2px solid #aaa4c7; border-radius: 10px; background: white; text-align: center; }
+.cpu-ready-panel li > b { position: absolute; top: 4px; left: 5px; color: #645e83; font-size: .55rem; }
+.cpu-ready-panel li > span { font-size: 1.2rem; }
+.cpu-ready-panel li > div { display: grid; gap: 2px; }
+.cpu-ready-panel li small { color: #645e83; }
+.cpu-ready-panel li[aria-current="step"] { border: 3px solid #c18400; background: #fff3b8; animation: cpu-front-pulse .7s ease-in-out infinite alternate; }
+.cpu-ready-empty { padding: 18px 10px; border: 2px dashed #aaa4c7; border-radius: 10px; color: #645e83; text-align: center; }
+.cpu-core { display: grid; min-height: 105px; place-items: center; gap: 5px; border: 4px double #5d5685; border-radius: 18px; background: #e9e4ff; text-align: center; }
+.cpu-core > span { display: grid; width: 50px; height: 50px; place-items: center; border: 2px solid #332f52; border-radius: 12px; background: #b9a8ff; font-family: monospace; font-weight: 950; }
+.cpu-core.has-run > span { background: #ffe36e; }
+.cpu-run-slice { width: 100%; background: #ffe36e; box-shadow: 3px 3px 0 #332f52; }
+.cpu-history-panel { margin-top: 13px; color: #332f52; }
+.cpu-history-panel > p { color: #645e83; }
+.cpu-history-panel ol { display: flex; gap: 6px; margin: 0; padding: 0 0 4px; overflow-x: auto; list-style: none; }
+.cpu-history-panel li { display: grid; flex: 0 0 165px; gap: 2px; padding: 7px; border: 1px solid #aaa4c7; border-radius: 8px; background: white; }
+.cpu-history-panel li b { color: #5c4fa1; font-size: .62rem; }
+.cpu-history-panel li strong { color: #645e83; font-size: .62rem; }
+.cpu-scheduler-feedback { min-height: 55px; margin-top: 12px !important; padding: 10px 12px; border-left: 5px solid #b9a8ff; border-radius: 8px; background: rgb(255 255 255 / 9%); }
+.cpu-scheduler-feedback.is-solved { border-left-color: #ffe36e; background: rgb(255 227 110 / 14%); }
+.cpu-next-shift { display: block; margin: 12px 0 0 auto; background: #ffe36e; box-shadow: 3px 3px 0 #151329; }
+.cpu-scheduler-complete > span { font-size: 3.4rem; }
+.cpu-scheduler-complete > div > p { color: #5c4fa1; font-size: .72rem; font-weight: 900; }
+@keyframes cpu-front-pulse { to { transform: translateY(-3px); } }
+
+@media (max-width: 760px) {
+  .cpu-scheduler-shell { width: min(100% - 32px, 1180px); }
+  .cpu-scheduler-locked, .cpu-scheduler-menu, .cpu-scheduler-complete { grid-template-columns: 1fr; align-items: start; }
+  .cpu-scheduler-layout { grid-template-columns: 1fr; }
+  .cpu-task-card { grid-template-columns: auto minmax(0, 1fr); }
+  .cpu-task-card > button { grid-column: 1 / -1; width: 100%; }
+  .cpu-next-shift { width: 100%; }
+}
+
+.bit-island-app--reduced-motion .cpu-ready-panel li[aria-current="step"] { animation: none; }
+@media (prefers-reduced-motion: reduce) { .cpu-ready-panel li[aria-current="step"] { animation: none; } }
+@media (forced-colors: active) {
+  .cpu-ready-panel li[aria-current="step"] { border: 4px solid Highlight; }
+  .cpu-memory-slots > span.is-used { border: 3px solid CanvasText; }
+  .cpu-task-card.is-complete { border: 4px double Highlight; }
+}

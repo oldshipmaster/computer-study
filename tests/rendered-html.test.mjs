@@ -142,7 +142,7 @@ test("server-renders the complete curriculum map", async () => {
   assert.match(html, /回到顶部与快捷航线/);
   assert.match(html, /已完成.*0.*\/.*65.*课/);
   assert.match(html, /aria-label="学习区域快捷航线"/);
-  for (const target of ["adventure-missions", "knowledge-sprint", "island-boss-arena", "logic-circuit-lab", "robot-code-expedition", "packet-escort", "learning-plan", "adventure-map", "foundation-roadmap", "foundation-practice", "foundation-capstone", "knowledge-atlas", "computer-dictionary", "term-match", "review-station"]) {
+  for (const target of ["adventure-missions", "knowledge-sprint", "island-boss-arena", "logic-circuit-lab", "robot-code-expedition", "packet-escort", "cpu-scheduler-game", "learning-plan", "adventure-map", "foundation-roadmap", "foundation-practice", "foundation-capstone", "knowledge-atlas", "computer-dictionary", "term-match", "review-station"]) {
     assert.match(html, new RegExp(`href="#${target}"`));
     assert.match(html, new RegExp(`id="${target}"`));
   }
@@ -163,6 +163,8 @@ test("server-renders the complete curriculum map", async () => {
   assert.match(html, /正在装载机器人代码远征/);
   assert.match(html, /网络数据包护航/);
   assert.match(html, /正在连接网络数据包护航/);
+  assert.match(html, /CPU 时间片调度台/);
+  assert.match(html, /正在启动 CPU 时间片调度台/);
   assert.match(html, /先完成任意一座岛的第一课/);
   assert.equal((html.match(/review-progress/g) ?? []).length, 1);
 });
