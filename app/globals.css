@@ -3849,6 +3849,8 @@ html.bit-island-document--reduced-motion *::after,
 .sprint-progress progress { width: 100%; height: 10px; accent-color: #79d9b5; }
 .sprint-question-panel { display: grid; min-width: 0; align-content: start; gap: 17px; }
 .sprint-question-kind { width: max-content; padding: 4px 9px; border-radius: 999px; background: #315a73; color: #dff3ff; font-size: .68rem; font-weight: 850; }
+.sprint-keyboard-hint { margin: -8px 0 0; color: #c6dce5; font-size: .72rem; font-weight: 750; }
+.sprint-keyboard-hint kbd { padding: 2px 6px; border: 1px solid #88aabc; border-radius: 5px; background: #183c54; color: #fff; font: inherit; font-weight: 900; }
 .sprint-answers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 11px; }
 .sprint-answer {
   display: grid;
@@ -3865,7 +3867,7 @@ html.bit-island-document--reduced-motion *::after,
   font-weight: 800;
   text-align: left;
 }
-.sprint-answer > span { display: grid; width: 28px; height: 28px; place-items: center; border-radius: 50%; background: #dff3ff; font-size: .72rem; }
+.sprint-answer > kbd { display: grid; width: 28px; height: 28px; place-items: center; border: 0; border-radius: 50%; background: #dff3ff; font: inherit; font-size: .72rem; font-weight: 900; }
 .sprint-answer:hover:not(:disabled) { border-color: #ffd85a; background: #fff7cf; }
 .sprint-answer:disabled { cursor: default; opacity: .72; }
 .sprint-answer--selected { border-color: #ffd85a; background: #fff2b8; opacity: 1 !important; box-shadow: 0 0 0 3px rgb(255 216 90 / 25%); }

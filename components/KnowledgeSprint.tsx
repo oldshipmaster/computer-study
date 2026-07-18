@@ -1,12 +1,21 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useMemo, useRef, useState, type MouseEvent } from "react";
+import {
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+  type KeyboardEvent as ReactKeyboardEvent,
+  type MouseEvent,
+} from "react";
 import { getCourse, getMapMission } from "@/lib/course-data";
 import {
   advanceKnowledgeSprint,
   answerKnowledgeSprint,
   buildKnowledgeSprintDeck,
   createKnowledgeSprintState,
+  knowledgeSprintOptionIndex,
 } from "@/lib/knowledge-sprint";
 
 interface KnowledgeSprintProps {
@@ -63,9 +72,29 @@ export function KnowledgeSprint({
     window.setTimeout(() => questionHeadingRef.current?.focus(), 0);
   }
 
-  function answerQuestion(event: MouseEvent<HTMLButtonElement>, optionIndex: number) {
+  function chooseOption(optionIndex: number, activationDetail: number) {
+    if (activationDetail > 1) return;
     setSelectedOption(optionIndex);
-    setState((current) => answerKnowledgeSprint(current, optionIndex, deck, event.detail));
+    setState((current) => answerKnowledgeSprint(current, optionIndex, deck, activationDetail));
+  }
+
+  function answerQuestion(event: MouseEvent<HTMLButtonElement>, optionIndex: number) {
+    chooseOption(optionIndex, event.detail);
+  }
+
+  function chooseSprintAnswerByKeyboard(event: ReactKeyboardEvent<HTMLElement>) {
+    if (
+      state.phase !== "answering"
+      || event.repeat
+      || event.metaKey
+      || event.ctrlKey
+      || event.altKey
+      || event.nativeEvent.isComposing
+    ) return;
+    const optionIndex = knowledgeSprintOptionIndex(event.key);
+    if (optionIndex === null) return;
+    event.preventDefault();
+    chooseOption(optionIndex, 0);
   }
 
   function advanceQuestion(event: MouseEvent<HTMLButtonElement>) {
@@ -138,7 +167,7 @@ export function KnowledgeSprint({
   }
 
   return (
-    <section className="knowledge-sprint knowledge-sprint--playing" id="knowledge-sprint" aria-labelledby="sprint-question-heading">
+    <section className="knowledge-sprint knowledge-sprint--playing" id="knowledge-sprint" aria-labelledby="sprint-question-heading" onKeyDown={chooseSprintAnswerByKeyboard}>
       <aside className="sprint-console" aria-label="闪击赛状态">
         <p className="sprint-kicker">知识闪击进行中</p>
         <div className="sprint-score"><span>分数</span><strong>{state.score}</strong></div>
@@ -152,16 +181,18 @@ export function KnowledgeSprint({
       <div className="sprint-question-panel">
         <span className="sprint-question-kind">{question.kind === "concept" ? "概念识别" : "情境判断"}</span>
         <h2 id="sprint-question-heading" ref={questionHeadingRef} tabIndex={-1}>{question.prompt}</h2>
+        <p className="sprint-keyboard-hint">按 <kbd>A</kbd>、<kbd>B</kbd>、<kbd>C</kbd> 也能作答</p>
         <div className="sprint-answers" role="group" aria-label="选择一个答案">
           {question.options.map((option, optionIndex) => (
             <button
               className={`sprint-answer ${selectedOption === optionIndex ? "sprint-answer--selected" : ""}`}
               disabled={state.phase !== "answering"}
+              aria-keyshortcuts={String.fromCharCode(65 + optionIndex)}
               key={option}
               onClick={(event) => answerQuestion(event, optionIndex)}
               type="button"
             >
-              <span aria-hidden="true">{String.fromCharCode(65 + optionIndex)}</span>{option}
+              <kbd aria-hidden="true">{String.fromCharCode(65 + optionIndex)}</kbd>{option}
             </button>
           ))}
         </div>

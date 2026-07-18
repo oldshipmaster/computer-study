@@ -21,6 +21,12 @@ test("offers a bounded child-friendly sprint flow", () => {
   assert.match(component, /onRecordSprint\(state\.score\)/);
   assert.match(component, /回到对应课程加练/);
   assert.match(component, /onStartCourse\(state\.missedCourseIds\[0\]\)/);
+  assert.match(component, /onKeyDown=\{chooseSprintAnswerByKeyboard\}/);
+  assert.match(component, /event\.repeat/);
+  assert.match(component, /event\.(?:metaKey|ctrlKey|altKey)/);
+  assert.match(component, /event\.nativeEvent\.isComposing/);
+  assert.match(component, /按\s*<kbd>A<\/kbd>、<kbd>B<\/kbd>、<kbd>C<\/kbd>\s*也能作答/);
+  assert.match(component, /aria-keyshortcuts=/);
 });
 
 test("integrates the sprint between missions and the learning plan", () => {
@@ -42,4 +48,6 @@ test("keeps sprint controls touch-sized and accessible in alternate modes", () =
   assert.match(css, /@media \(max-width: 680px\)[\s\S]*?\.sprint-answers[\s\S]*?grid-template-columns:\s*1fr/);
   assert.match(css, /\.bit-island-app--reduced-motion[\s\S]*?\.sprint-combo[\s\S]*?animation:\s*none/);
   assert.match(css, /@media \(forced-colors: active\)[\s\S]*?\.sprint-answer--selected[\s\S]*?\.sprint-shield/);
+  assert.match(css, /\.sprint-answer\s*>\s*kbd/);
+  assert.match(css, /\.sprint-keyboard-hint/);
 });

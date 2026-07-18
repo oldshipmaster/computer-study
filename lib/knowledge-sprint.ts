@@ -39,6 +39,11 @@ function rotate<T>(items: readonly T[], rotation: number) {
   return [...items.slice(offset), ...items.slice(0, offset)];
 }
 
+export function knowledgeSprintOptionIndex(key: string): number | null {
+  const optionIndex = ["a", "b", "c"].indexOf(key.toLocaleLowerCase());
+  return optionIndex >= 0 ? optionIndex : null;
+}
+
 function conceptQuestions(completed: ReadonlySet<string>): KnowledgeSprintQuestion[] {
   return TERM_MATCH_QUESTIONS
     .filter((question) => completed.has(question.courseId))

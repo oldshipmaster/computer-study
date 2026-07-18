@@ -6,6 +6,7 @@ import {
   answerKnowledgeSprint,
   buildKnowledgeSprintDeck,
   createKnowledgeSprintState,
+  knowledgeSprintOptionIndex,
 } from "../lib/knowledge-sprint.ts";
 
 const MIXED_COMPLETIONS = [
@@ -15,6 +16,18 @@ const MIXED_COMPLETIONS = [
   "learning-backpack",
   "instruction-order",
 ];
+
+test("maps only A, B, and C keys to sprint answer choices", () => {
+  assert.equal(knowledgeSprintOptionIndex("a"), 0);
+  assert.equal(knowledgeSprintOptionIndex("A"), 0);
+  assert.equal(knowledgeSprintOptionIndex("b"), 1);
+  assert.equal(knowledgeSprintOptionIndex("B"), 1);
+  assert.equal(knowledgeSprintOptionIndex("c"), 2);
+  assert.equal(knowledgeSprintOptionIndex("C"), 2);
+  assert.equal(knowledgeSprintOptionIndex("1"), null);
+  assert.equal(knowledgeSprintOptionIndex("ArrowLeft"), null);
+  assert.equal(knowledgeSprintOptionIndex(""), null);
+});
 
 test("builds an alternating deterministic deck without repeats", () => {
   const first = buildKnowledgeSprintDeck(MIXED_COMPLETIONS, 0);
