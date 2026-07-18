@@ -12,7 +12,10 @@ test("defines twenty unique game destinations with child-readable metadata", () 
     assert.ok(game.title.length >= 4);
     assert.ok(game.mechanic.length >= 4);
     assert.match(game.duration, /分钟|随时/);
+    assert.equal(typeof game.keyboardFriendly, "boolean");
   }
+  assert.equal(GAME_ARCADE_DEFINITIONS.filter((game) => game.keyboardFriendly).length, 19);
+  assert.equal(GAME_ARCADE_DEFINITIONS.find((game) => game.id === "missions").keyboardFriendly, false);
 });
 
 test("backs every arcade jump link with a rendered component destination", () => {

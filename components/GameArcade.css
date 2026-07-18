@@ -60,7 +60,7 @@
 .game-arcade-filter-count { min-width: 24px; padding: 2px 6px; border-radius: 999px; background: #eaf1f3; color: #17384d; font-size: .62rem; line-height: 1.2; text-align: center; }
 .game-arcade-filter[aria-pressed="true"] .game-arcade-filter-count { background: #fff; color: #17384d; }
 .game-arcade-filter[aria-pressed="true"] { border-color: #17384d; background: #17384d; color: white; }
-.game-arcade-personal-filters { display:flex; flex-wrap:wrap; gap:7px; } .game-arcade-filter--unlocked { flex: 0 0 auto; border-color: #356b5a; } .game-arcade-filter--favorites { border-color:#80520d; } .game-arcade-filter--unvisited { border-color:#315c9a; }
+.game-arcade-personal-filters { display:flex; flex-wrap:wrap; gap:7px; } .game-arcade-filter--unlocked { flex: 0 0 auto; border-color: #356b5a; } .game-arcade-filter--favorites { border-color:#80520d; } .game-arcade-filter--unvisited { border-color:#315c9a; } .game-arcade-filter--keyboard { border-color:#513977; }
 .game-arcade-filter--level { border-style: dashed; }
 .game-arcade-results-row { display:flex; align-items:center; gap:8px; margin-bottom:10px; } .game-arcade-results { display:flex; min-height: 24px; flex:1; align-items:center; gap:7px; margin:0; color: #48677a; font-size: .67rem; font-weight: 800; } .game-arcade-results small { margin-left:auto; font-size:.58rem; font-weight:650; } .game-arcade-results-actions { display:flex; flex-wrap:wrap; gap:6px; } .game-arcade-clear-favorites, .game-arcade-clear-visits { min-height:44px; flex:0 0 auto; padding:7px 10px; border:2px solid #80520d; border-radius:999px; background:#fff8dc; color:#6e470d; cursor:pointer; font:inherit; font-size:.62rem; font-weight:900; } .game-arcade-clear-visits { border-color:#356b5a; background:#edfaf3; color:#285f47; }
 .game-arcade-updated-picks { display:flex; width:fit-content; min-height:44px; align-items:center; gap:6px; margin:0 0 10px auto; padding:7px 11px; border:2px solid #315c9a; border-radius:999px; background:#e5edf8; color:#234b80; font-size:.66rem; font-weight:900; text-decoration:none; }
@@ -80,6 +80,7 @@
 .game-arcade-level--adventure { background: #fff0c7; color: #80520d; }
 .game-arcade-level--mastery { background: #e7ddf5; color: #513977; }
 .game-arcade-visited { width:fit-content; padding:2px 6px; border-radius:999px; background:#e4f4e7; color:#285f47; font-size:.58rem; font-weight:900; }
+.game-arcade-keyboard { width:fit-content; padding:2px 6px; border-radius:999px; background:#eee7f8; color:#513977; font-size:.58rem; font-weight:900; }
 .is-unlocked .game-arcade-state { background: #cceedd; color: #245c48; }
 .game-arcade-progress { display: grid; grid-column: 1 / -1; gap: 4px; }
 .game-arcade-progress span { color: #48677a; font-size: .62rem; font-weight: 800; }
@@ -107,7 +108,7 @@
   .game-arcade-session-complete { grid-template-columns:auto minmax(0,1fr); } .game-arcade-session-complete button { grid-column:1 / -1; }
   .game-arcade-search > div { align-items: stretch; flex-direction: column; }
   .game-arcade-session-progress { grid-template-columns:1fr; width:100%; } .game-arcade-session-progress progress { width:100%; }
-  .game-arcade-personal-filters, .game-arcade-filter--unlocked, .game-arcade-filter--favorites, .game-arcade-filter--unvisited { align-self: stretch; }
+  .game-arcade-personal-filters, .game-arcade-filter--unlocked, .game-arcade-filter--favorites, .game-arcade-filter--unvisited, .game-arcade-filter--keyboard { align-self: stretch; }
   .game-arcade-personal-filters > button { flex:1; }
   .game-arcade-results { align-items:flex-start; flex-direction:column; }
   .game-arcade-results small { margin-left:0; }

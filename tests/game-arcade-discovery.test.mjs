@@ -56,6 +56,16 @@ test("searches game titles and mechanics with combinable local filters", () => {
   assert.equal(filterGameArcadeEntries(entries, { query: "不存在的玩法词" }).length, 0);
 });
 
+test("finds keyboard-friendly games across filters and recommendations", () => {
+  const entries = buildGameArcadeEntries(COURSES.map((course) => course.id));
+  const keyboardGames = filterGameArcadeEntries(entries, { keyboardOnly: true });
+  assert.equal(keyboardGames.length, 19);
+  assert.ok(keyboardGames.every((game) => game.keyboardFriendly));
+  assert.ok(buildGameArcadeRecommendations(entries, 0, 3, [], { keyboardOnly: true }).every((game) => game.keyboardFriendly));
+  assert.deepEqual(buildGameArcadeFilterSummary({ keyboardOnly: true }), ["只看键盘玩法"]);
+  assert.equal(buildGameArcadeFacetCounts(entries, { keyboardOnly: true }).categories.all, 19);
+});
+
 test("previews live category and level result counts without trapping a child in an empty facet", () => {
   const entries = buildGameArcadeEntries(COURSES.map((course) => course.id));
   const all = buildGameArcadeFacetCounts(entries, {});

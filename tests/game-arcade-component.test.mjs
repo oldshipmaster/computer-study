@@ -87,6 +87,9 @@ test("offers rotating recommendations and reversible discovery filters", () => {
   assert.match(component, /aria-pressed=\{unlockedOnly\}/);
   assert.match(component, /只看已解锁/);
   assert.match(component, /只看没打开/);
+  assert.match(component, /⌨ 只看键盘玩法/);
+  assert.match(component, /键鼠都能玩/);
+  assert.match(component, /keyboardOnly/);
   assert.match(component, /unvisitedOnly/);
   assert.match(component, /visitedIds: visitedGameIds/);
   assert.match(css, /\.game-arcade-filter--unvisited/);
@@ -99,8 +102,8 @@ test("offers rotating recommendations and reversible discovery filters", () => {
   assert.match(component, /filterCounts\.levels\[option\.id\]/);
   assert.match(component, /种玩法/);
   assert.match(css, /\.game-arcade-filter-count/);
-  assert.match(component, /favoriteIds, \{ category, level, query, favoritesOnly, visitedIds: visitedGameIds \}/);
-  assert.match(component, /今日推荐会跟随主题、阶段、搜索和收藏筛选/);
+  assert.match(component, /favoriteIds, \{ category, level, query, favoritesOnly, visitedIds: visitedGameIds, keyboardOnly \}/);
+  assert.match(component, /今日推荐会跟随主题、阶段、搜索、收藏和键盘筛选/);
   assert.match(component, /buildGameArcadeFilterSummary/);
   assert.match(component, /当前推荐范围/);
   assert.match(component, /game-arcade-pick-context/);

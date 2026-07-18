@@ -18,6 +18,7 @@ export interface GameArcadeDefinition {
   duration: string;
   category: GameArcadeCategory;
   level: GameArcadeLevel;
+  keyboardFriendly: boolean;
   gate: GameGate;
 }
 
@@ -27,7 +28,7 @@ export interface GameArcadeEntry extends GameArcadeDefinition {
   nextCourseId: string | null;
 }
 
-export const GAME_ARCADE_DEFINITIONS: GameArcadeDefinition[] = [
+const GAME_ARCADE_BLUEPRINTS: Array<Omit<GameArcadeDefinition, "keyboardFriendly">> = [
   { id: "missions", targetId: "adventure-missions", title: "探险任务牌", icon: "🧭", mechanic: "选新课、重玩或修复薄弱点", duration: "随时选择", category: "quest", level: "starter", gate: { type: "always" } },
   { id: "sprint", targetId: "knowledge-sprint", title: "比特知识闪击赛", icon: "⚡", mechanic: "五题连击、护盾与错题回课", duration: "2–4 分钟", category: "quest", level: "starter", gate: { type: "course-count", count: 3 } },
   { id: "boss", targetId: "island-boss-arena", title: "十三岛 Boss 战", icon: "🐙", mechanic: "找证据、排行动、讲清原理", duration: "6–8 分钟", category: "quest", level: "adventure", gate: { type: "island-complete" } },
@@ -49,6 +50,11 @@ export const GAME_ARCADE_DEFINITIONS: GameArcadeDefinition[] = [
   { id: "systems-depth", targetId: "systems-depth-relay", title: "系统深海总控台", icon: "🔱", mechanic: "指令、缓存、分层、路由与可靠传输", duration: "8–10 分钟", category: "systems", level: "mastery", gate: { type: "exact", courseIds: ["instruction-cycle", "cache-station", "network-layers", "routing-maze", "reliable-transfer"] } },
   { id: "championship", targetId: "island-championship-relay", title: "十三岛冠军联赛", icon: "🏆", mechanic: "十三回合跨岛证据决策终局赛", duration: "8–10 分钟", category: "quest", level: "mastery", gate: { type: "exact", courseIds: COURSES.map((course) => course.id) } },
 ];
+
+export const GAME_ARCADE_DEFINITIONS: GameArcadeDefinition[] = GAME_ARCADE_BLUEPRINTS.map((definition) => ({
+  ...definition,
+  keyboardFriendly: definition.id !== "missions",
+}));
 
 export function buildGameArcadeEntries(completedCourseIds: readonly string[]): GameArcadeEntry[] {
   const knownIds = new Set(COURSES.map((course) => course.id));
@@ -82,22 +88,23 @@ const DISCOVERY_CATEGORY_ORDER: GameArcadeCategory[] = ["quest", "code", "system
 const DISCOVERY_CATEGORY_LABELS: Record<GameArcadeCategory, string> = { quest: "综合挑战", code: "编程与逻辑", systems: "电脑与网络", life: "安全与文件" };
 const DISCOVERY_LEVEL_LABELS: Record<GameArcadeLevel, string> = { starter: "入门探险", adventure: "进阶挑战", mastery: "大师联赛" };
 
-export function buildGameArcadeFilterSummary(filters: { category?: GameArcadeCategory | "all"; level?: GameArcadeLevel | "all"; query?: string; favoritesOnly?: boolean }): string[] {
+export function buildGameArcadeFilterSummary(filters: { category?: GameArcadeCategory | "all"; level?: GameArcadeLevel | "all"; query?: string; favoritesOnly?: boolean; keyboardOnly?: boolean }): string[] {
   const summary: string[] = [];
   if (filters.category && filters.category !== "all") summary.push(DISCOVERY_CATEGORY_LABELS[filters.category]);
   if (filters.level && filters.level !== "all") summary.push(DISCOVERY_LEVEL_LABELS[filters.level]);
   const query = filters.query?.trim();
   if (query) summary.push(`搜索：${query}`);
   if (filters.favoritesOnly) summary.push("只看收藏");
+  if (filters.keyboardOnly) summary.push("只看键盘玩法");
   return summary.length ? summary : ["全部已解锁玩法"];
 }
 
-export function buildGameArcadeRecommendations(entries: readonly GameArcadeEntry[], rotation: number, limit = 3, preferredIds: readonly string[] = [], filters: { category?: GameArcadeCategory | "all"; level?: GameArcadeLevel | "all"; query?: string; favoritesOnly?: boolean; visitedIds?: readonly string[] } = {}): GameArcadeEntry[] {
+export function buildGameArcadeRecommendations(entries: readonly GameArcadeEntry[], rotation: number, limit = 3, preferredIds: readonly string[] = [], filters: { category?: GameArcadeCategory | "all"; level?: GameArcadeLevel | "all"; query?: string; favoritesOnly?: boolean; keyboardOnly?: boolean; visitedIds?: readonly string[] } = {}): GameArcadeEntry[] {
   const safeRotation = Number.isFinite(rotation) ? Math.max(0, Math.floor(rotation)) : 0;
   const safeLimit = Number.isFinite(limit) ? Math.max(0, Math.floor(limit)) : 0;
   const preferredSet = new Set(preferredIds);
   const query = filters.query?.trim().toLocaleLowerCase() ?? "";
-  const unlocked = entries.filter((entry) => entry.unlocked && (!filters.category || filters.category === "all" || entry.category === filters.category) && (!filters.level || filters.level === "all" || entry.level === filters.level) && (!query || `${entry.title} ${entry.mechanic}`.toLocaleLowerCase().includes(query)) && (!filters.favoritesOnly || preferredSet.has(entry.id)));
+  const unlocked = entries.filter((entry) => entry.unlocked && (!filters.category || filters.category === "all" || entry.category === filters.category) && (!filters.level || filters.level === "all" || entry.level === filters.level) && (!query || `${entry.title} ${entry.mechanic}`.toLocaleLowerCase().includes(query)) && (!filters.favoritesOnly || preferredSet.has(entry.id)) && (!filters.keyboardOnly || entry.keyboardFriendly));
   const target = Math.min(safeLimit, unlocked.length);
   if (target === 0) return [];
   const categoryOffset = safeRotation % DISCOVERY_CATEGORY_ORDER.length;
@@ -134,7 +141,7 @@ export function buildGameArcadeRecommendations(entries: readonly GameArcadeEntry
   return prioritized;
 }
 
-export function filterGameArcadeEntries(entries: readonly GameArcadeEntry[], filters: { query?: string; category?: GameArcadeCategory | "all"; level?: GameArcadeLevel | "all"; unlockedOnly?: boolean; favoritesOnly?: boolean; favoriteIds?: readonly string[]; unvisitedOnly?: boolean; visitedIds?: readonly string[] }): GameArcadeEntry[] {
+export function filterGameArcadeEntries(entries: readonly GameArcadeEntry[], filters: { query?: string; category?: GameArcadeCategory | "all"; level?: GameArcadeLevel | "all"; unlockedOnly?: boolean; favoritesOnly?: boolean; favoriteIds?: readonly string[]; unvisitedOnly?: boolean; visitedIds?: readonly string[]; keyboardOnly?: boolean }): GameArcadeEntry[] {
   const query = filters.query?.trim().toLocaleLowerCase() ?? "";
   const favorites = new Set(filters.favoriteIds ?? []);
   const visited = new Set(filters.visitedIds ?? []);
@@ -144,6 +151,7 @@ export function filterGameArcadeEntries(entries: readonly GameArcadeEntry[], fil
     if (filters.unlockedOnly && !entry.unlocked) return false;
     if (filters.favoritesOnly && !favorites.has(entry.id)) return false;
     if (filters.unvisitedOnly && visited.has(entry.id)) return false;
+    if (filters.keyboardOnly && !entry.keyboardFriendly) return false;
     if (query && !`${entry.title} ${entry.mechanic}`.toLocaleLowerCase().includes(query)) return false;
     return true;
   });
@@ -162,6 +170,7 @@ export function buildGameArcadeFacetCounts(entries: readonly GameArcadeEntry[], 
     favoriteIds: filters.favoriteIds,
     unvisitedOnly: filters.unvisitedOnly,
     visitedIds: filters.visitedIds,
+    keyboardOnly: filters.keyboardOnly,
   };
   const categories = Object.fromEntries(
     (["all", "quest", "code", "systems", "life"] as const).map((candidate) => [
