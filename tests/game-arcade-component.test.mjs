@@ -113,3 +113,15 @@ test("lets a child collect and filter favorite games for the current visit", () 
   assert.match(component, /gameArcadePlaylistLimit\(sessionMinutes\), favoriteIds/);
   assert.match(css, /\.game-arcade-favorite/);
 });
+
+test("remembers the last opened game and offers a one-click session resume", () => {
+  const component = source("components/GameArcade.tsx");
+  const css = source("components/GameArcade.css");
+  assert.match(component, /lastGameId/);
+  assert.match(component, /setLastGameId\(entry\.id\)/);
+  assert.match(component, /继续刚才玩的/);
+  assert.match(component, /href=\{`#\$\{lastGame\.targetId\}`\}/);
+  assert.match(component, /只在本次打开页面内记住/);
+  assert.match(css, /\.game-arcade-resume/);
+  assert.match(css, /\.game-arcade-resume[^{]*\{[^}]*min-height:\s*44px/);
+});
