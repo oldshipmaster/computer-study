@@ -106,3 +106,19 @@ test("ignores locked favorite ids when building recommendations", () => {
   const entries = buildGameArcadeEntries([]);
   assert.deepEqual(buildGameArcadeRecommendations(entries, 0, 3, ["circuit", "missions"]).map((game) => game.id), ["missions"]);
 });
+
+test("builds the time-boxed playlist from the selected theme and level", () => {
+  const entries = buildGameArcadeEntries(COURSES.map((course) => course.id));
+  const systemsStarter = buildGameArcadeRecommendations(entries, 0, 3, [], { category: "systems", level: "starter" });
+  assert.ok(systemsStarter.length > 0);
+  assert.ok(systemsStarter.every((game) => game.category === "systems" && game.level === "starter"));
+  const lifeAdventure = buildGameArcadeRecommendations(entries, 0, 3, ["pilot", "creative"], { category: "life", level: "adventure" });
+  assert.ok(lifeAdventure.length > 0);
+  assert.ok(lifeAdventure.every((game) => game.category === "life" && game.level === "adventure"));
+  assert.equal(lifeAdventure[0].id, "creative");
+});
+
+test("returns an honest empty playlist when no unlocked game matches", () => {
+  const entries = buildGameArcadeEntries([]);
+  assert.deepEqual(buildGameArcadeRecommendations(entries, 0, 3, [], { category: "systems", level: "mastery" }), []);
+});

@@ -80,10 +80,10 @@ export function buildGameArcadeEntries(completedCourseIds: readonly string[]): G
 
 const DISCOVERY_CATEGORY_ORDER: GameArcadeCategory[] = ["quest", "code", "systems", "life"];
 
-export function buildGameArcadeRecommendations(entries: readonly GameArcadeEntry[], rotation: number, limit = 3, preferredIds: readonly string[] = []): GameArcadeEntry[] {
+export function buildGameArcadeRecommendations(entries: readonly GameArcadeEntry[], rotation: number, limit = 3, preferredIds: readonly string[] = [], filters: { category?: GameArcadeCategory | "all"; level?: GameArcadeLevel | "all" } = {}): GameArcadeEntry[] {
   const safeRotation = Number.isFinite(rotation) ? Math.max(0, Math.floor(rotation)) : 0;
   const safeLimit = Number.isFinite(limit) ? Math.max(0, Math.floor(limit)) : 0;
-  const unlocked = entries.filter((entry) => entry.unlocked);
+  const unlocked = entries.filter((entry) => entry.unlocked && (!filters.category || filters.category === "all" || entry.category === filters.category) && (!filters.level || filters.level === "all" || entry.level === filters.level));
   const target = Math.min(safeLimit, unlocked.length);
   if (target === 0) return [];
   const categoryOffset = safeRotation % DISCOVERY_CATEGORY_ORDER.length;

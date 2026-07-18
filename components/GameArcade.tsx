@@ -39,7 +39,7 @@ export function GameArcade({ completedCourseIds, onStartCourse }: GameArcadeProp
   const [favoriteIds, setFavoriteIds] = useState<string[]>([]);
   const [favoritesOnly, setFavoritesOnly] = useState(false);
   const [lastGameId, setLastGameId] = useState<string | null>(null);
-  const recommendations = useMemo(() => buildGameArcadeRecommendations(entries, recommendationRotation, gameArcadePlaylistLimit(sessionMinutes), favoriteIds), [entries, favoriteIds, recommendationRotation, sessionMinutes]);
+  const recommendations = useMemo(() => buildGameArcadeRecommendations(entries, recommendationRotation, gameArcadePlaylistLimit(sessionMinutes), favoriteIds, { category, level }), [category, entries, favoriteIds, level, recommendationRotation, sessionMinutes]);
   const playlistBreaks = gameArcadePlaylistBreaks(sessionMinutes);
   const closestUnlocks = useMemo(() => buildClosestGameUnlocks(entries), [entries]);
   const lastGame = entries.find((entry) => entry.id === lastGameId && entry.unlocked);
@@ -61,8 +61,9 @@ export function GameArcade({ completedCourseIds, onStartCourse }: GameArcadeProp
         {lastGame ? <a className="game-arcade-resume" href={`#${lastGame.targetId}`}><span aria-hidden="true">↪</span><div><small>继续刚才玩的</small><b>{lastGame.icon} {lastGame.title}</b><i>只在本次打开页面内记住</i></div><strong aria-hidden="true">→</strong></a> : null}
         <div className="game-arcade-time-options" aria-label="选择今天游戏时间" role="group">{([10, 20, 30] as const).map((minutes) => <button aria-pressed={sessionMinutes === minutes} key={minutes} onClick={() => setSessionMinutes(minutes)} type="button">我有 {minutes} 分钟</button>)}</div>
         <p className="game-arcade-break-plan"><span aria-hidden="true">🌿</span>{playlistBreaks ? <>中间安排 {playlistBreaks} 次离屏休息，每局后看看远处、动动身体。</> : <>完成这一局就离开屏幕休息一下。</>}</p>
-        <div className="game-arcade-recommendations" role="list">{recommendations.map((entry, index) => <a aria-label={`推荐第${index + 1}局：前往${entry.title}`} className="game-arcade-recommendation" href={`#${entry.targetId}`} key={entry.id} onClick={() => setLastGameId(entry.id)} role="listitem"><span>{index + 1}</span><b>{entry.icon} {entry.title}</b><small>{entry.duration}</small><i aria-hidden="true">→</i></a>)}</div>
-        {favoriteIds.length ? <p>收藏玩法会优先进入今日推荐；未解锁的收藏会等学完再加入。</p> : recommendations.length === 1 ? <p>一局就是一节完整小课；学完更多课程后，可选路线会一起长大。</p> : <p>按每局约 8–10 分钟安排，只从已解锁玩法中轮换，不会记录选择。</p>}
+        <p className="game-arcade-picks-filter-note">今日推荐会跟随主题和阶段筛选。</p>
+        {recommendations.length ? <div className="game-arcade-recommendations" role="list">{recommendations.map((entry, index) => <a aria-label={`推荐第${index + 1}局：前往${entry.title}`} className="game-arcade-recommendation" href={`#${entry.targetId}`} key={entry.id} onClick={() => setLastGameId(entry.id)} role="listitem"><span>{index + 1}</span><b>{entry.icon} {entry.title}</b><small>{entry.duration}</small><i aria-hidden="true">→</i></a>)}</div> : <div className="game-arcade-picks-empty"><span aria-hidden="true">🧭</span><p>当前主题和阶段还没有已解锁玩法。</p><button onClick={clearFilters} type="button">看全部推荐</button></div>}
+        {favoriteIds.length ? <p>收藏玩法会优先进入今日推荐；未解锁的收藏会等学完再加入。</p> : recommendations.length === 1 ? <p>一局就是一节完整小课；学完更多课程后，可选路线会一起长大。</p> : recommendations.length > 1 ? <p>按每局约 8–10 分钟安排，只从已解锁玩法中轮换，不会记录选择。</p> : null}
       </section>
 
       {closestUnlocks.length ? <section className="game-arcade-unlock-route" aria-labelledby="game-arcade-unlock-heading">
@@ -80,6 +81,7 @@ export function GameArcade({ completedCourseIds, onStartCourse }: GameArcadeProp
         <div className="game-arcade-personal-filters"><button aria-pressed={unlockedOnly} className="game-arcade-filter game-arcade-filter--unlocked" onClick={() => setUnlockedOnly((current) => !current)} type="button">✓ 只看已解锁</button><button aria-pressed={favoritesOnly} className="game-arcade-filter game-arcade-filter--favorites" onClick={() => setFavoritesOnly((current) => !current)} type="button">★ 只看收藏</button></div>
       </div>
       <p className="game-arcade-results" role="status">现在显示 {visibleEntries.length} 种玩法{filtersActive ? " · 已应用筛选" : ""}{favoriteIds.length ? ` · 已收藏 ${favoriteIds.length} 种` : ""}<small>收藏只在本次打开页面内保留。</small></p>
+      {category !== "all" || level !== "all" || favoriteIds.length ? <a className="game-arcade-updated-picks" href="#game-arcade-picks-heading">查看更新后的今日推荐 <span aria-hidden="true">↑</span></a> : null}
 
       <div className="game-arcade-grid">
         {visibleEntries.map((entry) => {
