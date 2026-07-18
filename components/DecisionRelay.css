@@ -2,6 +2,7 @@
 .relay-theme-code { --relay-deep:#33285b; --relay-mid:#745f9d; --relay-soft:#eee8f8; --relay-accent:#70e0b2; }
 .relay-theme-launch { --relay-deep:#17475b; --relay-mid:#3d7f96; --relay-soft:#dff3f5; --relay-accent:#ffcf58; }
 .relay-theme-network { --relay-deep:#173f67; --relay-mid:#39749d; --relay-soft:#e1f1fb; --relay-accent:#ffd05d; }
+.relay-theme-os { --relay-deep:#29384f; --relay-mid:#586d86; --relay-soft:#e8edf3; --relay-accent:#71dfbd; }
 .decision-relay-shell h2,.decision-relay-shell h3,.decision-relay-shell p { margin:0; }
 .decision-relay-locked { display:grid; grid-template-columns:auto minmax(0,1fr) auto; align-items:center; gap:18px; background:#eff2f5; } .decision-relay-mascot { display:grid; width:68px; height:68px; place-items:center; border:3px solid var(--relay-deep); border-radius:18px; background:white; font-size:2rem; } .decision-relay-locked>div { display:grid; gap:6px; }
 .decision-relay-locked>button,.decision-relay-back { min-height:44px; padding:9px 14px; border:2px solid var(--relay-deep); border-radius:11px; background:var(--relay-soft); color:var(--relay-deep); cursor:pointer; font:inherit; font-weight:900; }

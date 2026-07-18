@@ -146,7 +146,7 @@ test("server-renders the complete curriculum map", async () => {
     assert.match(html, new RegExp(`href="#${target}"`));
     assert.match(html, new RegExp(`id="${target}"`));
   }
-  for (const target of ["adventure-missions", "knowledge-sprint", "island-boss-arena", "logic-circuit-lab", "robot-code-expedition", "packet-escort", "cpu-scheduler-game", "algorithm-arena-game", "data-structure-harbor", "safety-detective-game", "virtual-computer-factory", "file-forest-rescue", "creative-studio-challenge", "ai-verification-lab", "game-maker-relay", "computer-pilot-relay", "network-voyage-relay"]) {
+  for (const target of ["adventure-missions", "knowledge-sprint", "island-boss-arena", "logic-circuit-lab", "robot-code-expedition", "packet-escort", "cpu-scheduler-game", "algorithm-arena-game", "data-structure-harbor", "safety-detective-game", "virtual-computer-factory", "file-forest-rescue", "creative-studio-challenge", "ai-verification-lab", "game-maker-relay", "computer-pilot-relay", "network-voyage-relay", "os-command-relay"]) {
     assert.match(html, new RegExp(`id="${target}"`));
   }
   assert.match(html, /比特岛游戏中心/);
@@ -155,7 +155,7 @@ test("server-renders the complete curriculum map", async () => {
   assert.match(html, /只看已解锁/);
   assert.match(html, /综合挑战/);
   assert.match(html, /安全与文件/);
-  assert.match(html, /现在显示.*17.*种玩法/);
+  assert.match(html, /现在显示.*18.*种玩法/);
   assert.match(html, /不需要注册账号或填写姓名/);
   assert.match(html, /均为虚构模拟/);
   assert.match(html, /你的知识图鉴/);
@@ -185,6 +185,7 @@ test("server-renders the complete curriculum map", async () => {
   assert.match(html, /正在启动迷你游戏导演/);
   assert.match(html, /正在准备电脑驾驶执照考试/);
   assert.match(html, /正在绘制网络航海训练图/);
+  assert.match(html, /正在接通操作系统任务指挥部/);
   assert.match(html, /先完成任意一座岛的第一课/);
   assert.equal((html.match(/review-progress/g) ?? []).length, 1);
 });
