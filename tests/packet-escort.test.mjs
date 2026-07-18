@@ -12,9 +12,18 @@ import {
   launchPacketTransfer,
   moveReceivedPacket,
   packPacketLayer,
+  packetEscortShortcutIndex,
   retransmitPacket,
   unpackPacketLayer,
 } from "../lib/packet-escort.ts";
+
+test("maps only visible numeric packet choices", () => {
+  assert.equal(packetEscortShortcutIndex("1", 4), 0);
+  assert.equal(packetEscortShortcutIndex("4", 4), 3);
+  assert.equal(packetEscortShortcutIndex("5", 4), null);
+  assert.equal(packetEscortShortcutIndex("0", 5), null);
+  assert.equal(packetEscortShortcutIndex("x", 5), null);
+});
 
 function packAll(state, mission) {
   for (const layer of PACK_LAYER_ORDER) state = packPacketLayer(state, mission, layer, 1);

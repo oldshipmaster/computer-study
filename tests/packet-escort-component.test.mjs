@@ -25,6 +25,11 @@ test("renders all six hands-on packet phases with persistent evidence", () => {
   assert.match(component, /moveReceivedPacket/);
   assert.match(component, /unpackPacketLayer/);
   assert.match(component, /role="status"/);
+  assert.match(component, /packetEscortShortcutIndex/);
+  assert.match(component, /onKeyDown=\{handleEscortKeyDown\}/);
+  assert.match(component, /按数字键/);
+  assert.match(component, /按 <kbd>Enter<\/kbd>/);
+  assert.match(component, /aria-keyshortcuts/);
 });
 
 test("shows named layers, route costs, packet numbers, and recovered message", () => {
@@ -55,5 +60,6 @@ test("lazy-loads packet escort after code expedition and ships accessible respon
   assert.match(css, /\.packet-escort-action[^{]*\{[^}]*min-height:\s*44px/);
   assert.match(css, /@media \(max-width: 760px\)[\s\S]*?\.packet-route-grid[\s\S]*?grid-template-columns:\s*1fr/);
   assert.match(css, /\.bit-island-app--reduced-motion[\s\S]*?animation:\s*none/);
+  assert.match(css, /\.packet-keyboard-hint/);
   assert.match(css, /@media \(forced-colors: active\)[\s\S]*?aria-current/);
 });

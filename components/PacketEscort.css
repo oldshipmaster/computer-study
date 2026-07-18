@@ -35,7 +35,8 @@
 .layer-network { background: #dff3ff; }
 .layer-link { background: #ffdcd2; }
 .packet-layer-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-.packet-escort-action { min-height: 44px; border: 2px solid #56798f; border-radius: 10px; background: white; color: #173653; cursor: pointer; font-weight: 850; }
+.packet-escort-action { position: relative; min-height: 44px; border: 2px solid #56798f; border-radius: 10px; background: white; color: #173653; cursor: pointer; font-weight: 850; }
+.packet-escort-action > kbd { position: absolute; top: 5px; left: 5px; display: grid; min-width: 22px; height: 22px; place-items: center; border: 1px solid #7896a8; border-radius: 5px; background: white; color: #173653; font: 900 .64rem/1 inherit; box-shadow: 0 2px 0 #9bb0ba; }
 .packet-layer-actions .packet-escort-action { display: grid; min-height: 72px; place-items: center; gap: 2px; padding: 7px; }
 .packet-layer-actions button > b { font-size: 1.1rem; }
 .packet-layer-actions button > small { color: #48677e; font-size: .58rem; }
@@ -64,6 +65,8 @@
 .packet-message-recovered h3 { margin: 0; font-size: 1.5rem; }
 .packet-message-recovered > button { padding: 9px 13px; background: #ffe36e; }
 .packet-escort-feedback { min-height: 55px; margin-top: 13px !important; padding: 10px 12px; border-left: 5px solid #6fcaf0; border-radius: 8px; background: rgb(255 255 255 / 9%); }
+.packet-keyboard-hint { margin-top: 12px !important; color: #c9e2ef; font-size: .75rem; font-weight: 800; text-align: center; }
+.packet-keyboard-hint kbd { display: inline-grid; min-width: 26px; min-height: 25px; place-items: center; margin-inline: 2px; border: 1px solid #8aaabd; border-radius: 6px; background: #f7fcff; color: #173653; font: 900 .68rem/1 inherit; box-shadow: 0 2px 0 #56798f; }
 .packet-escort-feedback.is-solved { border-left-color: #ffe36e; background: rgb(255 227 110 / 14%); }
 .packet-escort-complete > span { font-size: 3.4rem; }
 .packet-escort-complete > div > p { color: #315c9a; font-size: .72rem; font-weight: 900; }

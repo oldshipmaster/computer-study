@@ -26,6 +26,12 @@ export interface PacketEscortState {
 
 export const PACK_LAYER_ORDER: PacketLayer[] = ["application", "transport", "network", "link"];
 export const UNPACK_LAYER_ORDER: PacketLayer[] = [...PACK_LAYER_ORDER].reverse();
+
+export function packetEscortShortcutIndex(key: string, choiceCount: number): number | null {
+  if (!/^[1-5]$/.test(key)) return null;
+  const index = Number(key) - 1;
+  return index < Math.max(0, Math.floor(choiceCount)) ? index : null;
+}
 const LAYER_LABELS: Record<PacketLayer, string> = {
   application: "应用层", transport: "传输层", network: "网络层", link: "链路层",
 };
