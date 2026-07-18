@@ -38,7 +38,7 @@ export function GameArcade({ completedCourseIds, onStartCourse }: GameArcadeProp
   const [unlockedOnly, setUnlockedOnly] = useState(false);
   const [favoriteIds, setFavoriteIds] = useState<string[]>([]);
   const [favoritesOnly, setFavoritesOnly] = useState(false);
-  const recommendations = useMemo(() => buildGameArcadeRecommendations(entries, recommendationRotation, gameArcadePlaylistLimit(sessionMinutes)), [entries, recommendationRotation, sessionMinutes]);
+  const recommendations = useMemo(() => buildGameArcadeRecommendations(entries, recommendationRotation, gameArcadePlaylistLimit(sessionMinutes), favoriteIds), [entries, favoriteIds, recommendationRotation, sessionMinutes]);
   const closestUnlocks = useMemo(() => buildClosestGameUnlocks(entries), [entries]);
   const visibleEntries = filterGameArcadeEntries(entries, { query, category, level, unlockedOnly, favoritesOnly, favoriteIds });
   const filtersActive = Boolean(query.trim()) || category !== "all" || level !== "all" || unlockedOnly || favoritesOnly;
@@ -57,7 +57,7 @@ export function GameArcade({ completedCourseIds, onStartCourse }: GameArcadeProp
         <div className="game-arcade-picks-heading"><div><span aria-hidden="true">✦</span><h3 id="game-arcade-picks-heading">今天想玩这几局</h3></div>{recommendations.length > 1 ? <button onClick={() => setRecommendationRotation((current) => current + 1)} type="button">换一组推荐 ↻</button> : null}</div>
         <div className="game-arcade-time-options" aria-label="选择今天游戏时间" role="group">{([10, 20, 30] as const).map((minutes) => <button aria-pressed={sessionMinutes === minutes} key={minutes} onClick={() => setSessionMinutes(minutes)} type="button">我有 {minutes} 分钟</button>)}</div>
         <div className="game-arcade-recommendations" role="list">{recommendations.map((entry, index) => <a aria-label={`推荐第${index + 1}局：前往${entry.title}`} className="game-arcade-recommendation" href={`#${entry.targetId}`} key={entry.id} role="listitem"><span>{index + 1}</span><b>{entry.icon} {entry.title}</b><small>{entry.duration}</small><i aria-hidden="true">→</i></a>)}</div>
-        {recommendations.length === 1 ? <p>一局就是一节完整小课；学完更多课程后，可选路线会一起长大。</p> : <p>按每局约 8–10 分钟安排，只从已解锁玩法中轮换，不会记录选择。</p>}
+        {favoriteIds.length ? <p>收藏玩法会优先进入今日推荐；未解锁的收藏会等学完再加入。</p> : recommendations.length === 1 ? <p>一局就是一节完整小课；学完更多课程后，可选路线会一起长大。</p> : <p>按每局约 8–10 分钟安排，只从已解锁玩法中轮换，不会记录选择。</p>}
       </section>
 
       {closestUnlocks.length ? <section className="game-arcade-unlock-route" aria-labelledby="game-arcade-unlock-heading">

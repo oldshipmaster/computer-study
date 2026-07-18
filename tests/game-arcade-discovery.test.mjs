@@ -84,3 +84,18 @@ test("filters session favorites together with the existing discovery controls", 
   assert.deepEqual(filterGameArcadeEntries(entries, { favoritesOnly: true, favoriteIds: ["circuit", "pilot"], category: "life" }).map((game) => game.id), ["pilot"]);
   assert.deepEqual(filterGameArcadeEntries(entries, { favoritesOnly: true }).map((game) => game.id), []);
 });
+
+test("puts unlocked favorites first in a time-boxed recommendation without duplicates", () => {
+  const entries = buildGameArcadeEntries(COURSES.map((course) => course.id));
+  const picks = buildGameArcadeRecommendations(entries, 0, 3, ["pilot", "circuit", "unknown", "pilot"]);
+  assert.deepEqual(picks.slice(0, 2).map((game) => game.id), ["circuit", "pilot"]);
+  assert.equal(new Set(picks.map((game) => game.id)).size, 3);
+  assert.ok(picks.every((game) => game.unlocked));
+  const rotated = buildGameArcadeRecommendations(entries, 1, 2, ["pilot", "circuit"]);
+  assert.deepEqual(rotated.map((game) => game.id), ["pilot", "circuit"]);
+});
+
+test("ignores locked favorite ids when building recommendations", () => {
+  const entries = buildGameArcadeEntries([]);
+  assert.deepEqual(buildGameArcadeRecommendations(entries, 0, 3, ["circuit", "missions"]).map((game) => game.id), ["missions"]);
+});

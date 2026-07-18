@@ -96,5 +96,7 @@ test("lets a child collect and filter favorite games for the current visit", () 
   assert.match(component, /aria-label=\{`\$\{favoriteIds\.includes\(entry\.id\) \? "取消收藏" : "收藏"\}\$\{entry\.title\}`\}/);
   assert.match(component, /★ 只看收藏/);
   assert.match(component, /本次打开页面内保留/);
+  assert.match(component, /收藏玩法会优先进入今日推荐/);
+  assert.match(component, /gameArcadePlaylistLimit\(sessionMinutes\), favoriteIds/);
   assert.match(css, /\.game-arcade-favorite/);
 });

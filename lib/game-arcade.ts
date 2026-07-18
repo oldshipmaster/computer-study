@@ -80,7 +80,7 @@ export function buildGameArcadeEntries(completedCourseIds: readonly string[]): G
 
 const DISCOVERY_CATEGORY_ORDER: GameArcadeCategory[] = ["quest", "code", "systems", "life"];
 
-export function buildGameArcadeRecommendations(entries: readonly GameArcadeEntry[], rotation: number, limit = 3): GameArcadeEntry[] {
+export function buildGameArcadeRecommendations(entries: readonly GameArcadeEntry[], rotation: number, limit = 3, preferredIds: readonly string[] = []): GameArcadeEntry[] {
   const safeRotation = Number.isFinite(rotation) ? Math.max(0, Math.floor(rotation)) : 0;
   const safeLimit = Number.isFinite(limit) ? Math.max(0, Math.floor(limit)) : 0;
   const unlocked = entries.filter((entry) => entry.unlocked);
@@ -105,7 +105,18 @@ export function buildGameArcadeRecommendations(entries: readonly GameArcadeEntry
     }
     if (!added) break;
   }
-  return recommendations;
+  const preferredSet = new Set(preferredIds);
+  const preferred = unlocked.filter((entry) => preferredSet.has(entry.id));
+  if (!preferred.length) return recommendations;
+  const preferredOffset = safeRotation % preferred.length;
+  const rotatedPreferred = [...preferred.slice(preferredOffset), ...preferred.slice(0, preferredOffset)];
+  const prioritized: GameArcadeEntry[] = [];
+  for (const candidate of [...rotatedPreferred, ...recommendations, ...unlocked]) {
+    if (prioritized.some((entry) => entry.id === candidate.id)) continue;
+    prioritized.push(candidate);
+    if (prioritized.length === target) break;
+  }
+  return prioritized;
 }
 
 export function filterGameArcadeEntries(entries: readonly GameArcadeEntry[], filters: { query?: string; category?: GameArcadeCategory | "all"; level?: GameArcadeLevel | "all"; unlockedOnly?: boolean; favoritesOnly?: boolean; favoriteIds?: readonly string[] }): GameArcadeEntry[] {
