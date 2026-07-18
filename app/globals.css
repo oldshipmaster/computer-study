@@ -3954,6 +3954,7 @@ html.bit-island-document--reduced-motion *::after,
 .boss-stage-work > p { margin: 0; color: var(--deep-sea-soft); }
 .boss-choice-grid, .boss-action-bank { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
 .boss-keyboard-hint { margin: 0; color: #526d7b; font-size: .72rem; font-weight: 800; }
+.boss-keyboard-hint kbd { padding: 2px 6px; border: 1px solid #7b9aaa; border-radius: 5px; background: white; font: inherit; font-weight: 900; }
 .boss-evidence { display: grid; min-height: 44px; grid-template-columns: auto 1fr; align-items: center; gap: 9px; padding: 10px 12px; border: 2px solid #7b9aaa; border-radius: 12px; background: white; cursor: pointer; font-weight: 750; text-align: left; }
 .boss-action { display: grid; min-height: 44px; grid-template-columns: auto 1fr; align-items: center; gap: 9px; padding: 10px 12px; border: 2px solid #7b9aaa; border-radius: 12px; background: white; cursor: pointer; font-weight: 750; text-align: left; }
 .boss-explanation { display: grid; min-height: 44px; grid-template-columns: auto 1fr; align-items: center; gap: 9px; padding: 11px 13px; border: 2px solid #7b9aaa; border-radius: 12px; background: white; cursor: pointer; font-weight: 750; text-align: left; }

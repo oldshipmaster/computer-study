@@ -82,15 +82,26 @@ export function KnowledgeSprint({
     chooseOption(optionIndex, event.detail);
   }
 
-  function chooseSprintAnswerByKeyboard(event: ReactKeyboardEvent<HTMLElement>) {
+  function handleSprintKeyboard(event: ReactKeyboardEvent<HTMLElement>) {
     if (
-      state.phase !== "answering"
-      || event.repeat
+      event.repeat
       || event.metaKey
       || event.ctrlKey
       || event.altKey
       || event.nativeEvent.isComposing
     ) return;
+    if (
+      state.phase === "feedback"
+      && event.key === "Enter"
+      && !(event.target instanceof HTMLButtonElement)
+    ) {
+      event.preventDefault();
+      shouldFocusRef.current = true;
+      setSelectedOption(null);
+      setState((current) => advanceKnowledgeSprint(current, deck, 0));
+      return;
+    }
+    if (state.phase !== "answering") return;
     const optionIndex = knowledgeSprintOptionIndex(event.key);
     if (optionIndex === null) return;
     event.preventDefault();
@@ -167,7 +178,7 @@ export function KnowledgeSprint({
   }
 
   return (
-    <section className="knowledge-sprint knowledge-sprint--playing" id="knowledge-sprint" aria-labelledby="sprint-question-heading" onKeyDown={chooseSprintAnswerByKeyboard}>
+    <section className="knowledge-sprint knowledge-sprint--playing" id="knowledge-sprint" aria-labelledby="sprint-question-heading" onKeyDown={handleSprintKeyboard}>
       <aside className="sprint-console" aria-label="闪击赛状态">
         <p className="sprint-kicker">知识闪击进行中</p>
         <div className="sprint-score"><span>分数</span><strong>{state.score}</strong></div>
@@ -181,7 +192,7 @@ export function KnowledgeSprint({
       <div className="sprint-question-panel">
         <span className="sprint-question-kind">{question.kind === "concept" ? "概念识别" : "情境判断"}</span>
         <h2 id="sprint-question-heading" ref={questionHeadingRef} tabIndex={-1}>{question.prompt}</h2>
-        <p className="sprint-keyboard-hint">按 <kbd>A</kbd>、<kbd>B</kbd>、<kbd>C</kbd> 也能作答</p>
+        <p className="sprint-keyboard-hint">{state.phase === "feedback" ? <>按 <kbd>Enter</kbd> 进入{state.index === state.questionCount - 1 ? "战报" : "下一题"}</> : <>按 <kbd>A</kbd>、<kbd>B</kbd>、<kbd>C</kbd> 也能作答</>}</p>
         <div className="sprint-answers" role="group" aria-label="选择一个答案">
           {question.options.map((option, optionIndex) => (
             <button

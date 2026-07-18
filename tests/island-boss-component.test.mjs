@@ -37,6 +37,11 @@ test("offers evidence, ordered actions, core explanation, and replay", () => {
   assert.match(component, /aria-keyshortcuts=/);
   assert.match(component, /<kbd aria-hidden="true">/);
   assert.match(component, /removeBossAction\(current, choice\.id\)/);
+  assert.match(component, /event\.key === "Enter"/);
+  assert.match(component, /event\.target instanceof HTMLButtonElement/);
+  assert.match(component, /submitBossPhase\(current, activeBoss, 0\)/);
+  assert.match(component, /advanceBossPhase\(current\)/);
+  assert.match(component, /按 <kbd>Enter<\/kbd>/);
 });
 
 test("integrates the arena after sprint and before the learning plan", () => {

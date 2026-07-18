@@ -70,13 +70,30 @@ export function IslandBossArena({ completedCourseIds, completedBossIds, onComple
     if (
       !activeBoss
       || state.phase === "complete"
-      || state.status === "success"
       || event.repeat
       || event.altKey
       || event.ctrlKey
       || event.metaKey
       || event.nativeEvent.isComposing
     ) return;
+    if (event.key === "Enter" && !(event.target instanceof HTMLButtonElement)) {
+      if (state.status === "success") {
+        event.preventDefault();
+        shouldFocusStageRef.current = true;
+        setState((current) => advanceBossPhase(current));
+        return;
+      }
+      const canSubmitWithKeyboard = state.phase === "scan"
+        ? state.selectedEvidenceIds.length === 2
+        : state.phase === "sequence"
+          ? state.actionQueue.length === 3
+          : Boolean(state.selectedExplanationId);
+      if (!canSubmitWithKeyboard) return;
+      event.preventDefault();
+      setState((current) => submitBossPhase(current, activeBoss, 0));
+      return;
+    }
+    if (state.status === "success") return;
     const choices = state.phase === "scan" ? activeBoss.evidence : state.phase === "sequence" ? activeBoss.actions : activeBoss.explanations;
     const optionIndex = numberShortcutIndex(event.key, choices.length);
     if (optionIndex === null) return;
@@ -160,7 +177,7 @@ export function IslandBossArena({ completedCourseIds, completedBossIds, onComple
         ) : (
           <div className="boss-console">
             <div className="boss-console-heading"><span>阶段 {phaseIndex + 1} / 3</span><h3>{PHASE_LABELS[phaseIndex]}</h3></div>
-            <p className="boss-keyboard-hint">按数字键 1–{state.phase === "core" ? 3 : 4} 选择{state.phase === "sequence" ? "；再按一次可撤回" : ""}</p>
+            <p className="boss-keyboard-hint">{state.status === "success" ? <>按 <kbd>Enter</kbd> 进入{state.phase === "core" ? "胜利画面" : "下一阶段"}</> : <>按数字键 1–{state.phase === "core" ? 3 : 4} 选择{state.phase === "sequence" ? "；再按一次可撤回" : ""}，选好后按 <kbd>Enter</kbd> 提交</>}</p>
             {renderStage(activeBoss)}
             <p className={`boss-feedback boss-feedback--${state.status}`} role="status">{state.feedback}</p>
             {state.status === "success" ? <button className="boss-primary" onClick={nextPhase} type="button">{state.phase === "core" ? "点亮 Boss 核心" : "进入下一阶段"} →</button> : <button className="boss-primary" disabled={!canSubmit} onClick={submit} type="button">提交本阶段</button>}

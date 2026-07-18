@@ -21,12 +21,16 @@ test("offers a bounded child-friendly sprint flow", () => {
   assert.match(component, /onRecordSprint\(state\.score\)/);
   assert.match(component, /回到对应课程加练/);
   assert.match(component, /onStartCourse\(state\.missedCourseIds\[0\]\)/);
-  assert.match(component, /onKeyDown=\{chooseSprintAnswerByKeyboard\}/);
+  assert.match(component, /onKeyDown=\{handleSprintKeyboard\}/);
   assert.match(component, /event\.repeat/);
   assert.match(component, /event\.(?:metaKey|ctrlKey|altKey)/);
   assert.match(component, /event\.nativeEvent\.isComposing/);
   assert.match(component, /按\s*<kbd>A<\/kbd>、<kbd>B<\/kbd>、<kbd>C<\/kbd>\s*也能作答/);
   assert.match(component, /aria-keyshortcuts=/);
+  assert.match(component, /event\.key === "Enter"/);
+  assert.match(component, /event\.target instanceof HTMLButtonElement/);
+  assert.match(component, /advanceKnowledgeSprint\(current, deck, 0\)/);
+  assert.match(component, /按 <kbd>Enter<\/kbd> 进入/);
 });
 
 test("integrates the sprint between missions and the learning plan", () => {
