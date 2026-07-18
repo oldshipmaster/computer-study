@@ -42,6 +42,7 @@ export const GAME_ARCADE_DEFINITIONS: GameArcadeDefinition[] = [
   { id: "ai-lab", targetId: "ai-verification-lab", title: "AI 核验研究站", icon: "🔬", mechanic: "邮件、协作、AI 提问、核验与项目交付", duration: "8–10 分钟", category: "life", gate: { type: "exact", courseIds: ["email-message", "online-collaboration", "ai-helper", "verify-ai", "digital-project"] } },
   { id: "game-maker", targetId: "game-maker-relay", title: "迷你游戏导演", icon: "🎮", mechanic: "事件、变量、函数、逻辑、调试与平衡", duration: "8–10 分钟", category: "code", gate: { type: "exact", courseIds: ["events-handlers", "variables-score", "functions-tools", "boolean-logic", "game-design"] } },
   { id: "pilot", targetId: "computer-pilot-relay", title: "电脑驾驶执照", icon: "🧑‍✈️", mechanic: "键盘、鼠标、输入、窗口与程序综合操作", duration: "8–10 分钟", category: "life", gate: { type: "exact", courseIds: ["keyboard-flight", "mouse-precision", "bilingual-input", "desktop-adventure", "program-landing"] } },
+  { id: "voyage", targetId: "network-voyage-relay", title: "网络航海训练营", icon: "⛵", mechanic: "地址、搜索、云端传送与逐步排障", duration: "8–10 分钟", category: "systems", gate: { type: "exact", courseIds: ["network-journey", "web-address", "search-and-links", "downloads-and-cloud", "network-troubleshooting"] } },
 ];
 
 export function buildGameArcadeEntries(completedCourseIds: readonly string[]): GameArcadeEntry[] {
