@@ -131,10 +131,15 @@ test("remembers the last opened game and offers a one-click session resume", () 
   const component = source("components/GameArcade.tsx");
   const css = source("components/GameArcade.css");
   assert.match(component, /lastGameId/);
-  assert.match(component, /setLastGameId\(entry\.id\)/);
+  assert.match(component, /setLastGameId\(gameId\)/);
   assert.match(component, /继续刚才玩的/);
   assert.match(component, /href=\{`#\$\{lastGame\.targetId\}`\}/);
   assert.match(component, /只在本次打开页面内记住/);
   assert.match(css, /\.game-arcade-resume/);
   assert.match(css, /\.game-arcade-resume[^{]*\{[^}]*min-height:\s*44px/);
+  assert.match(component, /recordGameArcadeVisit/);
+  assert.match(component, /visitedGameIds/);
+  assert.match(component, /本次已打开/);
+  assert.match(component, /清空打开记录/);
+  assert.match(css, /\.game-arcade-visited/);
 });

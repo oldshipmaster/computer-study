@@ -157,3 +157,10 @@ export function buildClosestGameUnlocks(entries: readonly GameArcadeEntry[], lim
 
 export function gameArcadePlaylistLimit(minutes: number): number { if (!Number.isFinite(minutes) || minutes < 15) return 1; if (minutes < 25) return 2; return 3; }
 export function gameArcadePlaylistBreaks(minutes: number): number { return Math.max(0, gameArcadePlaylistLimit(minutes) - 1); }
+
+export function recordGameArcadeVisit(currentIds: readonly string[], gameId: string): string[] {
+  const known = new Set(GAME_ARCADE_DEFINITIONS.map((game) => game.id));
+  const visits = [...new Set(currentIds.filter((id) => known.has(id)))];
+  if (known.has(gameId) && !visits.includes(gameId)) visits.push(gameId);
+  return visits;
+}

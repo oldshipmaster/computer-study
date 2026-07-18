@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { getCourse } from "@/lib/course-data";
-import { buildClosestGameUnlocks, buildGameArcadeEntries, buildGameArcadeFilterSummary, buildGameArcadeRecommendations, filterGameArcadeEntries, gameArcadePlaylistBreaks, gameArcadePlaylistLimit, type GameArcadeCategory, type GameArcadeLevel } from "@/lib/game-arcade";
+import { buildClosestGameUnlocks, buildGameArcadeEntries, buildGameArcadeFilterSummary, buildGameArcadeRecommendations, filterGameArcadeEntries, gameArcadePlaylistBreaks, gameArcadePlaylistLimit, recordGameArcadeVisit, type GameArcadeCategory, type GameArcadeLevel } from "@/lib/game-arcade";
 import "./GameArcade.css";
 
 interface GameArcadeProps {
@@ -39,6 +39,7 @@ export function GameArcade({ completedCourseIds, onStartCourse }: GameArcadeProp
   const [favoriteIds, setFavoriteIds] = useState<string[]>([]);
   const [favoritesOnly, setFavoritesOnly] = useState(false);
   const [lastGameId, setLastGameId] = useState<string | null>(null);
+  const [visitedGameIds, setVisitedGameIds] = useState<string[]>([]);
   const recommendations = useMemo(() => buildGameArcadeRecommendations(entries, recommendationRotation, gameArcadePlaylistLimit(sessionMinutes), favoriteIds, { category, level, query, favoritesOnly }), [category, entries, favoriteIds, favoritesOnly, level, query, recommendationRotation, sessionMinutes]);
   const recommendationContext = buildGameArcadeFilterSummary({ category, level, query, favoritesOnly });
   const playlistBreaks = gameArcadePlaylistBreaks(sessionMinutes);
@@ -50,6 +51,7 @@ export function GameArcade({ completedCourseIds, onStartCourse }: GameArcadeProp
   function clearFilters() { setQuery(""); setCategory("all"); setLevel("all"); setUnlockedOnly(false); setFavoritesOnly(false); }
   function clearFavorites() { setFavoriteIds([]); setFavoritesOnly(false); }
   function toggleFavorite(gameId: string) { setFavoriteIds((current) => current.includes(gameId) ? current.filter((id) => id !== gameId) : [...current, gameId]); }
+  function openGame(gameId: string) { setLastGameId(gameId); setVisitedGameIds((current) => recordGameArcadeVisit(current, gameId)); }
 
   return (
     <section className="game-arcade" id="game-arcade" aria-labelledby="game-arcade-heading">
@@ -65,7 +67,7 @@ export function GameArcade({ completedCourseIds, onStartCourse }: GameArcadeProp
         <p className="game-arcade-break-plan"><span aria-hidden="true">🌿</span>{playlistBreaks ? <>中间安排 {playlistBreaks} 次离屏休息，每局后看看远处、动动身体。</> : <>完成这一局就离开屏幕休息一下。</>}</p>
         <p className="game-arcade-picks-filter-note">今日推荐会跟随主题、阶段、搜索和收藏筛选。</p>
         <div className="game-arcade-pick-context" aria-label="当前推荐范围" role="group"><b>当前推荐范围</b>{recommendationContext.map((item) => <span key={item}>{item}</span>)}</div>
-        {recommendations.length ? <div className="game-arcade-recommendations" role="list">{recommendations.map((entry, index) => <a aria-label={`推荐第${index + 1}局：前往${entry.title}`} className="game-arcade-recommendation" href={`#${entry.targetId}`} key={entry.id} onClick={() => setLastGameId(entry.id)} role="listitem"><span>{index + 1}</span><b>{entry.icon} {entry.title}</b><small>{entry.duration}</small><i aria-hidden="true">→</i></a>)}</div> : <div className="game-arcade-picks-empty"><span aria-hidden="true">🧭</span><p>当前主题和阶段还没有已解锁玩法。</p><button onClick={clearFilters} type="button">看全部推荐</button></div>}
+        {recommendations.length ? <div className="game-arcade-recommendations" role="list">{recommendations.map((entry, index) => <a aria-label={`推荐第${index + 1}局：前往${entry.title}${visitedGameIds.includes(entry.id) ? "，本次已打开" : ""}`} className="game-arcade-recommendation" href={`#${entry.targetId}`} key={entry.id} onClick={() => openGame(entry.id)} role="listitem"><span>{index + 1}</span><b>{entry.icon} {entry.title}</b><small>{entry.duration}</small>{visitedGameIds.includes(entry.id) ? <em>本次已打开</em> : null}<i aria-hidden="true">→</i></a>)}</div> : <div className="game-arcade-picks-empty"><span aria-hidden="true">🧭</span><p>当前主题和阶段还没有已解锁玩法。</p><button onClick={clearFilters} type="button">看全部推荐</button></div>}
         {favoriteIds.length ? <p>收藏玩法会优先进入今日推荐；未解锁的收藏会等学完再加入。</p> : recommendations.length === 1 ? <p>一局就是一节完整小课；学完更多课程后，可选路线会一起长大。</p> : recommendations.length > 1 ? <p>按每局约 8–10 分钟安排，只从已解锁玩法中轮换，不会记录选择。</p> : null}
       </section>
 
@@ -83,7 +85,7 @@ export function GameArcade({ completedCourseIds, onStartCourse }: GameArcadeProp
         <div className="game-arcade-filter-stack"><div className="game-arcade-filters" aria-label="按主题筛选游戏" role="group">{CATEGORY_OPTIONS.map((option) => <button aria-pressed={category === option.id} className="game-arcade-filter" key={option.id} onClick={() => setCategory(option.id)} type="button">{option.label}</button>)}</div><div className="game-arcade-filters" aria-label="按学习阶段筛选游戏" role="group">{LEVEL_OPTIONS.map((option) => <button aria-pressed={level === option.id} className="game-arcade-filter game-arcade-filter--level" key={option.id} onClick={() => setLevel(option.id)} type="button">{option.label}</button>)}</div></div>
         <div className="game-arcade-personal-filters"><button aria-pressed={unlockedOnly} className="game-arcade-filter game-arcade-filter--unlocked" onClick={() => setUnlockedOnly((current) => !current)} type="button">✓ 只看已解锁</button><button aria-pressed={favoritesOnly} className="game-arcade-filter game-arcade-filter--favorites" onClick={() => setFavoritesOnly((current) => !current)} type="button">★ 只看收藏</button></div>
       </div>
-      <div className="game-arcade-results-row"><p className="game-arcade-results" role="status">现在显示 {visibleEntries.length} 种玩法{filtersActive ? " · 已应用筛选" : ""}{favoriteIds.length ? ` · 已收藏 ${favoriteIds.length} 种` : ""}<small>收藏只在本次打开页面内保留。</small></p>{favoriteIds.length ? <button className="game-arcade-clear-favorites" onClick={clearFavorites} type="button">清空全部收藏</button> : null}</div>
+      <div className="game-arcade-results-row"><p className="game-arcade-results" role="status">现在显示 {visibleEntries.length} 种玩法{filtersActive ? " · 已应用筛选" : ""}{favoriteIds.length ? ` · 已收藏 ${favoriteIds.length} 种` : ""}{visitedGameIds.length ? ` · 本次打开 ${visitedGameIds.length} 种` : ""}<small>收藏和打开记录只在本次打开页面内保留。</small></p><div className="game-arcade-results-actions">{visitedGameIds.length ? <button className="game-arcade-clear-visits" onClick={() => setVisitedGameIds([])} type="button">清空打开记录</button> : null}{favoriteIds.length ? <button className="game-arcade-clear-favorites" onClick={clearFavorites} type="button">清空全部收藏</button> : null}</div></div>
       {category !== "all" || level !== "all" || query.trim() || favoriteIds.length ? <a className="game-arcade-updated-picks" href="#game-arcade-picks-heading">查看更新后的今日推荐 <span aria-hidden="true">↑</span></a> : null}
 
       <div className="game-arcade-grid">
@@ -93,9 +95,9 @@ export function GameArcade({ completedCourseIds, onStartCourse }: GameArcadeProp
             <article className={`game-arcade-card ${entry.unlocked ? "is-unlocked" : "is-locked"}`} key={entry.id}>
               <button aria-label={`${favoriteIds.includes(entry.id) ? "取消收藏" : "收藏"}${entry.title}`} aria-pressed={favoriteIds.includes(entry.id)} className="game-arcade-favorite" onClick={() => toggleFavorite(entry.id)} type="button"><span aria-hidden="true">★</span></button>
               <span className="game-arcade-icon" aria-hidden="true">{entry.icon}</span>
-              <div className="game-arcade-card-copy"><div className="game-arcade-card-tags"><span className="game-arcade-state">{entry.unlocked ? "已解锁" : "学习中"}</span><span className={`game-arcade-level game-arcade-level--${entry.level}`}>{LEVEL_LABELS[entry.level]}</span></div><h3>{entry.title}</h3><p>{entry.mechanic}</p><small>{entry.duration}</small></div>
+              <div className="game-arcade-card-copy"><div className="game-arcade-card-tags"><span className="game-arcade-state">{entry.unlocked ? "已解锁" : "学习中"}</span><span className={`game-arcade-level game-arcade-level--${entry.level}`}>{LEVEL_LABELS[entry.level]}</span>{visitedGameIds.includes(entry.id) ? <span className="game-arcade-visited">本次已打开</span> : null}</div><h3>{entry.title}</h3><p>{entry.mechanic}</p><small>{entry.duration}</small></div>
               <div className="game-arcade-progress"><span>解锁进度 {entry.progress.value} / {entry.progress.maximum}</span><progress aria-label={`${entry.title}解锁进度`} max={entry.progress.maximum} value={entry.progress.value} /></div>
-              {entry.unlocked ? <a aria-label={`前往${entry.title}`} className="game-arcade-action" href={`#${entry.targetId}`} onClick={() => setLastGameId(entry.id)}>去玩这个 <span aria-hidden="true">→</span></a> : entry.nextCourseId ? <button className="game-arcade-action" onClick={() => onStartCourse(entry.nextCourseId!)} type="button">下一课：{nextCourse?.title ?? "继续学习"}</button> : null}
+              {entry.unlocked ? <a aria-label={`前往${entry.title}`} className="game-arcade-action" href={`#${entry.targetId}`} onClick={() => openGame(entry.id)}>去玩这个 <span aria-hidden="true">→</span></a> : entry.nextCourseId ? <button className="game-arcade-action" onClick={() => onStartCourse(entry.nextCourseId!)} type="button">下一课：{nextCourse?.title ?? "继续学习"}</button> : null}
             </article>
           );
         })}
