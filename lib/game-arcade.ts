@@ -32,6 +32,7 @@ export const GAME_ARCADE_DEFINITIONS: GameArcadeDefinition[] = [
   { id: "cpu", targetId: "cpu-scheduler-game", title: "CPU 时间片调度台", icon: "⚙️", mechanic: "装入内存并轮转执行进程", duration: "8–10 分钟", gate: { type: "exact", courseIds: ["program-process", "cpu-scheduling", "memory-allocation"] } },
   { id: "algorithm", targetId: "algorithm-arena-game", title: "算法竞技场", icon: "🏁", mechanic: "搜索、排序、依赖与效率六关接力", duration: "8–10 分钟", gate: { type: "exact", courseIds: ["linear-search", "binary-search", "bubble-sort", "task-decomposition", "algorithm-efficiency"] } },
   { id: "structures", targetId: "data-structure-harbor", title: "数据结构装卸港", icon: "⚓", mechanic: "数组、链表、栈队列、树与图调度", duration: "8–10 分钟", gate: { type: "exact", courseIds: ["array-lockers", "linked-treasure", "stack-queue-dock", "tree-library", "graph-routes"] } },
+  { id: "safety", targetId: "safety-detective-game", title: "数字安全侦探局", icon: "🔎", mechanic: "看虚构线索，保护信息并安全求助", duration: "8–10 分钟", gate: { type: "exact", courseIds: ["password-guardian", "private-information", "popup-fog", "healthy-computer-habits", "light-bit-island"] } },
 ];
 
 export function buildGameArcadeEntries(completedCourseIds: readonly string[]): GameArcadeEntry[] {

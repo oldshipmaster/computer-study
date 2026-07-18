@@ -146,7 +146,7 @@ test("server-renders the complete curriculum map", async () => {
     assert.match(html, new RegExp(`href="#${target}"`));
     assert.match(html, new RegExp(`id="${target}"`));
   }
-  for (const target of ["adventure-missions", "knowledge-sprint", "island-boss-arena", "logic-circuit-lab", "robot-code-expedition", "packet-escort", "cpu-scheduler-game", "algorithm-arena-game", "data-structure-harbor"]) {
+  for (const target of ["adventure-missions", "knowledge-sprint", "island-boss-arena", "logic-circuit-lab", "robot-code-expedition", "packet-escort", "cpu-scheduler-game", "algorithm-arena-game", "data-structure-harbor", "safety-detective-game"]) {
     assert.match(html, new RegExp(`id="${target}"`));
   }
   assert.match(html, /比特岛游戏中心/);
@@ -172,6 +172,7 @@ test("server-renders the complete curriculum map", async () => {
   assert.match(html, /正在启动 CPU 时间片调度台/);
   assert.match(html, /正在开启算法竞技场/);
   assert.match(html, /正在开放数据结构装卸港/);
+  assert.match(html, /正在整理数字安全案件/);
   assert.match(html, /先完成任意一座岛的第一课/);
   assert.equal((html.match(/review-progress/g) ?? []).length, 1);
 });
