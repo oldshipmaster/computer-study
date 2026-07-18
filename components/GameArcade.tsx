@@ -61,7 +61,7 @@ export function GameArcade({ completedCourseIds, onStartCourse }: GameArcadeProp
       </header>
 
       <section className="game-arcade-picks" aria-labelledby="game-arcade-picks-heading">
-        <div className="game-arcade-picks-heading"><div><span aria-hidden="true">✦</span><h3 id="game-arcade-picks-heading">今天想玩这几局</h3></div>{recommendations.length > 1 ? <button onClick={() => setRecommendationRotation((current) => current + 1)} type="button">换一组推荐 ↻</button> : null}</div>
+        <div className="game-arcade-picks-heading"><div><span aria-hidden="true">✦</span><h3 id="game-arcade-picks-heading">今天想玩这几局</h3></div><div className="game-arcade-pick-actions">{recommendations.length > 1 ? <button onClick={() => setRecommendationRotation((current) => current + 1)} type="button">换一组推荐 ↻</button> : null}{recommendations[0] ? <a className="game-arcade-quick-start" href={`#${recommendations[0].targetId}`} onClick={() => openGame(recommendations[0].id)}>替我选一局，马上开始 <span aria-hidden="true">→</span></a> : null}</div></div>
         {lastGame ? <a className="game-arcade-resume" href={`#${lastGame.targetId}`}><span aria-hidden="true">↪</span><div><small>继续刚才玩的</small><b>{lastGame.icon} {lastGame.title}</b><i>只在本次打开页面内记住</i></div><strong aria-hidden="true">→</strong></a> : null}
         <div className="game-arcade-time-options" aria-label="选择今天游戏时间" role="group">{([10, 20, 30] as const).map((minutes) => <button aria-pressed={sessionMinutes === minutes} key={minutes} onClick={() => setSessionMinutes(minutes)} type="button">我有 {minutes} 分钟</button>)}</div>
         <p className="game-arcade-break-plan"><span aria-hidden="true">🌿</span>{playlistBreaks ? <>中间安排 {playlistBreaks} 次离屏休息，每局后看看远处、动动身体。</> : <>完成这一局就离开屏幕休息一下。</>}</p>

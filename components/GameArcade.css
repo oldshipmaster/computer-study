@@ -11,9 +11,11 @@
 .game-arcade-picks { display: grid; gap: 10px; margin-bottom: 18px; padding: 15px; border: 2px solid #17384d; border-radius: 17px; background: linear-gradient(135deg, #e0f5ff, #fff5c7); }
 .game-arcade-picks-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .game-arcade-picks-heading > div { display: flex; align-items: center; gap: 8px; }
+.game-arcade-picks-heading > .game-arcade-pick-actions { flex-wrap:wrap; justify-content:flex-end; }
 .game-arcade-picks-heading h3, .game-arcade-picks p { margin: 0; }
 .game-arcade-picks-heading > div > span { color: #a35d00; font-size: 1.4rem; }
 .game-arcade-picks-heading button { min-height: 44px; padding: 7px 11px; border: 2px solid #17384d; border-radius: 10px; background: white; color: #17384d; cursor: pointer; font: inherit; font-size: .7rem; font-weight: 900; }
+.game-arcade-quick-start { display:flex; min-height:44px; align-items:center; gap:5px; padding:7px 11px; border:2px solid #17384d; border-radius:10px; background:#ffe36e; color:#17384d; font-size:.7rem; font-weight:900; text-decoration:none; }
 .game-arcade-resume { display:grid; grid-template-columns:auto minmax(0,1fr) auto; min-height:44px; align-items:center; gap:9px; padding:8px 11px; border:2px solid #356b5a; border-radius:12px; background:#edfaf3; color:#17384d; text-decoration:none; } .game-arcade-resume > span { font-size:1.2rem; } .game-arcade-resume > div { display:grid; min-width:0; } .game-arcade-resume small { color:#356b5a; font-size:.58rem; font-weight:900; } .game-arcade-resume b { overflow-wrap:anywhere; font-size:.74rem; } .game-arcade-resume i { color:#48677a; font-size:.55rem; font-style:normal; } .game-arcade-resume > strong { font-size:1.1rem; }
 .game-arcade-time-options { display:flex; flex-wrap:wrap; gap:7px; }
 .game-arcade-time-options button { min-height:44px; padding:7px 11px; border:2px solid #758d9b; border-radius:999px; background:white; color:#17384d; cursor:pointer; font:inherit; font-size:.68rem; font-weight:900; }
@@ -94,6 +96,8 @@
   .game-arcade-heading { align-items: stretch; flex-direction: column; }
   .game-arcade-summary { flex-basis: auto; }
   .game-arcade-discovery, .game-arcade-picks-heading { align-items: stretch; flex-direction: column; }
+  .game-arcade-picks-heading > .game-arcade-pick-actions { align-items:stretch; justify-content:stretch; }
+  .game-arcade-pick-actions > * { flex:1; justify-content:center; text-align:center; }
   .game-arcade-recommendations, .game-arcade-unlock-list { grid-template-columns: 1fr; }
   .game-arcade-search > div { align-items: stretch; flex-direction: column; }
   .game-arcade-personal-filters, .game-arcade-filter--unlocked, .game-arcade-filter--favorites { align-self: stretch; }

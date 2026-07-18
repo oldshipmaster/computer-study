@@ -62,8 +62,13 @@ test("ships game cards in a separate responsive accessible stylesheet", () => {
 
 test("offers rotating recommendations and reversible discovery filters", () => {
   const component = source("components/GameArcade.tsx");
+  const css = source("components/GameArcade.css");
   assert.match(component, /buildGameArcadeRecommendations/);
   assert.match(component, /换一组推荐/);
+  assert.match(component, /替我选一局，马上开始/);
+  assert.match(component, /recommendations\[0\]\.targetId/);
+  assert.match(component, /openGame\(recommendations\[0\]\.id\)/);
+  assert.match(css, /\.game-arcade-quick-start[^{]*\{[^}]*min-height:\s*44px/);
   assert.match(component, /今天想玩这几局/);
   assert.match(component, /\(\[10, 20, 30\] as const\)/);
   assert.match(component, /我有 \{minutes\} 分钟/);
