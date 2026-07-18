@@ -194,18 +194,27 @@ export function KnowledgeSprint({
         <h2 id="sprint-question-heading" ref={questionHeadingRef} tabIndex={-1}>{question.prompt}</h2>
         <p className="sprint-keyboard-hint">{state.phase === "feedback" ? <>按 <kbd>Enter</kbd> 进入{state.index === state.questionCount - 1 ? "战报" : "下一题"}</> : <>按 <kbd>A</kbd>、<kbd>B</kbd>、<kbd>C</kbd> 也能作答</>}</p>
         <div className="sprint-answers" role="group" aria-label="选择一个答案">
-          {question.options.map((option, optionIndex) => (
-            <button
-              className={`sprint-answer ${selectedOption === optionIndex ? "sprint-answer--selected" : ""}`}
+          {question.options.map((option, optionIndex) => {
+            const isSelected = selectedOption === optionIndex;
+            const isCorrect = option === question.answer;
+            const resultClass = state.phase === "feedback"
+              ? isCorrect ? "sprint-answer--correct" : isSelected ? "sprint-answer--miss" : ""
+              : "";
+            const resultLabel = state.phase === "feedback"
+              ? isCorrect ? "，正确答案" : isSelected ? "，你的选择" : ""
+              : "";
+            return <button
+              aria-label={`${String.fromCharCode(65 + optionIndex)}，${option}${resultLabel}`}
+              className={`sprint-answer ${isSelected ? "sprint-answer--selected" : ""} ${resultClass}`}
               disabled={state.phase !== "answering"}
               aria-keyshortcuts={String.fromCharCode(65 + optionIndex)}
               key={option}
               onClick={(event) => answerQuestion(event, optionIndex)}
               type="button"
             >
-              <kbd aria-hidden="true">{String.fromCharCode(65 + optionIndex)}</kbd>{option}
-            </button>
-          ))}
+              <kbd aria-hidden="true">{String.fromCharCode(65 + optionIndex)}</kbd><span className="sprint-answer-copy">{option}</span>
+            </button>;
+          })}
         </div>
         <p className={`sprint-feedback sprint-feedback--${state.feedback.kind}`} role="status">{state.feedback.message}</p>
         {state.phase === "feedback" ? <button className="sprint-next" onClick={advanceQuestion} type="button">{state.index === state.questionCount - 1 ? "查看战报" : "下一题"} <span aria-hidden="true">→</span></button> : null}

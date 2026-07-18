@@ -31,6 +31,10 @@ test("offers a bounded child-friendly sprint flow", () => {
   assert.match(component, /event\.target instanceof HTMLButtonElement/);
   assert.match(component, /advanceKnowledgeSprint\(current, deck, 0\)/);
   assert.match(component, /按 <kbd>Enter<\/kbd> 进入/);
+  assert.match(component, /sprint-answer--correct/);
+  assert.match(component, /sprint-answer--miss/);
+  assert.match(component, /正确答案/);
+  assert.match(component, /你的选择/);
 });
 
 test("integrates the sprint between missions and the learning plan", () => {
@@ -54,4 +58,7 @@ test("keeps sprint controls touch-sized and accessible in alternate modes", () =
   assert.match(css, /@media \(forced-colors: active\)[\s\S]*?\.sprint-answer--selected[\s\S]*?\.sprint-shield/);
   assert.match(css, /\.sprint-answer\s*>\s*kbd/);
   assert.match(css, /\.sprint-keyboard-hint/);
+  assert.match(css, /\.sprint-answer--correct/);
+  assert.match(css, /\.sprint-answer--miss/);
+  assert.match(css, /@media \(forced-colors: active\)[\s\S]*?\.sprint-answer--correct/);
 });
