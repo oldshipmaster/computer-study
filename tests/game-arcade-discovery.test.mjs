@@ -122,3 +122,13 @@ test("returns an honest empty playlist when no unlocked game matches", () => {
   const entries = buildGameArcadeEntries([]);
   assert.deepEqual(buildGameArcadeRecommendations(entries, 0, 3, [], { category: "systems", level: "mastery" }), []);
 });
+
+test("uses search and favorite-only filters for the time-boxed playlist", () => {
+  const entries = buildGameArcadeEntries(COURSES.map((course) => course.id));
+  const routePicks = buildGameArcadeRecommendations(entries, 0, 3, [], { query: " 路由 " });
+  assert.ok(routePicks.length > 0);
+  assert.ok(routePicks.every((game) => `${game.title} ${game.mechanic}`.includes("路由")));
+  const favoritePicks = buildGameArcadeRecommendations(entries, 0, 3, ["pilot", "circuit"], { favoritesOnly: true });
+  assert.deepEqual(favoritePicks.map((game) => game.id), ["circuit", "pilot"]);
+  assert.deepEqual(buildGameArcadeRecommendations(entries, 0, 3, [], { favoritesOnly: true }), []);
+});
