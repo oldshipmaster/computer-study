@@ -47,14 +47,15 @@
 .game-arcade-filters { display: flex; flex-wrap: wrap; gap: 7px; }
 .game-arcade-filter { min-height: 44px; padding: 7px 11px; border: 2px solid #758d9b; border-radius: 999px; background: white; color: #17384d; cursor: pointer; font: inherit; font-size: .69rem; font-weight: 850; }
 .game-arcade-filter[aria-pressed="true"] { border-color: #17384d; background: #17384d; color: white; }
-.game-arcade-filter--unlocked { flex: 0 0 auto; border-color: #356b5a; }
+.game-arcade-personal-filters { display:flex; flex-wrap:wrap; gap:7px; } .game-arcade-filter--unlocked { flex: 0 0 auto; border-color: #356b5a; } .game-arcade-filter--favorites { border-color:#80520d; }
 .game-arcade-filter--level { border-style: dashed; }
-.game-arcade-results { min-height: 24px; margin: 0 0 10px; color: #48677a; font-size: .67rem; font-weight: 800; }
+.game-arcade-results { display:flex; min-height: 24px; align-items:center; gap:7px; margin: 0 0 10px; color: #48677a; font-size: .67rem; font-weight: 800; } .game-arcade-results small { margin-left:auto; font-size:.58rem; font-weight:650; }
 .game-arcade-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
 .game-arcade-card { position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr); align-content: start; gap: 10px 12px; min-width: 0; padding: 15px; border: 2px solid #9cacb5; border-radius: 16px; background: #f2f4f5; }
 .game-arcade-card.is-unlocked { border-color: #356b5a; background: #edfaf3; }
+.game-arcade-favorite { position:absolute; z-index:1; top:9px; right:9px; display:grid; width:44px; height:44px; place-items:center; border:2px solid #758d9b; border-radius:50%; background:white; color:#9cacb5; cursor:pointer; font:inherit; font-size:1.05rem; } .game-arcade-favorite[aria-pressed="true"] { border-color:#80520d; background:#fff0b3; color:#80520d; }
 .game-arcade-icon { display: grid; width: 48px; height: 48px; place-items: center; border: 2px solid #17384d; border-radius: 13px; background: white; font-size: 1.5rem; }
-.game-arcade-card-copy { display: grid; align-content: start; gap: 3px; min-width: 0; }
+.game-arcade-card-copy { display: grid; align-content: start; gap: 3px; min-width: 0; padding-right:38px; }
 .game-arcade-card-copy h3, .game-arcade-card-copy p { margin: 0; }
 .game-arcade-card-copy h3 { font-size: 1rem; }
 .game-arcade-card-copy p { color: #48677a; font-size: .72rem; }
@@ -87,9 +88,12 @@
   .game-arcade-discovery, .game-arcade-picks-heading { align-items: stretch; flex-direction: column; }
   .game-arcade-recommendations, .game-arcade-unlock-list { grid-template-columns: 1fr; }
   .game-arcade-search > div { align-items: stretch; flex-direction: column; }
-  .game-arcade-filter--unlocked { align-self: stretch; }
+  .game-arcade-personal-filters, .game-arcade-filter--unlocked, .game-arcade-filter--favorites { align-self: stretch; }
+  .game-arcade-personal-filters > button { flex:1; }
+  .game-arcade-results { align-items:flex-start; flex-direction:column; }
+  .game-arcade-results small { margin-left:0; }
   .game-arcade-grid { grid-template-columns: 1fr; }
 }
 .bit-island-app--reduced-motion .game-arcade-card.is-unlocked { animation: none; }
 @media (prefers-reduced-motion: reduce) { .game-arcade-card.is-unlocked { animation: none; } }
-@media (forced-colors: active) { .game-arcade-card.is-unlocked { border: 4px solid Highlight; } .game-arcade-state { border: 1px solid CanvasText; } .game-arcade-filter[aria-pressed="true"] { border: 4px solid Highlight; } }
+@media (forced-colors: active) { .game-arcade-card.is-unlocked { border: 4px solid Highlight; } .game-arcade-state { border: 1px solid CanvasText; } .game-arcade-filter[aria-pressed="true"], .game-arcade-favorite[aria-pressed="true"] { border: 4px solid Highlight; } }

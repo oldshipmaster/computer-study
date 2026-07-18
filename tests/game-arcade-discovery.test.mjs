@@ -77,3 +77,10 @@ test("nearest unlocks clamp invalid limits and disappear when every game is open
   const allCourses = COURSES.map((course) => course.id);
   assert.deepEqual(buildClosestGameUnlocks(buildGameArcadeEntries(allCourses), 3), []);
 });
+
+test("filters session favorites together with the existing discovery controls", () => {
+  const entries = buildGameArcadeEntries(COURSES.map((course) => course.id));
+  assert.deepEqual(filterGameArcadeEntries(entries, { favoritesOnly: true, favoriteIds: ["circuit", "pilot", "unknown", "pilot"] }).map((game) => game.id), ["circuit", "pilot"]);
+  assert.deepEqual(filterGameArcadeEntries(entries, { favoritesOnly: true, favoriteIds: ["circuit", "pilot"], category: "life" }).map((game) => game.id), ["pilot"]);
+  assert.deepEqual(filterGameArcadeEntries(entries, { favoritesOnly: true }).map((game) => game.id), []);
+});

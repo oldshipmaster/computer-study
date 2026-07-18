@@ -87,3 +87,14 @@ test("shows a short nearest-unlock learning route", () => {
   assert.match(css, /\.game-arcade-unlock-route/);
   assert.match(css, /\.game-arcade-unlock-card/);
 });
+
+test("lets a child collect and filter favorite games for the current visit", () => {
+  const component = source("components/GameArcade.tsx");
+  const css = source("components/GameArcade.css");
+  assert.match(component, /favoriteIds/);
+  assert.match(component, /toggleFavorite/);
+  assert.match(component, /aria-label=\{`\$\{favoriteIds\.includes\(entry\.id\) \? "取消收藏" : "收藏"\}\$\{entry\.title\}`\}/);
+  assert.match(component, /★ 只看收藏/);
+  assert.match(component, /本次打开页面内保留/);
+  assert.match(css, /\.game-arcade-favorite/);
+});
