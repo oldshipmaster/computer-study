@@ -32,7 +32,10 @@
 .algorithm-visual-note { color: #4a6679; font-size: .72rem; font-weight: 750; text-align: center; }
 .algorithm-arena-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 9px; }
 .algorithm-arena-options .algorithm-arena-action { background: #e5f2ff; box-shadow: 2px 2px 0 #172f46; }
+.algorithm-arena-options .algorithm-arena-action kbd { display: inline-grid; min-width: 25px; min-height: 25px; place-items: center; margin-right: 6px; border: 1px solid #6b899b; border-radius: 6px; background: white; color: #172f46; font: 900 .66rem/1 inherit; box-shadow: 0 2px 0 #8ca5b4; }
 .algorithm-arena-options .algorithm-arena-action[aria-pressed="true"] { background: #ccefdc; }
+.algorithm-keyboard-hint { color: #4a6679; font-size: .74rem; font-weight: 800; text-align: center; }
+.algorithm-keyboard-hint kbd { display: inline-grid; min-width: 26px; min-height: 25px; place-items: center; margin-inline: 2px; border: 1px solid #7793a4; border-radius: 6px; background: white; color: #172f46; font: 900 .68rem/1 inherit; box-shadow: 0 2px 0 #9eb2bd; }
 .algorithm-arena-feedback { min-height: 48px; padding: 10px 12px; border-left: 5px solid #55758b; border-radius: 9px; background: #edf3f6; color: #294d63; }
 .algorithm-arena-feedback.phase-step-solved, .algorithm-arena-feedback.phase-mission-solved { border-color: #267055; background: #e1f7eb; color: #1f5b45; }
 .algorithm-arena-next { justify-self: end; }

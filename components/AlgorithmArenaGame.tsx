@@ -1,7 +1,8 @@
 "use client";
 
-import { useLayoutEffect, useMemo, useRef, useState, type MouseEvent } from "react";
+import { useLayoutEffect, useMemo, useRef, useState, type KeyboardEvent, type MouseEvent } from "react";
 import { getCourse } from "@/lib/course-data";
+import { numberShortcutIndex } from "@/lib/keyboard-shortcuts";
 import {
   ALGORITHM_ARENA_MISSIONS,
   advanceAlgorithmMission,
@@ -102,8 +103,27 @@ export function AlgorithmArenaGame({ completedCourseIds, onStartCourse }: Algori
     setGame((current) => advanceAlgorithmMission(current, event.detail));
   }
 
+  function handleArenaKeyDown(event: KeyboardEvent<HTMLElement>) {
+    if (event.nativeEvent.isComposing || event.repeat || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+    const optionIndex = numberShortcutIndex(event.key, step.options.length);
+    if (optionIndex !== null && game.phase === "playing") {
+      event.preventDefault();
+      setGame((current) => chooseAlgorithmAction(current, mission, step.options[optionIndex].id, 0));
+      return;
+    }
+    if (event.key !== "Enter" || event.target instanceof HTMLButtonElement) return;
+    if (game.phase === "step-solved") {
+      focusNext();
+      setGame((current) => advanceAlgorithmStep(current, mission, 0));
+    } else if (game.phase === "mission-solved") {
+      focusNext();
+      setGame((current) => advanceAlgorithmMission(current, 0));
+    } else return;
+    event.preventDefault();
+  }
+
   return (
-    <section className={`algorithm-arena-shell algorithm-arena-game mode-${mission.mode}`} id="algorithm-arena-game" aria-labelledby="algorithm-arena-round-heading">
+    <section className={`algorithm-arena-shell algorithm-arena-game mode-${mission.mode}`} id="algorithm-arena-game" aria-labelledby="algorithm-arena-round-heading" onKeyDown={handleArenaKeyDown}>
       <button className="algorithm-arena-back" onClick={() => { focusNext(); setMode("menu"); }} type="button">← 返回竞技场入口</button>
       <header className="algorithm-arena-heading">
         <span className="algorithm-arena-round-icon" aria-hidden="true">{MODE_ICONS[mission.mode]}</span>
@@ -120,8 +140,9 @@ export function AlgorithmArenaGame({ completedCourseIds, onStartCourse }: Algori
           </div>
           <p className="algorithm-visual-note">{step.visual.note}</p>
           <div className="algorithm-arena-options" aria-label="选择下一步算法动作" role="group">
-            {step.options.map((candidate) => <button aria-pressed={game.phase !== "playing" && candidate.id === step.answerId} className="algorithm-arena-action" disabled={game.phase !== "playing"} key={candidate.id} onClick={(event) => choose(event, candidate.id)} type="button">{candidate.label}</button>)}
+            {step.options.map((candidate, index) => <button aria-keyshortcuts={String(index + 1)} aria-pressed={game.phase !== "playing" && candidate.id === step.answerId} className="algorithm-arena-action" disabled={game.phase !== "playing"} key={candidate.id} onClick={(event) => choose(event, candidate.id)} type="button"><kbd>{index + 1}</kbd><span>{candidate.label}</span></button>)}
           </div>
+          <p className="algorithm-keyboard-hint">{game.phase === "playing" ? <>也可以按键盘数字 <kbd>1</kbd>、<kbd>2</kbd>、<kbd>3</kbd> 作答</> : <>按 <kbd>Enter</kbd> {game.phase === "step-solved" ? "记录证据并继续" : "接入下一场算法赛"}</>}</p>
           <p className={`algorithm-arena-feedback phase-${game.phase}`} role="status">{game.feedback}</p>
           {game.phase === "step-solved" ? <button className="algorithm-arena-action algorithm-arena-next" onClick={nextStep} type="button">记录证据，继续下一步 →</button> : null}
           {game.phase === "mission-solved" ? <button className="algorithm-arena-action algorithm-arena-next" onClick={nextMission} type="button">{game.index === deck.length - 1 ? "查看通关报告" : "接入下一场算法赛"} →</button> : null}
