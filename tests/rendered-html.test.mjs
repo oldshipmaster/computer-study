@@ -129,6 +129,8 @@ test("server-renders the complete curriculum map", async () => {
   assert.equal((html.match(/开始任务/g) ?? []).length, 65);
   assert.equal((html.match(/route-curve route-curve--/g) ?? []).length, 12);
   assert.match(html, /五次探险计划/);
+  assert.match(html, /比比的探险任务牌/);
+  assert.match(html, /aria-label="探险能量等级进度"/);
   assert.equal((html.match(/class="session-number"/g) ?? []).length, 5);
   assert.match(html, /岛屿印章册/);
   assert.equal((html.match(/还差 5 课/g) ?? []).length, 13);
@@ -140,7 +142,7 @@ test("server-renders the complete curriculum map", async () => {
   assert.match(html, /回到顶部与快捷航线/);
   assert.match(html, /已完成.*0.*\/.*65.*课/);
   assert.match(html, /aria-label="学习区域快捷航线"/);
-  for (const target of ["learning-plan", "adventure-map", "foundation-roadmap", "foundation-practice", "foundation-capstone", "knowledge-atlas", "computer-dictionary", "term-match", "review-station"]) {
+  for (const target of ["adventure-missions", "learning-plan", "adventure-map", "foundation-roadmap", "foundation-practice", "foundation-capstone", "knowledge-atlas", "computer-dictionary", "term-match", "review-station"]) {
     assert.match(html, new RegExp(`href="#${target}"`));
     assert.match(html, new RegExp(`id="${target}"`));
   }

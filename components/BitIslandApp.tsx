@@ -356,6 +356,7 @@ export function BitIslandApp() {
       <IslandMap
         confidenceByCourse={progress.confidenceByCourse}
         completedCourseIds={progress.completedCourseIds}
+        coursePlayCounts={progress.coursePlayCounts}
         headingRef={mapHeadingRef}
         onStartCourse={startCourse}
         resume={progress.resume}
