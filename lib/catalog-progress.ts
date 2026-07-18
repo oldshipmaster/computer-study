@@ -1,5 +1,6 @@
 import { COURSES } from "./course-data.ts";
 import type { BackupProgress } from "./progress-backup.ts";
+import { sanitizeCompletedBossIds } from "./island-boss.ts";
 const COURSE_IDS = new Set(COURSES.map((course) => course.id));
 export function sanitizeCatalogProgress(progress: BackupProgress): BackupProgress {
   const completedCourseIds = [...new Set(progress.completedCourseIds)].filter((id) => COURSE_IDS.has(id));
@@ -14,5 +15,15 @@ export function sanitizeCatalogProgress(progress: BackupProgress): BackupProgres
     bestScore: Number.isInteger(progress.knowledgeSprint?.bestScore) && progress.knowledgeSprint.bestScore >= 0 && progress.knowledgeSprint.bestScore <= 750 ? progress.knowledgeSprint.bestScore : 0,
     runsPlayed: Number.isInteger(progress.knowledgeSprint?.runsPlayed) && progress.knowledgeSprint.runsPlayed >= 0 && progress.knowledgeSprint.runsPlayed <= 10_000 ? progress.knowledgeSprint.runsPlayed : 0,
   };
-  return { ...progress, completedCourseIds, badgeIds: [...progress.badgeIds], coursePlayCounts, knowledgeSprint, confidenceByCourse, settings: { ...progress.settings }, resume };
+  return {
+    version: 1,
+    completedCourseIds,
+    badgeIds: [...progress.badgeIds],
+    coursePlayCounts,
+    knowledgeSprint,
+    completedBossIds: sanitizeCompletedBossIds(progress.completedBossIds, completedCourseIds),
+    confidenceByCourse,
+    settings: { ...progress.settings },
+    resume,
+  };
 }

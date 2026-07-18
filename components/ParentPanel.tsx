@@ -23,6 +23,7 @@ export interface ParentProgress {
     bestScore: number;
     runsPlayed: number;
   };
+  completedBossIds: string[];
   confidenceByCourse: Record<string, "confident" | "practice" | "help">;
   resume: { courseId: string; stage: number } | null;
   settings: {

@@ -5,6 +5,7 @@ import * as progressModule from "../lib/progress.mjs";
 const {
   DEFAULT_PROGRESS,
   completeCourse,
+  completeIslandBoss,
   parseProgress,
   recordKnowledgeSprint,
   resetProgress,
@@ -129,6 +130,37 @@ test("sanitizes malformed knowledge sprint fields", () => {
       runsPlayed: Number.isInteger(knowledgeSprint.runsPlayed) && knowledgeSprint.runsPlayed >= 0 && knowledgeSprint.runsPlayed <= 10_000 ? knowledgeSprint.runsPlayed : 0,
     });
   }
+});
+
+test("migrates and records only unlocked known island boss victories", () => {
+  const legacy = parseProgress(JSON.stringify({
+    version: 1,
+    completedCourseIds: [],
+    badgeIds: [],
+    coursePlayCounts: {},
+    confidenceByCourse: {},
+    knowledgeSprint: { bestScore: 0, runsPlayed: 0 },
+    settings: DEFAULT_PROGRESS.settings,
+    resume: null,
+  }));
+  assert.deepEqual(legacy.completedBossIds, []);
+
+  const launchCourses = ["keyboard-flight", "mouse-precision", "bilingual-input", "desktop-adventure", "program-landing"];
+  const unlocked = { ...DEFAULT_PROGRESS, completedCourseIds: launchCourses };
+  const won = completeIslandBoss(unlocked, "launch-harbor-boss");
+  assert.deepEqual(won.completedBossIds, ["launch-harbor-boss"]);
+  assert.equal(completeIslandBoss(won, "launch-harbor-boss"), won);
+  assert.equal(completeIslandBoss(won, "unknown-boss"), won);
+  assert.equal(completeIslandBoss(DEFAULT_PROGRESS, "launch-harbor-boss"), DEFAULT_PROGRESS);
+  assert.equal(completeIslandBoss(unlocked, "file-forest-boss"), unlocked);
+
+  const parsed = parseProgress(JSON.stringify({
+    ...unlocked,
+    completedBossIds: ["launch-harbor-boss", "unknown-boss", "launch-harbor-boss", 42],
+  }));
+  assert.deepEqual(parsed.completedBossIds, ["launch-harbor-boss"]);
+  assert.deepEqual(parseProgress(JSON.stringify({ ...DEFAULT_PROGRESS, completedBossIds: ["launch-harbor-boss"] })).completedBossIds, []);
+  assert.deepEqual(resetProgress(won).completedBossIds, []);
 });
 
 test("reset keeps settings and can retry storage after an earlier write failure", () => {

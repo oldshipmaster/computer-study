@@ -66,3 +66,18 @@ test("copies only bounded knowledge sprint summary numbers", () => {
   });
   assert.deepEqual(invalid.knowledgeSprint, { bestScore: 0, runsPlayed: 0 });
 });
+
+test("copies only unlocked known island boss victory ids", () => {
+  const launchCourses = ["keyboard-flight", "mouse-precision", "bilingual-input", "desktop-adventure", "program-landing"];
+  const valid = sanitizeCatalogProgress({
+    ...DEFAULT_PROGRESS,
+    completedCourseIds: launchCourses,
+    completedBossIds: ["launch-harbor-boss", "unknown-boss", "launch-harbor-boss"],
+    bossAnswers: ["不应保留"],
+  });
+  assert.deepEqual(valid.completedBossIds, ["launch-harbor-boss"]);
+  assert.equal("bossAnswers" in valid, false);
+
+  const locked = sanitizeCatalogProgress({ ...DEFAULT_PROGRESS, completedBossIds: ["launch-harbor-boss"] });
+  assert.deepEqual(locked.completedBossIds, []);
+});

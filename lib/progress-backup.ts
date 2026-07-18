@@ -1,7 +1,8 @@
 import { COURSES } from "./course-data.ts";
 import { parseProgress } from "./progress.mjs";
+import { sanitizeCompletedBossIds } from "./island-boss.ts";
 
-export interface BackupProgress { version: 1; completedCourseIds: string[]; badgeIds: string[]; coursePlayCounts: Record<string, number>; knowledgeSprint: { bestScore: number; runsPlayed: number }; confidenceByCourse: Record<string, "confident" | "practice" | "help">; settings: { sound: boolean; reducedMotion: boolean }; resume: { courseId: string; stage: number } | null; }
+export interface BackupProgress { version: 1; completedCourseIds: string[]; badgeIds: string[]; coursePlayCounts: Record<string, number>; knowledgeSprint: { bestScore: number; runsPlayed: number }; completedBossIds: string[]; confidenceByCourse: Record<string, "confident" | "practice" | "help">; settings: { sound: boolean; reducedMotion: boolean }; resume: { courseId: string; stage: number } | null; }
 export type BackupParseResult = { ok: true; progress: BackupProgress } | { ok: false; message: string };
 const KNOWN_COURSE_IDS = new Set(COURSES.map((course) => course.id));
 
@@ -23,6 +24,7 @@ export function createProgressBackup(progress: BackupProgress, exportedAt = new 
       return [courseId, Number.isInteger(count) && count >= 1 && count <= 3 ? count : 1];
     })),
     knowledgeSprint: safeKnowledgeSprint(progress.knowledgeSprint),
+    completedBossIds: sanitizeCompletedBossIds(progress.completedBossIds, progress.completedCourseIds),
     confidenceByCourse: { ...progress.confidenceByCourse },
     settings: {
       sound: progress.settings.sound,
@@ -46,7 +48,7 @@ export function parseProgressBackup(text: string): BackupParseResult {
       const count = parsed.coursePlayCounts[courseId];
       return [courseId, Number.isInteger(count) && count >= 1 && count <= 3 ? count : 1];
     }));
-    return { ok: true, progress: { ...parsed, completedCourseIds, badgeIds: parsed.badgeIds.filter((id) => /^[a-z0-9-]{1,64}$/i.test(id)), coursePlayCounts, knowledgeSprint: safeKnowledgeSprint(parsed.knowledgeSprint), confidenceByCourse, resume } };
+    return { ok: true, progress: { ...parsed, completedCourseIds, badgeIds: parsed.badgeIds.filter((id) => /^[a-z0-9-]{1,64}$/i.test(id)), coursePlayCounts, knowledgeSprint: safeKnowledgeSprint(parsed.knowledgeSprint), completedBossIds: sanitizeCompletedBossIds(parsed.completedBossIds, completedCourseIds), confidenceByCourse, resume } };
   } catch {
     return { ok: false, message: "文件内容无法读取，请选择之前导出的 JSON 文件。" };
   }

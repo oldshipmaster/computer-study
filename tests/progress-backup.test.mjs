@@ -4,20 +4,39 @@ import { createProgressBackup, parseProgressBackup } from "../lib/progress-backu
 import { DEFAULT_PROGRESS } from "../lib/progress.mjs";
 
 test("exports a versioned backup without personal fields", () => {
-  const text = createProgressBackup({ ...DEFAULT_PROGRESS, completedCourseIds: ["keyboard-flight"], badgeIds: ["keyboard-pilot"], coursePlayCounts: { "keyboard-flight": 2 }, knowledgeSprint: { bestScore: 625, runsPlayed: 9 }, resume: { courseId: "data-table", stage: 4 }, name: "不应导出", email: "child@example.test", answers: ["不应导出"] }, "2026-07-12T00:00:00.000Z");
+  const launchCourses = ["keyboard-flight", "mouse-precision", "bilingual-input", "desktop-adventure", "program-landing"];
+  const text = createProgressBackup({ ...DEFAULT_PROGRESS, completedCourseIds: launchCourses, badgeIds: ["keyboard-pilot"], coursePlayCounts: { "keyboard-flight": 2 }, knowledgeSprint: { bestScore: 625, runsPlayed: 9 }, completedBossIds: ["launch-harbor-boss", "unknown-boss"], resume: { courseId: "data-table", stage: 4 }, name: "不应导出", email: "child@example.test", answers: ["不应导出"], bossAnswers: ["不应导出"] }, "2026-07-12T00:00:00.000Z");
   const data = JSON.parse(text);
   assert.equal(data.kind, "bit-island-progress-backup");
   assert.equal(data.exportedAt, "2026-07-12T00:00:00.000Z");
   assert.equal(data.progress.completedCourseIds[0], "keyboard-flight");
   assert.deepEqual(data.progress.resume, { courseId: "data-table", stage: 4 });
   assert.deepEqual(data.progress.confidenceByCourse, {});
-  assert.deepEqual(data.progress.coursePlayCounts, { "keyboard-flight": 2 });
+  assert.deepEqual(data.progress.coursePlayCounts, { "keyboard-flight": 2, "mouse-precision": 1, "bilingual-input": 1, "desktop-adventure": 1, "program-landing": 1 });
   assert.deepEqual(data.progress.knowledgeSprint, { bestScore: 625, runsPlayed: 9 });
+  assert.deepEqual(data.progress.completedBossIds, ["launch-harbor-boss"]);
   assert.equal("name" in data, false);
   assert.equal("name" in data.progress, false);
   assert.equal("email" in data.progress, false);
   assert.equal("answers" in data.progress, false);
+  assert.equal("bossAnswers" in data.progress, false);
   assert.equal(text.includes("不应导出"), false);
+});
+
+test("restores only known boss victories backed by completed island courses", () => {
+  const launchCourses = ["keyboard-flight", "mouse-precision", "bilingual-input", "desktop-adventure", "program-landing"];
+  const valid = parseProgressBackup(JSON.stringify({
+    kind: "bit-island-progress-backup",
+    version: 1,
+    progress: { ...DEFAULT_PROGRESS, completedCourseIds: launchCourses, completedBossIds: ["launch-harbor-boss", "unknown-boss", "launch-harbor-boss"], bossAnswers: ["不应保留"] },
+  }));
+  assert.equal(valid.ok, true);
+  assert.deepEqual(valid.progress.completedBossIds, ["launch-harbor-boss"]);
+  assert.equal("bossAnswers" in valid.progress, false);
+
+  const locked = parseProgressBackup(JSON.stringify({ kind: "bit-island-progress-backup", version: 1, progress: { ...DEFAULT_PROGRESS, completedBossIds: ["launch-harbor-boss"] } }));
+  assert.equal(locked.ok, true);
+  assert.deepEqual(locked.progress.completedBossIds, []);
 });
 
 test("restores only bounded knowledge sprint summary numbers", () => {

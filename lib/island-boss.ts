@@ -157,9 +157,24 @@ function makeBoss(seed: BossSeed): IslandBoss {
 }
 
 export const ISLAND_BOSSES: IslandBoss[] = BOSS_SEEDS.map(makeBoss);
+export const ISLAND_BOSS_IDS = ISLAND_BOSSES.map((boss) => boss.id);
 const VALID_EVIDENCE_IDS = new Set(ISLAND_BOSSES.flatMap((boss) => boss.evidence.map((item) => item.id)));
 const VALID_ACTION_IDS = new Set(ISLAND_BOSSES.flatMap((boss) => boss.actions.map((item) => item.id)));
 const VALID_EXPLANATION_IDS = new Set(ISLAND_BOSSES.flatMap((boss) => boss.explanations.map((item) => item.id)));
+const BOSS_BY_ID = new Map(ISLAND_BOSSES.map((boss) => [boss.id, boss]));
+
+export function sanitizeCompletedBossIds(value: unknown, completedCourseIds: readonly string[]): string[] {
+  if (!Array.isArray(value)) return [];
+  const ids = [...new Set(value.filter((item): item is string => typeof item === "string"))];
+  return ids.filter((id) => {
+    const boss = BOSS_BY_ID.get(id);
+    return boss ? getIslandBossUnlock(boss, completedCourseIds).unlocked : false;
+  }).slice(0, ISLAND_BOSSES.length);
+}
+
+export function getIslandBoss(bossId: string) {
+  return BOSS_BY_ID.get(bossId);
+}
 
 export function getIslandBossUnlock(boss: IslandBoss, completedCourseIds: readonly string[]) {
   const completed = new Set(completedCourseIds);
