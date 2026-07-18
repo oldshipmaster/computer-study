@@ -170,7 +170,7 @@ test("claims a successful lesson award exactly once before the visual delay", ()
   );
 
   const awardStart = appSource.indexOf("const awardCourse");
-  const awardEnd = appSource.indexOf("\n  }, []);", awardStart);
+  const awardEnd = appSource.indexOf("const finishCourse", awardStart);
   const awardSource = appSource.slice(awardStart, awardEnd);
   const transitionStart = appSource.indexOf("const finishCourse");
   const transitionEnd = appSource.indexOf("\n  }, []);", transitionStart);
