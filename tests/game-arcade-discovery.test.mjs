@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { GAME_ARCADE_DEFINITIONS, buildGameArcadeEntries, buildGameArcadeRecommendations, filterGameArcadeEntries, gameArcadePlaylistLimit } from "../lib/game-arcade.ts";
+import { COURSES } from "../lib/course-data.ts";
+import { GAME_ARCADE_DEFINITIONS, buildClosestGameUnlocks, buildGameArcadeEntries, buildGameArcadeRecommendations, filterGameArcadeEntries, gameArcadePlaylistLimit } from "../lib/game-arcade.ts";
 
 test("assigns every game to one child-readable discovery category", () => {
   const expected = new Set(["quest", "code", "systems", "life"]);
@@ -56,3 +57,23 @@ test("searches game titles and mechanics with combinable local filters", () => {
 });
 
 test("turns available time into one to three complete game sessions",()=>{assert.equal(gameArcadePlaylistLimit(10),1);assert.equal(gameArcadePlaylistLimit(20),2);assert.equal(gameArcadePlaylistLimit(30),3);assert.equal(gameArcadePlaylistLimit(Number.NaN),1);assert.equal(gameArcadePlaylistLimit(-5),1);assert.equal(gameArcadePlaylistLimit(99),3);});
+
+test("ranks the nearest locked games by remaining lessons without mutating entries", () => {
+  const entries = buildGameArcadeEntries(["bits-and-data"]);
+  const snapshot = entries.map((entry) => entry.id);
+  const closest = buildClosestGameUnlocks(entries, 3);
+  assert.equal(closest.length, 3);
+  assert.deepEqual(closest.map((entry) => entry.progress.maximum - entry.progress.value), [1, 2, 3]);
+  assert.equal(closest[0].id, "circuit");
+  assert.equal(closest[0].nextCourseId, "boolean-logic");
+  assert.deepEqual(entries.map((entry) => entry.id), snapshot);
+  assert.ok(closest.every((entry) => !entry.unlocked && entry.nextCourseId));
+});
+
+test("nearest unlocks clamp invalid limits and disappear when every game is open", () => {
+  const entries = buildGameArcadeEntries([]);
+  assert.deepEqual(buildClosestGameUnlocks(entries, Number.NaN), []);
+  assert.deepEqual(buildClosestGameUnlocks(entries, -2), []);
+  const allCourses = COURSES.map((course) => course.id);
+  assert.deepEqual(buildClosestGameUnlocks(buildGameArcadeEntries(allCourses), 3), []);
+});

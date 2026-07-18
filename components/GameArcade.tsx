@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { getCourse } from "@/lib/course-data";
-import { buildGameArcadeEntries, buildGameArcadeRecommendations, filterGameArcadeEntries, gameArcadePlaylistLimit, type GameArcadeCategory, type GameArcadeLevel } from "@/lib/game-arcade";
+import { buildClosestGameUnlocks, buildGameArcadeEntries, buildGameArcadeRecommendations, filterGameArcadeEntries, gameArcadePlaylistLimit, type GameArcadeCategory, type GameArcadeLevel } from "@/lib/game-arcade";
 import "./GameArcade.css";
 
 interface GameArcadeProps {
@@ -37,6 +37,7 @@ export function GameArcade({ completedCourseIds, onStartCourse }: GameArcadeProp
   const [query, setQuery] = useState("");
   const [unlockedOnly, setUnlockedOnly] = useState(false);
   const recommendations = useMemo(() => buildGameArcadeRecommendations(entries, recommendationRotation, gameArcadePlaylistLimit(sessionMinutes)), [entries, recommendationRotation, sessionMinutes]);
+  const closestUnlocks = useMemo(() => buildClosestGameUnlocks(entries), [entries]);
   const visibleEntries = filterGameArcadeEntries(entries, { query, category, level, unlockedOnly });
   const filtersActive = Boolean(query.trim()) || category !== "all" || level !== "all" || unlockedOnly;
 
@@ -55,6 +56,15 @@ export function GameArcade({ completedCourseIds, onStartCourse }: GameArcadeProp
         <div className="game-arcade-recommendations" role="list">{recommendations.map((entry, index) => <a aria-label={`推荐第${index + 1}局：前往${entry.title}`} className="game-arcade-recommendation" href={`#${entry.targetId}`} key={entry.id} role="listitem"><span>{index + 1}</span><b>{entry.icon} {entry.title}</b><small>{entry.duration}</small><i aria-hidden="true">→</i></a>)}</div>
         {recommendations.length === 1 ? <p>一局就是一节完整小课；学完更多课程后，可选路线会一起长大。</p> : <p>按每局约 8–10 分钟安排，只从已解锁玩法中轮换，不会记录选择。</p>}
       </section>
+
+      {closestUnlocks.length ? <section className="game-arcade-unlock-route" aria-labelledby="game-arcade-unlock-heading">
+        <div className="game-arcade-unlock-heading"><span aria-hidden="true">🔓</span><div><h3 id="game-arcade-unlock-heading">再学几课就能玩</h3><p>优先展示离解锁最近的路线，点一下就从下一课继续。</p></div></div>
+        <div className="game-arcade-unlock-list">{closestUnlocks.map((entry) => {
+          const nextCourse = entry.nextCourseId ? getCourse(entry.nextCourseId) : undefined;
+          const remaining = entry.progress.maximum - entry.progress.value;
+          return <article className="game-arcade-unlock-card" key={entry.id}><span aria-hidden="true">{entry.icon}</span><div><b>{entry.title}</b><small>还差 {remaining} 课</small></div><button onClick={() => onStartCourse(entry.nextCourseId!)} type="button">先学：{nextCourse?.title ?? "下一课"} <span aria-hidden="true">→</span></button></article>;
+        })}</div>
+      </section> : null}
 
       <div className="game-arcade-search"><label htmlFor="game-arcade-search">找一局想玩的</label><div><input aria-label="搜索游戏" id="game-arcade-search" onChange={(event) => setQuery(event.target.value)} placeholder="搜索游戏名称或玩法" type="search" value={query} />{query ? <button onClick={() => setQuery("")} type="button">清空搜索</button> : null}</div><small>只在当前页面匹配标题和玩法说明，不保存搜索词。</small></div>
       <div className="game-arcade-discovery">

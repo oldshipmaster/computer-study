@@ -119,4 +119,14 @@ export function filterGameArcadeEntries(entries: readonly GameArcadeEntry[], fil
   });
 }
 
+export function buildClosestGameUnlocks(entries: readonly GameArcadeEntry[], limit = 3): GameArcadeEntry[] {
+  const safeLimit = Number.isFinite(limit) ? Math.max(0, Math.floor(limit)) : 0;
+  return entries
+    .map((entry, index) => ({ entry, index, remaining: entry.progress.maximum - entry.progress.value }))
+    .filter(({ entry }) => !entry.unlocked && entry.nextCourseId !== null)
+    .sort((left, right) => left.remaining - right.remaining || left.entry.progress.maximum - right.entry.progress.maximum || left.index - right.index)
+    .slice(0, safeLimit)
+    .map(({ entry }) => entry);
+}
+
 export function gameArcadePlaylistLimit(minutes: number): number { if (!Number.isFinite(minutes) || minutes < 15) return 1; if (minutes < 25) return 2; return 3; }

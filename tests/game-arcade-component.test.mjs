@@ -76,3 +76,14 @@ test("keeps recommendation and filter controls touch-sized and responsive", () =
   assert.match(css, /@media \(max-width: 720px\)[\s\S]*?\.game-arcade-recommendations[\s\S]*?grid-template-columns:\s*1fr/);
   assert.match(css, /@media \(forced-colors: active\)[\s\S]*?aria-pressed="true"/);
 });
+
+test("shows a short nearest-unlock learning route", () => {
+  const component = source("components/GameArcade.tsx");
+  const css = source("components/GameArcade.css");
+  assert.match(component, /buildClosestGameUnlocks/);
+  assert.match(component, /再学几课就能玩/);
+  assert.match(component, /还差 \{remaining\} 课/);
+  assert.match(component, /onStartCourse\(entry\.nextCourseId!\)/);
+  assert.match(css, /\.game-arcade-unlock-route/);
+  assert.match(css, /\.game-arcade-unlock-card/);
+});
