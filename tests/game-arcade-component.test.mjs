@@ -89,6 +89,9 @@ test("offers rotating recommendations and reversible discovery filters", () => {
   assert.match(component, /只看没打开/);
   assert.match(component, /⌨ 只看键盘玩法/);
   assert.match(component, /键鼠都能玩/);
+  assert.match(component, /按屏幕标出的数字键选择/);
+  assert.match(component, /鼠标也能完成全部操作/);
+  assert.match(css, /\.game-arcade-keyboard-guide/);
   assert.match(component, /keyboardOnly/);
   assert.match(component, /unvisitedOnly/);
   assert.match(component, /visitedIds: visitedGameIds/);
