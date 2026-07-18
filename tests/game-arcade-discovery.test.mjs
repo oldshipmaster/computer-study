@@ -145,3 +145,15 @@ test("records a bounded unique game trail for the current page visit", () => {
   assert.deepEqual(recordGameArcadeVisit(["unknown", "missions", "missions"], "circuit"), ["missions", "circuit"]);
   assert.deepEqual(recordGameArcadeVisit(["missions"], "unknown"), ["missions"]);
 });
+
+test("prefers fresh matches before games already opened this visit", () => {
+  const entries = buildGameArcadeEntries(COURSES.map((course) => course.id));
+  const fresh = buildGameArcadeRecommendations(entries, 0, 3, ["missions", "circuit"], { visitedIds: ["missions", "circuit"] });
+  assert.equal(fresh.length, 3);
+  assert.ok(fresh.every((game) => !["missions", "circuit"].includes(game.id)));
+  const almostAllVisited = entries.filter((entry) => entry.unlocked).slice(0, -1).map((entry) => entry.id);
+  const fallback = buildGameArcadeRecommendations(entries, 0, 3, [], { visitedIds: almostAllVisited });
+  assert.equal(fallback.length, 3);
+  assert.equal(fallback[0].id, entries.filter((entry) => entry.unlocked).at(-1)?.id);
+  assert.equal(new Set(fallback.map((game) => game.id)).size, 3);
+});

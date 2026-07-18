@@ -92,7 +92,7 @@ export function buildGameArcadeFilterSummary(filters: { category?: GameArcadeCat
   return summary.length ? summary : ["全部已解锁玩法"];
 }
 
-export function buildGameArcadeRecommendations(entries: readonly GameArcadeEntry[], rotation: number, limit = 3, preferredIds: readonly string[] = [], filters: { category?: GameArcadeCategory | "all"; level?: GameArcadeLevel | "all"; query?: string; favoritesOnly?: boolean } = {}): GameArcadeEntry[] {
+export function buildGameArcadeRecommendations(entries: readonly GameArcadeEntry[], rotation: number, limit = 3, preferredIds: readonly string[] = [], filters: { category?: GameArcadeCategory | "all"; level?: GameArcadeLevel | "all"; query?: string; favoritesOnly?: boolean; visitedIds?: readonly string[] } = {}): GameArcadeEntry[] {
   const safeRotation = Number.isFinite(rotation) ? Math.max(0, Math.floor(rotation)) : 0;
   const safeLimit = Number.isFinite(limit) ? Math.max(0, Math.floor(limit)) : 0;
   const preferredSet = new Set(preferredIds);
@@ -120,11 +120,13 @@ export function buildGameArcadeRecommendations(entries: readonly GameArcadeEntry
     if (!added) break;
   }
   const preferred = unlocked.filter((entry) => preferredSet.has(entry.id));
-  if (!preferred.length) return recommendations;
   const preferredOffset = safeRotation % preferred.length;
   const rotatedPreferred = [...preferred.slice(preferredOffset), ...preferred.slice(0, preferredOffset)];
+  const visitedSet = new Set(filters.visitedIds ?? []);
   const prioritized: GameArcadeEntry[] = [];
-  for (const candidate of [...rotatedPreferred, ...recommendations, ...unlocked]) {
+  const fresh = (candidates: readonly GameArcadeEntry[]) => candidates.filter((entry) => !visitedSet.has(entry.id));
+  const visited = (candidates: readonly GameArcadeEntry[]) => candidates.filter((entry) => visitedSet.has(entry.id));
+  for (const candidate of [...fresh(rotatedPreferred), ...fresh(recommendations), ...fresh(unlocked), ...visited(rotatedPreferred), ...visited(recommendations), ...visited(unlocked)]) {
     if (prioritized.some((entry) => entry.id === candidate.id)) continue;
     prioritized.push(candidate);
     if (prioritized.length === target) break;
