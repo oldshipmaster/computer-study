@@ -47,3 +47,24 @@ test("ships game cards in a separate responsive accessible stylesheet", () => {
   assert.match(css, /\.bit-island-app--reduced-motion[\s\S]*?animation:\s*none/);
   assert.match(css, /@media \(forced-colors: active\)[\s\S]*?\.game-arcade-card\.is-unlocked/);
 });
+
+test("offers rotating recommendations and reversible discovery filters", () => {
+  const component = source("components/GameArcade.tsx");
+  assert.match(component, /buildGameArcadeRecommendations/);
+  assert.match(component, /换一组推荐/);
+  assert.match(component, /今天想玩这几局/);
+  assert.match(component, /aria-pressed=\{category === option\.id\}/);
+  assert.match(component, /aria-pressed=\{unlockedOnly\}/);
+  assert.match(component, /只看已解锁/);
+  assert.match(component, /清除筛选/);
+  assert.match(component, /role="status"/);
+  for (const label of ["全部玩法", "综合挑战", "编程与逻辑", "电脑与网络", "安全与文件"]) assert.match(component, new RegExp(label));
+});
+
+test("keeps recommendation and filter controls touch-sized and responsive", () => {
+  const css = source("components/GameArcade.css");
+  assert.match(css, /\.game-arcade-filter[^{]*\{[^}]*min-height:\s*44px/);
+  assert.match(css, /\.game-arcade-recommendation[^{]*\{[^}]*min-height:\s*44px/);
+  assert.match(css, /@media \(max-width: 720px\)[\s\S]*?\.game-arcade-recommendations[\s\S]*?grid-template-columns:\s*1fr/);
+  assert.match(css, /@media \(forced-colors: active\)[\s\S]*?aria-pressed="true"/);
+});

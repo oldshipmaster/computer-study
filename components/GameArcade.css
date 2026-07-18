@@ -8,6 +8,25 @@
 .game-arcade-summary strong { font-size: 1.3rem; }
 .game-arcade-summary span { color: #48677a; font-size: .68rem; }
 .game-arcade-summary progress { width: 100%; accent-color: #315c9a; }
+.game-arcade-picks { display: grid; gap: 10px; margin-bottom: 18px; padding: 15px; border: 2px solid #17384d; border-radius: 17px; background: linear-gradient(135deg, #e0f5ff, #fff5c7); }
+.game-arcade-picks-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.game-arcade-picks-heading > div { display: flex; align-items: center; gap: 8px; }
+.game-arcade-picks-heading h3, .game-arcade-picks p { margin: 0; }
+.game-arcade-picks-heading > div > span { color: #a35d00; font-size: 1.4rem; }
+.game-arcade-picks-heading button { min-height: 44px; padding: 7px 11px; border: 2px solid #17384d; border-radius: 10px; background: white; color: #17384d; cursor: pointer; font: inherit; font-size: .7rem; font-weight: 900; }
+.game-arcade-recommendations { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.game-arcade-recommendation { display: grid; grid-template-columns: 28px minmax(0, 1fr) auto; min-height: 44px; align-items: center; gap: 2px 8px; padding: 9px; border: 2px solid #4e7489; border-radius: 12px; background: white; color: #17384d; text-decoration: none; }
+.game-arcade-recommendation > span { display: grid; grid-row: 1 / 3; width: 28px; height: 28px; place-items: center; border-radius: 50%; background: #17384d; color: white; font-weight: 950; }
+.game-arcade-recommendation b { overflow-wrap: anywhere; font-size: .75rem; }
+.game-arcade-recommendation small { color: #48677a; font-size: .62rem; }
+.game-arcade-recommendation i { grid-column: 3; grid-row: 1 / 3; font-style: normal; font-weight: 950; }
+.game-arcade-picks > p { color: #48677a; font-size: .66rem; }
+.game-arcade-discovery { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 6px; }
+.game-arcade-filters { display: flex; flex-wrap: wrap; gap: 7px; }
+.game-arcade-filter { min-height: 44px; padding: 7px 11px; border: 2px solid #758d9b; border-radius: 999px; background: white; color: #17384d; cursor: pointer; font: inherit; font-size: .69rem; font-weight: 850; }
+.game-arcade-filter[aria-pressed="true"] { border-color: #17384d; background: #17384d; color: white; }
+.game-arcade-filter--unlocked { flex: 0 0 auto; border-color: #356b5a; }
+.game-arcade-results { min-height: 24px; margin: 0 0 10px; color: #48677a; font-size: .67rem; font-weight: 800; }
 .game-arcade-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
 .game-arcade-card { position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr); align-content: start; gap: 10px 12px; min-width: 0; padding: 15px; border: 2px solid #9cacb5; border-radius: 16px; background: #f2f4f5; }
 .game-arcade-card.is-unlocked { border-color: #356b5a; background: #edfaf3; }
@@ -25,6 +44,10 @@
 .is-unlocked .game-arcade-progress progress { accent-color: #39755f; }
 .game-arcade-action { display: flex; grid-column: 1 / -1; min-height: 44px; align-items: center; justify-content: center; padding: 8px 10px; border: 2px solid #17384d; border-radius: 10px; background: #ffe36e; box-shadow: 3px 3px 0 #17384d; color: #17384d; cursor: pointer; font: inherit; font-size: .72rem; font-weight: 900; text-align: center; text-decoration: none; }
 .is-locked .game-arcade-action { background: #dff3ff; }
+.game-arcade-empty { display: grid; justify-items: center; gap: 7px; padding: 28px; border: 2px dashed #758d9b; border-radius: 16px; background: #f3f6f7; text-align: center; }
+.game-arcade-empty > span { font-size: 2rem; }
+.game-arcade-empty h3, .game-arcade-empty p { margin: 0; }
+.game-arcade-empty .game-arcade-action { width: min(100%, 220px); }
 .game-arcade-card.is-unlocked { animation: game-card-enter .32s ease-out both; }
 .game-arcade-card.is-unlocked:nth-child(2n) { animation-delay: .04s; }
 @keyframes game-card-enter { from { opacity: 0; transform: translateY(5px); } }
@@ -34,8 +57,11 @@
   .game-arcade { width: min(100% - 32px, 1180px); }
   .game-arcade-heading { align-items: stretch; flex-direction: column; }
   .game-arcade-summary { flex-basis: auto; }
+  .game-arcade-discovery, .game-arcade-picks-heading { align-items: stretch; flex-direction: column; }
+  .game-arcade-recommendations { grid-template-columns: 1fr; }
+  .game-arcade-filter--unlocked { align-self: stretch; }
   .game-arcade-grid { grid-template-columns: 1fr; }
 }
 .bit-island-app--reduced-motion .game-arcade-card.is-unlocked { animation: none; }
 @media (prefers-reduced-motion: reduce) { .game-arcade-card.is-unlocked { animation: none; } }
-@media (forced-colors: active) { .game-arcade-card.is-unlocked { border: 4px solid Highlight; } .game-arcade-state { border: 1px solid CanvasText; } }
+@media (forced-colors: active) { .game-arcade-card.is-unlocked { border: 4px solid Highlight; } .game-arcade-state { border: 1px solid CanvasText; } .game-arcade-filter[aria-pressed="true"] { border: 4px solid Highlight; } }

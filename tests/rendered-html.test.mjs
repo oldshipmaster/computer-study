@@ -151,6 +151,11 @@ test("server-renders the complete curriculum map", async () => {
   }
   assert.match(html, /比特岛游戏中心/);
   assert.match(html, /正在整理比特岛游戏中心/);
+  assert.match(html, /今天想玩这几局/);
+  assert.match(html, /只看已解锁/);
+  assert.match(html, /综合挑战/);
+  assert.match(html, /安全与文件/);
+  assert.match(html, /现在显示.*12.*种玩法/);
   assert.match(html, /不需要注册账号或填写姓名/);
   assert.match(html, /均为虚构模拟/);
   assert.match(html, /你的知识图鉴/);
