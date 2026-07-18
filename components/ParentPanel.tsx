@@ -19,6 +19,10 @@ export interface ParentProgress {
   completedCourseIds: string[];
   badgeIds: string[];
   coursePlayCounts: Record<string, number>;
+  knowledgeSprint: {
+    bestScore: number;
+    runsPlayed: number;
+  };
   confidenceByCourse: Record<string, "confident" | "practice" | "help">;
   resume: { courseId: string; stage: number } | null;
   settings: {

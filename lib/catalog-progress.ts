@@ -10,5 +10,9 @@ export function sanitizeCatalogProgress(progress: BackupProgress): BackupProgres
     const count = progress.coursePlayCounts?.[courseId];
     return [courseId, Number.isInteger(count) && count >= 1 && count <= 3 ? count : 1];
   }));
-  return { ...progress, completedCourseIds, badgeIds: [...progress.badgeIds], coursePlayCounts, confidenceByCourse, settings: { ...progress.settings }, resume };
+  const knowledgeSprint = {
+    bestScore: Number.isInteger(progress.knowledgeSprint?.bestScore) && progress.knowledgeSprint.bestScore >= 0 && progress.knowledgeSprint.bestScore <= 750 ? progress.knowledgeSprint.bestScore : 0,
+    runsPlayed: Number.isInteger(progress.knowledgeSprint?.runsPlayed) && progress.knowledgeSprint.runsPlayed >= 0 && progress.knowledgeSprint.runsPlayed <= 10_000 ? progress.knowledgeSprint.runsPlayed : 0,
+  };
+  return { ...progress, completedCourseIds, badgeIds: [...progress.badgeIds], coursePlayCounts, knowledgeSprint, confidenceByCourse, settings: { ...progress.settings }, resume };
 }

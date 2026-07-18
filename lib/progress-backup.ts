@@ -1,9 +1,17 @@
 import { COURSES } from "./course-data.ts";
 import { parseProgress } from "./progress.mjs";
 
-export interface BackupProgress { version: 1; completedCourseIds: string[]; badgeIds: string[]; coursePlayCounts: Record<string, number>; confidenceByCourse: Record<string, "confident" | "practice" | "help">; settings: { sound: boolean; reducedMotion: boolean }; resume: { courseId: string; stage: number } | null; }
+export interface BackupProgress { version: 1; completedCourseIds: string[]; badgeIds: string[]; coursePlayCounts: Record<string, number>; knowledgeSprint: { bestScore: number; runsPlayed: number }; confidenceByCourse: Record<string, "confident" | "practice" | "help">; settings: { sound: boolean; reducedMotion: boolean }; resume: { courseId: string; stage: number } | null; }
 export type BackupParseResult = { ok: true; progress: BackupProgress } | { ok: false; message: string };
 const KNOWN_COURSE_IDS = new Set(COURSES.map((course) => course.id));
+
+function safeKnowledgeSprint(value: unknown): BackupProgress["knowledgeSprint"] {
+  const sprint = value && typeof value === "object" ? value as Partial<BackupProgress["knowledgeSprint"]> : {};
+  return {
+    bestScore: Number.isInteger(sprint.bestScore) && sprint.bestScore! >= 0 && sprint.bestScore! <= 750 ? sprint.bestScore! : 0,
+    runsPlayed: Number.isInteger(sprint.runsPlayed) && sprint.runsPlayed! >= 0 && sprint.runsPlayed! <= 10_000 ? sprint.runsPlayed! : 0,
+  };
+}
 
 export function createProgressBackup(progress: BackupProgress, exportedAt = new Date().toISOString()): string {
   const safeProgress: BackupProgress = {
@@ -14,6 +22,7 @@ export function createProgressBackup(progress: BackupProgress, exportedAt = new 
       const count = progress.coursePlayCounts?.[courseId];
       return [courseId, Number.isInteger(count) && count >= 1 && count <= 3 ? count : 1];
     })),
+    knowledgeSprint: safeKnowledgeSprint(progress.knowledgeSprint),
     confidenceByCourse: { ...progress.confidenceByCourse },
     settings: {
       sound: progress.settings.sound,
@@ -37,7 +46,7 @@ export function parseProgressBackup(text: string): BackupParseResult {
       const count = parsed.coursePlayCounts[courseId];
       return [courseId, Number.isInteger(count) && count >= 1 && count <= 3 ? count : 1];
     }));
-    return { ok: true, progress: { ...parsed, completedCourseIds, badgeIds: parsed.badgeIds.filter((id) => /^[a-z0-9-]{1,64}$/i.test(id)), coursePlayCounts, confidenceByCourse, resume } };
+    return { ok: true, progress: { ...parsed, completedCourseIds, badgeIds: parsed.badgeIds.filter((id) => /^[a-z0-9-]{1,64}$/i.test(id)), coursePlayCounts, knowledgeSprint: safeKnowledgeSprint(parsed.knowledgeSprint), confidenceByCourse, resume } };
   } catch {
     return { ok: false, message: "文件内容无法读取，请选择之前导出的 JSON 文件。" };
   }

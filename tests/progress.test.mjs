@@ -6,6 +6,7 @@ const {
   DEFAULT_PROGRESS,
   completeCourse,
   parseProgress,
+  recordKnowledgeSprint,
   resetProgress,
   setCourseConfidence,
   serializeProgress,
@@ -84,6 +85,50 @@ test("drops malformed play counts and keeps only completed courses", () => {
     "keyboard-flight": 2,
     "file-home": 1,
   });
+});
+
+test("migrates, records, and bounds private knowledge sprint scores", () => {
+  const legacy = parseProgress(JSON.stringify({
+    version: 1,
+    completedCourseIds: [],
+    badgeIds: [],
+    confidenceByCourse: {},
+    settings: DEFAULT_PROGRESS.settings,
+    resume: null,
+  }));
+  assert.deepEqual(legacy.knowledgeSprint, { bestScore: 0, runsPlayed: 0 });
+
+  const first = recordKnowledgeSprint(DEFAULT_PROGRESS, 425);
+  const lower = recordKnowledgeSprint(first, 300);
+  assert.deepEqual(first.knowledgeSprint, { bestScore: 425, runsPlayed: 1 });
+  assert.deepEqual(lower.knowledgeSprint, { bestScore: 425, runsPlayed: 2 });
+  assert.equal(recordKnowledgeSprint(lower, -1), lower);
+  assert.equal(recordKnowledgeSprint(lower, 751), lower);
+  assert.equal(recordKnowledgeSprint(lower, 1.5), lower);
+
+  const capped = recordKnowledgeSprint({
+    ...lower,
+    knowledgeSprint: { bestScore: 425, runsPlayed: 10_000 },
+  }, 750);
+  assert.deepEqual(capped.knowledgeSprint, { bestScore: 750, runsPlayed: 10_000 });
+  assert.deepEqual(resetProgress(capped).knowledgeSprint, { bestScore: 0, runsPlayed: 0 });
+});
+
+test("sanitizes malformed knowledge sprint fields", () => {
+  for (const knowledgeSprint of [
+    { bestScore: -1, runsPlayed: 1 },
+    { bestScore: 751, runsPlayed: 1 },
+    { bestScore: 100.5, runsPlayed: 1 },
+    { bestScore: 100, runsPlayed: -1 },
+    { bestScore: 100, runsPlayed: 10_001 },
+    { bestScore: "100", runsPlayed: "2" },
+  ]) {
+    const parsed = parseProgress(JSON.stringify({ ...DEFAULT_PROGRESS, knowledgeSprint }));
+    assert.deepEqual(parsed.knowledgeSprint, {
+      bestScore: Number.isInteger(knowledgeSprint.bestScore) && knowledgeSprint.bestScore >= 0 && knowledgeSprint.bestScore <= 750 ? knowledgeSprint.bestScore : 0,
+      runsPlayed: Number.isInteger(knowledgeSprint.runsPlayed) && knowledgeSprint.runsPlayed >= 0 && knowledgeSprint.runsPlayed <= 10_000 ? knowledgeSprint.runsPlayed : 0,
+    });
+  }
 });
 
 test("reset keeps settings and can retry storage after an earlier write failure", () => {

@@ -52,3 +52,17 @@ test("keeps bounded play counts only for completed catalog courses", () => {
     "file-home": 1,
   });
 });
+
+test("copies only bounded knowledge sprint summary numbers", () => {
+  const valid = sanitizeCatalogProgress({
+    ...DEFAULT_PROGRESS,
+    knowledgeSprint: { bestScore: 700, runsPlayed: 42, answers: ["不应保留"] },
+  });
+  assert.deepEqual(valid.knowledgeSprint, { bestScore: 700, runsPlayed: 42 });
+
+  const invalid = sanitizeCatalogProgress({
+    ...DEFAULT_PROGRESS,
+    knowledgeSprint: { bestScore: 751, runsPlayed: -1 },
+  });
+  assert.deepEqual(invalid.knowledgeSprint, { bestScore: 0, runsPlayed: 0 });
+});

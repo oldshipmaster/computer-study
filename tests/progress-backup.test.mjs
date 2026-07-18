@@ -4,7 +4,7 @@ import { createProgressBackup, parseProgressBackup } from "../lib/progress-backu
 import { DEFAULT_PROGRESS } from "../lib/progress.mjs";
 
 test("exports a versioned backup without personal fields", () => {
-  const text = createProgressBackup({ ...DEFAULT_PROGRESS, completedCourseIds: ["keyboard-flight"], badgeIds: ["keyboard-pilot"], coursePlayCounts: { "keyboard-flight": 2 }, resume: { courseId: "data-table", stage: 4 }, name: "不应导出", email: "child@example.test", answers: ["不应导出"] }, "2026-07-12T00:00:00.000Z");
+  const text = createProgressBackup({ ...DEFAULT_PROGRESS, completedCourseIds: ["keyboard-flight"], badgeIds: ["keyboard-pilot"], coursePlayCounts: { "keyboard-flight": 2 }, knowledgeSprint: { bestScore: 625, runsPlayed: 9 }, resume: { courseId: "data-table", stage: 4 }, name: "不应导出", email: "child@example.test", answers: ["不应导出"] }, "2026-07-12T00:00:00.000Z");
   const data = JSON.parse(text);
   assert.equal(data.kind, "bit-island-progress-backup");
   assert.equal(data.exportedAt, "2026-07-12T00:00:00.000Z");
@@ -12,11 +12,30 @@ test("exports a versioned backup without personal fields", () => {
   assert.deepEqual(data.progress.resume, { courseId: "data-table", stage: 4 });
   assert.deepEqual(data.progress.confidenceByCourse, {});
   assert.deepEqual(data.progress.coursePlayCounts, { "keyboard-flight": 2 });
+  assert.deepEqual(data.progress.knowledgeSprint, { bestScore: 625, runsPlayed: 9 });
   assert.equal("name" in data, false);
   assert.equal("name" in data.progress, false);
   assert.equal("email" in data.progress, false);
   assert.equal("answers" in data.progress, false);
   assert.equal(text.includes("不应导出"), false);
+});
+
+test("restores only bounded knowledge sprint summary numbers", () => {
+  const valid = parseProgressBackup(JSON.stringify({
+    kind: "bit-island-progress-backup",
+    version: 1,
+    progress: { ...DEFAULT_PROGRESS, knowledgeSprint: { bestScore: 750, runsPlayed: 10_000, answers: ["不应保留"] } },
+  }));
+  assert.equal(valid.ok, true);
+  assert.deepEqual(valid.progress.knowledgeSprint, { bestScore: 750, runsPlayed: 10_000 });
+
+  const invalid = parseProgressBackup(JSON.stringify({
+    kind: "bit-island-progress-backup",
+    version: 1,
+    progress: { ...DEFAULT_PROGRESS, knowledgeSprint: { bestScore: 999, runsPlayed: -3 } },
+  }));
+  assert.equal(invalid.ok, true);
+  assert.deepEqual(invalid.progress.knowledgeSprint, { bestScore: 0, runsPlayed: 0 });
 });
 
 test("restores play counts only for completed known courses", () => {
