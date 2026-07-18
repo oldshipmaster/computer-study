@@ -34,6 +34,7 @@ export const GAME_ARCADE_DEFINITIONS: GameArcadeDefinition[] = [
   { id: "structures", targetId: "data-structure-harbor", title: "数据结构装卸港", icon: "⚓", mechanic: "数组、链表、栈队列、树与图调度", duration: "8–10 分钟", gate: { type: "exact", courseIds: ["array-lockers", "linked-treasure", "stack-queue-dock", "tree-library", "graph-routes"] } },
   { id: "safety", targetId: "safety-detective-game", title: "数字安全侦探局", icon: "🔎", mechanic: "看虚构线索，保护信息并安全求助", duration: "8–10 分钟", gate: { type: "exact", courseIds: ["password-guardian", "private-information", "popup-fog", "healthy-computer-habits", "light-bit-island"] } },
   { id: "factory", targetId: "virtual-computer-factory", title: "虚拟电脑装配厂", icon: "🦾", mechanic: "连接输入、CPU、内存、存储与输出", duration: "8–10 分钟", gate: { type: "exact", courseIds: ["input-process-output", "cpu-memory-storage", "bits-and-data", "hardware-software", "troubleshoot-machine"] } },
+  { id: "files", targetId: "file-forest-rescue", title: "文件森林救援队", icon: "📁", mechanic: "路径、命名、移动、复制、分类与恢复", duration: "8–10 分钟", gate: { type: "exact", courseIds: ["file-home", "name-your-work", "move-and-copy", "file-types", "learning-backpack"] } },
 ];
 
 export function buildGameArcadeEntries(completedCourseIds: readonly string[]): GameArcadeEntry[] {
