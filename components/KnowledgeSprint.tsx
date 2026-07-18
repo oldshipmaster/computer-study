@@ -107,7 +107,7 @@ export function KnowledgeSprint({
           <h2 id="knowledge-sprint-heading">比特知识闪击赛</h2>
           <p>概念题和情境题交替出现。答对会累积连击分，答错也不会出局，先想清楚再选择。</p>
         </div>
-        <div className="sprint-best-card" aria-label="闪击赛本机记录">
+        <div className="sprint-best-card" aria-label="闪击赛本机记录" role="group">
           <span>本机最佳</span><strong>{bestScore}</strong><small>已经挑战 {runsPlayed} 局</small>
         </div>
         <button className="sprint-next" onClick={startSprint} type="button">开始闪击赛 <span aria-hidden="true">→</span></button>
@@ -142,8 +142,8 @@ export function KnowledgeSprint({
       <aside className="sprint-console" aria-label="闪击赛状态">
         <p className="sprint-kicker">知识闪击进行中</p>
         <div className="sprint-score"><span>分数</span><strong>{state.score}</strong></div>
-        <div className="sprint-combo" aria-label={`当前连击 ${state.streak}`}><span aria-hidden="true">⚡</span><strong>{state.streak} 连击</strong></div>
-        <div className="sprint-shields" aria-label={`护盾剩余 ${state.shields} 个`}>
+        <div className="sprint-combo" aria-label={`当前连击 ${state.streak}`} role="group"><span aria-hidden="true">⚡</span><strong>{state.streak} 连击</strong></div>
+        <div className="sprint-shields" aria-label={`护盾剩余 ${state.shields} 个`} role="group">
           <span>护盾</span>
           <span>{[0, 1, 2].map((index) => <i className={`sprint-shield ${index < state.shields ? "sprint-shield--active" : ""}`} key={index} aria-hidden="true">◆</i>)}</span>
         </div>
