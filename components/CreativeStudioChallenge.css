@@ -36,7 +36,10 @@
 .creative-canvas-card.is-ready { border-color: #527f69; background: #e5f4e7; }
 .creative-studio-actions { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 9px; }
 .creative-studio-actions .creative-studio-action { background: #f0e5f5; box-shadow: 2px 2px 0 #402c5b; }
+.creative-studio-actions .creative-studio-action kbd { display: inline-grid; min-width: 25px; min-height: 25px; place-items: center; border: 1px solid #9477a6; border-radius: 6px; background: white; color: #402c5b; font: 900 .66rem/1 inherit; box-shadow: 0 2px 0 #b3a1bd; }
 .creative-studio-actions .creative-studio-action[aria-pressed="true"] { background: #d9f0df; }
+.creative-studio-keyboard-hint { color: #705f7d; font-size: .74rem; font-weight: 800; text-align: center; }
+.creative-studio-keyboard-hint kbd { display: inline-grid; min-width: 26px; min-height: 25px; place-items: center; margin-inline: 2px; border: 1px solid #9477a6; border-radius: 6px; background: white; color: #402c5b; font: 900 .68rem/1 inherit; box-shadow: 0 2px 0 #b3a1bd; }
 .creative-studio-feedback { min-height: 48px; padding: 10px 12px; border-left: 5px solid #9477a6; border-radius: 9px; background: #f2edf4; color: #604c6d; }
 .creative-studio-feedback.phase-step-solved, .creative-studio-feedback.phase-project-solved { border-color: #527f69; background: #e3f5e7; color: #356247; }
 .creative-studio-next { justify-self: end; }

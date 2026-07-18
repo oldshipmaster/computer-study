@@ -1,7 +1,8 @@
 "use client";
 
-import { useLayoutEffect, useMemo, useRef, useState, type MouseEvent } from "react";
+import { useLayoutEffect, useMemo, useRef, useState, type KeyboardEvent, type MouseEvent } from "react";
 import { getCourse } from "@/lib/course-data";
+import { numberShortcutIndex } from "@/lib/keyboard-shortcuts";
 import {
   CREATIVE_STUDIO_PROJECTS,
   advanceCreativeProject,
@@ -43,10 +44,21 @@ export function CreativeStudioChallenge({ completedCourseIds, onStartCourse }: C
   function nextStep(event: MouseEvent<HTMLButtonElement>) { focusNext(); setGame((current) => advanceCreativeStep(current, project, event.detail)); }
   function nextProject(event: MouseEvent<HTMLButtonElement>) { focusNext(); setGame((current) => advanceCreativeProject(current, event.detail)); }
 
-  return <section className={`creative-studio-shell creative-studio-game studio-${project.mode}`} id="creative-studio-challenge" aria-labelledby="creative-project-heading">
+  function handleStudioKeyDown(event: KeyboardEvent<HTMLElement>) {
+    if (event.nativeEvent.isComposing || event.repeat || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+    const optionIndex = numberShortcutIndex(event.key, step.options.length);
+    if (optionIndex !== null && game.phase === "drafting") { event.preventDefault(); setGame((current) => chooseCreativeDecision(current, project, step.options[optionIndex].id, 0)); return; }
+    if (event.key !== "Enter" || event.target instanceof HTMLButtonElement) return;
+    if (game.phase === "step-solved") { focusNext(); setGame((current) => advanceCreativeStep(current, project, 0)); }
+    else if (game.phase === "project-solved") { focusNext(); setGame((current) => advanceCreativeProject(current, 0)); }
+    else return;
+    event.preventDefault();
+  }
+
+  return <section className={`creative-studio-shell creative-studio-game studio-${project.mode}`} id="creative-studio-challenge" aria-labelledby="creative-project-heading" onKeyDown={handleStudioKeyDown}>
     <button className="creative-studio-back" onClick={() => { focusNext(); setMode("menu"); }} type="button">← 返回项目大厅</button>
     <header className="creative-studio-heading"><span aria-hidden="true">{MODE_ICONS[project.mode]}</span><div><p>项目 {game.index + 1} / {deck.length} · {project.skill}</p><h2 id="creative-project-heading" ref={headingRef} tabIndex={-1}>{project.title}</h2><small>{project.story}</small></div><progress aria-label="创作工坊六项目进度" max={deck.length} value={game.solved} /></header>
-    <div className="creative-studio-layout"><section className="creative-studio-workbench" aria-labelledby="creative-step-heading"><span className="creative-studio-step-count">设计决定 {game.stepIndex + 1} / {project.steps.length}</span><h3 id="creative-step-heading">{step.prompt}</h3><div className={`creative-studio-canvas canvas-${project.mode}`} aria-label="当前虚拟作品画布" role="list">{step.canvas.map((canvasCard) => <article aria-current={canvasCard.state === "active" ? "step" : undefined} className={`creative-canvas-card is-${canvasCard.state ?? "normal"}`} key={canvasCard.id} role="listitem"><span aria-hidden="true">{MODE_ICONS[project.mode]}</span><b>{canvasCard.label}</b><small>{canvasCard.detail}</small></article>)}</div><div className="creative-studio-actions" aria-label="选择设计决定" role="group">{step.options.map((candidate) => <button aria-pressed={game.phase !== "drafting" && candidate.id === step.answerId} className="creative-studio-action" disabled={game.phase !== "drafting"} key={candidate.id} onClick={(event) => choose(event, candidate.id)} type="button">{candidate.label}</button>)}</div><p className={`creative-studio-feedback phase-${game.phase}`} role="status">{game.feedback}</p>{game.phase === "step-solved" ? <button className="creative-studio-action creative-studio-next" onClick={nextStep} type="button">把理由放入作品集 →</button> : null}{game.phase === "project-solved" ? <button className="creative-studio-action creative-studio-next" onClick={nextProject} type="button">{game.index === deck.length - 1 ? "参观最终展览" : "打开下一个项目"} <span aria-hidden="true">→</span></button> : null}</section>
+    <div className="creative-studio-layout"><section className="creative-studio-workbench" aria-labelledby="creative-step-heading"><span className="creative-studio-step-count">设计决定 {game.stepIndex + 1} / {project.steps.length}</span><h3 id="creative-step-heading">{step.prompt}</h3><div className={`creative-studio-canvas canvas-${project.mode}`} aria-label="当前虚拟作品画布" role="list">{step.canvas.map((canvasCard) => <article aria-current={canvasCard.state === "active" ? "step" : undefined} className={`creative-canvas-card is-${canvasCard.state ?? "normal"}`} key={canvasCard.id} role="listitem"><span aria-hidden="true">{MODE_ICONS[project.mode]}</span><b>{canvasCard.label}</b><small>{canvasCard.detail}</small></article>)}</div><div className="creative-studio-actions" aria-label="选择设计决定" role="group">{step.options.map((candidate, index) => <button aria-keyshortcuts={String(index + 1)} aria-pressed={game.phase !== "drafting" && candidate.id === step.answerId} className="creative-studio-action" disabled={game.phase !== "drafting"} key={candidate.id} onClick={(event) => choose(event, candidate.id)} type="button"><kbd>{index + 1}</kbd><span>{candidate.label}</span></button>)}</div><p className="creative-studio-keyboard-hint">{game.phase === "drafting" ? <>也可以按键盘数字 <kbd>1</kbd>、<kbd>2</kbd>、<kbd>3</kbd> 选择设计决定</> : <>按 <kbd>Enter</kbd> {game.phase === "step-solved" ? "把理由放入作品集" : "打开下一个项目"}</>}</p><p className={`creative-studio-feedback phase-${game.phase}`} role="status">{game.feedback}</p>{game.phase === "step-solved" ? <button className="creative-studio-action creative-studio-next" onClick={nextStep} type="button">把理由放入作品集 →</button> : null}{game.phase === "project-solved" ? <button className="creative-studio-action creative-studio-next" onClick={nextProject} type="button">{game.index === deck.length - 1 ? "参观最终展览" : "打开下一个项目"} <span aria-hidden="true">→</span></button> : null}</section>
       <aside className="creative-studio-portfolio" aria-labelledby="creative-portfolio-heading"><div><span aria-hidden="true">✦</span><h3 id="creative-portfolio-heading">项目作品集</h3></div>{game.portfolio.length > 0 ? <ol>{game.portfolio.map((evidence, index) => <li key={`${project.id}-${index}`}><span>{index + 1}</span>{evidence}</li>)}</ol> : <p>完成第一个设计决定后，这里会记录“为什么这样做”。</p>}<small>画布和素材均为虚构内容，选择不会上传或保存。</small></aside></div>
   </section>;
 }
