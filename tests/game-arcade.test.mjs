@@ -27,7 +27,7 @@ test("unlocks exact-course games only after every required course", () => {
   assert.equal(partial.find((entry) => entry.id === "robot").unlocked, false);
   const complete = buildGameArcadeEntries([
     "bits-and-data", "boolean-logic",
-    "instruction-order", "grid-city-navigation", "repeat-power", "rainy-condition",
+    "instruction-order", "grid-city-navigation", "repeat-power", "rainy-condition", "bug-catcher",
     "network-layers", "routing-maze", "reliable-transfer",
     "program-process", "cpu-scheduling", "memory-allocation",
     "linear-search", "binary-search", "bubble-sort", "task-decomposition", "algorithm-efficiency",

@@ -8,9 +8,9 @@ function source(relativePath) {
   return readFileSync(file, "utf8");
 }
 
-test("keeps code expedition behind four robot-workshop prerequisites", () => {
+test("keeps code expedition behind all five robot-workshop prerequisites", () => {
   const component = source("components/RobotCodeExpedition.tsx");
-  for (const courseId of ["instruction-order", "grid-city-navigation", "repeat-power", "rainy-condition"]) {
+  for (const courseId of ["instruction-order", "grid-city-navigation", "repeat-power", "rainy-condition", "bug-catcher"]) {
     assert.match(component, new RegExp(courseId));
   }
   assert.match(component, /已完成 \{completedRequired\.length\} \/ \{REQUIRED_COURSE_IDS\.length\}/);

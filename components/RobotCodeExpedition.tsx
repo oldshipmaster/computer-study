@@ -24,7 +24,7 @@ interface RobotCodeExpeditionProps {
   onStartCourse: (courseId: string) => void;
 }
 
-const REQUIRED_COURSE_IDS = ["instruction-order", "grid-city-navigation", "repeat-power", "rainy-condition"] as const;
+const REQUIRED_COURSE_IDS = ["instruction-order", "grid-city-navigation", "repeat-power", "rainy-condition", "bug-catcher"] as const;
 const COMMAND_COPY: Record<RobotCommand, { icon: string; label: string; short: string }> = {
   forward: { icon: "↑", label: "前进一格", short: "前进" },
   turnLeft: { icon: "↶", label: "向左转", short: "左转" },
@@ -77,7 +77,7 @@ export function RobotCodeExpedition({ completedCourseIds, onStartCourse }: Robot
     return (
       <section className="robot-expedition-shell robot-expedition-locked" id="robot-code-expedition" aria-labelledby="robot-expedition-heading">
         <span className="robot-expedition-badge" aria-hidden="true">⌘</span>
-        <div><p className="section-kicker">编程后再执行</p><h2 id="robot-expedition-heading">机器人代码远征</h2><p>先学会顺序、坐标、循环和条件，再来编排真正会移动的程序。</p><strong>已完成 {completedRequired.length} / {REQUIRED_COURSE_IDS.length} 门必修课</strong></div>
+        <div><p className="section-kicker">编程后再执行</p><h2 id="robot-expedition-heading">机器人代码远征</h2><p>先学会顺序、坐标、循环、条件和调试，再来编排真正会移动的程序。</p><strong>已完成 {completedRequired.length} / {REQUIRED_COURSE_IDS.length} 门必修课</strong></div>
         {nextCourse ? <button onClick={() => onStartCourse(nextCourse.id)} type="button">下一门：{nextCourse.title}</button> : null}
       </section>
     );
