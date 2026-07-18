@@ -46,9 +46,10 @@ test("lazy-loads packet escort after code expedition and ships accessible respon
   const map = source("components/IslandMap.tsx");
   const component = source("components/PacketEscort.tsx");
   const css = source("components/PacketEscort.css");
+  const arcade = source("lib/game-arcade.ts");
   assert.match(map, /const PacketEscort = lazy\(\(\) => import\("@\/components\/PacketEscort"\)/);
   assert.match(map, /<RobotCodeExpedition[\s\S]*?<PacketEscort[\s\S]*?<LearningPlan/);
-  assert.match(map, /href="#packet-escort"/);
+  assert.match(arcade, /targetId: "packet-escort"/);
   assert.match(map, /正在连接网络数据包护航/);
   assert.match(component, /import "\.\/PacketEscort\.css"/);
   assert.match(css, /\.packet-escort-action[^{]*\{[^}]*min-height:\s*44px/);

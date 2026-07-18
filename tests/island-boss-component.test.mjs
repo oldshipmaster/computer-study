@@ -35,8 +35,9 @@ test("offers evidence, ordered actions, core explanation, and replay", () => {
 test("integrates the arena after sprint and before the learning plan", () => {
   const map = source("components/IslandMap.tsx");
   const app = source("components/BitIslandApp.tsx");
+  const arcade = source("lib/game-arcade.ts");
   assert.match(map, /<KnowledgeSprint[\s\S]*?<IslandBossArena[\s\S]*?<LearningPlan/);
-  assert.match(map, /href="#island-boss-arena"/);
+  assert.match(arcade, /targetId: "island-boss-arena"/);
   assert.match(app, /completeIslandBoss/);
   assert.match(app, /completedBossIds=\{progress\.completedBossIds\}/);
   assert.match(app, /onCompleteBoss=\{recordBossVictory\}/);

@@ -33,9 +33,10 @@ test("offers complete truth-table challenge and free sandbox flows", () => {
 
 test("lazy-loads the lab between boss arena and learning plan", () => {
   const map = source("components/IslandMap.tsx");
+  const arcade = source("lib/game-arcade.ts");
   assert.match(map, /const LogicCircuitLab = lazy\(\(\) => import\("@\/components\/LogicCircuitLab"\)/);
   assert.match(map, /<IslandBossArena[\s\S]*?<Suspense[\s\S]*?<LogicCircuitLab[\s\S]*?<LearningPlan/);
-  assert.match(map, /href="#logic-circuit-lab"/);
+  assert.match(arcade, /targetId: "logic-circuit-lab"/);
   assert.match(map, /正在接通逻辑电路实验台/);
 });
 

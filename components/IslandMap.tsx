@@ -36,6 +36,7 @@ const LogicCircuitLab = lazy(() => import("@/components/LogicCircuitLab").then((
 const RobotCodeExpedition = lazy(() => import("@/components/RobotCodeExpedition").then((module) => ({ default: module.RobotCodeExpedition })));
 const PacketEscort = lazy(() => import("@/components/PacketEscort").then((module) => ({ default: module.PacketEscort })));
 const CpuSchedulerGame = lazy(() => import("@/components/CpuSchedulerGame").then((module) => ({ default: module.CpuSchedulerGame })));
+const GameArcade = lazy(() => import("@/components/GameArcade").then((module) => ({ default: module.GameArcade })));
 
 interface IslandMapProps {
   completedCourseIds: string[];
@@ -165,13 +166,7 @@ export function IslandMap({
           <span>比特岛大冒险</span>
         </a>
         <nav className="section-jump-nav" aria-label="学习区域快捷航线">
-          <a href="#adventure-missions">任务牌</a>
-          <a href="#knowledge-sprint">闪击赛</a>
-          <a href="#island-boss-arena">Boss 战</a>
-          <a href="#logic-circuit-lab">电路台</a>
-          <a href="#robot-code-expedition">代码远征</a>
-          <a href="#packet-escort">包裹护航</a>
-          <a href="#cpu-scheduler-game">CPU 调度</a>
+          <a href="#game-arcade">游戏中心</a>
           <a href="#learning-plan">今日计划</a>
           <a href="#adventure-map">课程地图</a>
           <a href="#foundation-roadmap">深度路线</a>
@@ -248,6 +243,7 @@ export function IslandMap({
         </div>
       </section>
 
+      <Suspense fallback={<section className="game-arcade" id="game-arcade" role="status"><h2>比特岛游戏中心</h2><p>正在整理比特岛游戏中心…</p></section>}><GameArcade completedCourseIds={completedCourseIds} onStartCourse={onStartCourse} /></Suspense>
       <AdventureMissionBoard completedCourseIds={completedCourseIds} confidenceByCourse={confidenceByCourse} coursePlayCounts={coursePlayCounts} onStartCourse={onStartCourse} />
       <KnowledgeSprint bestScore={knowledgeSprint.bestScore} completedCourseIds={completedCourseIds} key={`sprint-${completedCourseIds.join("|")}`} onRecordSprint={onRecordSprint} onStartCourse={onStartCourse} runsPlayed={knowledgeSprint.runsPlayed} />
       <IslandBossArena completedBossIds={completedBossIds} completedCourseIds={completedCourseIds} onCompleteBoss={onCompleteBoss} onStartCourse={onStartCourse} />

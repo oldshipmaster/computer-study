@@ -45,9 +45,10 @@ test("supports retry, six-map completion, replay rotation, and focus handoff", (
 
 test("lazy-loads code expedition after the circuit lab and before learning plan", () => {
   const map = source("components/IslandMap.tsx");
+  const arcade = source("lib/game-arcade.ts");
   assert.match(map, /const RobotCodeExpedition = lazy\(\(\) => import\("@\/components\/RobotCodeExpedition"\)/);
   assert.match(map, /<LogicCircuitLab[\s\S]*?<RobotCodeExpedition[\s\S]*?<LearningPlan/);
-  assert.match(map, /href="#robot-code-expedition"/);
+  assert.match(arcade, /targetId: "robot-code-expedition"/);
   assert.match(map, /正在装载机器人代码远征/);
 });
 

@@ -142,10 +142,15 @@ test("server-renders the complete curriculum map", async () => {
   assert.match(html, /回到顶部与快捷航线/);
   assert.match(html, /已完成.*0.*\/.*65.*课/);
   assert.match(html, /aria-label="学习区域快捷航线"/);
-  for (const target of ["adventure-missions", "knowledge-sprint", "island-boss-arena", "logic-circuit-lab", "robot-code-expedition", "packet-escort", "cpu-scheduler-game", "learning-plan", "adventure-map", "foundation-roadmap", "foundation-practice", "foundation-capstone", "knowledge-atlas", "computer-dictionary", "term-match", "review-station"]) {
+  for (const target of ["game-arcade", "learning-plan", "adventure-map", "foundation-roadmap", "foundation-practice", "foundation-capstone", "knowledge-atlas", "computer-dictionary", "term-match", "review-station"]) {
     assert.match(html, new RegExp(`href="#${target}"`));
     assert.match(html, new RegExp(`id="${target}"`));
   }
+  for (const target of ["adventure-missions", "knowledge-sprint", "island-boss-arena", "logic-circuit-lab", "robot-code-expedition", "packet-escort", "cpu-scheduler-game"]) {
+    assert.match(html, new RegExp(`id="${target}"`));
+  }
+  assert.match(html, /比特岛游戏中心/);
+  assert.match(html, /正在整理比特岛游戏中心/);
   assert.match(html, /不需要注册账号或填写姓名/);
   assert.match(html, /均为虚构模拟/);
   assert.match(html, /你的知识图鉴/);

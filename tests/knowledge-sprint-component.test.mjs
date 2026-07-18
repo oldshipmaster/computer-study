@@ -26,8 +26,9 @@ test("offers a bounded child-friendly sprint flow", () => {
 test("integrates the sprint between missions and the learning plan", () => {
   const map = source("components/IslandMap.tsx");
   const app = source("components/BitIslandApp.tsx");
+  const arcade = source("lib/game-arcade.ts");
   assert.match(map, /<AdventureMissionBoard[\s\S]*?<KnowledgeSprint[\s\S]*?<LearningPlan/);
-  assert.match(map, /href="#knowledge-sprint"/);
+  assert.match(arcade, /targetId: "knowledge-sprint"/);
   assert.match(map, /knowledgeSprint:\s*\{\s*bestScore: number;\s*runsPlayed: number/);
   assert.match(app, /recordKnowledgeSprint/);
   assert.match(app, /onRecordSprint=\{recordSprintScore\}/);

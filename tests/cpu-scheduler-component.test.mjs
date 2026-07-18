@@ -47,9 +47,10 @@ test("lazy-loads scheduler after packet escort with responsive accessible styles
   const map = source("components/IslandMap.tsx");
   const component = source("components/CpuSchedulerGame.tsx");
   const css = source("components/CpuSchedulerGame.css");
+  const arcade = source("lib/game-arcade.ts");
   assert.match(map, /const CpuSchedulerGame = lazy\(\(\) => import\("@\/components\/CpuSchedulerGame"\)/);
   assert.match(map, /<PacketEscort[\s\S]*?<CpuSchedulerGame[\s\S]*?<LearningPlan/);
-  assert.match(map, /href="#cpu-scheduler-game"/);
+  assert.match(arcade, /targetId: "cpu-scheduler-game"/);
   assert.match(map, /正在启动 CPU 时间片调度台/);
   assert.match(component, /import "\.\/CpuSchedulerGame\.css"/);
   assert.match(css, /\.cpu-scheduler-action[^{]*\{[^}]*min-height:\s*44px/);

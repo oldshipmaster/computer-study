@@ -1,0 +1,41 @@
+.game-arcade { width: min(100% - 48px, 1180px); margin: 48px auto; padding: clamp(20px, 4vw, 34px); scroll-margin-top: 20px; border: 3px solid #17384d; border-radius: 28px; background: #fffdf4; box-shadow: 9px 10px 0 rgb(20 56 77 / 12%); }
+.game-arcade-heading { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin-bottom: 20px; }
+.game-arcade-heading > div:first-child { display: grid; gap: 5px; }
+.game-arcade-heading h2, .game-arcade-heading p { margin: 0; }
+.game-arcade-heading h2 { font-size: clamp(1.55rem, 3.5vw, 2.35rem); }
+.game-arcade-heading > div:first-child > span { color: #48677a; }
+.game-arcade-summary { display: grid; flex: 0 0 170px; gap: 3px; padding: 11px; border: 2px solid #17384d; border-radius: 13px; background: #dff3ff; }
+.game-arcade-summary strong { font-size: 1.3rem; }
+.game-arcade-summary span { color: #48677a; font-size: .68rem; }
+.game-arcade-summary progress { width: 100%; accent-color: #315c9a; }
+.game-arcade-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.game-arcade-card { position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr); align-content: start; gap: 10px 12px; min-width: 0; padding: 15px; border: 2px solid #9cacb5; border-radius: 16px; background: #f2f4f5; }
+.game-arcade-card.is-unlocked { border-color: #356b5a; background: #edfaf3; }
+.game-arcade-icon { display: grid; width: 48px; height: 48px; place-items: center; border: 2px solid #17384d; border-radius: 13px; background: white; font-size: 1.5rem; }
+.game-arcade-card-copy { display: grid; align-content: start; gap: 3px; min-width: 0; }
+.game-arcade-card-copy h3, .game-arcade-card-copy p { margin: 0; }
+.game-arcade-card-copy h3 { font-size: 1rem; }
+.game-arcade-card-copy p { color: #48677a; font-size: .72rem; }
+.game-arcade-card-copy small { color: #315c9a; font-weight: 850; }
+.game-arcade-state { width: fit-content; padding: 2px 6px; border-radius: 999px; background: #e3e8eb; color: #48677a; font-size: .58rem; font-weight: 900; }
+.is-unlocked .game-arcade-state { background: #cceedd; color: #245c48; }
+.game-arcade-progress { display: grid; grid-column: 1 / -1; gap: 4px; }
+.game-arcade-progress span { color: #48677a; font-size: .62rem; font-weight: 800; }
+.game-arcade-progress progress { width: 100%; height: 8px; accent-color: #5c7f91; }
+.is-unlocked .game-arcade-progress progress { accent-color: #39755f; }
+.game-arcade-action { display: flex; grid-column: 1 / -1; min-height: 44px; align-items: center; justify-content: center; padding: 8px 10px; border: 2px solid #17384d; border-radius: 10px; background: #ffe36e; box-shadow: 3px 3px 0 #17384d; color: #17384d; cursor: pointer; font: inherit; font-size: .72rem; font-weight: 900; text-align: center; text-decoration: none; }
+.is-locked .game-arcade-action { background: #dff3ff; }
+.game-arcade-card.is-unlocked { animation: game-card-enter .32s ease-out both; }
+.game-arcade-card.is-unlocked:nth-child(2n) { animation-delay: .04s; }
+@keyframes game-card-enter { from { opacity: 0; transform: translateY(5px); } }
+
+@media (max-width: 900px) { .game-arcade-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 720px) {
+  .game-arcade { width: min(100% - 32px, 1180px); }
+  .game-arcade-heading { align-items: stretch; flex-direction: column; }
+  .game-arcade-summary { flex-basis: auto; }
+  .game-arcade-grid { grid-template-columns: 1fr; }
+}
+.bit-island-app--reduced-motion .game-arcade-card.is-unlocked { animation: none; }
+@media (prefers-reduced-motion: reduce) { .game-arcade-card.is-unlocked { animation: none; } }
+@media (forced-colors: active) { .game-arcade-card.is-unlocked { border: 4px solid Highlight; } .game-arcade-state { border: 1px solid CanvasText; } }
