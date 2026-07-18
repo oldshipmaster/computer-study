@@ -102,6 +102,14 @@ test("filters session favorites together with the existing discovery controls", 
   assert.deepEqual(filterGameArcadeEntries(entries, { favoritesOnly: true }).map((game) => game.id), []);
 });
 
+test("filters out games already opened during the current visit", () => {
+  const entries = buildGameArcadeEntries(COURSES.map((course) => course.id));
+  const fresh = filterGameArcadeEntries(entries, { unvisitedOnly: true, visitedIds: ["missions", "circuit", "unknown", "missions"] });
+  assert.ok(fresh.every((game) => !["missions", "circuit"].includes(game.id)));
+  assert.equal(fresh.length, entries.length - 2);
+  assert.equal(filterGameArcadeEntries(entries, { unvisitedOnly: false, visitedIds: ["missions"] }).length, entries.length);
+});
+
 test("puts unlocked favorites first in a time-boxed recommendation without duplicates", () => {
   const entries = buildGameArcadeEntries(COURSES.map((course) => course.id));
   const picks = buildGameArcadeRecommendations(entries, 0, 3, ["pilot", "circuit", "unknown", "pilot"]);

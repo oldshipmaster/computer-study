@@ -86,6 +86,10 @@ test("offers rotating recommendations and reversible discovery filters", () => {
   assert.match(component, /aria-pressed=\{category === option\.id\}/);
   assert.match(component, /aria-pressed=\{unlockedOnly\}/);
   assert.match(component, /只看已解锁/);
+  assert.match(component, /只看没打开/);
+  assert.match(component, /unvisitedOnly/);
+  assert.match(component, /visitedIds: visitedGameIds/);
+  assert.match(css, /\.game-arcade-filter--unvisited/);
   assert.match(component, /清除筛选/);
   assert.match(component, /placeholder="搜索游戏名称或玩法"/);
   assert.match(component, /aria-label="搜索游戏"/);

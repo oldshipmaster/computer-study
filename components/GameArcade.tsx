@@ -38,6 +38,7 @@ export function GameArcade({ completedCourseIds, onStartCourse }: GameArcadeProp
   const [unlockedOnly, setUnlockedOnly] = useState(false);
   const [favoriteIds, setFavoriteIds] = useState<string[]>([]);
   const [favoritesOnly, setFavoritesOnly] = useState(false);
+  const [unvisitedOnly, setUnvisitedOnly] = useState(false);
   const [lastGameId, setLastGameId] = useState<string | null>(null);
   const [visitedGameIds, setVisitedGameIds] = useState<string[]>([]);
   const sessionGameLimit = gameArcadePlaylistLimit(sessionMinutes);
@@ -49,10 +50,10 @@ export function GameArcade({ completedCourseIds, onStartCourse }: GameArcadeProp
   const playlistBreaks = gameArcadePlaylistBreaks(sessionMinutes);
   const closestUnlocks = useMemo(() => buildClosestGameUnlocks(entries), [entries]);
   const lastGame = entries.find((entry) => entry.id === lastGameId && entry.unlocked);
-  const visibleEntries = filterGameArcadeEntries(entries, { query, category, level, unlockedOnly, favoritesOnly, favoriteIds });
-  const filtersActive = Boolean(query.trim()) || category !== "all" || level !== "all" || unlockedOnly || favoritesOnly;
+  const visibleEntries = filterGameArcadeEntries(entries, { query, category, level, unlockedOnly, favoritesOnly, favoriteIds, unvisitedOnly, visitedIds: visitedGameIds });
+  const filtersActive = Boolean(query.trim()) || category !== "all" || level !== "all" || unlockedOnly || favoritesOnly || unvisitedOnly;
 
-  function clearFilters() { setQuery(""); setCategory("all"); setLevel("all"); setUnlockedOnly(false); setFavoritesOnly(false); }
+  function clearFilters() { setQuery(""); setCategory("all"); setLevel("all"); setUnlockedOnly(false); setFavoritesOnly(false); setUnvisitedOnly(false); }
   function clearFavorites() { setFavoriteIds([]); setFavoritesOnly(false); }
   function toggleFavorite(gameId: string) { setFavoriteIds((current) => current.includes(gameId) ? current.filter((id) => id !== gameId) : [...current, gameId]); }
   function openGame(gameId: string) { setLastGameId(gameId); setVisitedGameIds((current) => recordGameArcadeVisit(current, gameId)); }
@@ -89,7 +90,7 @@ export function GameArcade({ completedCourseIds, onStartCourse }: GameArcadeProp
       <div className="game-arcade-search"><label htmlFor="game-arcade-search">找一局想玩的</label><div><input aria-label="搜索游戏" id="game-arcade-search" onChange={(event) => setQuery(event.target.value)} placeholder="搜索游戏名称或玩法" type="search" value={query} />{query ? <button onClick={() => setQuery("")} type="button">清空搜索</button> : null}</div><small>只在当前页面匹配标题和玩法说明，不保存搜索词。</small></div>
       <div className="game-arcade-discovery">
         <div className="game-arcade-filter-stack"><div className="game-arcade-filters" aria-label="按主题筛选游戏" role="group">{CATEGORY_OPTIONS.map((option) => <button aria-pressed={category === option.id} className="game-arcade-filter" key={option.id} onClick={() => setCategory(option.id)} type="button">{option.label}</button>)}</div><div className="game-arcade-filters" aria-label="按学习阶段筛选游戏" role="group">{LEVEL_OPTIONS.map((option) => <button aria-pressed={level === option.id} className="game-arcade-filter game-arcade-filter--level" key={option.id} onClick={() => setLevel(option.id)} type="button">{option.label}</button>)}</div></div>
-        <div className="game-arcade-personal-filters"><button aria-pressed={unlockedOnly} className="game-arcade-filter game-arcade-filter--unlocked" onClick={() => setUnlockedOnly((current) => !current)} type="button">✓ 只看已解锁</button><button aria-pressed={favoritesOnly} className="game-arcade-filter game-arcade-filter--favorites" onClick={() => setFavoritesOnly((current) => !current)} type="button">★ 只看收藏</button></div>
+        <div className="game-arcade-personal-filters"><button aria-pressed={unlockedOnly} className="game-arcade-filter game-arcade-filter--unlocked" onClick={() => setUnlockedOnly((current) => !current)} type="button">✓ 只看已解锁</button><button aria-pressed={favoritesOnly} className="game-arcade-filter game-arcade-filter--favorites" onClick={() => setFavoritesOnly((current) => !current)} type="button">★ 只看收藏</button><button aria-pressed={unvisitedOnly} className="game-arcade-filter game-arcade-filter--unvisited" onClick={() => setUnvisitedOnly((current) => !current)} type="button">○ 只看没打开</button></div>
       </div>
       <div className="game-arcade-results-row"><p className="game-arcade-results" role="status">现在显示 {visibleEntries.length} 种玩法{filtersActive ? " · 已应用筛选" : ""}{favoriteIds.length ? ` · 已收藏 ${favoriteIds.length} 种` : ""}{visitedGameIds.length ? ` · 本次打开 ${visitedGameIds.length} 种` : ""}<small>收藏和打开记录只在本次打开页面内保留。</small></p><div className="game-arcade-results-actions">{visitedGameIds.length ? <button className="game-arcade-clear-visits" onClick={() => setVisitedGameIds([])} type="button">清空打开记录</button> : null}{favoriteIds.length ? <button className="game-arcade-clear-favorites" onClick={clearFavorites} type="button">清空全部收藏</button> : null}</div></div>
       {category !== "all" || level !== "all" || query.trim() || favoriteIds.length ? <a className="game-arcade-updated-picks" href="#game-arcade-picks-heading">查看更新后的今日推荐 <span aria-hidden="true">↑</span></a> : null}

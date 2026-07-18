@@ -134,14 +134,16 @@ export function buildGameArcadeRecommendations(entries: readonly GameArcadeEntry
   return prioritized;
 }
 
-export function filterGameArcadeEntries(entries: readonly GameArcadeEntry[], filters: { query?: string; category?: GameArcadeCategory | "all"; level?: GameArcadeLevel | "all"; unlockedOnly?: boolean; favoritesOnly?: boolean; favoriteIds?: readonly string[] }): GameArcadeEntry[] {
+export function filterGameArcadeEntries(entries: readonly GameArcadeEntry[], filters: { query?: string; category?: GameArcadeCategory | "all"; level?: GameArcadeLevel | "all"; unlockedOnly?: boolean; favoritesOnly?: boolean; favoriteIds?: readonly string[]; unvisitedOnly?: boolean; visitedIds?: readonly string[] }): GameArcadeEntry[] {
   const query = filters.query?.trim().toLocaleLowerCase() ?? "";
   const favorites = new Set(filters.favoriteIds ?? []);
+  const visited = new Set(filters.visitedIds ?? []);
   return entries.filter((entry) => {
     if (filters.category && filters.category !== "all" && entry.category !== filters.category) return false;
     if (filters.level && filters.level !== "all" && entry.level !== filters.level) return false;
     if (filters.unlockedOnly && !entry.unlocked) return false;
     if (filters.favoritesOnly && !favorites.has(entry.id)) return false;
+    if (filters.unvisitedOnly && visited.has(entry.id)) return false;
     if (query && !`${entry.title} ${entry.mechanic}`.toLocaleLowerCase().includes(query)) return false;
     return true;
   });
