@@ -1,0 +1,5 @@
+"use client";
+import { DecisionRelay } from "@/components/DecisionRelay"; import { GAME_MAKER_MISSIONS } from "@/lib/game-maker-relay";
+const REQUIRED = ["events-handlers","variables-score","functions-tools","boolean-logic","game-design"];
+const ICONS = { locked:"🎮", complete:"🏆", event:"⚡", variable:"x", function:"ƒ", logic:"01", playtest:"🐞", design:"★" };
+export function GameMakerRelay({ completedCourseIds, onStartCourse }: { completedCourseIds:string[]; onStartCourse:(courseId:string)=>void }) { return <DecisionRelay id="game-maker-relay" theme="code" title="迷你游戏导演" kicker="事件 · 状态 · 工具 · 规则" description="把六个编程系统接起来，设计、调试并平衡一局虚拟迷你游戏。" lockedDescription="先完成代码星港五课，再来连接事件、变量、函数、逻辑和游戏设计。" requiredCourseIds={REQUIRED} missions={GAME_MAKER_MISSIONS} icons={ICONS} startLabel="启动六关游戏制作" completeTitle="你的迷你游戏可以试玩了！" completeDescription="你会把事件接到动作，用变量保存状态，用函数复用工具，再通过试玩证据调试和调整难度。" replayLabel="重做六关游戏制作" evidenceTitle="游戏导演记录" safetyNote="所有游戏状态都是固定虚构数据，不运行或上传孩子写的代码。" completedCourseIds={completedCourseIds} onStartCourse={onStartCourse} />; }

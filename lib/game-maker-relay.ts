@@ -1,0 +1,28 @@
+import type { RelayMission, RelaySignal } from "./decision-relay.ts";
+const option = (id: string, label: string) => ({ id, label }); const signal = (id: string, label: string, detail: string, state: RelaySignal["state"] = "normal"): RelaySignal => ({ id, label, detail, state });
+export const GAME_MAKER_MISSIONS: RelayMission[] = [
+  { id:"event-wiring", title:"事件接线", story:"让虚构太空船响应玩家操作。", skill:"事件与处理程序", courseId:"events-handlers", mode:"event", steps:[
+    { prompt:"按下空格键时，哪条连接最清楚？", signals:[signal("event","事件","按下空格","active"),signal("handler","处理程序","发射光束"),signal("result","结果","光束出现")], options:[option("wire","空格事件 → 发射处理程序"),option("reverse","光束 → 按键"),option("always","不按键也不断发射")], answerId:"wire", explanation:"事件发生后调用对应处理程序，程序才知道何时行动。", evidence:"事件：输入触发对应处理程序", wrongFeedback:"先找玩家做了什么，再找程序应该执行什么。" },
+    { prompt:"点击“重新开始”后应该发生什么？", signals:[signal("click","点击事件","重新开始按钮","active"),signal("reset","重置函数","分数归零、位置复原","ready"),signal("play","游戏状态","重新可玩")], options:[option("reset","调用一次重置函数"),option("stack","同时开始三局"),option("score","只把分数加一")], answerId:"reset", explanation:"一个明确事件调用一次重置动作，避免状态叠加。", evidence:"事件：一次操作只触发一次预期动作", wrongFeedback:"重新开始需要恢复哪些初始状态，而不是增加新状态？" }
+  ]},
+  { id:"score-control", title:"分数控制", story:"管理虚构收集星星游戏的状态。", skill:"变量与状态变化", courseId:"variables-score", mode:"variable", steps:[
+    { prompt:"收集一颗星时，分数变量怎样更新？", signals:[signal("before","score","当前 2","ready"),signal("star","收集星星","+1","active"),signal("after","新分数","待计算")], options:[option("increment","score = score + 1"),option("fixed","score 永远写成 1"),option("text","把分数改成“很多”")], answerId:"increment", explanation:"变量保存会变化的状态，新值来自旧值加一。", evidence:"变量：用旧值计算并保存新值", wrongFeedback:"观察收集前已有 2 分，不能丢掉旧值。" },
+    { prompt:"能量最低不能小于 0，碰到障碍时怎样更新？", signals:[signal("energy","energy","当前 1","active"),signal("hit","碰到障碍","-2","warning"),signal("floor","下限","0")], options:[option("clamp","energy = max(0, energy - 2)"),option("negative","energy = -1"),option("score","改动 score 而不是 energy")], answerId:"clamp", explanation:"状态可以设合理边界，避免出现负能量。", evidence:"变量：更新后仍遵守状态边界", wrongFeedback:"任务给出了最低值 0，计算结果必须留在边界内。" }
+  ]},
+  { id:"tool-functions", title:"工具函数", story:"为虚构迷宫游戏制作可重复工具。", skill:"函数输入、复用与输出", courseId:"functions-tools", mode:"function", steps:[
+    { prompt:"三个关卡都要播放提示音，怎样减少重复？", signals:[signal("level1","关卡 1","播放提示音"),signal("level2","关卡 2","播放提示音","active"),signal("tool","playHint()","共同工具")], options:[option("function","写一次 playHint()，需要时调用"),option("copy","复制三份不同代码"),option("manual","让玩家自己发出声音")], answerId:"function", explanation:"函数把重复步骤命名并复用，修改时只改一处。", evidence:"函数：把重复动作封装成工具", wrongFeedback:"找出三个关卡中完全相同的动作。" },
+    { prompt:"move(3) 里的 3 表示什么？", signals:[signal("name","函数","move","ready"),signal("input","输入","3","active"),signal("output","结果","前进 3 格")], options:[option("parameter","告诉函数前进几格的参数"),option("score","自动变成分数"),option("event","表示键盘事件")], answerId:"parameter", explanation:"参数让同一个函数用不同输入完成相似任务。", evidence:"函数：参数改变工具的具体结果", wrongFeedback:"比较 move(1) 和 move(3) 会有什么不同。" }
+  ]},
+  { id:"logic-gate", title:"规则开关", story:"设置虚构宝箱开启规则。", skill:"布尔条件与组合规则", courseId:"boolean-logic", mode:"logic", steps:[
+    { prompt:"有钥匙并且到达宝箱，门才打开，应选哪条规则？", signals:[signal("key","有钥匙","真","ready"),signal("near","到达宝箱","真","active"),signal("door","门","待判断")], options:[option("and","有钥匙 AND 到达宝箱"),option("or","只满足任意一个就开"),option("not","没有钥匙才开")], answerId:"and", explanation:"AND 要求两个必要条件同时成立。", evidence:"逻辑：AND 组合两个必要条件", wrongFeedback:"题目用了“并且”，说明少一个条件都不能开门。" },
+    { prompt:"护盾开启时不受伤，受伤规则怎样写？", signals:[signal("shield","护盾开启","真","active"),signal("danger","碰到危险","真","warning"),signal("hurt","是否受伤","待判断")], options:[option("not","危险 AND NOT 护盾"),option("always","只要危险就受伤"),option("shield","护盾开启时受伤")], answerId:"not", explanation:"NOT 把护盾状态反转，护盾关闭时危险才造成伤害。", evidence:"逻辑：NOT 表示条件不成立", wrongFeedback:"护盾开启应该阻止哪一个结果？" }
+  ]},
+  { id:"playtest-loop", title:"试玩调试", story:"测试一个虚构接星星小游戏。", skill:"观察、复现与修复", courseId:"game-design", mode:"playtest", steps:[
+    { prompt:"玩家报告“第二颗星不加分”，先做什么？", signals:[signal("report","现象","第二颗星不加分","warning"),signal("steps","操作步骤","先接蓝星再接黄星","active"),signal("expected","预期","总分 2")], options:[option("reproduce","按相同步骤重现并观察变量"),option("guess","随机改很多地方"),option("ignore","只测第一颗星")], answerId:"reproduce", explanation:"先稳定复现，才能比较预期和实际状态。", evidence:"调试：按固定步骤复现问题", wrongFeedback:"没有重现路径，就不知道修改是否真的解决问题。" },
+    { prompt:"发现黄星处理程序漏了加分，修复后怎样确认？", signals:[signal("fix","修复","加入 score + 1","ready"),signal("same","原步骤","再次试玩","active"),signal("other","其他星星","也需回归")], options:[option("retest","重测原问题并检查其他星星"),option("declare","写完代码就宣布完成"),option("remove","删掉黄星")], answerId:"retest", explanation:"用相同步骤复测，再检查附近功能没有被破坏。", evidence:"调试：修复后复测并做回归检查", wrongFeedback:"修复只是猜想，运行结果才是证据。" }
+  ]},
+  { id:"game-balance", title:"游戏导演", story:"完成一局虚构比特岛迷你游戏。", skill:"目标、反馈与公平难度", courseId:"game-design", mode:"design", steps:[
+    { prompt:"怎样让玩家一开始就知道要做什么？", signals:[signal("goal","目标","收集 5 颗星","active"),signal("control","操作","方向键移动","ready"),signal("feedback","反馈","星星计数")], options:[option("teach","开局显示目标和操作，收集时即时反馈"),option("hide","隐藏目标让玩家猜"),option("essay","开局先读十页说明")], answerId:"teach", explanation:"清楚目标、简短操作和即时反馈组成可学会的游戏循环。", evidence:"设计：目标、操作、反馈形成循环", wrongFeedback:"玩家需要在几秒内知道做什么，以及是否做对了。" },
+    { prompt:"试玩者总在第一关失败，怎样公平调整？", signals:[signal("attempts","试玩记录","5 人都未通过","warning"),signal("obstacles","障碍","移动很快","active"),signal("goal","学习目标","练习条件判断")], options:[option("balance","减慢障碍并保留核心判断"),option("blame","认为玩家不够聪明"),option("remove-all","删掉所有规则")], answerId:"balance", explanation:"根据试玩证据调整强度，同时保留要练习的核心规则。", evidence:"设计：用试玩证据调整公平难度", wrongFeedback:"调整应降低无关挫折，但不能删掉学习目标。" }
+  ]}
+];

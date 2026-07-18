@@ -40,6 +40,7 @@ export const GAME_ARCADE_DEFINITIONS: GameArcadeDefinition[] = [
   { id: "files", targetId: "file-forest-rescue", title: "文件森林救援队", icon: "📁", mechanic: "路径、命名、移动、复制、分类与恢复", duration: "8–10 分钟", category: "life", gate: { type: "exact", courseIds: ["file-home", "name-your-work", "move-and-copy", "file-types", "learning-backpack"] } },
   { id: "creative", targetId: "creative-studio-challenge", title: "创作工坊项目赛", icon: "🎨", mechanic: "像素画、文档、幻灯片、版权与表格", duration: "8–10 分钟", category: "life", gate: { type: "exact", courseIds: ["pixel-art", "document-design", "slide-story", "media-copyright", "data-table"] } },
   { id: "ai-lab", targetId: "ai-verification-lab", title: "AI 核验研究站", icon: "🔬", mechanic: "邮件、协作、AI 提问、核验与项目交付", duration: "8–10 分钟", category: "life", gate: { type: "exact", courseIds: ["email-message", "online-collaboration", "ai-helper", "verify-ai", "digital-project"] } },
+  { id: "game-maker", targetId: "game-maker-relay", title: "迷你游戏导演", icon: "🎮", mechanic: "事件、变量、函数、逻辑、调试与平衡", duration: "8–10 分钟", category: "code", gate: { type: "exact", courseIds: ["events-handlers", "variables-score", "functions-tools", "boolean-logic", "game-design"] } },
 ];
 
 export function buildGameArcadeEntries(completedCourseIds: readonly string[]): GameArcadeEntry[] {

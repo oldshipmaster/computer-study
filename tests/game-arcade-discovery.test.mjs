@@ -4,7 +4,7 @@ import { GAME_ARCADE_DEFINITIONS, buildGameArcadeEntries, buildGameArcadeRecomme
 
 test("assigns every game to one child-readable discovery category", () => {
   const expected = new Set(["quest", "code", "systems", "life"]);
-  assert.equal(GAME_ARCADE_DEFINITIONS.length, 14);
+  assert.equal(GAME_ARCADE_DEFINITIONS.length, 15);
   for (const game of GAME_ARCADE_DEFINITIONS) assert.ok(expected.has(game.category), `${game.id}: ${game.category}`);
   for (const category of expected) assert.ok(GAME_ARCADE_DEFINITIONS.some((game) => game.category === category), category);
 });
