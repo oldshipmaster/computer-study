@@ -79,6 +79,18 @@ export function buildGameArcadeEntries(completedCourseIds: readonly string[]): G
 }
 
 const DISCOVERY_CATEGORY_ORDER: GameArcadeCategory[] = ["quest", "code", "systems", "life"];
+const DISCOVERY_CATEGORY_LABELS: Record<GameArcadeCategory, string> = { quest: "综合挑战", code: "编程与逻辑", systems: "电脑与网络", life: "安全与文件" };
+const DISCOVERY_LEVEL_LABELS: Record<GameArcadeLevel, string> = { starter: "入门探险", adventure: "进阶挑战", mastery: "大师联赛" };
+
+export function buildGameArcadeFilterSummary(filters: { category?: GameArcadeCategory | "all"; level?: GameArcadeLevel | "all"; query?: string; favoritesOnly?: boolean }): string[] {
+  const summary: string[] = [];
+  if (filters.category && filters.category !== "all") summary.push(DISCOVERY_CATEGORY_LABELS[filters.category]);
+  if (filters.level && filters.level !== "all") summary.push(DISCOVERY_LEVEL_LABELS[filters.level]);
+  const query = filters.query?.trim();
+  if (query) summary.push(`搜索：${query}`);
+  if (filters.favoritesOnly) summary.push("只看收藏");
+  return summary.length ? summary : ["全部已解锁玩法"];
+}
 
 export function buildGameArcadeRecommendations(entries: readonly GameArcadeEntry[], rotation: number, limit = 3, preferredIds: readonly string[] = [], filters: { category?: GameArcadeCategory | "all"; level?: GameArcadeLevel | "all"; query?: string; favoritesOnly?: boolean } = {}): GameArcadeEntry[] {
   const safeRotation = Number.isFinite(rotation) ? Math.max(0, Math.floor(rotation)) : 0;

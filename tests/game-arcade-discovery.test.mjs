@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { COURSES } from "../lib/course-data.ts";
-import { GAME_ARCADE_DEFINITIONS, buildClosestGameUnlocks, buildGameArcadeEntries, buildGameArcadeRecommendations, filterGameArcadeEntries, gameArcadePlaylistBreaks, gameArcadePlaylistLimit } from "../lib/game-arcade.ts";
+import { GAME_ARCADE_DEFINITIONS, buildClosestGameUnlocks, buildGameArcadeEntries, buildGameArcadeFilterSummary, buildGameArcadeRecommendations, filterGameArcadeEntries, gameArcadePlaylistBreaks, gameArcadePlaylistLimit } from "../lib/game-arcade.ts";
 
 test("assigns every game to one child-readable discovery category", () => {
   const expected = new Set(["quest", "code", "systems", "life"]);
@@ -131,4 +131,10 @@ test("uses search and favorite-only filters for the time-boxed playlist", () => 
   const favoritePicks = buildGameArcadeRecommendations(entries, 0, 3, ["pilot", "circuit"], { favoritesOnly: true });
   assert.deepEqual(favoritePicks.map((game) => game.id), ["circuit", "pilot"]);
   assert.deepEqual(buildGameArcadeRecommendations(entries, 0, 3, [], { favoritesOnly: true }), []);
+});
+
+test("explains the active playlist filters in child-readable language", () => {
+  assert.deepEqual(buildGameArcadeFilterSummary({}), ["全部已解锁玩法"]);
+  assert.deepEqual(buildGameArcadeFilterSummary({ category: "systems", level: "starter", query: "  路由  ", favoritesOnly: true }), ["电脑与网络", "入门探险", "搜索：路由", "只看收藏"]);
+  assert.deepEqual(buildGameArcadeFilterSummary({ category: "all", level: "all", query: "   ", favoritesOnly: false }), ["全部已解锁玩法"]);
 });

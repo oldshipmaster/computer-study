@@ -20,6 +20,7 @@
 .game-arcade-time-options button[aria-pressed="true"] { border-color:#17384d; background:#17384d; color:white; }
 .game-arcade-break-plan { width:fit-content; padding:6px 9px; border-radius:9px; background:#e4f4e7; color:#285f47 !important; font-weight:800; }
 .game-arcade-picks-filter-note { font-weight:800; }
+.game-arcade-pick-context { display:flex; flex-wrap:wrap; align-items:center; gap:6px; color:#48677a; font-size:.62rem; } .game-arcade-pick-context b { color:#17384d; } .game-arcade-pick-context span { padding:4px 7px; border:1px solid #4e7489; border-radius:999px; background:rgb(255 255 255 / 72%); color:#315c9a; font-weight:850; }
 .game-arcade-picks-empty { display:flex; min-height:54px; align-items:center; justify-content:center; gap:9px; padding:9px; border:2px dashed #758d9b; border-radius:12px; background:white; } .game-arcade-picks-empty p { margin:0; } .game-arcade-picks-empty button { min-height:44px; padding:7px 11px; border:2px solid #17384d; border-radius:9px; background:#ffe36e; color:#17384d; cursor:pointer; font:inherit; font-size:.66rem; font-weight:900; }
 .game-arcade-recommendations { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
 .game-arcade-recommendation { display: grid; grid-template-columns: 28px minmax(0, 1fr) auto; min-height: 44px; align-items: center; gap: 2px 8px; padding: 9px; border: 2px solid #4e7489; border-radius: 12px; background: white; color: #17384d; text-decoration: none; }
