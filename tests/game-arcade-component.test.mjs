@@ -121,6 +121,10 @@ test("lets a child collect and filter favorite games for the current visit", () 
   assert.match(component, /收藏玩法会优先进入今日推荐/);
   assert.match(component, /gameArcadePlaylistLimit\(sessionMinutes\), favoriteIds/);
   assert.match(css, /\.game-arcade-favorite/);
+  assert.match(component, /clearFavorites/);
+  assert.match(component, /清空全部收藏/);
+  assert.match(component, /setFavoritesOnly\(false\)/);
+  assert.match(css, /\.game-arcade-clear-favorites/);
 });
 
 test("remembers the last opened game and offers a one-click session resume", () => {

@@ -48,6 +48,7 @@ export function GameArcade({ completedCourseIds, onStartCourse }: GameArcadeProp
   const filtersActive = Boolean(query.trim()) || category !== "all" || level !== "all" || unlockedOnly || favoritesOnly;
 
   function clearFilters() { setQuery(""); setCategory("all"); setLevel("all"); setUnlockedOnly(false); setFavoritesOnly(false); }
+  function clearFavorites() { setFavoriteIds([]); setFavoritesOnly(false); }
   function toggleFavorite(gameId: string) { setFavoriteIds((current) => current.includes(gameId) ? current.filter((id) => id !== gameId) : [...current, gameId]); }
 
   return (
@@ -82,7 +83,7 @@ export function GameArcade({ completedCourseIds, onStartCourse }: GameArcadeProp
         <div className="game-arcade-filter-stack"><div className="game-arcade-filters" aria-label="按主题筛选游戏" role="group">{CATEGORY_OPTIONS.map((option) => <button aria-pressed={category === option.id} className="game-arcade-filter" key={option.id} onClick={() => setCategory(option.id)} type="button">{option.label}</button>)}</div><div className="game-arcade-filters" aria-label="按学习阶段筛选游戏" role="group">{LEVEL_OPTIONS.map((option) => <button aria-pressed={level === option.id} className="game-arcade-filter game-arcade-filter--level" key={option.id} onClick={() => setLevel(option.id)} type="button">{option.label}</button>)}</div></div>
         <div className="game-arcade-personal-filters"><button aria-pressed={unlockedOnly} className="game-arcade-filter game-arcade-filter--unlocked" onClick={() => setUnlockedOnly((current) => !current)} type="button">✓ 只看已解锁</button><button aria-pressed={favoritesOnly} className="game-arcade-filter game-arcade-filter--favorites" onClick={() => setFavoritesOnly((current) => !current)} type="button">★ 只看收藏</button></div>
       </div>
-      <p className="game-arcade-results" role="status">现在显示 {visibleEntries.length} 种玩法{filtersActive ? " · 已应用筛选" : ""}{favoriteIds.length ? ` · 已收藏 ${favoriteIds.length} 种` : ""}<small>收藏只在本次打开页面内保留。</small></p>
+      <div className="game-arcade-results-row"><p className="game-arcade-results" role="status">现在显示 {visibleEntries.length} 种玩法{filtersActive ? " · 已应用筛选" : ""}{favoriteIds.length ? ` · 已收藏 ${favoriteIds.length} 种` : ""}<small>收藏只在本次打开页面内保留。</small></p>{favoriteIds.length ? <button className="game-arcade-clear-favorites" onClick={clearFavorites} type="button">清空全部收藏</button> : null}</div>
       {category !== "all" || level !== "all" || query.trim() || favoriteIds.length ? <a className="game-arcade-updated-picks" href="#game-arcade-picks-heading">查看更新后的今日推荐 <span aria-hidden="true">↑</span></a> : null}
 
       <div className="game-arcade-grid">
