@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync, readdirSync } from "node:fs";
 import { COURSES, ISLANDS } from "../lib/course-data.ts";
 import { GAME_ARCADE_DEFINITIONS, buildGameArcadeEntries } from "../lib/game-arcade.ts";
 
@@ -11,6 +12,21 @@ test("defines twenty unique game destinations with child-readable metadata", () 
     assert.ok(game.title.length >= 4);
     assert.ok(game.mechanic.length >= 4);
     assert.match(game.duration, /分钟|随时/);
+  }
+});
+
+test("backs every arcade jump link with a rendered component destination", () => {
+  const componentDirectory = new URL("../components/", import.meta.url);
+  const componentSource = readdirSync(componentDirectory, { recursive: true })
+    .filter((path) => String(path).endsWith(".tsx"))
+    .map((path) => readFileSync(new URL(String(path), componentDirectory), "utf8"))
+    .join("\n");
+
+  for (const game of GAME_ARCADE_DEFINITIONS) {
+    assert.ok(
+      componentSource.includes(`"${game.targetId}"`),
+      `${game.id} must render the destination #${game.targetId}`,
+    );
   }
 });
 

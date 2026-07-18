@@ -30,6 +30,13 @@ test("offers evidence, ordered actions, core explanation, and replay", () => {
   assert.match(component, /onCompleteBoss\(activeBoss\.id\)/);
   assert.match(component, /重玩这场 Boss 战/);
   assert.match(component, /stageHeadingRef\.current\?\.focus/);
+  assert.match(component, /onKeyDown=\{chooseBossByKeyboard\}/);
+  assert.match(component, /event\.repeat/);
+  assert.match(component, /event\.nativeEvent\.isComposing/);
+  assert.match(component, /按数字键/);
+  assert.match(component, /aria-keyshortcuts=/);
+  assert.match(component, /<kbd aria-hidden="true">/);
+  assert.match(component, /removeBossAction\(current, choice\.id\)/);
 });
 
 test("integrates the arena after sprint and before the learning plan", () => {
@@ -49,4 +56,5 @@ test("keeps boss controls usable on touch, mobile, reduced motion, and forced co
   assert.match(css, /@media \(max-width: 680px\)[\s\S]*?\.boss-radar[\s\S]*?grid-template-columns:\s*1fr/);
   assert.match(css, /\.bit-island-app--reduced-motion[\s\S]*?\.boss-core-icon[\s\S]*?animation:\s*none/);
   assert.match(css, /@media \(forced-colors: active\)[\s\S]*?\.boss-evidence\[aria-pressed="true"\][\s\S]*?\.boss-stage--complete/);
+  assert.match(css, /\.boss-(?:evidence|action|explanation)\s*>\s*kbd/);
 });

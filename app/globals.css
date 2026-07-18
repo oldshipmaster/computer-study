@@ -3953,10 +3953,12 @@ html.bit-island-document--reduced-motion *::after,
 .boss-stage-work { display: grid; gap: 13px; }
 .boss-stage-work > p { margin: 0; color: var(--deep-sea-soft); }
 .boss-choice-grid, .boss-action-bank { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+.boss-keyboard-hint { margin: 0; color: #526d7b; font-size: .72rem; font-weight: 800; }
 .boss-evidence { display: grid; min-height: 44px; grid-template-columns: auto 1fr; align-items: center; gap: 9px; padding: 10px 12px; border: 2px solid #7b9aaa; border-radius: 12px; background: white; cursor: pointer; font-weight: 750; text-align: left; }
-.boss-action { min-height: 44px; padding: 10px 12px; border: 2px solid #7b9aaa; border-radius: 12px; background: white; cursor: pointer; font-weight: 750; text-align: left; }
-.boss-explanation { min-height: 44px; padding: 11px 13px; border: 2px solid #7b9aaa; border-radius: 12px; background: white; cursor: pointer; font-weight: 750; text-align: left; }
-.boss-evidence[aria-pressed="true"], .boss-explanation[aria-pressed="true"] { border-color: #bd8100; background: #fff1ae; box-shadow: inset 4px 0 0 #f3bd28; }
+.boss-action { display: grid; min-height: 44px; grid-template-columns: auto 1fr; align-items: center; gap: 9px; padding: 10px 12px; border: 2px solid #7b9aaa; border-radius: 12px; background: white; cursor: pointer; font-weight: 750; text-align: left; }
+.boss-explanation { display: grid; min-height: 44px; grid-template-columns: auto 1fr; align-items: center; gap: 9px; padding: 11px 13px; border: 2px solid #7b9aaa; border-radius: 12px; background: white; cursor: pointer; font-weight: 750; text-align: left; }
+.boss-evidence > kbd, .boss-action > kbd, .boss-explanation > kbd { display: grid; width: 27px; height: 27px; place-items: center; border: 1px solid #7b9aaa; border-radius: 7px; background: #edf6fa; font: inherit; font-size: .68rem; font-weight: 900; }
+.boss-evidence[aria-pressed="true"], .boss-action[aria-pressed="true"], .boss-explanation[aria-pressed="true"] { border-color: #bd8100; background: #fff1ae; box-shadow: inset 4px 0 0 #f3bd28; }
 .boss-action:disabled, .boss-evidence:disabled, .boss-explanation:disabled { cursor: default; opacity: .55; }
 .boss-action-queue { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; margin: 0; padding: 0; list-style: none; }
 .boss-action-queue li { display: grid; min-height: 90px; grid-template-columns: auto 1fr; align-content: center; gap: 5px 8px; padding: 10px; border: 2px dashed #91aab6; border-radius: 12px; background: #edf2f4; }

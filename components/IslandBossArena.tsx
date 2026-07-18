@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, useState, type MouseEvent } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type KeyboardEvent, type MouseEvent } from "react";
 import { getCourse } from "@/lib/course-data";
+import { numberShortcutIndex } from "@/lib/keyboard-shortcuts";
 import {
   ISLAND_BOSSES,
   advanceBossPhase,
@@ -65,13 +66,40 @@ export function IslandBossArena({ completedCourseIds, completedBossIds, onComple
     setState((current) => advanceBossPhase(current));
   }
 
+  function chooseBossByKeyboard(event: KeyboardEvent<HTMLElement>) {
+    if (
+      !activeBoss
+      || state.phase === "complete"
+      || state.status === "success"
+      || event.repeat
+      || event.altKey
+      || event.ctrlKey
+      || event.metaKey
+      || event.nativeEvent.isComposing
+    ) return;
+    const choices = state.phase === "scan" ? activeBoss.evidence : state.phase === "sequence" ? activeBoss.actions : activeBoss.explanations;
+    const optionIndex = numberShortcutIndex(event.key, choices.length);
+    if (optionIndex === null) return;
+    const choice = choices[optionIndex];
+    event.preventDefault();
+    setState((current) => {
+      if (current.phase === "scan") return toggleBossEvidence(current, choice.id);
+      if (current.phase === "sequence") {
+        return current.actionQueue.includes(choice.id)
+          ? removeBossAction(current, choice.id)
+          : queueBossAction(current, choice.id);
+      }
+      return selectBossExplanation(current, choice.id);
+    });
+  }
+
   function renderStage(boss: IslandBoss) {
     if (state.phase === "scan") {
       return (
         <div className="boss-stage-work">
           <p>选择 2 条能直接帮助判断的证据。</p>
           <div className="boss-choice-grid" role="group" aria-label="选择两条证据">
-            {boss.evidence.map((item) => <button aria-pressed={state.selectedEvidenceIds.includes(item.id)} className="boss-evidence" disabled={state.status === "success"} key={item.id} onClick={() => setState((current) => toggleBossEvidence(current, item.id))} type="button"><span aria-hidden="true">◎</span>{item.text}</button>)}
+            {boss.evidence.map((item, index) => <button aria-keyshortcuts={`${index + 1}`} aria-pressed={state.selectedEvidenceIds.includes(item.id)} className="boss-evidence" disabled={state.status === "success"} key={item.id} onClick={() => setState((current) => toggleBossEvidence(current, item.id))} type="button"><kbd aria-hidden="true">{index + 1}</kbd>{item.text}</button>)}
           </div>
         </div>
       );
@@ -82,7 +110,10 @@ export function IslandBossArena({ completedCourseIds, completedBossIds, onComple
         <div className="boss-stage-work">
           <p>选择 3 个行动，按真正执行的先后顺序加入编队。</p>
           <div className="boss-action-bank" role="group" aria-label="候选行动">
-            {boss.actions.map((item) => <button className="boss-action" disabled={state.status === "success" || state.actionQueue.includes(item.id) || state.actionQueue.length >= 3} key={item.id} onClick={() => setState((current) => queueBossAction(current, item.id))} type="button">+ {item.text}</button>)}
+            {boss.actions.map((item, index) => {
+              const queued = state.actionQueue.includes(item.id);
+              return <button aria-keyshortcuts={`${index + 1}`} aria-pressed={queued} className="boss-action" disabled={state.status === "success" || (!queued && state.actionQueue.length >= 3)} key={item.id} onClick={() => setState((current) => current.actionQueue.includes(item.id) ? removeBossAction(current, item.id) : queueBossAction(current, item.id))} type="button"><kbd aria-hidden="true">{index + 1}</kbd><span>{queued ? "−" : "+"} {item.text}</span></button>;
+            })}
           </div>
           <ol className="boss-action-queue" aria-label="行动编队顺序">
             {[0, 1, 2].map((index) => {
@@ -99,7 +130,7 @@ export function IslandBossArena({ completedCourseIds, completedBossIds, onComple
       <div className="boss-stage-work">
         <p>选择一个能同时解释证据与行动的核心原理。</p>
         <div className="boss-explanation-list" role="group" aria-label="选择核心原理">
-          {boss.explanations.map((item) => <button aria-pressed={state.selectedExplanationId === item.id} className="boss-explanation" disabled={state.status === "success"} key={item.id} onClick={() => setState((current) => selectBossExplanation(current, item.id))} type="button">{item.text}</button>)}
+          {boss.explanations.map((item, index) => <button aria-keyshortcuts={`${index + 1}`} aria-pressed={state.selectedExplanationId === item.id} className="boss-explanation" disabled={state.status === "success"} key={item.id} onClick={() => setState((current) => selectBossExplanation(current, item.id))} type="button"><kbd aria-hidden="true">{index + 1}</kbd><span>{item.text}</span></button>)}
         </div>
       </div>
     );
@@ -109,7 +140,7 @@ export function IslandBossArena({ completedCourseIds, completedBossIds, onComple
     const phaseIndex = state.phase === "scan" ? 0 : state.phase === "sequence" ? 1 : state.phase === "core" ? 2 : 3;
     const canSubmit = state.phase === "scan" ? state.selectedEvidenceIds.length === 2 : state.phase === "sequence" ? state.actionQueue.length === 3 : Boolean(state.selectedExplanationId);
     return (
-      <section className="island-boss-arena boss-battle" id="island-boss-arena" aria-labelledby="boss-stage-heading">
+      <section className="island-boss-arena boss-battle" id="island-boss-arena" aria-labelledby="boss-stage-heading" onKeyDown={chooseBossByKeyboard}>
         <button className="boss-back" onClick={() => setActiveBossId(null)} type="button">← 返回 Boss 雷达</button>
         <header className="boss-battle-header">
           <span className="boss-core-icon" aria-hidden="true">{activeBoss.icon}</span>
@@ -129,6 +160,7 @@ export function IslandBossArena({ completedCourseIds, completedBossIds, onComple
         ) : (
           <div className="boss-console">
             <div className="boss-console-heading"><span>阶段 {phaseIndex + 1} / 3</span><h3>{PHASE_LABELS[phaseIndex]}</h3></div>
+            <p className="boss-keyboard-hint">按数字键 1–{state.phase === "core" ? 3 : 4} 选择{state.phase === "sequence" ? "；再按一次可撤回" : ""}</p>
             {renderStage(activeBoss)}
             <p className={`boss-feedback boss-feedback--${state.status}`} role="status">{state.feedback}</p>
             {state.status === "success" ? <button className="boss-primary" onClick={nextPhase} type="button">{state.phase === "core" ? "点亮 Boss 核心" : "进入下一阶段"} →</button> : <button className="boss-primary" disabled={!canSubmit} onClick={submit} type="button">提交本阶段</button>}
