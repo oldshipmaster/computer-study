@@ -57,9 +57,9 @@ export function AlgorithmArenaGame({ completedCourseIds, onStartCourse }: Algori
 
   if (!unlocked) {
     return (
-      <section className="algorithm-arena-shell algorithm-arena-locked" id="algorithm-arena-game" aria-labelledby="algorithm-arena-heading">
+      <section className="algorithm-arena-shell algorithm-arena-locked" id="algorithm-arena-game" aria-labelledby="algorithm-arena-game-heading">
         <span className="algorithm-arena-emblem" aria-hidden="true">Σ</span>
-        <div><p className="section-kicker">算法岛综合游戏</p><h2 id="algorithm-arena-heading">算法竞技场</h2><p>先学会搜索、排序、任务依赖和效率比较，再来完成六场证据挑战。</p><strong>已完成 {completedRequired.length} / {REQUIRED_COURSE_IDS.length} 门必修课</strong></div>
+        <div><p className="section-kicker">算法岛综合游戏</p><h2 id="algorithm-arena-game-heading">算法竞技场</h2><p>先学会搜索、排序、任务依赖和效率比较，再来完成六场证据挑战。</p><strong>已完成 {completedRequired.length} / {REQUIRED_COURSE_IDS.length} 门必修课</strong></div>
         {nextCourse ? <button onClick={() => onStartCourse(nextCourse.id)} type="button">下一门：{nextCourse.title}</button> : null}
       </section>
     );
@@ -67,8 +67,8 @@ export function AlgorithmArenaGame({ completedCourseIds, onStartCourse }: Algori
 
   if (mode === "menu") {
     return (
-      <section className="algorithm-arena-shell algorithm-arena-menu" id="algorithm-arena-game" aria-labelledby="algorithm-arena-heading">
-        <div><p className="section-kicker">不拼手速 · 拼证据</p><h2 id="algorithm-arena-heading" ref={headingRef} tabIndex={-1}>算法竞技场</h2><p>亲手走过搜索、排序、依赖和效率决策，把每一步为什么正确留在证据轨迹里。</p></div>
+      <section className="algorithm-arena-shell algorithm-arena-menu" id="algorithm-arena-game" aria-labelledby="algorithm-arena-game-heading">
+        <div><p className="section-kicker">不拼手速 · 拼证据</p><h2 id="algorithm-arena-game-heading" ref={headingRef} tabIndex={-1}>算法竞技场</h2><p>亲手走过搜索、排序、依赖和效率决策，把每一步为什么正确留在证据轨迹里。</p></div>
         <div className="algorithm-arena-preview" aria-label="六场算法赛" role="list">{ALGORITHM_ARENA_MISSIONS.map((mission) => <span key={mission.id} role="listitem"><b aria-hidden="true">{MODE_ICONS[mission.mode]}</b>{mission.title}</span>)}</div>
         <button className="algorithm-arena-action" onClick={startGame} type="button">开始六场算法赛 <span aria-hidden="true">→</span></button>
       </section>

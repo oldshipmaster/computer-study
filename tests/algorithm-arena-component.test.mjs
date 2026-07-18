@@ -15,6 +15,13 @@ test("keeps the arena behind all five algorithm courses", () => {
   assert.match(component, /onStartCourse\(nextCourse\.id\)/);
 });
 
+test("keeps the game heading distinct from the algorithm island heading", () => {
+  const component = source("components/AlgorithmArenaGame.tsx");
+  assert.match(component, /aria-labelledby="algorithm-arena-game-heading"/);
+  assert.match(component, /id="algorithm-arena-game-heading"/);
+  assert.doesNotMatch(component, /id="algorithm-arena-heading"/);
+});
+
 test("renders visual evidence, choices, progress, feedback, and evidence trail", () => {
   const component = source("components/AlgorithmArenaGame.tsx");
   assert.match(component, /step\.visual\.items\.map/);
