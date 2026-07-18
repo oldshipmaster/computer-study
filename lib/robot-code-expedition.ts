@@ -110,6 +110,12 @@ export const ROBOT_CODE_MISSIONS: RobotCodeMission[] = [
 
 export const robotPointKey = (point: RobotPoint) => `${point.row}-${point.col}`;
 
+export function robotCommandShortcutIndex(key: string, commandCount: number): number | null {
+  if (!/^[1-5]$/.test(key)) return null;
+  const index = Number(key) - 1;
+  return index < Math.max(0, Math.floor(commandCount)) ? index : null;
+}
+
 function normalizeRotation(rotation: number, length: number) {
   if (!Number.isFinite(rotation) || length === 0) return 0;
   return ((Math.floor(rotation) % length) + length) % length;

@@ -32,6 +32,11 @@ test("offers a visible editable program and step-by-step map trace", () => {
   assert.match(component, /traceCursor/);
   assert.match(component, /aria-current/);
   assert.match(component, /role="status"/);
+  assert.match(component, /robotCommandShortcutIndex/);
+  assert.match(component, /onKeyDown=\{handleGameKeyDown\}/);
+  assert.match(component, /aria-keyshortcuts=\{String\(index \+ 1\)\}/);
+  assert.match(component, /按数字键/);
+  assert.match(component, /按 <kbd>Enter<\/kbd>/);
 });
 
 test("supports retry, six-map completion, replay rotation, and focus handoff", () => {
@@ -59,5 +64,6 @@ test("ships a separate responsive and accessible expedition stylesheet", () => {
   assert.match(css, /\.robot-command-button[^{]*\{[^}]*min-height:\s*44px/);
   assert.match(css, /@media \(max-width: 760px\)[\s\S]*?\.robot-expedition-layout[\s\S]*?grid-template-columns:\s*1fr/);
   assert.match(css, /\.bit-island-app--reduced-motion[\s\S]*?animation:\s*none/);
+  assert.match(css, /\.robot-keyboard-hint/);
   assert.match(css, /@media \(forced-colors: active\)[\s\S]*?aria-current/);
 });

@@ -10,6 +10,7 @@ import {
   moveRobotCommand,
   prepareRobotRun,
   removeRobotCommand,
+  robotCommandShortcutIndex,
   runRobotProgram,
 } from "../lib/robot-code-expedition.ts";
 
@@ -34,6 +35,15 @@ test("defines six bounded five-by-five missions with progressive commands", () =
   assert.deepEqual(ROBOT_CODE_MISSIONS[0].allowedCommands, ["forward"]);
   assert.ok(ROBOT_CODE_MISSIONS[2].allowedCommands.includes("repeatForward2"));
   assert.ok(ROBOT_CODE_MISSIONS[3].allowedCommands.includes("ifBlockedTurnRight"));
+});
+
+test("maps only visible one-to-five shortcuts to command-library positions", () => {
+  assert.equal(robotCommandShortcutIndex("1", 1), 0);
+  assert.equal(robotCommandShortcutIndex("3", 5), 2);
+  assert.equal(robotCommandShortcutIndex("5", 5), 4);
+  assert.equal(robotCommandShortcutIndex("2", 1), null);
+  assert.equal(robotCommandShortcutIndex("0", 5), null);
+  assert.equal(robotCommandShortcutIndex("6", 5), null);
 });
 
 test("solves every mission with its intended bounded program", () => {

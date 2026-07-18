@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useMemo, useRef, useState, type MouseEvent } from "react";
+import { useLayoutEffect, useMemo, useRef, useState, type KeyboardEvent, type MouseEvent } from "react";
 import { getCourse } from "@/lib/course-data";
 import {
   ROBOT_CODE_MISSIONS,
@@ -13,6 +13,7 @@ import {
   moveRobotCommand,
   prepareRobotRun,
   removeRobotCommand,
+  robotCommandShortcutIndex,
   robotPointKey,
   type RobotCommand,
   type RobotDirection,
@@ -123,8 +124,26 @@ export function RobotCodeExpedition({ completedCourseIds, onStartCourse }: Robot
     setGame((current) => advanceRobotMission(current, event.detail));
   }
 
+  function handleGameKeyDown(event: KeyboardEvent<HTMLElement>) {
+    if (event.nativeEvent.isComposing || event.repeat || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+    const commandIndex = robotCommandShortcutIndex(event.key, mission.allowedCommands.length);
+    if (commandIndex !== null && editing) {
+      event.preventDefault();
+      setGame((current) => addRobotCommand(current, mission, mission.allowedCommands[commandIndex], 0));
+      return;
+    }
+    if (event.key !== "Enter" || event.target instanceof HTMLButtonElement) return;
+    if (editing && game.queue.length > 0) setGame((current) => prepareRobotRun(current, mission, 0));
+    else if (game.phase === "tracing") setGame((current) => advanceRobotTrace(current, 0));
+    else if (game.phase === "solved") {
+      focusNextHeading();
+      setGame((current) => advanceRobotMission(current, 0));
+    } else return;
+    event.preventDefault();
+  }
+
   return (
-    <section className="robot-expedition-shell robot-expedition-game" id="robot-code-expedition" aria-labelledby="robot-expedition-game-heading">
+    <section className="robot-expedition-shell robot-expedition-game" id="robot-code-expedition" aria-labelledby="robot-expedition-game-heading" onKeyDown={handleGameKeyDown}>
       <header className="robot-expedition-heading">
         <p>代码地图 {game.missionIndex + 1} / {game.missionCount}</p>
         <h2 id="robot-expedition-game-heading" ref={headingRef} tabIndex={-1}>{mission.title}</h2>
@@ -154,7 +173,7 @@ export function RobotCodeExpedition({ completedCourseIds, onStartCourse }: Robot
         <div className="robot-program-panel">
           <section className="robot-command-library" aria-labelledby="robot-command-library-heading">
             <h3 id="robot-command-library-heading">指令库</h3>
-            <div role="group" aria-label="可添加的机器人指令">{mission.allowedCommands.map((command) => <button className="robot-command-button" disabled={!editing || game.queue.length >= mission.maxCommands} key={command} onClick={(event) => setGame((current) => addRobotCommand(current, mission, command, event.detail))} type="button"><b>{COMMAND_COPY[command].icon}</b><span>{COMMAND_COPY[command].label}</span></button>)}</div>
+            <div role="group" aria-label="可添加的机器人指令">{mission.allowedCommands.map((command, index) => <button aria-keyshortcuts={String(index + 1)} className="robot-command-button" disabled={!editing || game.queue.length >= mission.maxCommands} key={command} onClick={(event) => setGame((current) => addRobotCommand(current, mission, command, event.detail))} type="button"><kbd>{index + 1}</kbd><b>{COMMAND_COPY[command].icon}</b><span>{COMMAND_COPY[command].label}</span></button>)}</div>
           </section>
 
           <section className="robot-program-queue" aria-labelledby="robot-program-heading">
@@ -166,6 +185,7 @@ export function RobotCodeExpedition({ completedCourseIds, onStartCourse }: Robot
       </div>
 
       <aside className="robot-concept-card"><strong>本关原理</strong><span>{mission.concept}</span></aside>
+      <p className="robot-keyboard-hint">{editing ? <>按数字键 <kbd>1</kbd>–<kbd>{mission.allowedCommands.length}</kbd> 添加指令；程序准备好后按 <kbd>Enter</kbd> 运行</> : <>按 <kbd>Enter</kbd> {game.phase === "tracing" ? "逐步执行程序" : "接入下一张地图"}</>}</p>
       <p className={`robot-expedition-feedback is-${game.phase}`} role="status">{game.feedback}</p>
       {game.phase === "failed" ? <p className="robot-retry-note">保留程序继续修改：移动、删除或添加一条指令，再重新运行。</p> : null}
       <div className="robot-expedition-actions">
