@@ -3,10 +3,10 @@ import assert from "node:assert/strict";
 import { COURSES, ISLANDS } from "../lib/course-data.ts";
 import { GAME_ARCADE_DEFINITIONS, buildGameArcadeEntries } from "../lib/game-arcade.ts";
 
-test("defines twelve unique game destinations with child-readable metadata", () => {
-  assert.equal(GAME_ARCADE_DEFINITIONS.length, 12);
-  assert.equal(new Set(GAME_ARCADE_DEFINITIONS.map((game) => game.id)).size, 12);
-  assert.equal(new Set(GAME_ARCADE_DEFINITIONS.map((game) => game.targetId)).size, 12);
+test("defines thirteen unique game destinations with child-readable metadata", () => {
+  assert.equal(GAME_ARCADE_DEFINITIONS.length, 13);
+  assert.equal(new Set(GAME_ARCADE_DEFINITIONS.map((game) => game.id)).size, 13);
+  assert.equal(new Set(GAME_ARCADE_DEFINITIONS.map((game) => game.targetId)).size, 13);
   for (const game of GAME_ARCADE_DEFINITIONS) {
     assert.ok(game.title.length >= 4);
     assert.ok(game.mechanic.length >= 4);
@@ -35,8 +35,9 @@ test("unlocks exact-course games only after every required course", () => {
     "password-guardian", "private-information", "popup-fog", "healthy-computer-habits", "light-bit-island",
     "input-process-output", "cpu-memory-storage", "hardware-software", "troubleshoot-machine",
     "file-home", "name-your-work", "move-and-copy", "file-types", "learning-backpack",
+    "pixel-art", "document-design", "slide-story", "media-copyright", "data-table",
   ]);
-  for (const id of ["circuit", "robot", "packet", "cpu", "algorithm", "structures", "safety", "factory", "files"]) assert.equal(complete.find((entry) => entry.id === id).unlocked, true, id);
+  for (const id of ["circuit", "robot", "packet", "cpu", "algorithm", "structures", "safety", "factory", "files", "creative"]) assert.equal(complete.find((entry) => entry.id === id).unlocked, true, id);
 });
 
 test("unlocks sprint from three known unique courses", () => {
