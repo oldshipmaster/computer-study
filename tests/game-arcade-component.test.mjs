@@ -56,6 +56,8 @@ test("offers rotating recommendations and reversible discovery filters", () => {
   assert.match(component, /\(\[10, 20, 30\] as const\)/);
   assert.match(component, /我有 \{minutes\} 分钟/);
   assert.match(component, /gameArcadePlaylistLimit/);
+  assert.match(component, /gameArcadePlaylistBreaks/);
+  assert.match(component, /中间安排 \{playlistBreaks\} 次离屏休息/);
   assert.match(component, /aria-pressed=\{category === option\.id\}/);
   assert.match(component, /aria-pressed=\{unlockedOnly\}/);
   assert.match(component, /只看已解锁/);

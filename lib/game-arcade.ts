@@ -143,3 +143,4 @@ export function buildClosestGameUnlocks(entries: readonly GameArcadeEntry[], lim
 }
 
 export function gameArcadePlaylistLimit(minutes: number): number { if (!Number.isFinite(minutes) || minutes < 15) return 1; if (minutes < 25) return 2; return 3; }
+export function gameArcadePlaylistBreaks(minutes: number): number { return Math.max(0, gameArcadePlaylistLimit(minutes) - 1); }

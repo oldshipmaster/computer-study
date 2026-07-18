@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { COURSES } from "../lib/course-data.ts";
-import { GAME_ARCADE_DEFINITIONS, buildClosestGameUnlocks, buildGameArcadeEntries, buildGameArcadeRecommendations, filterGameArcadeEntries, gameArcadePlaylistLimit } from "../lib/game-arcade.ts";
+import { GAME_ARCADE_DEFINITIONS, buildClosestGameUnlocks, buildGameArcadeEntries, buildGameArcadeRecommendations, filterGameArcadeEntries, gameArcadePlaylistBreaks, gameArcadePlaylistLimit } from "../lib/game-arcade.ts";
 
 test("assigns every game to one child-readable discovery category", () => {
   const expected = new Set(["quest", "code", "systems", "life"]);
@@ -57,6 +57,13 @@ test("searches game titles and mechanics with combinable local filters", () => {
 });
 
 test("turns available time into one to three complete game sessions",()=>{assert.equal(gameArcadePlaylistLimit(10),1);assert.equal(gameArcadePlaylistLimit(20),2);assert.equal(gameArcadePlaylistLimit(30),3);assert.equal(gameArcadePlaylistLimit(Number.NaN),1);assert.equal(gameArcadePlaylistLimit(-5),1);assert.equal(gameArcadePlaylistLimit(99),3);});
+
+test("places one off-screen break between each pair of planned games", () => {
+  assert.equal(gameArcadePlaylistBreaks(10), 0);
+  assert.equal(gameArcadePlaylistBreaks(20), 1);
+  assert.equal(gameArcadePlaylistBreaks(30), 2);
+  assert.equal(gameArcadePlaylistBreaks(Number.NaN), 0);
+});
 
 test("ranks the nearest locked games by remaining lessons without mutating entries", () => {
   const entries = buildGameArcadeEntries(["bits-and-data"]);
