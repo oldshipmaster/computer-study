@@ -47,6 +47,45 @@ test("deduplicates completion and badge rewards", () => {
   assert.deepEqual(parseProgress(serializeProgress(twice)), twice);
 });
 
+test("migrates legacy completions and caps rewarded course play counts", () => {
+  const legacy = parseProgress(JSON.stringify({
+    ...DEFAULT_PROGRESS,
+    completedCourseIds: ["keyboard-flight"],
+  }));
+  assert.deepEqual(legacy.coursePlayCounts, { "keyboard-flight": 1 });
+
+  const once = completeCourse(DEFAULT_PROGRESS, "keyboard-flight", "keyboard-pilot");
+  const twice = completeCourse(once, "keyboard-flight", "keyboard-pilot");
+  const threeTimes = completeCourse(twice, "keyboard-flight", "keyboard-pilot");
+  const fourTimes = completeCourse(threeTimes, "keyboard-flight", "keyboard-pilot");
+
+  assert.equal(once.coursePlayCounts["keyboard-flight"], 1);
+  assert.equal(twice.coursePlayCounts["keyboard-flight"], 2);
+  assert.equal(threeTimes.coursePlayCounts["keyboard-flight"], 3);
+  assert.equal(fourTimes.coursePlayCounts["keyboard-flight"], 3);
+  assert.deepEqual(resetProgress(fourTimes).coursePlayCounts, {});
+});
+
+test("drops malformed play counts and keeps only completed courses", () => {
+  const parsed = parseProgress(JSON.stringify({
+    ...DEFAULT_PROGRESS,
+    completedCourseIds: ["keyboard-flight", "file-home"],
+    coursePlayCounts: {
+      "keyboard-flight": 2,
+      "file-home": 4,
+      "instruction-order": 1,
+      fractional: 1.5,
+      text: "3",
+      ["x".repeat(65)]: 1,
+    },
+  }));
+
+  assert.deepEqual(parsed.coursePlayCounts, {
+    "keyboard-flight": 2,
+    "file-home": 1,
+  });
+});
+
 test("reset keeps settings and can retry storage after an earlier write failure", () => {
   assert.equal(typeof resetProgress, "function");
   assert.equal(typeof storeProgress, "function");
