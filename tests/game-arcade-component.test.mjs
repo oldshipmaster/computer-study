@@ -99,7 +99,10 @@ test("offers rotating recommendations and reversible discovery filters", () => {
   assert.match(component, /buildGameArcadeFilterSummary/);
   assert.match(component, /当前推荐范围/);
   assert.match(component, /game-arcade-pick-context/);
-  assert.match(component, /当前主题和阶段还没有已解锁玩法/);
+  assert.match(component, /当前筛选里还没有已解锁玩法/);
+  assert.match(component, /这组玩法本轮都打开过了/);
+  assert.match(component, /还没有收藏玩法/);
+  assert.match(component, /退出只看收藏/);
   assert.match(component, /查看更新后的今日推荐/);
   assert.match(component, /href="#game-arcade-picks-heading"/);
   assert.match(component, /role="status"/);
