@@ -1491,6 +1491,11 @@ input {
 .offline-status.is-offline { background: rgb(255 221 113 / 20%); }
 .back-to-top { display: inline-flex; min-height: 44px; margin: 16px auto 0; padding: 0 15px; align-items: center; justify-content: center; border: 2px solid rgb(255 255 255 / 72%); border-radius: 999px; color: inherit; font-size: .86rem; font-weight: 850; text-decoration: none; }
 .back-to-top:hover, .back-to-top:focus-visible { background: rgb(255 255 255 / 15%); }
+.game-playground { position:relative; }
+.game-return-dock { position:sticky; z-index:12; top:10px; display:flex; width:fit-content; max-width:calc(100% - 32px); margin:0 auto 10px; align-items:center; gap:10px; padding:5px 7px; border:2px solid var(--deep-sea); border-radius:999px; background:rgb(255 253 244 / 94%); box-shadow:4px 5px 0 rgb(20 56 77 / 14%); color:var(--deep-sea); backdrop-filter:blur(8px); }
+.game-return-dock a { display:inline-flex; min-height:44px; align-items:center; gap:6px; padding:0 12px; border-radius:999px; background:var(--deep-sea); color:white; font-size:.74rem; font-weight:900; text-decoration:none; }
+.game-return-dock > span { padding-right:8px; color:#48677a; font-size:.64rem; font-weight:800; }
+.game-return-dock a:hover,.game-return-dock a:focus-visible { background:#315c9a; }
 .section-jump-nav { display: flex; align-items: center; justify-content: center; gap: 4px; min-width: 0; }
 .section-jump-nav a { min-height: 44px; padding: 10px; border-radius: 999px; color: inherit; font-size: .78rem; font-weight: 850; text-decoration: none; white-space: nowrap; }
 .section-jump-nav a:hover, .section-jump-nav a:focus-visible { background: rgb(255 255 255 / 70%); }
@@ -1504,6 +1509,7 @@ input {
 .course-compass label > span { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 .course-compass kbd { min-width: 26px; padding: 2px 6px; border: 1px solid #8fa7b3; border-bottom-width: 3px; border-radius: 6px; background: white; font: inherit; font-size: .72rem; text-align: center; }
 @media (max-width: 900px) { .site-header { flex-wrap: wrap; } .section-jump-nav { order: 3; width: 100%; overflow-x: auto; justify-content: flex-start; padding-bottom: 3px; scrollbar-width: thin; } }
+@media (max-width: 520px) { .game-return-dock > span { display:none; } }
 .computer-dictionary { padding: 58px max(20px, calc((100vw - 1120px) / 2)); background: #fff8df; color: var(--ink); }
 .dictionary-heading { display: flex; align-items: end; justify-content: space-between; gap: 24px; }
 .dictionary-heading h2 { margin: 5px 0 0; font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 3rem); line-height: 1.04; }

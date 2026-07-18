@@ -257,6 +257,8 @@ export function IslandMap({
       </section>
 
       <Suspense fallback={<section className="game-arcade" id="game-arcade" role="status"><h2>比特岛游戏中心</h2><p>正在整理比特岛游戏中心…</p></section>}><GameArcade completedCourseIds={completedCourseIds} onStartCourse={onStartCourse} /></Suspense>
+      <div className="game-playground">
+      <nav className="game-return-dock" aria-label="游戏快捷导航"><a href="#game-arcade"><span aria-hidden="true">↑</span> 回到游戏中心</a><span>可随时换一局，不会丢失课程进度</span></nav>
       <AdventureMissionBoard completedCourseIds={completedCourseIds} confidenceByCourse={confidenceByCourse} coursePlayCounts={coursePlayCounts} onStartCourse={onStartCourse} />
       <KnowledgeSprint bestScore={knowledgeSprint.bestScore} completedCourseIds={completedCourseIds} key={`sprint-${completedCourseIds.join("|")}`} onRecordSprint={onRecordSprint} onStartCourse={onStartCourse} runsPlayed={knowledgeSprint.runsPlayed} />
       <IslandBossArena completedBossIds={completedBossIds} completedCourseIds={completedCourseIds} onCompleteBoss={onCompleteBoss} onStartCourse={onStartCourse} />
@@ -277,6 +279,7 @@ export function IslandMap({
       <Suspense fallback={<section className="decision-relay-shell relay-theme-os" id="os-command-relay" role="status"><h2>操作系统任务指挥部</h2><p>正在接通操作系统任务指挥部…</p></section>}><OsCommandRelay completedCourseIds={completedCourseIds} onStartCourse={onStartCourse} /></Suspense>
       <Suspense fallback={<section className="decision-relay-shell relay-theme-depth" id="systems-depth-relay" role="status"><h2>系统深海总控台</h2><p>正在下潜系统深海总控台…</p></section>}><SystemsDepthRelay completedCourseIds={completedCourseIds} onStartCourse={onStartCourse} /></Suspense>
       <Suspense fallback={<section className="decision-relay-shell relay-theme-championship" id="island-championship-relay" role="status"><h2>十三岛冠军联赛</h2><p>正在集合十三岛冠军联赛…</p></section>}><IslandChampionshipRelay completedCourseIds={completedCourseIds} onStartCourse={onStartCourse} /></Suspense>
+      </div>
       <LearningPlan completedCourseIds={completedCourseIds} onStartCourse={onStartCourse} resume={resume} />
       <ChildReviewQueue confidenceByCourse={confidenceByCourse} onStartCourse={onStartCourse} />
       <IslandSealCollection completedCourseIds={completedCourseIds} />

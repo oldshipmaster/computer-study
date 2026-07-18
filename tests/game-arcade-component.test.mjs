@@ -38,6 +38,17 @@ test("lazy-loads the arcade before individual games and keeps one header entry",
   for (const oldTarget of ["adventure-missions", "knowledge-sprint", "island-boss-arena", "logic-circuit-lab", "robot-code-expedition", "packet-escort", "cpu-scheduler-game"]) assert.doesNotMatch(nav, new RegExp(`href="#${oldTarget}"`));
 });
 
+test("keeps one sticky return route available throughout the complete game gallery", () => {
+  const map = source("components/IslandMap.tsx");
+  const css = source("app/globals.css");
+  const gallery = map.match(/<div className="game-playground"[\s\S]*?<\/div>\s*<LearningPlan/)?.[0] ?? "";
+  assert.match(gallery, /className="game-return-dock"/);
+  assert.match(gallery, /href="#game-arcade"/);
+  assert.match(gallery, /<AdventureMissionBoard[\s\S]*?<IslandChampionshipRelay/);
+  assert.match(css, /\.game-return-dock[^{]*\{[^}]*position:\s*sticky/);
+  assert.match(css, /\.game-return-dock a[^{]*\{[^}]*min-height:\s*44px/);
+});
+
 test("ships game cards in a separate responsive accessible stylesheet", () => {
   const component = source("components/GameArcade.tsx");
   const css = source("components/GameArcade.css");
