@@ -118,3 +118,5 @@ export function filterGameArcadeEntries(entries: readonly GameArcadeEntry[], fil
     return true;
   });
 }
+
+export function gameArcadePlaylistLimit(minutes: number): number { if (!Number.isFinite(minutes) || minutes < 15) return 1; if (minutes < 25) return 2; return 3; }

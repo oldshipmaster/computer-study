@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { getCourse } from "@/lib/course-data";
-import { buildGameArcadeEntries, buildGameArcadeRecommendations, filterGameArcadeEntries, type GameArcadeCategory, type GameArcadeLevel } from "@/lib/game-arcade";
+import { buildGameArcadeEntries, buildGameArcadeRecommendations, filterGameArcadeEntries, gameArcadePlaylistLimit, type GameArcadeCategory, type GameArcadeLevel } from "@/lib/game-arcade";
 import "./GameArcade.css";
 
 interface GameArcadeProps {
@@ -31,11 +31,12 @@ export function GameArcade({ completedCourseIds, onStartCourse }: GameArcadeProp
   const entries = useMemo(() => buildGameArcadeEntries(completedCourseIds), [completedCourseIds]);
   const unlockedCount = entries.filter((entry) => entry.unlocked).length;
   const [recommendationRotation, setRecommendationRotation] = useState(0);
+  const [sessionMinutes, setSessionMinutes] = useState<10 | 20 | 30>(10);
   const [category, setCategory] = useState<DiscoveryCategory>("all");
   const [level, setLevel] = useState<DiscoveryLevel>("all");
   const [query, setQuery] = useState("");
   const [unlockedOnly, setUnlockedOnly] = useState(false);
-  const recommendations = useMemo(() => buildGameArcadeRecommendations(entries, recommendationRotation), [entries, recommendationRotation]);
+  const recommendations = useMemo(() => buildGameArcadeRecommendations(entries, recommendationRotation, gameArcadePlaylistLimit(sessionMinutes)), [entries, recommendationRotation, sessionMinutes]);
   const visibleEntries = filterGameArcadeEntries(entries, { query, category, level, unlockedOnly });
   const filtersActive = Boolean(query.trim()) || category !== "all" || level !== "all" || unlockedOnly;
 
@@ -50,8 +51,9 @@ export function GameArcade({ completedCourseIds, onStartCourse }: GameArcadeProp
 
       <section className="game-arcade-picks" aria-labelledby="game-arcade-picks-heading">
         <div className="game-arcade-picks-heading"><div><span aria-hidden="true">✦</span><h3 id="game-arcade-picks-heading">今天想玩这几局</h3></div>{recommendations.length > 1 ? <button onClick={() => setRecommendationRotation((current) => current + 1)} type="button">换一组推荐 ↻</button> : null}</div>
+        <div className="game-arcade-time-options" aria-label="选择今天游戏时间" role="group">{([10, 20, 30] as const).map((minutes) => <button aria-pressed={sessionMinutes === minutes} key={minutes} onClick={() => setSessionMinutes(minutes)} type="button">我有 {minutes} 分钟</button>)}</div>
         <div className="game-arcade-recommendations" role="list">{recommendations.map((entry, index) => <a aria-label={`推荐第${index + 1}局：前往${entry.title}`} className="game-arcade-recommendation" href={`#${entry.targetId}`} key={entry.id} role="listitem"><span>{index + 1}</span><b>{entry.icon} {entry.title}</b><small>{entry.duration}</small><i aria-hidden="true">→</i></a>)}</div>
-        {recommendations.length === 1 ? <p>先从这一局开始；学完更多课程后，推荐路线会一起长大。</p> : <p>推荐只从已经解锁的玩法中轮换，不会记录你的选择。</p>}
+        {recommendations.length === 1 ? <p>一局就是一节完整小课；学完更多课程后，可选路线会一起长大。</p> : <p>按每局约 8–10 分钟安排，只从已解锁玩法中轮换，不会记录选择。</p>}
       </section>
 
       <div className="game-arcade-search"><label htmlFor="game-arcade-search">找一局想玩的</label><div><input aria-label="搜索游戏" id="game-arcade-search" onChange={(event) => setQuery(event.target.value)} placeholder="搜索游戏名称或玩法" type="search" value={query} />{query ? <button onClick={() => setQuery("")} type="button">清空搜索</button> : null}</div><small>只在当前页面匹配标题和玩法说明，不保存搜索词。</small></div>
