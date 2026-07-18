@@ -28,3 +28,16 @@ test("every shared relay step supports the visible one two three controls", () =
     }
   }
 });
+
+test("shared relay copy stays scannable for a primary-school learner", () => {
+  for (const [catalogName, missions] of catalogs) {
+    for (const mission of missions) {
+      assert.ok(mission.story.length <= 30, `${catalogName}/${mission.id}/story`);
+      for (const step of mission.steps) {
+        assert.ok(step.prompt.length <= 40, `${catalogName}/${mission.id}/prompt`);
+        assert.ok(step.wrongFeedback.length <= 30, `${catalogName}/${mission.id}/wrongFeedback`);
+        assert.ok(step.options.every((option) => option.label.length <= 30), `${catalogName}/${mission.id}/options`);
+      }
+    }
+  }
+});
